@@ -547,7 +547,7 @@ class NamechangeController extends Controller
         $new_data_add->present_name_ban = Session::get('new_name_ban');
         $new_data_add->status = 'Ongoing';
         $new_data_add->time_for_api = $main_time;
-        $new_data_add->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
+         
         $new_data_add->save();
 
 
