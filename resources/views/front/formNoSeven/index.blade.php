@@ -1,7 +1,7 @@
 @extends('front.master.master')
 
 @section('title')
-{{ trans('fd9.fc2')}} | {{ trans('header.ngo_ab')}}
+{{ trans('formNoSeven.formNoSeven')}} | {{ trans('header.ngo_ab')}}
 @endsection
 
 @section('css')
@@ -93,19 +93,23 @@
                                 <p class="{{ Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.view') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
                             </a>
                         </div>
-
                         <div class="profile_link_box">
                             <a href="{{ route('fd3Form.index') }}">
                                 <p class="{{ Route::is('fd3Form.index') ||  Route::is('fd3Form.create') || Route::is('fd3Form.view') || Route::is('addFd2DetailForFd3') || Route::is('editFd2DetailForFd3') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd3')}}</p>
                             </a>
                         </div>
+
                         <div class="profile_link_box">
                             <a href="{{ route('fdFiveForm.index') }}">
                                 <p class="{{ Route::is('fdFiveForm.index') ||  Route::is('fdFiveForm.create') || Route::is('fdFiveForm.view')  || Route::is('fdFiveForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd5')}}</p>
                             </a>
                         </div>
 
-                        
+                        <div class="profile_link_box">
+                            <a href="{{ route('formNoSeven.index') }}">
+                                <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
+                            </a>
+                        </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -137,6 +141,7 @@
                                 <p class="{{ Route::is('executiveCommitteeApproval.index')  ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.cf3')}}</p>
                             </a>
                         </div> --}}
+
                         <div class="profile_link_box">
                             <a href="{{ route('logout') }}">
                                 <p class=""><i class="fa fa-cog pe-2"></i>{{ trans('fd9.l')}}</p>
@@ -153,63 +158,60 @@
                     <div class="card-body">
                         <div class="name_change_box">
                             <div class="row">
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-7 col-sm-12">
                                     <div class="others_inner_section">
-                                        <h1>ব্যক্তি কর্তৃক বৈদেশিক অনুদানে গৃহীত প্রকল্প প্রস্তাব ফরম
-                                        </h1>
+                                        <h1>প্রকল্প বাস্তবায়ন সম্পর্কিত প্রত্যয়নপত্রের ছক</h1>
                                         @include('flash_message')
                                         <div class="notice_underline"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-sm-12">
+                                <div class="col-lg-5 col-sm-12">
                                     <div class="d-grid d-md-flex justify-content-end">
                                         <button type="button" class="btn btn-registration"
-                                                onclick="location.href = '{{ route('fc2Form.create') }}';">নতুন ফরম যোগ করুন
+                                                onclick="location.href = '{{ route('formNoSeven.create') }}';">নতুন ফরম যোগ করুন
                                         </button>
                                     </div>
                                 </div>
                             </div>
 
-                            @if(count($fc2FormList) == 0)
+                            @if(count($formNoSevenList) == 0)
                             <div class="no_name_change">
                                 <div class="d-flex justify-content-center pt-5">
                                     <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
                                 </div>
                                 <div class="text-center">
-                                    <h5>কোন আবেদন ফর্ম তালিকা নেই</h5>
+                                    <h5>কোন তালিকা নেই</h5>
                                 </div>
                             </div>
                             @else
                             <div class="no_name_change pt-4">
-                                <h5 class="pb-3">এককালীন অনুদান গ্রহণের  আবেদনপত্র</h5>
+                                <h5 class="pb-3">প্রকল্প বাস্তবায়ন সম্পর্কিত প্রত্যয়নপত্রের ছকের বিবরণ</h5>
                                 <table class="table table-bordered">
                                     <tr>
                                         <th>ক্র : নং :</th>
-                                        <th>পূর্ণ নাম</th>
-
-                                        <th>জাতীয় পরিচয়পত্র নম্বর</th>
-                                        <th>মোবাইল</th>
-                                        <th>প্রকল্পের সময়রেখা</th>
+                                        <th>সংস্থার নাম</th>
+                                        <th>প্রকল্পের নাম</th>
+                                        <th>প্রকল্পের মেয়াদ</th>
+                                        <th>প্রকল্পের টাকার  পরিমাণ</th>
                                         <th>স্ট্যাটাস</th>
                                         <th>কর্ম পরিকল্পনা</th>
                                     </tr>
-                                    @foreach($fc2FormList as $key=>$fd6FormListAll)
+                                    @foreach($formNoSevenList as $key=>$formNoSevenListAll)
                                     <tr>
                                         <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
-                                        <td>{{ $fd6FormListAll->person_full_name }}</td>
-                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormListAll->person_nid) }}</td>
-                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormListAll->person_mobile) }}</td>
-
-                                        <td>{{ $fd6FormListAll->ngo_prokolpo_start_date }} <b>-</b> {{ $fd6FormListAll->ngo_prokolpo_end_date }}</td>
-                                        <td><span class="text-success">{{ $fd6FormListAll->status }}</span></td>
+                                        <td>{{ $formNoSevenListAll->ngo_name }}</td>
+                                        <td>{{ $formNoSevenListAll->prokolpo_name}}</td>
+                                        <td>{{ $formNoSevenListAll->prokolpo_duration}}</td>
+                                        <td>{{ $formNoSevenListAll->prokolpo_fund }}</td>
+                                        <td><span class="text-success">{{ $formNoSevenListAll->status }}</span></td>
                                         <td>
 
-                                            <a  href="{{ route('fc2Form.edit',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
-                                            <a  href="{{ route('fc2Form.show',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                            <button type="button" onclick="deleteTag({{ $fd6FormListAll->id}})" class="btn btn-sm btn-outline-danger"><i
+                                            <a  href="{{ route('formNoSeven.edit',base64_encode($formNoSevenListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                            <a  href="{{ route('formNoSeven.show',base64_encode($formNoSevenListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                            <button type="button" onclick="deleteTag({{ $formNoSevenListAll->id}})" class="btn btn-sm btn-outline-danger"><i
                                                 class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $fd6FormListAll->id }}" action="{{ route('fc2Form.destroy',$fd6FormListAll->id) }}" method="POST" style="display: none;">
+                                                <form id="delete-form-{{ $formNoSevenListAll->id }}" action="{{ route('formNoSeven.destroy',$formNoSevenListAll->id) }}" method="POST" style="display: none;">
 
                                                     @csrf
                                                     @method('DELETE')

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('form_no_seven_step_fours', function (Blueprint $table) {
+        Schema::create('form_no_five_step_fours', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('form_no_sevens_id')->unsigned();
-            $table->foreign('form_no_sevens_id')->references('id')->on('form_no_sevens')->onDelete('cascade');
+            $table->bigInteger('form_no_fives_id')->unsigned();
+            $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
             $table->longText('description_of_property')->nullable();
             $table->string('quantity')->nullable();
             $table->string('collect_date')->nullable();
@@ -40,6 +40,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_no_seven_step_fours');
+        Schema::dropIfExists('form_no_five_step_fours');
     }
 };

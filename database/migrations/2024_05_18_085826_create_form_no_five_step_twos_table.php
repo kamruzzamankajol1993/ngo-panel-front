@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('form_no_seven_step_twos', function (Blueprint $table) {
+        Schema::create('form_no_five_step_twos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('form_no_sevens_id')->unsigned();
-            $table->foreign('form_no_sevens_id')->references('id')->on('form_no_sevens')->onDelete('cascade');
+            $table->bigInteger('form_no_fives_id')->unsigned();
+            $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
             $table->string('sector_of_annexure_C')->nullable();
             $table->string('sector_wise_budget')->nullable();
             $table->string('activities_and_objectives')->nullable();
@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_no_seven_step_twos');
+        Schema::dropIfExists('form_no_five_step_twos');
     }
 };

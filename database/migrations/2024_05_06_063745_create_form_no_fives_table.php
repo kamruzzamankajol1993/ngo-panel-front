@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('form_no_sevens', function (Blueprint $table) {
+        Schema::create('form_no_fives', function (Blueprint $table) {
             $table->id();
+
+
+
             $table->bigInteger('fd_one_form_id')->unsigned();
             $table->foreign('fd_one_form_id')->references('id')->on('fd_one_forms')->onDelete('cascade');
             $table->string('prokolpo_name')->nullable();
@@ -27,7 +30,7 @@ return new class extends Migration
             $table->string('report_year')->nullable();
             $table->string('percentage_of_achievement_during_project')->nullable();
             $table->string('prokolpo_araea')->nullable();
-            $table->string('prokolpo_subject')->nullable();
+            $table->string('prokolpo_subject_one')->nullable();
             $table->string('prokolpo_district')->nullable();
             $table->string('prokolpo_district_area_type')->nullable();
             $table->string('prokolpo_district_area_name')->nullable();
@@ -44,6 +47,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_no_sevens');
+        Schema::dropIfExists('form_no_fives');
     }
 };

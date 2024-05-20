@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('form_no_seven_step_fives', function (Blueprint $table) {
+        Schema::create('form_no_five_step_fives', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('form_no_sevens_id')->unsigned();
-            $table->foreign('form_no_sevens_id')->references('id')->on('form_no_sevens')->onDelete('cascade');
+            $table->bigInteger('form_no_fives_id')->unsigned();
+            $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
             $table->longText('name_of_the_officer')->nullable();
             $table->string('designation_of_the_officer')->nullable();
             $table->string('joining_date')->nullable();
@@ -55,6 +55,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_no_seven_step_fives');
+        Schema::dropIfExists('form_no_five_step_fives');
     }
 };

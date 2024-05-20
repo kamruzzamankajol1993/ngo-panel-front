@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('form_no_fives', function (Blueprint $table) {
+        Schema::create('form_no_sevens', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('fd_one_form_id')->unsigned();
             $table->foreign('fd_one_form_id')->references('id')->on('fd_one_forms')->onDelete('cascade');
@@ -92,6 +92,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_no_fives');
+        Schema::dropIfExists('form_no_sevens');
     }
 };
