@@ -27,6 +27,8 @@ use App\Http\Controllers\NGO\DuplicateCertificateController;
 use App\Http\Controllers\NGO\ExecutiveComitteeApprovalController;
 use App\Http\Controllers\NGO\FdFiveFormController;
 use App\Http\Controllers\Front\ComplainMonitorController;
+use App\Http\Controllers\NGO\FormNoSevenController;
+use App\Http\Controllers\NGO\FormNoFiveController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -224,6 +226,21 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('addDataStepTwoFd8/{id}', 'addDataStepTwoFd8')->name('addDataStepTwoFd8');
         Route::get('addDataStepThreeFd8/{id}', 'addDataStepThreeFd8')->name('addDataStepThreeFd8');
         Route::get('addDataStepFourFd8/{id}', 'addDataStepFourFd8')->name('addDataStepFourFd8');
+    });
+
+
+
+    Route::resource('formNoSeven',FormNoSevenController::class);
+    Route::resource('formNoFive',FormNoFiveController::class);
+
+    Route::controller(FormNoSevenController::class)->group(function () {
+
+        Route::get('formNoSevenPdfDownload/{id}', 'formNoSevenPdfDownload')->name('formNoSevenPdfDownload');
+    });
+
+    Route::controller(FormNoFiveController::class)->group(function () {
+
+        Route::get('formNoFivePdfDownload/{id}', 'formNoFivePdfDownload')->name('formNoFivePdfDownload');
     });
 
     Route::resource('fd3Form',Fd3FormController::class);
