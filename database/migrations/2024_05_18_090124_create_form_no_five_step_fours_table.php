@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('form_no_fives_id')->unsigned();
             $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
             $table->longText('description_of_property')->nullable();
+            $table->string('sub_property')->nullable();
             $table->string('quantity')->nullable();
             $table->string('collect_date')->nullable();
             $table->string('real_buying_price')->nullable();

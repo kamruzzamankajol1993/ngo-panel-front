@@ -186,17 +186,17 @@
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">প্রকল্পের নাম<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="prokolpo_name"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্পের মেয়াদকাল<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="prokolpo_duration"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">ব্যুরোর অনুমোদনের নম্বর<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="ngo_registration_number"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
@@ -206,28 +206,28 @@
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">অনুমোদিত প্রাক্কলিত ব্যয় (বছর ভিত্তিক)<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="approved_estimated_expenditure_year_wise"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রতিবেদনকালে ছাড়কৃত অর্থের পরিমাণ<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="received_money_during_report"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রতিবেদনকাল (প্রকল্প বর্ষ)<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="report_year"  class="form-control" id=""placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্পের বিবেচ্য সময়ে অর্জনের শতকরা হার<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="percentage_of_achievement_during_project"  class="form-control" id=""placeholder="">
                                         </div>
 
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রতিবেদনকালে বাস্তবায়িত এলাকা<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="prokolpo_araea"  class="form-control" id=""placeholder="">
                                         </div>
 
                                     </div>

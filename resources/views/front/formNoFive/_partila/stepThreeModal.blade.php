@@ -22,7 +22,7 @@
                                     {{-- <input type="text" required name="district_name[]" class="form-control" id=""
                                     placeholder=""> --}}
 
-                                    <select required name="district_name[]" class="form-control district_name" id="district_name0">
+                                    <select required name="district_name" class="form-control district_name" id="district_name0">
                                         <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
                                         @foreach($divisionList as $districtListAll)
 
@@ -37,7 +37,7 @@
                                     placeholder=""> --}}
 
 
-                                    <select required name="upozila_name[]" class="form-control upozila_name" id="upozila_name">
+                                    <select required name="upazila_name" class="form-control upozila_name" id="upozila_name">
                                         <option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
 
 
@@ -45,18 +45,18 @@
                                 </div>
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">উপজেলার জন্য মোট বরাদ্দ<span class="text-danger">*</span> </label>
-                                    <input name="staff_address" required type="text" class="form-control" id="">
+                                    <input name="total_allocation_for_upazila" required type="text" class="form-control" id="">
                                 </div>
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">মোট প্রকৃত ব্যয়<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="total_actual_cost" required type="text" class="form-control">
                                 </div>
 
 
                                 <div class="col-lg-12 col-sm-12 mb-3">
                                     <label for="" class="form-label">মন্তব্য</label>
-                                    <textarea name="other_occupation"  class="form-control" id="" placeholder=""></textarea>
+                                    <textarea name="comment"  class="form-control" id="" placeholder=""></textarea>
                                 </div>
 
 

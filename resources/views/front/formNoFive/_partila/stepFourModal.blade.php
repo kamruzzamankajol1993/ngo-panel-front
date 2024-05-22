@@ -22,7 +22,7 @@
                                     <label for="" class="form-label">সম্পদ / সম্পত্তির বিবরণ<span class="text-danger">*</span> </label>
                                     {{-- <textarea name="other_occupation"  class="form-control" id="" placeholder=""></textarea> --}}
 
-                                    <select name="date_of_join" required type="text" class="form-control" id="wealth_descrip">
+                                    <select name="description_of_property" required type="text" class="form-control" id="wealth_descrip">
                                         <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
                                         <option value="স্থাবর">স্থাবর</option>
                                         <option value="অস্থাবর">অস্থাবর</option>
@@ -37,41 +37,41 @@
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">পরিমাণ /সংখ্যা<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="quantity" required type="text" class="form-control">
                                 </div>
 
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">প্রাপ্তি/সংগ্রহের তারিখ <span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control datepickerOne">
+                                    <input name="collect_date" required type="text" class="form-control datepickerOne">
                                 </div>
 
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">প্রকৃত ক্রয় মূল্য<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="real_buying_price" required type="text" class="form-control">
                                 </div>
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">অর্থের উৎস<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="fund_source" required type="text" class="form-control">
                                 </div>
 
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">কি কাজে ব্যবহৃত হতেছে<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="what_is_it_used_for" required type="text" class="form-control">
                                 </div>
 
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">অবস্থান(স্থান)<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="place" required type="text" class="form-control">
                                 </div>
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">বিক্রিত স্থান্তরিত সম্পদ (সংখ্যা /পরিমাণ )<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="assets_sold_transferred_number_or_quantity" required type="text" class="form-control">
                                 </div>
 
 
@@ -79,17 +79,17 @@
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত (সংখ্যা /পরিমাণ )<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="quantity_during_start_of_organization" required type="text" class="form-control">
                                 </div>
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত সর্বমোট ক্রয়মূল্য<span class="text-danger">*</span> </label>
-                                    <input name="date_of_join" required type="text" class="form-control">
+                                    <input name="total_during_start_of_organization" required type="text" class="form-control">
                                 </div>
 
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">বর্তমান অবস্থা <span class="text-danger">*</span> </label>
-                                    <select name="date_of_join" required type="text" class="form-control">
+                                    <select name="current_status" required type="text" class="form-control">
                                         <option value="সচল" selected>সচল</option>
                                         <option value="অচল">অচল</option>
                                     </select>
