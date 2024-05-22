@@ -15,9 +15,7 @@
                 <div class="modal-body"  id="mResult">
 
                 </div>
-                <div class="modal-footer">
-
-                </div>
+                
             </div>
         </div>
     </div>

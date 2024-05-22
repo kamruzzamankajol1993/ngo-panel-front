@@ -252,13 +252,14 @@
         <small id="digital_signature_text" class="text-danger"></small> --}}
 
         {{-- <input type="file" class="file" id="file" > --}}
-        <button type="button" data-toggle="tooltip" data-placement="top" title="Save" class="btn btn-success btn-sm" id="btnCrop" value="Crop" style="float: right;margin-left: 5px;"><i class="fa fa-crop" aria-hidden="true"></i></button>
+
         <button type="button" data-toggle="tooltip" data-placement="top" title="Zoom In" class="btn btn-primary btn-sm" id="btnZoomIn" value="+" style="float: right;margin-left: 5px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
         <button type="button" data-toggle="tooltip" data-placement="top" title="Zoom Out"  class="btn btn-danger btn-sm"  id="btnZoomOut" value="-" style="float: right;margin-left: 5px;"><i class="fa fa-minus" aria-hidden="true"></i></button>
     </div>
     <div class="cropped">
 
     </div>
+    <button type="button" data-toggle="tooltip" data-placement="top" title="Save" class="btn btn-success btn-sm" id="btnCrop" value="Crop" style="float: right;margin-left: 5px;">সংরক্ষণ করুন</button>
 </div>
 
 

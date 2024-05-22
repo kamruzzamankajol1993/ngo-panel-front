@@ -78,7 +78,11 @@ $mainNgoType = CommonController::changeView();
         </a>
     </div>
 
-
+    <div class="profile_link_box">
+        <a href="{{ route('formNoFive.index') }}">
+            <p class="{{ Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.view')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
+        </a>
+    </div>
     {{-- <div class="profile_link_box">
         <a href="{{ route('duplicateCertificate.index') }}">
             <p class="{{ Route::is('duplicateCertificate.index')  ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.cf1')}}</p>
@@ -178,11 +182,11 @@ $mainNgoType = CommonController::changeView();
         </a>
     </div>
 
-    <div class="profile_link_box">
+    {{-- <div class="profile_link_box">
         <a href="{{ route('formNoSeven.index') }}">
             <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
         </a>
-    </div>
+    </div> --}}
 
     <div class="profile_link_box">
         <a href="{{ route('formNoFive.index') }}">

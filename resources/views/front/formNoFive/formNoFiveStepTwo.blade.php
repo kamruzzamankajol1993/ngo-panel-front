@@ -1,7 +1,7 @@
 @extends('front.master.master')
 
 @section('title')
-{{ trans('formNoFive.formNoFive')}} | {{ trans('header.ngo_ab')}}
+প্রকল্পের খাতভিত্তিক বিবরণী | {{ trans('header.ngo_ab')}}
 @endsection
 
 @section('css')
@@ -105,8 +105,6 @@
                         </div>
 
 
-
-
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
                                 <p class="{{Route::is('formNoFiveStepFive') || Route::is('formNoFiveStepFour') || Route::is('formNoFiveStepThree') || Route::is('formNoFiveStepTwo') || Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.view')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
@@ -176,154 +174,47 @@
                                     </div>
 
                                     <div class="fd01_tablist mt-3">
+                                        <div class="fd01_tab"></div>
                                         <div class="fd01_tab fd01_checked"></div>
                                         <div class="fd01_tab"></div>
                                         <div class="fd01_tab"></div>
                                         <div class="fd01_tab"></div>
-                                        <div class="fd01_tab"></div>
                                     </div>
+
+                                     <div class="card">
+                                        <div class="card-header text-center">প্রকল্পের খাতভিত্তিক বিবরণী</div>
+                                     </div>
 
                                     <div class="row">
-                                        <div class="mb-3 col-lg-12">
-                                            <label for="" class="form-label">প্রকল্পের নাম<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
+                                        <div class="col-lg-12">
 
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রকল্পের মেয়াদকাল<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
+                                            <!-- add modal button start -->
 
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">ব্যুরোর অনুমোদনের নম্বর<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">ব্যুরোর অনুমোদনের তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text"  required name="ngo_registration_date" class="form-control datepickerOne" id="" placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">অনুমোদিত প্রাক্কলিত ব্যয় (বছর ভিত্তিক)<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রতিবেদনকালে ছাড়কৃত অর্থের পরিমাণ<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রতিবেদনকাল (প্রকল্প বর্ষ)<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রকল্পের বিবেচ্য সময়ে অর্জনের শতকরা হার<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
+                                            <div class="d-flex justify-content-between ">
+                                                <div class="p-2">
 
 
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রতিবেদনকালে বাস্তবায়িত এলাকা<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
-                                        </div>
+                                                </div>
+                                                <div class="p-2">
+                                                    <button class="btn btn-primary btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                                        {{ trans('formNoFive.addNew')}}
+                                                    </button>
+                                                </div>
+                                            </div>
 
-                                    </div>
+                                            <!--- modal start--->
 
-                                    <div class="row mt-5">
-                                        {{-- <div class="mb-3 col-lg-12">
-                                            <label for="" class="form-label">প্রকল্প এলাকা</label>
-                                        </div> --}}
-                                        <div class="mb-3 col-lg-12">
-                                            <table class="table table-bordered" id="dynamicAddRemove">
-                                                <tr>
-                                                    <th>বিভাগ</th>
-                                                    <th>জেলা/সিটি কর্পোরেশন</th>
-                                                    <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
-                                                    <th></th>
-                                                </tr>
-                                                <tr>
-                                                    <td style="width: 20%">
-                                                        <label for="" class="form-label">বিভাগ <span class="text-danger">*</span></label>
-                                                        {{-- <input type="text" required name="division_name[]" class="form-control" id=""
-                                                        placeholder=""> --}}
+                                            @include('front.formNoFive._partila.modal')
 
+                                            <!--- modal end --->
 
+                                            <!-- add modal button end -->
 
-                                                        <select required name="division_name[]" class="form-control division_name" id="division_name0">
-                                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-                                                            @foreach($divisionList as $districtListAll)
-
-                                                            <option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>
-                                                            @endforeach
-
-                                                        </select>
-                                                    </td>
-                                                    <td style="width: 35%">
-                                                        <div class="row">
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                                                {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                                                placeholder=""> --}}
-
-                                                                <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                                                    <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                                                </select>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">সিটি কর্পোরেশন</label>
-                                                                {{-- <input type="text" name="city_corparation_name[]" class="form-control" id=""
-                                                                placeholder=""> --}}
-
-
-                                                                <select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name0">
-                                                                    <option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="row">
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">উপজেলা</label>
-                                                                <input type="text" name="upozila_name[]" class="form-control" id=""
-                                                                placeholder="">
-                                                            </div>
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">থানা</label>
-                                                                <input type="text" name="thana_name[]" class="form-control" id=""
-                                                                placeholder="" required>
-                                                            </div>
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">পৌরসভা</label>
-                                                                <input type="text" name="municipality_name[]" class="form-control" id=""
-                                                                placeholder="">
-                                                            </div>
-                                                            <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">ওয়ার্ড</label>
-                                                                <input type="text" name="ward_name[]" class="form-control" id=""
-                                                                placeholder="">
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a class="btn btn-primary btn-sm" id="dynamic-ar"><i class="fa fa-plus"></i></a>
-                                                    </td>
-                                                </tr>
-                                            </table>
                                         </div>
                                     </div>
-
-
 
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepTwo',base64_encode(1)) }}">next</a>
+                                        <a target="_blank" href="{{ route('formNoFiveStepThree',base64_encode($decode_id)) }}">next</a>
                                         <button type="submit" class="btn btn-registration"
                                                 >জমা দিন
                                         </button>

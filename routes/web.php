@@ -240,6 +240,15 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(FormNoFiveController::class)->group(function () {
 
+
+        Route::get('formNoFiveStepTwo/{id}', 'formNoFiveStepTwo')->name('formNoFiveStepTwo');
+        Route::post('formNoFiveStepTwoPost', 'formNoFiveStepTwoPost')->name('formNoFiveStepTwoPost');
+        Route::get('formNoFiveStepThree/{id}', 'formNoFiveStepThree')->name('formNoFiveStepThree');
+        Route::post('formNoFiveStepThreePost', 'formNoFiveStepThreePost')->name('formNoFiveStepThreePost');
+        Route::get('formNoFiveStepFour/{id}', 'formNoFiveStepFour')->name('formNoFiveStepFour');
+        Route::post('formNoFiveStepFourPost', 'formNoFiveStepFourPost')->name('formNoFiveStepFourPost');
+        Route::get('formNoFiveStepFive/{id}', 'formNoFiveStepFive')->name('formNoFiveStepFive');
+        Route::post('formNoFiveStepPost', 'formNoFiveStepPost')->name('formNoFiveStepPost');
         Route::get('formNoFivePdfDownload/{id}', 'formNoFivePdfDownload')->name('formNoFivePdfDownload');
     });
 
@@ -376,6 +385,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('ProjectProposalFormPdfDownload/{id}', 'ProjectProposalFormPdfDownload')->name('ProjectProposalFormPdfDownload');
         Route::get('getDistrictList', 'getDistrictList')->name('getDistrictList');
         Route::get('getCityCorporationList', 'getCityCorporationList')->name('getCityCorporationList');
+
+        Route::get('getUpozilaList', 'getUpozilaList')->name('getUpozilaList');
+
 
     });
 

@@ -255,7 +255,7 @@
         <small id="digital_seal_text" class="text-danger"></small> --}}
 
 
-        <button type="button" data-toggle="tooltip" data-placement="top" title="Save" title="text" class="btn btn-success btn-sm" id="btnCrop" value="Crop" style="float: right;margin-left: 5px;"><i class="fa fa-crop" aria-hidden="true"></i></button>
+
         <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Zoom In" id="btnZoomIn" value="+" style="float: right;margin-left: 5px;"><i class="fa fa-plus" aria-hidden="true"></i></button>
         <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Zoom Out"  id="btnZoomOut" value="-" style="float: right;margin-left: 5px;"><i class="fa fa-minus" aria-hidden="true"></i></button>
 
@@ -263,6 +263,7 @@
     <div class="cropped">
 
     </div>
+    <button type="button" data-toggle="tooltip" data-placement="top" title="Save" title="text" class="btn btn-success btn-sm" id="btnCrop" value="Crop" style="float: right;margin-left: 5px;">সংরক্ষণ করুন</button>
 </div>
 
 

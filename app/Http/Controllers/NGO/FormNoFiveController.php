@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Session;
 use App\Models\FormNoFive;
 use App\Models\FdOneForm;
+use App\Models\NgoDuration;
 class FormNoFiveController extends Controller
 {
     public function index(){
@@ -39,12 +40,99 @@ class FormNoFiveController extends Controller
 
             $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
-
-            return view('front.formNoFive.create',compact('ngo_list_all'));
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+            return view('front.formNoFive.create',compact('ngo_list_all','ngoDurationReg','divisionList'));
 
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');
         }
+    }
+
+
+    public function formNoFiveStepTwo($id){
+
+
+        try{
+
+            $decode_id = base64_decode($id);
+
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+            return view('front.formNoFive.formNoFiveStepTwo',compact('decode_id','ngo_list_all','ngoDurationReg','divisionList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+
+    }
+
+    public function formNoFiveStepThree($id){
+
+
+        try{
+
+            $decode_id = base64_decode($id);
+
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $divisionList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+            return view('front.formNoFive.formNoFiveStepThree',compact('decode_id','ngo_list_all','ngoDurationReg','divisionList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+
+    }
+
+
+    public function formNoFiveStepFour($id){
+
+
+        try{
+
+            $decode_id = base64_decode($id);
+
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $divisionList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+            return view('front.formNoFive.formNoFiveStepFour',compact('decode_id','ngo_list_all','ngoDurationReg','divisionList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+
+    }
+
+    public function formNoFiveStepFive($id){
+
+
+        try{
+
+            $decode_id = base64_decode($id);
+
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+            return view('front.formNoFive.formNoFiveStepFive',compact('decode_id','ngo_list_all','ngoDurationReg','divisionList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+
     }
 }
