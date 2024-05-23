@@ -6,6 +6,30 @@
 
 @section('css')
 
+<style>
+
+.alertify .ajs-body .ajs-content {
+    font-weight: bolder;
+    color:red;
+    font-size: 20px;
+}
+
+.alertify .ajs-header{
+
+    color:red;
+    font-size: 20px;
+
+}
+
+.alertify .ajs-footer .ajs-buttons .ajs-button{
+
+    background-color: #006A4E;
+    color: #fff;
+
+}
+
+</style>
+
 @endsection
 
 @section('body')
@@ -164,8 +188,7 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
 
-                                    <form action="{{ route('formNoFive.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
-                                        @csrf
+
                                     <div class="form9_upper_box">
                                         <h3>ফরম নং-৫</h3>
                                         <h4 style="font-weight: 900;">বার্ষিক প্রতিবেদন</h4>
@@ -186,16 +209,16 @@
                                      <div class="card">
                                         <div class="card-header text-center">উপজেলা ওয়ারী প্রকল্পের আর্থিক বিবরণী (ছক-২)</div>
                                      </div>
-
+                                     @include('flash_message')
                                      <div class="row mt-4">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্পের নাম<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="prokolpo_name_one"  class="form-control" id="prokolpo_name_one" placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রতিবেদনাধীন সময়<span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="text" required name="reporting_period"  class="form-control" id="reporting_period" placeholder="">
                                         </div>
 
                                     </div>
@@ -229,14 +252,82 @@
                                     </div>
 
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @if(count($formNoFiveStepThreeData) == 0 )
+
+                                            <div class="no_name_change">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5>কোন তালিকা নেই</h5>
+                                                </div>
+                                            </div>
+
+                                            @else
+
+                                            <div class="table-responsive">
+
+
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th >ক্র : নং :</th>
+                                                        <th >জেলার নাম</th>
+                                                        <th >উপজেলার নাম</th>
+                                                        <th >উপজেলার জন্য মোট বরাদ্দ</th>
+                                                        <th >মোট প্রকৃত ব্যয়</th>
+                                                        <th >মন্তব্য</th>
+                                                        <th >কর্ম পরিকল্পনা</th>
+                                                    </tr>
+
+                                                    @foreach($formNoFiveStepThreeData as $key=>$formNoFiveStepThreeDatass)
+                                                    <tr>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                        <td>{{ $formNoFiveStepThreeDatass->district_name }}</td>
+                                                        <td>{{ $formNoFiveStepThreeDatass->upazila_name}}</td>
+                                                        <td>{{ $formNoFiveStepThreeDatass->total_allocation_for_upazila}}</td>
+                                                        <td>{{ $formNoFiveStepThreeDatass->total_actual_cost }}</td>
+                                                        <td>{{ $formNoFiveStepThreeDatass->comment }}</td>
+                                                        <td>
+
+                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepThreeDatass->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepThreeDatass->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                                            <button type="button" onclick="deleteTag({{ $formNoFiveStepThreeDatass->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                                class="bi bi-trash"></i></button>
+
+                                                                <form id="delete-form-{{ $formNoFiveStepThreeDatass->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepThreeDatass->id) }}" method="POST" style="display: none;">
+
+                                                                    @csrf
+                                                                    @method('DELETE')
+
+                                                                </form>
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </table>
+
+                                            </div>
+
+                                            @endif
+                                        </div>
+                                    </div>
+
+
+
 
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepFour',base64_encode($decode_id)) }}">next</a>
-                                        <button type="submit" class="btn btn-registration"
-                                                >জমা দিন
-                                        </button>
+                                        <a href="{{ route('formNoFiveStepTwo',base64_encode($decode_id)) }}"  class="btn btn-dark back_button me-2">{{ trans('fd_one_step_one.back')}}</a>
+                                        @if(count($formNoFiveStepThreeData) == 0 )
+
+                                        @else
+                                        <a id="final_button" class="btn btn-registration"
+                                                >{{ trans('fd_one_step_one.Next_Step')}}
+                                    </a>
+                                    @endif
                                     </div>
-                                </form>
+
                                 </div>
                             </div>
                         </div>
@@ -251,12 +342,67 @@
 
 </section>
 
-
 @endsection
 
 @section('script')
 
 <script>
+
+    /////
+
+
+    $(document).on('click', '#final_button', function () {
+
+        if(!$('#prokolpo_name_one').val() && !$('#reporting_period').val() ){
+
+            alertify.alert('Error', 'প্রকল্পের নাম এবং প্রতিবেদনাধীন সময় সম্পর্কিত তথ্য দিন');
+
+        } else if(!$('#prokolpo_name_one').val()){
+
+            alertify.alert('Error', 'প্রকল্পের নাম সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#reporting_period').val()){
+
+            alertify.alert('Error', 'প্রতিবেদনাধীন সময় সম্পর্কিত তথ্য দিন');
+
+        }else{
+
+
+            var prokolpo_name_one = $('#prokolpo_name_one').val();
+            var reporting_period = $('#reporting_period').val();
+            var decode_id = $('#decode_id').val();
+
+
+            $.ajax({
+    url: "{{ route('formNoFiveStepThreeExtra') }}",
+    method: 'GET',
+    data: {prokolpo_name_one:prokolpo_name_one,reporting_period:reporting_period,decode_id:decode_id},
+    success: function(data) {
+
+
+        location.href = data;
+
+
+    //   $("#upozila_name").html('');
+    //   $("#upozila_name").html(data);
+
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+
+        }
+
+
+    });
+    ///////
 
     ///
 
@@ -311,7 +457,13 @@ $(document).on('change', 'select.district_name', function () {
     success: function(data) {
       $("#upozila_name").html('');
       $("#upozila_name").html(data);
-    }
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
     });
 
 });

@@ -17,15 +17,18 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('form_no_fives_id')->unsigned();
             $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
-            $table->longText('approval_file_of_Bureau')->nullable();
-            $table->longText('land_and_transport_detail')->nullable();
-            $table->string('prokolpo_name')->nullable();
-            $table->string('report_time')->nullable();
-            $table->longText('foreign_tour_detail')->nullable();
-            $table->text('foreign_tour_file')->nullable();
-            $table->string('report_preparar_seal')->nullable();
-            $table->string('report_preparar_sign')->nullable();
-            $table->string('report_preparar_date')->nullable();
+            $table->string('name_of_the_officer_depend_on_salary')->nullable();
+            $table->string('nationality_of_the_officer_depend_on_salary')->nullable();
+            $table->string('designation_of_the_officer_depend_on_salary')->nullable();
+            $table->string('responsbility_of_the_officer_depend_on_salary')->nullable();
+            $table->string('education_of_the_officer_depend_on_salary')->nullable();
+            $table->string('experience_of_the_officer_depend_on_salary')->nullable();
+            $table->string('age_of_the_officer_depend_on_salary')->nullable();
+            $table->string('salary_of_the_officer_depend_on_salary')->nullable();
+            $table->string('other_allowances_or_benefits_of_the_officer_depend_on_salary')->nullable();
+            $table->string('job_duration_of_the_officer_depend_on_salary')->nullable();
+            $table->string('financial_benefit_received_from_any_other_scheme')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamps();
         });
     }

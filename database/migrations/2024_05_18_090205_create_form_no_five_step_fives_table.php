@@ -28,22 +28,6 @@ return new class extends Migration
             $table->string('total_expense')->nullable();
             $table->string('name_of_donor_organization')->nullable();
             $table->string('country_name_of_donor_organization')->nullable();
-            $table->longText('achievments_of_travel_in_file')->nullable();
-            $table->string('name_of_the_officer_depend_on_salary')->nullable();
-            $table->string('nationality_of_the_officer_depend_on_salary')->nullable();
-            $table->string('designation_of_the_officer_depend_on_salary')->nullable();
-            $table->string('responsbility_of_the_officer_depend_on_salary')->nullable();
-            $table->string('education_of_the_officer_depend_on_salary')->nullable();
-            $table->string('experience_of_the_officer_depend_on_salary')->nullable();
-            $table->string('age_of_the_officer_depend_on_salary')->nullable();
-            $table->string('salary_of_the_officer_depend_on_salary')->nullable();
-            $table->string('other_allowances_or_benefits_of_the_officer_depend_on_salary')->nullable();
-            $table->string('job_duration_of_the_officer_depend_on_salary')->nullable();
-            $table->string('financial_benefit_received_from_any_other_scheme')->nullable();
-            $table->string('comment')->nullable();
-            $table->string('report_preparar_seal')->nullable();
-            $table->string('report_preparar_sign')->nullable();
-            $table->string('report_preparar_date')->nullable();
             $table->timestamps();
         });
     }

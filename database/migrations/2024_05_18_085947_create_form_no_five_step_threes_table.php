@@ -17,8 +17,6 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('form_no_fives_id')->unsigned();
             $table->foreign('form_no_fives_id')->references('id')->on('form_no_fives')->onDelete('cascade');
-            $table->string('prokolpo_name')->nullable();
-            $table->string('reporting_period')->nullable();
             $table->string('district_name')->nullable();
             $table->string('upazila_name')->nullable();
             $table->string('total_allocation_for_upazila')->nullable();

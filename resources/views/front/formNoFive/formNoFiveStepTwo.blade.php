@@ -162,8 +162,7 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
 
-                                    <form action="{{ route('formNoFive.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
-                                        @csrf
+
                                     <div class="form9_upper_box">
                                         <h3>ফরম নং-৫</h3>
                                         <h4 style="font-weight: 900;">বার্ষিক প্রতিবেদন</h4>
@@ -187,6 +186,7 @@
 
                                     <div class="row">
                                         <div class="col-lg-12">
+                                            @include('flash_message')
 
                                             <!-- add modal button start -->
 
@@ -213,13 +213,94 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepThree',base64_encode($decode_id)) }}">next</a>
-                                        <button type="submit" class="btn btn-registration"
-                                                >জমা দিন
-                                        </button>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @if(count($formNoFiveStepTwoData) == 0 )
+
+                                            <div class="no_name_change">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5>কোন তালিকা নেই</h5>
+                                                </div>
+                                            </div>
+
+                                            @else
+
+                                            <div class="table-responsive">
+
+
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th rowspan="2">ক্র : নং :</th>
+                                                        <th rowspan="2">এনেক্সার - সি এর খাত</th>
+                                                        <th rowspan="2">খাত ওয়ারী বাজেট</th>
+                                                        <th rowspan="2">কার্যক্রম ও লক্ষ্যমাত্রা</th>
+                                                        <th rowspan="2">কার্যক্রম ওয়ারী বিভাজিত বাজেট</th>
+                                                        <th rowspan="2">কার্যক্রম ভিত্তিক অর্জিত লক্ষ্যমাত্রা</th>
+                                                        <th rowspan="2">কার্যক্রম ভিত্তিক প্রকৃত ব্যয়</th>
+                                                        <th rowspan="2">খাতওয়ারী মোট  প্রকৃত ব্যয়</th>
+                                                        <th colspan="2">প্রতিবেদনকাল পর্যন্ত পুঞ্জীভূত অগ্রগতি বাস্তব</th>
+                                                        {{-- <th>প্রতিবেদনকাল পর্যন্ত পুঞ্জীভূত অগ্রগতি আর্থিক</th> --}}
+                                                        <th rowspan="2">মন্তব্য</th>
+                                                        <th rowspan="2">কর্ম পরিকল্পনা</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>বাস্তব</th>
+                                                        <th>আর্থিক</th>
+                                                    </tr>
+                                                    @foreach($formNoFiveStepTwoData as $key=>$formNoFiveStepTwoDatas)
+                                                    <tr>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->sector_of_annexure_C }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->sector_wise_budget}}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->activities_and_objectives}}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->activity_wise_segmented_budget }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->activity_based_achievement_targets }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->activity_based_actual_costing }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->accounts_payable_total_actual_expenditure }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->cumulative_progress_during_reporting_in_real }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->cumulative_progress_during_reporting_in_financial }}</td>
+                                                        <td>{{ $formNoFiveStepTwoDatas->comment }}</td>
+                                                        <td>
+
+                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepTwoDatas->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepTwoDatas->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                                            <button type="button" onclick="deleteTag({{ $formNoFiveStepTwoDatas->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                                class="bi bi-trash"></i></button>
+
+                                                                <form id="delete-form-{{ $formNoFiveStepTwoDatas->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepTwoDatas->id) }}" method="POST" style="display: none;">
+
+                                                                    @csrf
+                                                                    @method('DELETE')
+
+                                                                </form>
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </table>
+
+                                            </div>
+
+                                            @endif
+                                        </div>
                                     </div>
-                                </form>
+
+                                    <div class="d-grid d-md-flex justify-content-md-end mt-4">
+
+
+                                        <a href="{{ route('formNoFive.edit',base64_encode($decode_id)) }}"  class="btn btn-dark back_button me-2">{{ trans('fd_one_step_one.back')}}</a>
+                                        @if(count($formNoFiveStepTwoData) == 0 )
+
+                                        @else
+                                        <a href="{{ route('formNoFiveStepThree',base64_encode($decode_id)) }}" class="btn btn-registration"
+                                                >{{ trans('fd_one_step_one.Next_Step')}}
+                                    </a>
+                                    @endif
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

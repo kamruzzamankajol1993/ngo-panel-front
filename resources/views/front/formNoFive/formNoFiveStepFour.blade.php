@@ -5,7 +5,34 @@
 @endsection
 
 @section('css')
+<style>
 
+    .alertify .ajs-body .ajs-content {
+        font-weight: bolder;
+        color:red;
+        font-size: 20px;
+    }
+
+    .alertify .ajs-header{
+
+        color:red;
+        font-size: 20px;
+
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button{
+
+        background-color: #006A4E;
+        color: #fff;
+
+    }
+
+</style>
+<style>
+    .ui-widget.ui-widget-content {
+    top: 0px !important;
+    }
+</style>
 @endsection
 
 @section('body')
@@ -164,7 +191,7 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
 
-                                    <form action="{{ route('formNoFive.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('formNoFiveStepFourPost') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                     <div class="form9_upper_box">
                                         <h3>ফরম নং-৫</h3>
@@ -190,7 +217,7 @@
 
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
-
+                                            @include('flash_message')
                                             <!-- add modal button start -->
 
                                             <div class="d-flex justify-content-between ">
@@ -216,27 +243,127 @@
                                         </div>
                                     </div>
 
+                                    <div class="row" id="tableAjaxData">
+                                        <div class="col-md-12">
+                                            @if(count($formNoFiveStepFourData) == 0 )
+
+                                            <div class="no_name_change">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5>কোন তালিকা নেই</h5>
+                                                </div>
+                                            </div>
+
+                                            @else
+
+                                            <div class="table-responsive">
+
+
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th rowspan="2">ক্র : নং :</th>
+                                                        <th rowspan="2">সম্পদ / সম্পত্তির বিবরণ</th>
+                                                        <th rowspan="2">পরিমাণ /সংখ্যা</th>
+                                                        <th rowspan="2">প্রাপ্তি/সংগ্রহের তারিখ</th>
+                                                        <th rowspan="2">প্রকৃত ক্রয় মূল্য</th>
+                                                        <th rowspan="2">অর্থের উৎস</th>
+                                                        <th rowspan="2">কি কাজে ব্যবহৃত হতেছে</th>
+                                                        <th rowspan="2">অবস্থান(স্থান)</th>
+                                                        <th rowspan="2">বিক্রিত স্থান্তরিত সম্পদ (সংখ্যা /পরিমাণ )</th>
+                                                        <th colspan="2">সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত</th>
+                                                        <th colspan="2">বর্তমান অবস্থা</th>
+                                                        <th rowspan="2">কর্ম পরিকল্পনা</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>(সংখ্যা /পরিমাণ )</th>
+                                                        <th>সর্বমোট ক্রয়মূল্য </th>
+                                                        <th>সচল</th>
+                                                        <th>অচল</th>
+                                                    </tr>
+                                                    @foreach($formNoFiveStepFourData as $key=>$formNoFiveStepFourDatas)
+                                                    <tr>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->description_of_property }}({{ $formNoFiveStepFourDatas->sub_property }})</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->quantity}}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->collect_date}}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->real_buying_price }}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->fund_source }}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->what_is_it_used_for }}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->place}}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->assets_sold_transferred_number_or_quantity}}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->quantity_during_start_of_organization }}</td>
+                                                        <td>{{ $formNoFiveStepFourDatas->total_during_start_of_organization }}</td>
+                                                        <td>
+
+                                                            @if($formNoFiveStepFourDatas->current_status == 'সচল')
+                                                            সচল
+                                                            @else
+
+                                                            @endif
+
+                                                        </td>
+                                                        <td>
+
+                                                            @if($formNoFiveStepFourDatas->current_status == 'অচল')
+                                                            অচল
+                                                            @else
+
+                                                            @endif
+
+                                                        </td>
+                                                        <td>
+
+                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                                            <button type="button" onclick="deleteTag({{ $formNoFiveStepFourDatas->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                                class="bi bi-trash"></i></button>
+
+                                                                {{-- <form id="delete-form-{{ $formNoFiveStepFourDatas->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepFourDatas->id) }}" method="POST" style="display: none;">
+
+                                                                    @csrf
+                                                                    @method('DELETE')
+
+                                                                </form> --}}
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </table>
+
+                                            </div>
+
+                                            @endif
+                                        </div>
+                                    </div>
+
                                     <div class="row mt-4">
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">জমি/যানবাহন  যার নামে রেজিস্ট্রিকৃত তার বিস্তারিত তথ্য উল্লেখ করতে হবে <span class="text-danger">*</span></label>
-                                            <textarea required name="ngo_name"  class="form-control" id=""placeholder=""></textarea>
+                                            <textarea required name="land_and_transport_detail"  class="form-control" id=""placeholder=""></textarea>
                                         </div>
 
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">ব্যুরোর অনুমোদনের প্রমাণক সংযুক্ত করতে হবে <span class="text-danger">*</span></label>
-                                            <input type="file" accept=".pdf" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="file" accept=".pdf" required name="approval_file_of_Bureau"  class="form-control" id=""placeholder="">
                                         </div>
                                     </div>
 
 
 
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepFive',base64_encode($decode_id)) }}">next</a>
+                                        <a href="{{ route('formNoFiveStepThree',base64_encode($decode_id)) }}"  class="btn btn-dark back_button me-2">{{ trans('fd_one_step_one.back')}}</a>
+
+                                        @if(count($formNoFiveStepFourData) == 0 )
+
+                                        @else
                                         <button type="submit" class="btn btn-registration"
                                                 >জমা দিন
                                         </button>
+                                        @endif
                                     </div>
                                 </form>
                                 </div>
@@ -260,6 +387,119 @@
 
 <script>
 
+
+//form submit start data
+
+
+
+$(document).on('click', '#finalFormSubmit', function () {
+
+    if(!$('#wealth_descrip').val()){
+
+        alertify.alert('Error', 'সম্পদ / সম্পত্তির বিবরণ সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#sub_property').val()){
+
+        alertify.alert('Error', 'সম্পদ / সম্পত্তির বিবরণ সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#quantity').val()){
+
+        alertify.alert('Error', 'পরিমাণ /সংখ্যা সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#collect_date').val()){
+
+        alertify.alert('Error', 'প্রাপ্তি/সংগ্রহের তারিখ সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#real_buying_price').val()){
+
+        alertify.alert('Error', 'প্রকৃত ক্রয় মূল্য সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#fund_source').val()){
+
+        alertify.alert('Error', 'অর্থের উৎস সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#what_is_it_used_for').val()){
+
+        alertify.alert('Error', 'কি কাজে ব্যবহৃত হতেছে সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#place').val()){
+
+        alertify.alert('Error', 'অবস্থান(স্থান) সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#assets_sold_transferred_number_or_quantity').val()){
+
+        alertify.alert('Error', 'বিক্রিত স্থান্তরিত সম্পদ (সংখ্যা /পরিমাণ ) সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#quantity_during_start_of_organization').val()){
+
+        alertify.alert('Error', 'সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত (সংখ্যা /পরিমাণ ) সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#total_during_start_of_organization').val()){
+
+        alertify.alert('Error', 'সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত সর্বমোট ক্রয়মূল্য সম্পর্কিত তথ্য দিন');
+
+    }else if(!$('#current_status').val()){
+
+        alertify.alert('Error', 'বর্তমান অবস্থা সম্পর্কিত তথ্য দিন');
+
+    }else{
+
+        $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+
+
+   var decode_id = $('#decode_id').val();
+   var wealth_descrip = $('#wealth_descrip').val();
+   var sub_property = $('#sub_property').val();
+   var quantity = $('#quantity').val();
+   var collect_date = $('#collect_date').val();
+   var real_buying_price = $('#real_buying_price').val();
+   var fund_source =$('#fund_source').val();
+   var what_is_it_used_for = $('#what_is_it_used_for').val();
+   var place = $('#place').val();
+   var assets_sold_transferred_number_or_quantity = $('#assets_sold_transferred_number_or_quantity').val();
+   var quantity_during_start_of_organization = $('#quantity_during_start_of_organization').val();
+   var total_during_start_of_organization = $('#total_during_start_of_organization').val();
+   var current_status = $('#current_status').val();
+
+
+    $.ajax({
+    url: "{{ route('formNoFiveStepFourPostAjax') }}",
+    method: 'POST',
+    data: {decode_id:decode_id,current_status:current_status,total_during_start_of_organization:total_during_start_of_organization,quantity_during_start_of_organization:quantity_during_start_of_organization,assets_sold_transferred_number_or_quantity:assets_sold_transferred_number_or_quantity,place:place,what_is_it_used_for:what_is_it_used_for,fund_source:fund_source,real_buying_price:real_buying_price,collect_date:collect_date,quantity:quantity,sub_property:sub_property,wealth_descrip:wealth_descrip},
+    success: function(data) {
+
+        $('#exampleModal').modal('hide');
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.success('Data Added Successfully');
+
+      $("#tableAjaxData").html('');
+      $("#tableAjaxData").html(data);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+
+
+    }
+
+});
+//form submit start data end
+
+
+
 //esthabor data start
 
 $(document).on('change', 'select#wealth_descrip', function () {
@@ -270,10 +510,10 @@ $(document).on('change', 'select#wealth_descrip', function () {
     if(mainValue == 'অস্থাবর'){
 
         $('#secondWealth').html('');
-        $('#secondWealth').html('<select required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="যানবাহন">যানবাহন</option><option value="এয়ার কন্ডিশনার">এয়ার কন্ডিশনার</option></select>');
+        $('#secondWealth').html('<select id="sub_property" required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="যানবাহন">যানবাহন</option><option value="এয়ার কন্ডিশনার">এয়ার কন্ডিশনার</option></select>');
     }else{
         $('secondWealth').html('');
-        $('#secondWealth').html('<select required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="জমি">জমি</option><option value="বিল্ডিং">বিল্ডিং</option><option value="অন্যান্য">অন্যান্য</option></select>');
+        $('#secondWealth').html('<select id="sub_property" required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="জমি">জমি</option><option value="বিল্ডিং">বিল্ডিং</option><option value="অন্যান্য">অন্যান্য</option></select>');
 
 
     }

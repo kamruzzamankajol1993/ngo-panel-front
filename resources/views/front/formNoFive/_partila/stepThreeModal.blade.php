@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <form action="{{ route('formNoFiveStepThreePost') }}" method="post" enctype="multipart/form-data" id="form"  data-parsley-validate="">
                             @csrf
-                            <input type="hidden" class="form-control" value="{{ $decode_id }}" name="id"  id="">
+                            <input type="hidden" class="form-control" value="{{ $decode_id }}" name="id"  id="decode_id">
                             <div class="row">
                                 <div class="col-lg-6 col-sm-12 mb-3">
                                     <label for="" class="form-label">জেলার নাম<span class="text-danger">*</span></label>

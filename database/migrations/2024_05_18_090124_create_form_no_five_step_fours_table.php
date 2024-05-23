@@ -29,7 +29,6 @@ return new class extends Migration
             $table->longText('quantity_during_start_of_organization')->nullable();
             $table->longText('total_during_start_of_organization')->nullable();
             $table->longText('current_status')->nullable();
-            $table->longText('approval_file_of_Bureau')->nullable();
             $table->timestamps();
         });
     }

@@ -6,6 +6,12 @@
 
 @section('css')
 
+<style>
+    .ui-widget.ui-widget-content {
+    top: 0px !important;
+    }
+</style>
+
 @endsection
 
 @section('body')
@@ -190,7 +196,7 @@
 
                                     <div class="row mt-3">
                                         <div class="col-lg-12">
-
+                                            @include('flash_message')
                                             <!-- add modal button start -->
 
                                             <div class="d-flex justify-content-between ">
@@ -216,16 +222,43 @@
                                         </div>
                                     </div>
 
+
+                                    <div class="row" id="tableAjaxData">
+                                        <div class="col-md-12">
+                                            @if(count($formNoFiveStepFiveData) == 0 )
+
+                                            <div class="no_name_change">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5>কোন তালিকা নেই</h5>
+                                                </div>
+                                            </div>
+
+                                            @else
+
+                                            <div class="table-responsive">
+
+
+
+
+                                            </div>
+
+                                            @endif
+                                        </div>
+                                    </div>
+
                                     <div class="row mt-4">
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">সভা, সেমিনার, কর্মশালা,সম্মেলন ইত্যাদিও প্রশিক্ষণ হিসাবে গণ্য হবে <span class="text-danger">*</span></label>
-                                            <textarea required name="ngo_name"  class="form-control" id=""placeholder=""></textarea>
+                                            <textarea required name="foreign_tour_detail"  class="form-control" id=""placeholder=""></textarea>
                                         </div>
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">দাপ্তরিক কাজে বিদেশ ভ্রমণ শেষে ভ্রমণের অর্জন উল্লেখপূর্বক প্রতিবেদন দাখিলের প্রমাণক সংযুক্ত করতে হবে<span class="text-danger">*</span></label>
-                                            <input type="file" accept=".pdf" required name="ngo_name"  class="form-control" id=""placeholder="">
+                                            <input type="file" accept=".pdf" required name="foreign_tour_file"  class="form-control" id=""placeholder="">
                                         </div>
 
 
@@ -261,6 +294,33 @@
 
                                         </div>
                                     </div>
+
+                                    <div class="row" id="tableAjaxDataOther">
+                                        <div class="col-md-12">
+                                            @if(count($formNoFiveStepFiveOther) == 0 )
+
+                                            <div class="no_name_change">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <img src="{{ asset('/') }}public/front/assets/img/icon/no-results%20(1).png" alt="" width="120" height="120">
+                                                </div>
+                                                <div class="text-center">
+                                                    <h5>কোন তালিকা নেই</h5>
+                                                </div>
+                                            </div>
+
+                                            @else
+
+                                            <div class="table-responsive">
+
+
+
+
+                                            </div>
+
+                                            @endif
+                                        </div>
+                                    </div>
+
 
                                     <div class="card mt-3">
                                         <div class="card-header text-center">অন্যান্য</div>
@@ -304,7 +364,9 @@
                                      </div>
 
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepFive',base64_encode($decode_id)) }}">next</a>
+
+                                        <a href="{{ route('formNoFiveStepFour',base64_encode($decode_id)) }}"  class="btn btn-dark back_button me-2">{{ trans('fd_one_step_one.back')}}</a>
+
                                         <button type="submit" class="btn btn-registration"
                                                 >জমা দিন
                                         </button>

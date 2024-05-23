@@ -323,7 +323,7 @@
 
 
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
-                                        <a target="_blank" href="{{ route('formNoFiveStepTwo',base64_encode(1)) }}">next</a>
+                                        {{-- <a target="_blank" href="{{ route('formNoFiveStepTwo',base64_encode(1)) }}">next</a> --}}
                                         <button type="submit" class="btn btn-registration"
                                                 >জমা দিন
                                         </button>
