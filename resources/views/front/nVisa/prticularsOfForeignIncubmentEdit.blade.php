@@ -37,7 +37,7 @@
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Date of Issue: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Date of Issue" required name="passport_issue_date" value="{{ $nVisaEdit->nVisaParticularsOfForeignIncumbnet->passport_issue_date }}">
         </div>
         <div class="mb-3 col-lg-4">
@@ -47,7 +47,7 @@
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Expiry Date: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Expiry Date" required name="passport_expiry_date" value="{{ $nVisaEdit->nVisaParticularsOfForeignIncumbnet->passport_expiry_date }}">
         </div>
         <div class="mb-3 col-sm-12 ">
@@ -116,7 +116,7 @@
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Date of Birth: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Date of Birth" name="date_of_birth" value="{{ $nVisaEdit->nVisaParticularsOfForeignIncumbnet->date_of_birth }}" required>
         </div>
         <div class="mb-3 col-lg-4">

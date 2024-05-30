@@ -665,7 +665,7 @@ class NVisaController extends Controller
 
             ->delete();
             DB::commit();
-            return redirect()->route('fdNineOneForm.index')->with('success','Created Successfully');
+            return redirect()->route('fdNineOneForm.show',base64_encode($request->fd9OneId))->with('success','Created Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');

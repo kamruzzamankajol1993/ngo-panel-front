@@ -105,7 +105,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -162,10 +162,25 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
+
+                                    <?php
+                                    $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->first();
+                                    $name_change_list = DB::table('fd6_forms')->where('fd_one_form_id',$fdOneFormid->id)
+                                    ->latest()->value('status');
+                                                ?>
+
+
                                     <div class="d-grid d-md-flex justify-content-end">
+
+                                        @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
+                                        <button disabled type="button" class="btn btn-registration"
+                                        onclick="location.href = '{{ route('fd6Form.create') }}';">নতুন ফরম যোগ করুন
+                                </button>
+                                        @else
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('fd6Form.create') }}';">নতুন ফরম যোগ করুন
                                         </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -202,17 +217,18 @@
                                         <td><span class="text-success">{{ $fd6FormListAll->status }}</span></td>
                                         <td>
 
+                                            @if(  $fd6FormListAll->status == 'Ongoing' || $fd6FormListAll->status == 'Accepted')
+
+                                            @else
+
                                             <a  href="{{ route('fd6Form.edit',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+
+                                            @endif
+
+
+
                                             <a  href="{{ route('fd6Form.show',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                            <button type="button" onclick="deleteTag({{ $fd6FormListAll->id}})" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $fd6FormListAll->id }}" action="{{ route('fd6Form.destroy',$fd6FormListAll->id) }}" method="POST" style="display: none;">
-
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
 
                                         </td>
                                     </tr>

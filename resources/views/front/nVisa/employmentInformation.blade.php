@@ -10,7 +10,7 @@
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Date of arrival in Bangladesh: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Date of arrival in Bangladesh" required name="date_of_arrival_in_bangladesh">
         </div>
         <div class="mb-3 col-lg-4">
@@ -29,17 +29,17 @@
         </div> --}}
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Date of first assignment: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Date of first assignment" required name="first_appoinment_date">
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Desired Effective Date: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Desired Effective Date" required name="desired_effective_date">
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Desired End Date: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Desired End Date" required name="desired_end_date">
         </div>
         <div class="mb-3 col-lg-4">

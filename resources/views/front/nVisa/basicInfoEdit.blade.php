@@ -16,7 +16,7 @@
                         <div class="mb-3 col-lg-6">
                             <label for="" class="form-label">Effective Date<span
                                         class="text-danger">*</span></label>
-                            <input type="text" class="form-control datepicker"
+                            <input type="text" class="form-control datepickerOne"
                                    placeholder="Effective Date" value="{{ $nVisaEdit->permit_efct_date }}" name="permit_efct_date" required>
                         </div>
                     </div>

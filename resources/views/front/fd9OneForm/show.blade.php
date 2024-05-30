@@ -109,7 +109,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -184,7 +184,24 @@
                             <i class="fa fa-print"></i>
                         </button>
 
+
+                        @if($fd9OneList->status == 'Ongoing' || $fd9OneList->status == 'Accepted')
+
+                                        @else
+
+                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fd9OneList->id}})" class="btn btn-info">
+                                            <i class="fa fa-send-o"></i>
+                                        </button>
+
+                                            <form id="delete-form-{{ $fd9OneList->id }}" action="{{ route('finalFdNineOneApplicationSubmit',base64_encode($fd9OneList->id)) }}" method="get" style="display: none;">
+
+                                                @csrf
+
+
+                                            </form>
+
                         <button class="btn btn-primary" onclick="location.href = '{{ route('fdNineOneForm.edit',$fd9OneList->id) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+                        @endif
 
 
                     </div>
@@ -954,6 +971,42 @@ E.COMPENSATION AND BENIFITS
 </section>
 @endsection
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 <script>
 $("#downloadButton").click(function(){
       var name = $('#mainName').val();

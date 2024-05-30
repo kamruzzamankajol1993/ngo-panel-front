@@ -57,6 +57,14 @@ Route::controller(FrontController::class)->group(function () {
 
 Route::controller(NamechangeController::class)->group(function () {
 
+
+    Route::put('nameChangeSingleFile/{id}', 'nameChangeSingleFile')->name('nameChangeSingleFile');
+    Route::get('addOtherDocEdit/{id}', 'addOtherDocEdit')->name('addOtherDocEdit');
+    Route::delete('namechangeApplicationDelete/{id}', 'namechangeApplicationDelete')->name('namechangeApplicationDelete');
+    Route::get('namechangeApplicationEdit/{id}', 'namechangeApplicationEdit')->name('namechangeApplicationEdit');
+    Route::post('namechangeApplicationUpdate', 'namechangeApplicationUpdate')->name('namechangeApplicationUpdate');
+
+
     Route::get('finalNamechangeSubmit/{id}', 'finalNamechangeSubmit')->name('finalNamechangeSubmit');
 
     Route::get('addOtherDoc', 'addOtherDoc')->name('addOtherDoc');
@@ -94,6 +102,8 @@ Route::controller(NamechangeController::class)->group(function () {
 
 Route::controller(RenewController::class)->group(function () {
 
+    Route::get('finalRenewApplicationSubmit/{id}', 'finalRenewApplicationSubmit')->name('finalRenewApplicationSubmit');
+
     Route::get('fileListForNameChange', 'fileListForNameChange')->name('fileListForNameChange');
     Route::get('foreignNgoType', 'foreignNgoType')->name('foreignNgoType');
     Route::get('localNgoType', 'localNgoType')->name('localNgoType');
@@ -108,7 +118,7 @@ Route::controller(RenewController::class)->group(function () {
     Route::get('renewInfo/{id}', 'renewInfo')->name('renewInfo');
     Route::get('renew', 'renew')->name('renew');
 
-
+    Route::get('ngoRenewStepAdd', 'ngoRenewStepAdd')->name('ngoRenewStepAdd');
     Route::get('ngoRenewStepOne', 'ngoRenewStepOne')->name('ngoRenewStepOne');
     Route::get('ngoRenewStepTwo/{id}', 'ngoRenewStepTwo')->name('ngoRenewStepTwo');
     Route::post('ngoRenewStepTwoPost', 'ngoRenewStepTwoPost')->name('ngoRenewStepTwoPost');
@@ -416,6 +426,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('updateFd2DetailForFd7', 'updateFd2DetailForFd7')->name('updateFd2DetailForFd7');
         Route::post('storeFd2DetailForFd7', 'storeFd2DetailForFd7')->name('storeFd2DetailForFd7');
         Route::post('fd2PdfUpdate', 'fd2PdfUpdate')->name('fd2PdfUpdate');
+
+        Route::get('fd2PdfUpdateModal', 'fd2PdfUpdateModal')->name('fd2PdfUpdateModal');
+
+
         Route::get('fd2MainPdfDownload/{id}', 'fd2MainPdfDownload')->name('fd2MainPdfDownload');
         Route::get('fd2PdfDownload/{id}', 'fd2PdfDownload')->name('fd2PdfDownload');
         Route::get('fd2PdfDestroy/{id}', 'fd2PdfDestroy')->name('fd2PdfDestroy');
@@ -424,6 +438,8 @@ Route::group(['middleware' => ['auth']], function() {
     });
 
     Route::controller(Fd6FormController::class)->group(function () {
+
+        Route::get('finalFdSixApplicationSubmit/{id}', 'finalFdSixApplicationSubmit')->name('finalFdSixApplicationSubmit');
 
         Route::get('ProjectProposalFormPdfDownload/{id}', 'ProjectProposalFormPdfDownload')->name('ProjectProposalFormPdfDownload');
         Route::get('getDistrictList', 'getDistrictList')->name('getDistrictList');
@@ -448,6 +464,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::controller(Fd9Controller::class)->group(function () {
 
 
+        Route::get('finalFdNineApplicationSubmit/{id}', 'finalFdNineApplicationSubmit')->name('finalFdNineApplicationSubmit');
+
+
         Route::get('/singlePdfDownload/{id}', 'singlePdfDownload')->name('singlePdfDownload');
         Route::get('/singlePdfDelete', 'singlePdfDelete')->name('singlePdfDelete');
         Route::get('/singlePdfUpdate/{data}', 'singlePdfUpdate')->name('singlePdfUpdate');
@@ -460,6 +479,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('fdNineOneForm',Fd9OneController::class);
 
     Route::controller(Fd9OneController::class)->group(function () {
+
+
+        Route::get('finalFdNineOneApplicationSubmit/{id}', 'finalFdNineOneApplicationSubmit')->name('finalFdNineOneApplicationSubmit');
+
 
         Route::get('/fd9OneFormExtraPdfDownload/{cat}/{id}', 'fd9OneFormExtraPdfDownload')->name('fd9OneFormExtraPdfDownload');
         Route::get('fd9OneChief', 'fd9OneChief')->name('fd9OneChief');

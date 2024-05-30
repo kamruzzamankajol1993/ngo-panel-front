@@ -67,8 +67,16 @@ $ngoTypeInfo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()
                    </td>
                    <td>
                     <div class="d-flex mt-2">
+
+                        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
+
                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                       data-bs-target="#exampleModal555551211"><i class="fa fa-pencil"></i></button>
+                       data-bs-target="#exampleModala{{$ngoOtherDocListsFirst->id}}">
+                       <i class="fa fa-pencil"></i></button>
+
+                       @endif
 
 
                        <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'fd_eight_form_data', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -76,7 +84,7 @@ $ngoTypeInfo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()
 
 
                          <!--modal -->
-                         <div class="modal fade" id="exampleModal555551211" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                         <div class="modal fade" id="exampleModala{{$ngoOtherDocListsFirst->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                            <div class="modal-dialog">
                                <div class="modal-content">
                                    <div class="modal-header">
@@ -137,8 +145,16 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
                    </td>
                    <td>
                     <div class="d-flex mt-2">
+
+                        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
+
                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                       data-bs-target="#exampleModal{{ $ngoOtherDocListsFirst->id  }}"><i class="fa fa-pencil"></i></button>
+                       data-bs-target="#exampleModalb{{ $ngoOtherDocListsFirst->id  }}">
+                       <i class="fa fa-pencil"></i></button>
+
+                       @endif
 
 
                        <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'trustees', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -150,7 +166,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
 
                          <!--modal -->
-                         <div class="modal fade" id="exampleModal{{ $ngoOtherDocListsFirst->id  }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                         <div class="modal fade" id="exampleModalb{{ $ngoOtherDocListsFirst->id  }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                            <div class="modal-dialog">
                                <div class="modal-content">
                                    <div class="modal-header">
@@ -210,8 +226,14 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
        </td>
        <td>
         <div class="d-flex mt-2">
+
+            @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
+
            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-           data-bs-target="#exampleModal2"><i class="fa fa-pencil"></i></button>
+           data-bs-target="#exampleModalc2"><i class="fa fa-pencil"></i></button>
+           @endif
 
 
            <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'laws_or_constitution', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -223,7 +245,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
 
              <!--modal -->
-             <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal fade" id="exampleModalc2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                <div class="modal-dialog">
                    <div class="modal-content">
                        <div class="modal-header">
@@ -284,8 +306,12 @@ Work Procedure of the Board of Directors / Board of Trustees meeting of the orga
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-data-bs-target="#exampleModal3222"><i class="fa fa-pencil"></i></button>
+data-bs-target="#exampleModald3222"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'work_procedure', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -297,7 +323,7 @@ data-bs-target="#exampleModal3222"><i class="fa fa-pencil"></i></button>
 
 
  <!--modal -->
- <div class="modal fade" id="exampleModal3222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="exampleModald3222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
@@ -358,8 +384,12 @@ Attested copy of last 10 (ten) years audit report report of the organization
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-data-bs-target="#exampleModal4"><i class="fa fa-pencil"></i></button>
+data-bs-target="#exampleModale4"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'last_ten_years', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -371,7 +401,7 @@ data-bs-target="#exampleModal4"><i class="fa fa-pencil"></i></button>
 
 
  <!--modal -->
- <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="exampleModale4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
@@ -431,8 +461,12 @@ Attested copy of last 10 (ten) years annual report of the organization
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-data-bs-target="#exampleModal4"><i class="fa fa-pencil"></i></button>
+data-bs-target="#exampleModalf4"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'last_ten_year_annual_report', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -444,7 +478,7 @@ data-bs-target="#exampleModal4"><i class="fa fa-pencil"></i></button>
 
 
  <!--modal -->
- <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="exampleModalf4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
@@ -505,8 +539,12 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
        </td>
        <td>
         <div class="d-flex mt-2">
+            @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-           data-bs-target="#exampleModal4222"><i class="fa fa-pencil"></i></button>
+           data-bs-target="#exampleModalg4222"><i class="fa fa-pencil"></i></button>
+           @endif
 
 
            <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'registration_certificate', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -518,7 +556,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
 
              <!--modal -->
-             <div class="modal fade" id="exampleModal4222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+             <div class="modal fade" id="exampleModalg4222" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                <div class="modal-dialog">
                    <div class="modal-content">
                        <div class="modal-header">
@@ -580,8 +618,12 @@ Attested copy of latest registration/renewal certificate
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal41212"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'registration_or_renewal_certificate', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -655,8 +697,12 @@ Under Right To Information Act - 2009 - Focal Point appointed: Copy of notificat
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-data-bs-target="#exampleModal455555"><i class="fa fa-pencil"></i></button>
+data-bs-target="#exampleModalh455555"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'right_to_information_act', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -668,7 +714,7 @@ data-bs-target="#exampleModal455555"><i class="fa fa-pencil"></i></button>
 
 
  <!--modal -->
- <div class="modal fade" id="exampleModal455555" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal fade" id="exampleModalh455555" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog">
        <div class="modal-content">
            <div class="modal-header">
@@ -730,8 +776,12 @@ $filename  = pathinfo($file_path, PATHINFO_FILENAME);
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-   data-bs-target="#exampleModal4888"><i class="fa fa-pencil"></i></button>
+   data-bs-target="#exampleModalk4888"><i class="fa fa-pencil"></i></button>
+   @endif
 
 
    <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'fee_if_changed', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -743,7 +793,7 @@ $filename  = pathinfo($file_path, PATHINFO_FILENAME);
 
 
      <!--modal -->
-     <div class="modal fade" id="exampleModal4888" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal fade" id="exampleModalk4888" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        <div class="modal-dialog">
            <div class="modal-content">
                <div class="modal-header">
@@ -806,8 +856,12 @@ Attested copy of constitution approved by primary registering authority
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal46767"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'primary_registering_authority', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -881,8 +935,12 @@ Clean copy of the constitution jointly signed by the chairman and secretary of t
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal4rr"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'clean_copy_of_the_constitution', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -949,8 +1007,12 @@ Original copy of invoice for payment of change fee in any section, sub-section o
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal4ff"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'payment_of_change_fee', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -1022,8 +1084,12 @@ A certified copy of the minutes of the general meeting regarding the amendment a
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal4ee"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'section_sub_section_of_the_constitution', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -1094,8 +1160,12 @@ Comparative statement of previous constitution and current constitution (with jo
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
 data-bs-target="#exampleModal4dd"><i class="fa fa-pencil"></i></button>
+@endif
 
 
 <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'previous_constitution', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -1169,8 +1239,12 @@ $filename  = pathinfo($file_path, PATHINFO_FILENAME);
 </td>
 <td>
     <div class="d-flex mt-2">
+        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
    <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-   data-bs-target="#exampleModal4bb"><i class="fa fa-pencil"></i></button>
+   data-bs-target="#exampleModal4bbc"><i class="fa fa-pencil"></i></button>
+   @endif
 
 
    <a class="btn btn-sm btn-registration" target="_blank" style="margin-left:5px;"  href = '{{ route('deleteRenewalFileDownload', ['title' =>'organization_if_unchanged', 'id' =>$ngoOtherDocListsFirst->id]) }}'><i class="fa fa-download"></i></a>
@@ -1182,7 +1256,7 @@ $filename  = pathinfo($file_path, PATHINFO_FILENAME);
 
 
      <!--modal -->
-     <div class="modal fade" id="exampleModal4bb" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal fade" id="exampleModal4bbc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
        <div class="modal-dialog">
            <div class="modal-content">
                <div class="modal-header">
@@ -1348,8 +1422,13 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
                     <td>
                         <div class="d-flex mt-2">
 
+                            @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
+
                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal{{ $all_ngo_list_all->id  }}"><i class="fa fa-pencil"></i></button>
+                                    @endif
 
                                     <!--modal -->
                                     <div class="modal fade" id="exampleModal{{ $all_ngo_list_all->id  }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -177,12 +177,11 @@ class Fd9Controller extends Controller
             $arr_all = implode(", ",$request->fd9_countries_that_have_traveled);
         }
 
-      try{
-            DB::beginTransaction();
+        try{
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
 
             $fd9FormInfo = new Fd9Form();
-            $fd9FormInfo->status = 'Ongoing';
+            $fd9FormInfo->status = 'Review';
             $fd9FormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
             $fd9FormInfo->chief_name = $request->chief_name;
             $fd9FormInfo->chief_desi = $request->chief_desi;
@@ -221,19 +220,22 @@ class Fd9Controller extends Controller
 
             }
 
-            if ($request->hasfile('digital_signature')) {
+            if (!empty($request->image_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_signature');
-                $fd9FormInfo->digital_signature =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
-            }
+                }
 
-            if ($request->hasfile('digital_seal')) {
+
+            if (!empty($request->image_seal_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_seal');
-                $fd9FormInfo->digital_seal =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
-            }
+                }
 
 
             if ($request->hasfile('fd9_offered_post_niyog')) {
@@ -346,13 +348,28 @@ class Fd9Controller extends Controller
 
             }
 
-            DB::commit();
-            return redirect()->route('fdNineForm.index')->with('success','Created Successfully');
+            //dd($fd9FormId->id);
+
+
+            return redirect()->route('fdNineForm.show',base64_encode($fd9FormId))->with('success','Review Your Information And Send It To Ngo');
 
         } catch (\Exception $e) {
-            DB::rollBack();
+
             return redirect()->route('error_404');
         }
+
+    }
+
+
+    public function finalFdNineApplicationSubmit($id){
+
+
+        $new_data_add = Fd9Form::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/fdNineForm')->with('success','Submit To Ngo Sucessfully');
+
 
     }
 
@@ -433,19 +450,22 @@ class Fd9Controller extends Controller
 
                 }
 
-                if ($request->hasfile('digital_signature')) {
+                if (!empty($request->image_base64)) {
+
                     $filePath="ngoHead";
                     $file = $request->file('digital_signature');
-                    $fd9FormInfo->digital_signature =CommonController::imageUpload($request,$file,$filePath);
+                    $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
-                }
+                    }
 
-                if ($request->hasfile('digital_seal')) {
+
+                if (!empty($request->image_seal_base64)) {
+
                     $filePath="ngoHead";
                     $file = $request->file('digital_seal');
-                    $fd9FormInfo->digital_seal =CommonController::imageUpload($request,$file,$filePath);
+                    $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
-                }
+                    }
 
                 if ($request->hasfile('fd9_offered_post_niyog')) {
                     $filePath="fd9FormInfo";

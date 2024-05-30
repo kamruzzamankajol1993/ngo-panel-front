@@ -160,10 +160,27 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
+
+
+                                    <?php
+                                    $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->first();
+                                    $name_change_list = DB::table('fd9_one_forms')->where('fd_one_form_id',$fdOneFormid->id)
+                                    ->latest()->value('status');
+                                                ?>
+
+                                                
                                     <div class="d-grid d-md-flex justify-content-end">
+
+                                        @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
+
+                                        <button type="button" disabled class="btn btn-registration"
+                                        onclick="location.href = '{{ route('fdNineOneForm.create') }}';">নতুন অ্যাপ্লিকেশন যোগ করুন
+                                </button>
+                                        @else
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('fdNineOneForm.create') }}';">নতুন অ্যাপ্লিকেশন যোগ করুন
                                         </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -195,25 +212,18 @@
                                         <td>{{ $allFd9OneList->sarok_number }}</td>
                                         <td>{{ $allFd9OneList->prokolpo_name }}</td>
                                         <td>
-                                           @if(empty($allFd9OneList->status))
-                                            <span class="text-success">Ongoing</span>
-@else
-<span class="text-success">Accepted</span>
-@endif
+
+                                            <span class="text-success">{{ $allFd9OneList->status }}</span>
+
                                         </td>
                                         <td>
-
+                                            @if( $name_change_list == 'Ongoing' || $name_change_list == 'Accepted')
+                                            @else
                                             <a  href="{{ route('fdNineOneForm.edit',$allFd9OneList->id) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                            @endif
+
                                             <a  href="{{ route('fdNineOneForm.show',base64_encode($allFd9OneList->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                            <button type="button" onclick="deleteTag({{ $allFd9OneList->id}})" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $allFd9OneList->id }}" action="{{ route('fdNineOneForm.destroy',$allFd9OneList->id) }}" method="POST" style="display: none;">
-
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
 
                                         </td>
                                     </tr>

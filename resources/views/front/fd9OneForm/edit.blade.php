@@ -184,7 +184,7 @@
                                             </p>
                                             <p>
                                                 সূত্র: এনজিও বিষয়ক ব্যুরোর স্মারক নম্বর
-                                                <span style="color:red;">*</span><input type="text" class="form-control custom-form" value="{{ $fd9OneList->sarok_number }}" name="sarok_number" id="" placeholder="" required> তারিখ <span style="color:red;">*</span><input type="text" class="form-control custom-form datepicker" id="" required  ="" name="application_date" value="{{ $fd9OneList->application_date }}">
+                                                <span style="color:red;">*</span><input type="text" class="form-control custom-form" value="{{ $fd9OneList->sarok_number }}" name="sarok_number" id="" placeholder="" required> তারিখ <span style="color:red;">*</span><input type="text" class="form-control custom-form datepickerOne" id="" required  ="" name="application_date" value="{{ $fd9OneList->application_date }}">
                                             </p>
 
                                             <p class="mt-3">
@@ -194,9 +194,9 @@
                                                 আওতায় <span style="color:red;">*</span><input type="text" class="form-control custom-form" required value="{{ $fd9OneList->designation_name }}" name="designation_name" id="" placeholder="">
                                                 হিসেবে বিদেশী বিশেষজ্ঞ/ উপদেষ্টা/কর্মকর্তা/স্বেচ্ছাসেবী <span style="color:red;">*</span><input
                                                         type="text" class="form-control custom-form" required value="{{ $fd9OneList->foreigner_name_for_body }}" name="foreigner_name_for_body" id="" placeholder=""> কে <span style="color:red;">*</span><input
-                                                        type="text" class="form-control datepicker custom-form" required value="{{ $fd9OneList->expire_from_date }}" name="expire_from_date" id="" placeholder=""> খ্রি: হতে
+                                                        type="text" class="form-control datepickerOne custom-form" required value="{{ $fd9OneList->expire_from_date }}" name="expire_from_date" id="" placeholder=""> খ্রি: হতে
                                                         <span style="color:red;">*</span><input
-                                                        type="text" class="form-control datepicker custom-form" required value="{{ $fd9OneList->expire_to_date }}" name="expire_to_date" id="" placeholder="">
+                                                        type="text" class="form-control datepickerOne custom-form" required value="{{ $fd9OneList->expire_to_date }}" name="expire_to_date" id="" placeholder="">
                                                 পর্যন্ত সময়ের জন্য নিয়োগ করা হয়েছে। সংস্থার অনুকূলে উক্ত ব্যাক্তির
                                                 অনুমোদিত সময়ের জন্য ওয়ার্ক পারমিট ইস্যু করার জন্য ওয়ার্ক পারমিট ইস্যু
                                                 করার জন্য একসাথে নিম্ন বর্ণিত কাগজপত্র সংযুক্ত করা হল:
@@ -264,7 +264,7 @@
 
 
                                                             </li>
-                                                <li>এন ভিসা নিয়ে আগমনের তারিখ (প্রমানসহ): <span style="color:red;">*</span><input type="text" required name="arrival_date_in_nvisa" value="{{ $fd9OneList->arrival_date_in_nvisa }}"  class="form-control datepicker custom-form"
+                                                <li>এন ভিসা নিয়ে আগমনের তারিখ (প্রমানসহ): <span style="color:red;">*</span><input type="text" required name="arrival_date_in_nvisa" value="{{ $fd9OneList->arrival_date_in_nvisa }}"  class="form-control datepickerOne custom-form"
                                                                                                 id="" placeholder=""><span style="color:red;">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 500 KB)</span><input  type="file" accept="application/pdf" name="copy_of_nvisa" class="form-control custom-form"
                                                                                                 id="fdNineOnePdf4" placeholder="">
                                                                                                 <p id="fdNineOnePdf4_text" class="text-danger mt-2" style="font-size:12px;"></p>
@@ -288,8 +288,8 @@
 
                                                                                                                 ?></li>
                                             </ul>
-                                            <p class="mb-3">এমতবস্থায়, অত্র সংস্থার উল্লেখিত পদে <span><span style="color:red;">*</span><input type="text" required name="proposed_from_date" value="{{ $fd9OneList->proposed_from_date }}" class="datepicker form-control custom-form"
-                                                id="" placeholder=""></span> হতে <span><span style="color:red;">*</span><input type="text" required name="proposed_to_date" value="{{ $fd9OneList->proposed_to_date }}" class="datepicker form-control custom-form"
+                                            <p class="mb-3">এমতবস্থায়, অত্র সংস্থার উল্লেখিত পদে <span><span style="color:red;">*</span><input type="text" required name="proposed_from_date" value="{{ $fd9OneList->proposed_from_date }}" class="datepickerOne form-control custom-form"
+                                                id="" placeholder=""></span> হতে <span><span style="color:red;">*</span><input type="text" required name="proposed_to_date" value="{{ $fd9OneList->proposed_to_date }}" class="datepickerOne form-control custom-form"
                                                     id="" placeholder=""></span> মেয়াদে উক্ত বিদেশি কর্মকর্তাকে ওয়ার্ক পারমিট ইস্যু করার জন্য বিনীত অনুরধ করেছি।</p>
                                         </div>
                                     </div>

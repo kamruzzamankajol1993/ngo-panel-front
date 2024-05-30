@@ -179,14 +179,14 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                 </div>
                                 <div class="">
 
-                                    @if($nameChangeInfo->status == 'Ongoing')
+                                    @if($nameChangeInfo->status == 'Ongoing' || $nameChangeInfo->status == 'Accepted')
 
 
                                     @else
 
 
 
-
+                                    <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('namechangeApplicationEdit',base64_encode($nameChangeInfo->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
                                     <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $nameChangeInfo->id}})" class="btn btn-sm btn-success">
                                         <i class="fa fa-send-o"></i>

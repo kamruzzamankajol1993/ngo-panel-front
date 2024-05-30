@@ -45,6 +45,19 @@ class Fd2FormController extends Controller
     }
 
 
+    public function fd2PdfUpdateModal(Request $request){
+
+
+
+        $fd2OtherPdf = Fd2FormOtherInfo::where('id',$request->main_id)->first();
+
+        $data = view('front.fd2Form.fd2PdfUpdateModal',compact('fd2OtherPdf'))->render();
+        return response()->json($data);
+
+
+    }
+
+
 
     public function addFd2Detail($id){
 

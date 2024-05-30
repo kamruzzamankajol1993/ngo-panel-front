@@ -162,10 +162,30 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
+
+                                    <?php
+$fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->first();
+$name_change_list = DB::table('fd9_forms')->where('fd_one_form_id',$fdOneFormid->id)
+->latest()->value('status');
+
+
+
+
+            ?>
+
                                     <div class="d-grid d-md-flex justify-content-end">
+
+                                        @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
+
+                                        <button type="button" disabled class="btn btn-registration"
+                                        onclick="location.href = '{{ route('fdNineForm.create') }}';">নতুন অ্যাপ্লিকেশন যোগ করুন
+                                </button>
+
+                                        @else
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('fdNineForm.create') }}';">নতুন অ্যাপ্লিকেশন যোগ করুন
                                         </button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -213,17 +233,18 @@
 @endif</td>
                                         <td>
 
+                                            @if(  $allFd9List->status == 'Ongoing' || $allFd9List->status == 'Accepted')
+
+                                            @else
+
                                             <a  href="{{ route('fdNineForm.edit',base64_encode($allFd9List->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                            @endif
+
+
+
+
                                             <a  href="{{ route('fdNineForm.show',base64_encode($allFd9List->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                            <button type="button" onclick="deleteTag({{ $allFd9List->id}})" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $allFd9List->id }}" action="{{ route('fdNineForm.destroy',$allFd9List->id) }}" method="POST" style="display: none;">
-
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
 
 
 

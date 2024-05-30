@@ -108,7 +108,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -241,7 +241,7 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">জন্ম তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker"  id=""
+        <input type="text" class="form-control datepickerOne"  id=""
                placeholder="" name="fd9_dob" value="{{ $foriugnerData->date_of_birth }}" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -253,13 +253,13 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">ইস্যু তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" name="fd9_passport_issue_date" value="{{ $foriugnerData->passport_issue_date }}" required>
     </div>
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">মেয়াদোর্ত্তীণ তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" value="{{ $foriugnerData->passport_expiry_date }}" name="fd9_passport_expiration_date" id=""
+        <input type="text" class="form-control datepickerOne" value="{{ $foriugnerData->passport_expiry_date }}" name="fd9_passport_expiration_date" id=""
                placeholder="" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -408,7 +408,7 @@
     <div class="mb-3 col-lg-6">
         <label for="" class="form-label">এক্সটেনশন হয়ে থাকলে তার সময়কাল<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" name="fd9_extension_date" required>
     </div>
     <div class="mb-3 col-lg-6">
@@ -499,7 +499,7 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">জন্ম তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker"  id=""
+        <input type="text" class="form-control datepickerOne"  id=""
                placeholder="" value="{{ $fdNineData->fd9_dob }}" name="fd9_dob" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -511,13 +511,13 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">ইস্যু তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" value="{{ $fdNineData->fd9_passport_issue_date }}" name="fd9_passport_issue_date" required>
     </div>
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">মেয়াদোর্ত্তীণ তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" value="{{ $fdNineData->fd9_passport_expiration_date }}" name="fd9_passport_expiration_date" id=""
+        <input type="text" class="form-control datepickerOne" value="{{ $fdNineData->fd9_passport_expiration_date }}" name="fd9_passport_expiration_date" id=""
                placeholder="" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -777,7 +777,7 @@
     <div class="mb-3 col-lg-6">
         <label for="" class="form-label">এক্সটেনশন হয়ে থাকলে তার সময়কাল<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" value="{{ $fdNineData->fd9_extension_date }}" name="fd9_extension_date" required>
     </div>
     <div class="mb-3 col-lg-6">

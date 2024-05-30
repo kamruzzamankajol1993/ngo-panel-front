@@ -111,7 +111,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -176,7 +176,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="d-grid d-md-flex justify-content-end">
-                                        @if(  $name_change_list == 'Ongoing')
+                                        @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
                                         <button type="button" disabled class="btn btn-registration"
                                                 onclick="location.href = '{{ route('sendNameChange') }}';">এনজিওর নাম পরিবর্তন
                                         </button>
@@ -218,13 +218,21 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                     @foreach($name_change_list_all as $key=>$all_name_change_list_all)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $all_name_change_list_all->created_at->format('d-M-Y')}}</td>
+                                        <td>{{ $all_name_change_list_all->created_at->format('d-m-Y')}}</td>
                                         <td>{{ $all_name_change_list_all->previous_name_ban }}</td>
                                         <td>{{ $all_name_change_list_all->previous_name_eng }}</td>
                                         <td>{{ $all_name_change_list_all->present_name_ban }}</td>
                                         <td>{{ $all_name_change_list_all->present_name_eng }}</td>
                                         <td><span class="text-success">{{ $all_name_change_list_all->status }}</span></td>
-                                <td> <a  href="{{ route('nameChange.view',base64_encode($all_name_change_list_all->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a></td>
+                                <td>
+                                    @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Accepted')
+
+                                    @else
+                                    <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('namechangeApplicationEdit',base64_encode($all_name_change_list_all->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+@endif
+                                    <a  href="{{ route('nameChange.view',base64_encode($all_name_change_list_all->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+
+                                </td>
 
                                     </tr>
                                     @endforeach

@@ -125,6 +125,7 @@ class Fd9OneController extends Controller
             $fd9OneFormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
             $fd9OneFormInfo->chief_name = $request->chief_name;
             $fd9OneFormInfo->chief_desi = $request->chief_desi;
+            $fd9OneFormInfo->status = 'Review';
             $fd9OneFormInfo->foreigner_name_for_subject = $request->foreigner_name_for_subject;
             $fd9OneFormInfo->sarok_number = $request->sarok_number;
             $fd9OneFormInfo->application_date = $request->application_date;
@@ -147,20 +148,22 @@ class Fd9OneController extends Controller
             }
 
 
-            if ($request->hasfile('digital_signature')) {
+            if (!empty($request->image_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_signature');
-                $fd9OneFormInfo->digital_signature =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
-            }
+                }
 
 
-            if ($request->hasfile('digital_seal')) {
+            if (!empty($request->image_seal_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_seal');
-                $fd9OneFormInfo->digital_seal =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
-            }
+                }
 
 
             if ($request->hasfile('attestation_of_appointment_letter')) {
@@ -205,6 +208,19 @@ class Fd9OneController extends Controller
     }
 
 
+    public function finalFdNineOneApplicationSubmit($id){
+
+
+        $new_data_add = Fd9OneForm::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/fdNineOneForm')->with('success','Submit To Ngo Sucessfully');
+
+
+    }
+
+
     public function update(Request $request,$id){
 
         try{
@@ -238,20 +254,22 @@ class Fd9OneController extends Controller
             }
 
 
-            if ($request->hasfile('digital_signature')) {
+            if (!empty($request->image_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_signature');
-                $fd9OneFormInfo->digital_signature =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
-            }
+                }
 
 
-            if ($request->hasfile('digital_seal')) {
+            if (!empty($request->image_seal_base64)) {
+
                 $filePath="ngoHead";
                 $file = $request->file('digital_seal');
-                $fd9OneFormInfo->digital_seal =CommonController::imageUpload($request,$file,$filePath);
+                $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
-            }
+                }
 
 
             if ($request->hasfile('attestation_of_appointment_letter')) {

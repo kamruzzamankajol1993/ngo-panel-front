@@ -120,7 +120,7 @@ color:white !important;
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -178,7 +178,7 @@ color:white !important;
 
 
                                 <div class="mb-0 m-t-30">
-
+                                    @include('flash_message')
                                     <!--new code start -->
                                     <div class="d-flex justify-content-between ">
                                         <div class="">
@@ -186,6 +186,28 @@ color:white !important;
 
                                         </div>
                                         <div class="">
+
+                                            @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                                            @else
+
+
+
+                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $getUserIdFrom->id}})" class="btn btn-sm btn-success">
+                                        <i class="fa fa-send-o"></i>
+                                    </button>
+
+                                        <form id="delete-form-{{ $getUserIdFrom->id }}" action="{{ route('finalRenewApplicationSubmit',base64_encode($getUserIdFrom->id)) }}" method="get" style="display: none;">
+
+                                            @csrf
+
+
+                                        </form>
+
+                                            <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('ngoRenewStepOne') }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+
+                                            @endif
+
                                             <input type="hidden" data-parsley-required  name="id"  value="{{ $get_all_data_new->id }}" class="form-control" id="mainId">
                                             <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="{{ trans('form 8_bn.download_pdf')}}"  id="downloadButton">
                                                 <i class="fa fa-print"></i>
@@ -650,6 +672,42 @@ $getngoForLanguage = DB::table('ngo_type_and_languages')->where('user_id',$all_p
 @endsection
 
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 <script>
 $("#downloadButton").click(function(){
       var name = $('#mainName').val();

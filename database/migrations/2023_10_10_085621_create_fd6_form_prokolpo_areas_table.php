@@ -24,6 +24,9 @@ return new class extends Migration
             $table->string('thana_name')->nullable();
             $table->string('municipality_name')->nullable();
             $table->string('ward_name')->nullable();
+            $table->string('prokolpo_type')->nullable();
+            $table->string('allocated_budget')->nullable();
+            $table->string('number_of_beneficiaries')->nullable();
             $table->timestamps();
         });
     }

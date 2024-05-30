@@ -39,6 +39,56 @@ class NamechangeController extends Controller
         }
     }
 
+    public function namechangeApplicationEdit($id){
+
+
+        $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $name_change_list_all =  NgoNameChange::where('id',base64_decode($id))
+        ->latest()->first();
+
+        CommonController::checkNgotype(1);
+
+        $mainNgoType = CommonController::changeView();
+
+        if($mainNgoType== 'দেশিও'){
+        return view('front.name_change.namechangeApplicationEdit',compact('ngo_list_all','name_change_list_all'));
+        }else{
+            return view('front.name_change.foreign.namechangeApplicationEdit',compact('ngo_list_all','name_change_list_all'));
+        }
+
+    }
+
+    public function namechangeApplicationUpdate(Request $request){
+
+        try{
+
+
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+
+            // Session::put('previous_name',$request->previous_name);
+            // Session::put('previous_name_ban',$request->previous_name_ban);
+            // Session::put('new_name',$request->new_name);
+            // Session::put('new_name_ban',$request->new_name_ban);
+
+
+            $new_data_add = NgoNameChange::find($request->id);
+            $new_data_add->previous_name_eng =  $request->previous_name;
+            $new_data_add->previous_name_ban = $request->previous_name_ban;
+            $new_data_add->present_name_eng = $request->new_name;
+            $new_data_add->present_name_ban = $request->new_name_ban;
+            $new_data_add->save();
+
+
+            return redirect()->route('addOtherDocEdit',base64_encode($request->id));
+
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
+    }
+
 
     public function sendNameChange(){
 
@@ -518,6 +568,27 @@ class NamechangeController extends Controller
         }
     }
 
+    public function addOtherDocEdit($id){
+
+        $nameChangeInfo = NgoNameChange::where('id',base64_decode($id))->first();
+
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $form_eight_list = NgoOtherDoc::where('fd_one_form_id',$ngo_list_all->id)->get();
+
+        CommonController::checkNgotype(1);
+
+        $mainNgoType = CommonController::changeView();
+
+        $nameChangeInfoDoc = NameChangeDoc::where('ngo_name_change_id',base64_decode($id))->get();
+
+
+        if($mainNgoType== 'দেশিও'){
+                return view('front.name_change.addOtherDocEdit',compact('nameChangeInfo','nameChangeInfoDoc','ngo_list_all','form_eight_list'));
+        }else{
+            return view('front.name_change.foreign.addOtherDocEdit',compact('nameChangeInfo','nameChangeInfoDoc','ngo_list_all','form_eight_list'));
+        }
+    }
+
 
 
 
@@ -527,6 +598,11 @@ class NamechangeController extends Controller
         $new_data_add = NgoNameChange::find(base64_decode($id));
         $new_data_add->status = 'Ongoing';
         $new_data_add->save();
+
+        session()->forget('previous_name');
+            session()->forget('previous_name_ban');
+            session()->forget('new_name');
+            session()->forget('new_name_ban');
 
         return redirect('/nameChange')->with('success','Submit To Ngo Sucessfully');
 
@@ -592,12 +668,45 @@ class NamechangeController extends Controller
             }
 
             DB::commit();
+
+
+
+
             return redirect('nameChange/'.base64_encode($new_data_add_id))->with('success','Review Your Information Then Submi To Ngo');
 
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');
         }
+
+    }
+
+
+    public function nameChangeSingleFile(Request $request,$id){
+
+
+        try{
+
+            $ngoOtherDoc =NameChangeDoc::find($id);
+            if ($request->hasfile('nameChangeFile')) {
+
+                $file_size = number_format($request->nameChangeFile->getSize() / 1048576,2);
+                $file = $request->file('nameChangeFile');
+                $filePath="NameChangeDoc";
+                $ngoOtherDoc->pdf_file_list =CommonController::pdfUpload($request,$file,$filePath);
+                $ngoOtherDoc->file_size =$file_size;
+
+            }
+
+            $ngoOtherDoc->save();
+
+
+            return redirect()->back()->with('success','File Updated Successfully');
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
 
     }
 

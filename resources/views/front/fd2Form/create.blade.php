@@ -105,7 +105,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -158,7 +158,7 @@
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         <p>এফডি - ৬</p>
                                     </li>
-                                    <li class="active visited">
+                                    <li class="active ">
                                         <i class="fa fa-file-text" aria-hidden="true"></i>
                                         <p>এফডি - ২</p>
                                     </li>

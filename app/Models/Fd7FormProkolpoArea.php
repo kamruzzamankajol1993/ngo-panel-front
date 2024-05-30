@@ -20,6 +20,7 @@ class Fd7FormProkolpoArea extends Model
         'thana_name',
         'municipality_name',
         'ward_name',
+        'prokolpo_type',
         'allocated_budget',
         'number_of_beneficiaries',
 

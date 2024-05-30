@@ -110,7 +110,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -284,7 +284,7 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">জন্ম তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker"  id=""
+        <input type="text" class="form-control datepickerOne"  id=""
                placeholder="" value="{{ $fdNineData->fd9_dob }}" name="fd9_dob" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -296,13 +296,13 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">পাসপোর্ট ইস্যু তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" value="{{ $fdNineData->fd9_passport_issue_date }}" name="fd9_passport_issue_date" required>
     </div>
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">পাসপোর্ট মেয়াদউত্তীর্ণের তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" value="{{ $fdNineData->fd9_passport_expiration_date }}" name="fd9_passport_expiration_date" id=""
+        <input type="text" class="form-control datepickerOne" value="{{ $fdNineData->fd9_passport_expiration_date }}" name="fd9_passport_expiration_date" id=""
                placeholder="" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -808,7 +808,7 @@ $convert_new_ass_cat  = explode(",",$fdNineData->fd9_countries_that_have_travele
                     <div class="col-md-6">
                         <label>তারিখ</label>
 
-                        <input type="text" class="form-control datepicker" id=""
+                        <input type="text" class="form-control datepickerOne" id=""
                         placeholder="" value={{ $fdNineData->fd9_extension_date_new }} name="fd9_extension_date_new" required>
                     </div>
 
@@ -853,7 +853,7 @@ $convert_new_ass_cat  = explode(",",$fdNineData->fd9_countries_that_have_travele
             </div>
             <div class="card-body">
 
-                <input type="text" class="form-control datepicker" id=""
+                <input type="text" class="form-control datepickerOne" id=""
                 placeholder="" value="{{ $fdNineData->fd9_extension_date }}" name="fd9_extension_date" required>
 
             </div>

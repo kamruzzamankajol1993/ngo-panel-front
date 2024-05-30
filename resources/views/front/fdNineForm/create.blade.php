@@ -110,7 +110,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -118,7 +118,7 @@
                             </a>
                         </div>
 
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('complain.index') }}">
                                 <p class="{{ Route::is('complain.index') ||  Route::is('complain.create') || Route::is('complain.view')  || Route::is('complain.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.complain')}}</p>
@@ -262,7 +262,7 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">জন্ম তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker"  id=""
+        <input type="text" class="form-control datepickerOne"  id=""
                placeholder="" name="fd9_dob" value="" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -274,13 +274,13 @@
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">পাসপোর্ট ইস্যু তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" id=""
+        <input type="text" class="form-control datepickerOne" id=""
                placeholder="" name="fd9_passport_issue_date" value="" required>
     </div>
     <div class="mb-3 col-lg-4">
         <label for="" class="form-label">পাসপোর্ট মেয়াদউত্তীর্ণের তারিখ<span
             class="text-danger">*</span></label>
-        <input type="text" class="form-control datepicker" value="" name="fd9_passport_expiration_date" id=""
+        <input type="text" class="form-control datepickerOne" value="" name="fd9_passport_expiration_date" id=""
                placeholder="" required>
     </div>
     <div class="mb-3 col-lg-4">
@@ -363,11 +363,11 @@
             <tr>
                 <td>
                     <input type="text" name="family_member_name[]"
-                           class="form-control" required/>
+                           class="form-control" />
                 </td>
                 <td>
                     <input type="text" name="family_member_age[]"
-                           class="form-control" required/>
+                           class="form-control" />
                 </td>
                 <td></td>
             </tr>
@@ -626,7 +626,7 @@ $countryList = DB::table('countries')->orderBy('id','asc')->get();
                     <div class="col-md-6">
                         <label>তারিখ</label>
 
-                        <input type="text" class="form-control datepicker" id=""
+                        <input type="text" class="form-control datepickerOne" id=""
                         placeholder="" name="fd9_extension_date_new" required>
                     </div>
 
@@ -662,7 +662,7 @@ $countryList = DB::table('countries')->orderBy('id','asc')->get();
             </div>
             <div class="card-body">
 
-                <input type="text" class="form-control datepicker" id=""
+                <input type="text" class="form-control datepickerOne" id=""
                 placeholder="" name="fd9_extension_date" >
 
             </div>

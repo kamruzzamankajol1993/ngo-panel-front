@@ -142,6 +142,31 @@ class RenewController extends Controller
         }
     }
 
+    public function ngoRenewStepAdd(){
+
+        try{
+
+            $get_all_data_new = NgoRenewInfo::where('user_id','for_add')->latest()->get();
+            $all_parti = FdOneForm::where('user_id',Auth::user()->id)->get();
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $name_change_list_all =  NgoRenew::where('fd_one_form_id',$ngo_list_all->id)->latest()->get();
+
+            CommonController::checkNgotype(1);
+            $mainNgoType = CommonController::changeView();
+
+            if($mainNgoType== 'দেশিও'){
+                    return view('front.renew.ngo_renew_list_new',compact('get_all_data_new','ngo_list_all','name_change_list_all','all_parti'));
+            }else{
+                return view('front.renew.foreign.ngo_renew_list_new',compact('get_all_data_new','ngo_list_all','name_change_list_all','all_parti'));
+            }
+
+            } catch (\Exception $e) {
+
+                return redirect()->route('error_404');
+            }
+
+    }
+
 
 
     public function updateRenewInformationList(Request $request){
@@ -815,10 +840,11 @@ class RenewController extends Controller
             $add_renew_request = new NgoRenew();
             $add_renew_request->fd_one_form_id = $ngo_list_all->id;
             $add_renew_request->time_for_api =$main_time;
-            $add_renew_request->status = 'Ongoing';
+            $add_renew_request->status = 'Review';
             $add_renew_request->save();
             DB::commit();
-            return redirect('/renew')->with('success','Renew Request Send Successfully');
+
+            return redirect('renewInfo/'.base64_encode($add_renew_request->id))->with('success','Review Your Renew Request,Then Send To Ngo');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -945,6 +971,19 @@ class RenewController extends Controller
 
             return redirect()->route('error_404');
         }
+
+    }
+
+
+    public function finalRenewApplicationSubmit($id){
+
+
+        $new_data_add = NgoRenew::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/renew')->with('success','Submit To Ngo Sucessfully');
+
 
     }
 

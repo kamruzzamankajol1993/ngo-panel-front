@@ -47,7 +47,7 @@
         </div>
         <div class="mb-3 col-lg-4">
             <label for="" class="form-label">Submission Date: <span class="text-danger">*</span></label>
-            <input type="text" class="form-control datepicker" id=""
+            <input type="text" class="form-control datepickerOne" id=""
                    placeholder="Submission Date" required name="submission_date">
         </div>
         <div class="mb-3 col-lg-4">

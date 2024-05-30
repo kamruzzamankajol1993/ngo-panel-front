@@ -109,7 +109,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -173,16 +173,16 @@ $fdOneFormId = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->val
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-sm-12">
-                                    @if($name_change_list == 'Ongoing')
+                                    @if($name_change_list == 'Ongoing' || $name_change_list == 'Review')
                                     <div class="d-grid d-md-flex justify-content-end">
                                         <button type="button" disabled  class="btn btn-registration"
-                                                onclick="location.href = '{{ route('ngoRenewStepOne') }}';">{{ trans('fd9.ar')}}
+                                                onclick="location.href = '{{ route('ngoRenewStepAdd') }}';">{{ trans('fd9.ar')}}
                                         </button>
                                     </div>
                                     @else
                                     <div class="d-grid d-md-flex justify-content-end">
                                         <button type="button"  class="btn btn-registration"
-                                                onclick="location.href = '{{ route('ngoRenewStepOne') }}';">{{ trans('fd9.ar')}}
+                                                onclick="location.href = '{{ route('ngoRenewStepAdd') }}';">{{ trans('fd9.ar')}}
                                         </button>
                                     </div>
                                     @endif
@@ -211,10 +211,24 @@ $fdOneFormId = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->val
                                     @foreach($name_change_list_all as $key=>$all_name_change_list_all)
                                     <tr>
                                         <td>{{ $key+1 }}</td>
-                                        <td>{{ $all_name_change_list_all->created_at->format('d-M-Y')}}</td>
+                                        <td>{{ $all_name_change_list_all->created_at->format('d-m-Y')}}</td>
 
                                         <td><span class="text-success">{{ $all_name_change_list_all->status }}</span></td>
-                                        <td> <a  href="{{ route('renewInfo',base64_encode($all_name_change_list_all->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a></td>
+                                        <td>
+
+                                            @if($all_name_change_list_all->status == 'Ongoing' || $all_name_change_list_all->status == 'Accepted')
+
+                                            @else
+
+                                            <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('ngoRenewStepOne') }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+
+                                            @endif
+
+
+                                            <a  href="{{ route('renewInfo',base64_encode($all_name_change_list_all->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+
+
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </table>

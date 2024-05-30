@@ -179,12 +179,26 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                 </div>
                                 <div class="">
 
-                                    @if($nameChangeInfo->status == 'Ongoing')
+                                    @if($nameChangeInfo->status == 'Ongoing' || $nameChangeInfo->status == 'Accepted')
 
 
                                     @else
 
-                                    <button class="btn btn-info" onclick="location.href = '{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}';" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান"><i class="fa fa-send-o"></i></button>
+
+
+                                    <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('namechangeApplicationEdit',base64_encode($nameChangeInfo->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+
+                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $nameChangeInfo->id}})" class="btn btn-sm btn-success">
+                                        <i class="fa fa-send-o"></i>
+                                    </button>
+
+                                        <form id="delete-form-{{ $nameChangeInfo->id }}" action="{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}" method="get" style="display: none;">
+
+                                            @csrf
+
+
+                                        </form>
+
 
 
 
@@ -383,7 +397,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: '{{ trans('notification.success_three')}}',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
             cancelButtonText: '{{ trans('notification.success_four')}}',
             confirmButtonClass: 'btn btn-success',
             cancelButtonClass: 'btn btn-danger',
@@ -403,7 +417,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
             ) {
                 swal(
                     '{{ trans('notification.success_five')}}',
-                    '{{ trans('notification.success_six')}} :)',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
                     'error'
                 )
             }

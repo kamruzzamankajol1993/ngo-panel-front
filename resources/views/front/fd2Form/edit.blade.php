@@ -107,7 +107,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -160,7 +160,7 @@
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                         <p>এফডি - ৬</p>
                                     </li>
-                                    <li class="active visited">
+                                    <li class="active ">
                                         <i class="fa fa-file-text" aria-hidden="true"></i>
                                         <p>এফডি - ২</p>
                                     </li>
@@ -190,52 +190,52 @@
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">সংস্থার নাম <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd2FormList->ngo_name }}" name="ngo_name" class="form-control" id=""
+                                            <input type="text"  value="{{ $fd2FormList->ngo_name }}" name="ngo_name" class="form-control" id=""
                                                    placeholder="">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">সংস্থার ঠিকানা <span class="text-danger">*</span></label>
-                                            <input type="text" required class="form-control" value="{{ $fd2FormList->ngo_address }}" name="ngo_address" id=""
+                                            <input type="text"  class="form-control" value="{{ $fd2FormList->ngo_address }}" name="ngo_address" id=""
                                                    placeholder="">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">প্রকল্প নাম <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd2FormList->ngo_prokolpo_name }}" name="ngo_prokolpo_name" class="form-control" id=""
+                                            <input type="text"  value="{{ $fd2FormList->ngo_prokolpo_name }}" name="ngo_prokolpo_name" class="form-control" id=""
                                                    placeholder="">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">প্রকল্প মেয়াদ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd2FormList->ngo_prokolpo_duration }}" name="ngo_prokolpo_duration" class="form-control" id=""
+                                            <input type="text"  value="{{ $fd2FormList->ngo_prokolpo_duration }}" name="ngo_prokolpo_duration" class="form-control" id=""
                                                    placeholder="">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">আরম্ভের তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd2FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
+                                            <input type="text"  value="{{ $fd2FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">সমাপ্তির তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd2FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
+                                            <input type="text"  value="{{ $fd2FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
                                                    placeholder="">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রস্তাবিত অর্থছাড়ের পরিমান (বাংলাদেশী টাকা ) <span class="text-danger">*</span></label>
-                                            <input type="text" required class="form-control" id="" name="proposed_rebate_amount_bangladeshi_taka" value="{{ $fd2FormList->proposed_rebate_amount_bangladeshi_taka }}"
+                                            <input type="text"  class="form-control" id="" name="proposed_rebate_amount_bangladeshi_taka" value="{{ $fd2FormList->proposed_rebate_amount_bangladeshi_taka }}"
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রস্তাবিত অর্থছাড়ের পরিমান (বৈদেশিক মুদ্রায় )<span class="text-danger">*</span></label>
-                                            <input type="text" required class="form-control" id="" name="proposed_rebate_amount_in_foreign_currency" value="{{ $fd2FormList->proposed_rebate_amount_in_foreign_currency }}"
+                                            <input type="text"  class="form-control" id="" name="proposed_rebate_amount_in_foreign_currency" value="{{ $fd2FormList->proposed_rebate_amount_in_foreign_currency }}"
                                                    placeholder="">
                                         </div>
                                     </div>
@@ -247,82 +247,35 @@
 
                                     @else
                                     <div class="row">
-                                @foreach($fd2OtherInfo as $key=>$fd2OtherInfoAll)
-                                <div class="col-md-3 mt-2">
-                                    <div class="card card-custom-color">
-                                        <div class="card-body">
 
 
-                                            <p><b>{{ $fd2OtherInfoAll->file_name }}:</b> <a target="_blank" href="{{ route('fd2PdfDownload',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
-                                                <i class="fa fa-download" aria-hidden="true"></i>
-                                            </a></p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button type="button" class="btn btn-custom next_button btn-sm" data-bs-toggle="modal" data-bs-target="#mmexampleModal{{ $key+1 }}">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        <table class="table table-bordered">
+                                            @foreach($fd2OtherInfo as $key=>$fd2OtherInfoAll)
+                                            <tr>
+                                                <td>{{ $fd2OtherInfoAll->file_name }}</td>
+                                                <td>
 
-                                              </button>
+                                                    <a target="_blank" href="{{ route('fd2PdfDownload',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
+                                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                                </a>
 
-                                              <a href="{{ route('fd2PdfDestroy',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></a>
+                                                <button type="button" class="btn btn-custom next_button btn-sm mmexampleModal" id="{{ $fd2OtherInfoAll->id }}">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
 
+                                                  </button>
 
-
-
-
-
-                                              <!-- Modal -->
-                            <div class="modal fade" id="mmexampleModal{{ $key+1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">ডেটা আপডেট করুন</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                            <form method="post" action="{{ route('fd2PdfUpdate') }}" enctype="multipart/form-data" id="form">
-                            @csrf
-
-
-                            <input type="hidden" name="mid" value="{{ $fd2OtherInfoAll->id }}" class="form-control" id="exampleFormControlInput1" >
+                                                  <a href="{{ route('fd2PdfDestroy',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
+                                                    class="bi bi-trash"></i></a>
 
 
 
+                                            </td>
+                                            </tr>
+                                            @endforeach
 
-                            <div class="mb-3">
-                                <?php
-
-                                $file_path = url($fd2OtherInfoAll->file);
-                                $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                        </table>
 
 
-
-
-                                ?>
-                            <label for="exampleFormControlInput1" class="form-label">{{ $fd2OtherInfoAll->file_name }}:</label>
-                            <input type="file" accept=".pdf" name="file" class="form-control" id="exampleFormControlInput1">
-                            <b>{{ $filename.'.'.$extension }}</b>
-
-
-                        </div>
-
-                            <button type="submit" class="btn btn-custom next_button btn-sm">
-                                জমা দিন
-                            </button>
-                            </form>
-
-                            </div>
-
-                            </div>
-                            </div>
-                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    @endforeach
-                                    </div>
 
                                     @endif
 
@@ -396,9 +349,50 @@
 </section>
 
 
+                          <!-- Modal -->
+                          <div class="modal fade" id="mmexampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">ডেটা আপডেট করুন</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body" id="formBody">
+
+
+                            </div>
+
+                            </div>
+                            </div>
+                            </div>
+
+
 @endsection
 
 @section('script')
+
+<script>
+
+$(document).on('click', '.mmexampleModal', function () {
+
+    var main_id = $(this).attr('id');
+    $('#mmexampleModal').modal('show');
+
+
+
+    $.ajax({
+    url: "{{ route('fd2PdfUpdateModal') }}",
+    method: 'GET',
+    data: {main_id:main_id},
+    success: function(data) {
+      $("#formBody").html('');
+      $("#formBody").html(data);
+    }
+    });
+
+
+});
+</script>
 
 <script>
 

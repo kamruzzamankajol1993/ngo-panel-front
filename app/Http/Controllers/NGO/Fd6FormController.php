@@ -70,6 +70,9 @@ class Fd6FormController extends Controller
     }
 
 
+   
+
+
     public function getCityCorporationList(Request $request){
 
 
@@ -143,17 +146,21 @@ class Fd6FormController extends Controller
 
         ]);
 
+        //dd($request->all());
+
         try{
             DB::beginTransaction();
 
             $fdOneFormID = FdOneForm::where('user_id',Auth::user()->id)->first();
 
+            $subject_all = implode(",",$request->subject_id);
+
             $fd6FormInfo = new Fd6Form();
             $fd6FormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
             $fd6FormInfo->fd_one_form_id =$fdOneFormID->id;
             $fd6FormInfo->ngo_name =$request->ngo_name;
-            $fd6FormInfo->subject_id =$request->subject_id;
-            $fd6FormInfo->status ='Ongoing';
+            $fd6FormInfo->subject_id =$subject_all;
+            $fd6FormInfo->status ='Review';
             $fd6FormInfo->ngo_registration_date =$request->ngo_registration_date;
             $fd6FormInfo->ngo_last_renew_date =$request->ngo_last_renew_date;
             $fd6FormInfo->ngo_expiration_date =$request->ngo_expiration_date;
@@ -235,6 +242,30 @@ class Fd6FormController extends Controller
                 $form->district_name=$input['district_name'][$key];
                 $form->city_corparation_name=$input['city_corparation_name'][$key];
 
+                if(empty($input['beneficiaries_total'][$key])){
+
+
+                }else{
+
+                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+                }
+
+                if(empty($input['prokolpoType'][$key])){
+
+
+                }else{
+
+                    $form->prokolpo_type=$input['prokolpoType'][$key];
+                }
+
+                if(empty($input['allocated_budget'][$key])){
+
+
+                }else{
+
+                    $form->allocated_budget=$input['allocated_budget'][$key];
+                }
+
                 if(empty($input['upozila_name'][$key])){
 
 
@@ -303,15 +334,29 @@ class Fd6FormController extends Controller
 
     }
 
+    public function finalFdSixApplicationSubmit($id){
+
+
+        $new_data_add = Fd6Form::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/fd6Form')->with('success','Submit To Ngo Sucessfully');
+
+
+    }
+
 
     public function update(Request $request,$id){
         try{
+
+            $subject_all = implode(",",$request->subject_id);
 
             DB::beginTransaction();
 
             $fd6FormInfo = Fd6Form::find($id);
             $fd6FormInfo->ngo_name =$request->ngo_name;
-            $fd6FormInfo->subject_id =$request->subject_id;
+            $fd6FormInfo->subject_id =$subject_all;
             $fd6FormInfo->ngo_registration_date =$request->ngo_registration_date;
             $fd6FormInfo->ngo_last_renew_date =$request->ngo_last_renew_date;
             $fd6FormInfo->ngo_expiration_date =$request->ngo_expiration_date;
@@ -394,6 +439,30 @@ class Fd6FormController extends Controller
                 $form->division_name=$input['division_name'][$key];
                 $form->district_name=$input['district_name'][$key];
                 $form->city_corparation_name=$input['city_corparation_name'][$key];
+
+                if(empty($input['beneficiaries_total'][$key])){
+
+
+                }else{
+
+                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+                }
+
+                if(empty($input['prokolpoType'][$key])){
+
+
+                }else{
+
+                    $form->prokolpo_type=$input['prokolpoType'][$key];
+                }
+
+                if(empty($input['allocated_budget'][$key])){
+
+
+                }else{
+
+                    $form->allocated_budget=$input['allocated_budget'][$key];
+                }
 
                 if(empty($input['upozila_name'][$key])){
 

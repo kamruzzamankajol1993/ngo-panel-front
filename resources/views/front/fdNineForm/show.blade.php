@@ -120,7 +120,7 @@ color:white !important;
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -164,7 +164,7 @@ color:white !important;
             <div class="col-lg-9 col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-
+                        @include('flash_message')
 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
 
@@ -190,7 +190,25 @@ color:white !important;
                                             <i class="fa fa-print"></i>
                                         </button>
 
+                                        @if($fdNineData->status == 'Ongoing' || $fdNineData->status == 'Accepted')
+
+                                        @else
+
+                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fdNineData->id}})" class="btn btn-info">
+                                            <i class="fa fa-send-o"></i>
+                                        </button>
+
+                                            <form id="delete-form-{{ $fdNineData->id }}" action="{{ route('finalFdNineApplicationSubmit',base64_encode($fdNineData->id)) }}" method="get" style="display: none;">
+
+                                                @csrf
+
+
+                                            </form>
+
+
                                         <button class="btn btn-primary" onclick="location.href = '{{ route('fdNineForm.edit',base64_encode($fdNineData->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+
+                                        @endif
 
 
                                     </div>
@@ -553,6 +571,42 @@ color:white !important;
 </section>
 @endsection
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 <script>
 $("#downloadButton").click(function(){
       var name = $('#mainName').val();
