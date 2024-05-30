@@ -109,15 +109,11 @@
                             </a>
                         </div>
 
-
-                        
-
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
                                 <p class="{{ Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.view')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
                             </a>
                         </div>
-
 
                         <div class="profile_link_box">
                             <a href="{{ route('complain.index') }}">
@@ -143,6 +139,7 @@
                                 <p class="{{ Route::is('executiveCommitteeApproval.index')  ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.cf3')}}</p>
                             </a>
                         </div> --}}
+                        
                         <div class="profile_link_box">
                             <a href="{{ route('logout') }}">
                                 <p class=""><i class="fa fa-cog pe-2"></i>{{ trans('fd9.l')}}</p>
@@ -180,7 +177,7 @@
                                                 মহাপরিচালক <br>
                                                 এনজিও বিষয় ব্যুরো <br>
                                                 প্রধানমন্ত্রীর কার্যালয়</p>
-                                            <p>নিষয়ঃ সংস্থার বিদেশি বিশেষজ্ঞউপদেষ্টা/কর্মকর্ত/সেচ্ছাসেবী “<span style="color:red;">*</span><input
+                                            <p>বিষয়: সংস্থার বিদেশি বিশেষজ্ঞউপদেষ্টা/কর্মকর্ত/সেচ্ছাসেবী “<span style="color:red;">*</span><input
                                                         type="text" class="form-control custom-form" name="foreigner_name_for_subject" required> ”' এর ওয়ার্ক পারমিট প্রসঙ্গে।
                                             </p>
                                             <p>

@@ -30,7 +30,7 @@
 </style>
 <style>
     .ui-widget.ui-widget-content {
-    top: 0px !important;
+    top: 10px !important;
     }
 </style>
 @endsection
@@ -191,8 +191,7 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
 
-                                    <form action="{{ route('formNoFiveStepFourPost') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
-                                        @csrf
+
                                     <div class="form9_upper_box">
                                         <h3>ফরম নং-৫</h3>
                                         <h4 style="font-weight: 900;">বার্ষিক প্রতিবেদন</h4>
@@ -315,17 +314,25 @@
                                                         </td>
                                                         <td>
 
-                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
-                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                                            <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $formNoFiveStepFourDatas->id }}" >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                                                  <!-- edit modal start -->
+
+                                                                                  @include('front.formNoFive._partila.stepFourModalEdit')
+
+                                                                                  <!-- edit  modal end -->
+
                                                             <button type="button" onclick="deleteTag({{ $formNoFiveStepFourDatas->id}})" class="btn btn-sm btn-outline-danger"><i
                                                                 class="bi bi-trash"></i></button>
 
-                                                                {{-- <form id="delete-form-{{ $formNoFiveStepFourDatas->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepFourDatas->id) }}" method="POST" style="display: none;">
+                                                                <form id="delete-form-{{ $formNoFiveStepFourDatas->id }}" action="{{ route('formNoFiveStepFourDelete',$formNoFiveStepFourDatas->id) }}" method="POST" style="display: none;">
 
                                                                     @csrf
                                                                     @method('DELETE')
 
-                                                                </form> --}}
+                                                                </form>
 
                                                         </td>
                                                     </tr>
@@ -337,19 +344,51 @@
                                             @endif
                                         </div>
                                     </div>
-
+                                    <form action="{{ route('formNoFiveStepFourPost') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                        @csrf
+                                        <input type="hidden" class="form-control" value="{{ $decode_id }}" name="id"  id="decode_id">
                                     <div class="row mt-4">
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">জমি/যানবাহন  যার নামে রেজিস্ট্রিকৃত তার বিস্তারিত তথ্য উল্লেখ করতে হবে <span class="text-danger">*</span></label>
-                                            <textarea required name="land_and_transport_detail"  class="form-control" id=""placeholder=""></textarea>
+                                            <textarea required name="land_and_transport_detail"  class="form-control" id=""placeholder="">{{ $formFiveData->land_and_transport_detail }}</textarea>
                                         </div>
 
+
+
+                                        @if(empty($formFiveData->approval_file_of_Bureau))
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">ব্যুরোর অনুমোদনের প্রমাণক সংযুক্ত করতে হবে <span class="text-danger">*</span></label>
                                             <input type="file" accept=".pdf" required name="approval_file_of_Bureau"  class="form-control" id=""placeholder="">
                                         </div>
+                    @else
+
+                    <?php
+
+                    $file_path = url($formFiveData->approval_file_of_Bureau);
+                    $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                    $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                    ?>
+                    <div class="mb-3 col-lg-12">
+                        <label for="" class="form-label">ব্যুরোর অনুমোদনের প্রমাণক সংযুক্ত করতে হবে <span class="text-danger">*</span></label>
+                        <input type="file" accept=".pdf"  name="approval_file_of_Bureau"  class="form-control" id=""placeholder="">
+                    </div>
+                    <b>{{ $filename.'.'.$extension }}</b>
+                                    @endif
+
+
+
+
+
+
+
+
                                     </div>
 
 
@@ -357,13 +396,15 @@
                                     <div class="d-grid d-md-flex justify-content-md-end mt-4">
                                         <a href="{{ route('formNoFiveStepThree',base64_encode($decode_id)) }}"  class="btn btn-dark back_button me-2">{{ trans('fd_one_step_one.back')}}</a>
 
+                                        <div id="jomadinButton">
                                         @if(count($formNoFiveStepFourData) == 0 )
 
                                         @else
                                         <button type="submit" class="btn btn-registration"
-                                                >জমা দিন
+                                                >{{ trans('fd_one_step_one.Next_Step')}}
                                         </button>
                                         @endif
+                                        </div>
                                     </div>
                                 </form>
                                 </div>
@@ -389,6 +430,127 @@
 
 
 //form submit start data
+
+
+//for edit start
+
+$(document).on('click', '.finalFormUpdate', function () {
+
+    var mainId = $(this).attr('id');
+
+    if(!$('#wealth_descrip'+mainId).val()){
+
+alertify.alert('Error', 'সম্পদ / সম্পত্তির বিবরণ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#sub_property'+mainId).val()){
+
+alertify.alert('Error', 'সম্পদ / সম্পত্তির বিবরণ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#quantity'+mainId).val()){
+
+alertify.alert('Error', 'পরিমাণ /সংখ্যা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#collect_date'+mainId).val()){
+
+alertify.alert('Error', 'প্রাপ্তি/সংগ্রহের তারিখ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#real_buying_price'+mainId).val()){
+
+alertify.alert('Error', 'প্রকৃত ক্রয় মূল্য সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#fund_source'+mainId).val()){
+
+alertify.alert('Error', 'অর্থের উৎস সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#what_is_it_used_for'+mainId).val()){
+
+alertify.alert('Error', 'কি কাজে ব্যবহৃত হতেছে সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#place'+mainId).val()){
+
+alertify.alert('Error', 'অবস্থান(স্থান) সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#assets_sold_transferred_number_or_quantity'+mainId).val()){
+
+alertify.alert('Error', 'বিক্রিত স্থান্তরিত সম্পদ (সংখ্যা /পরিমাণ ) সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#quantity_during_start_of_organization'+mainId).val()){
+
+alertify.alert('Error', 'সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত (সংখ্যা /পরিমাণ ) সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#total_during_start_of_organization'+mainId).val()){
+
+alertify.alert('Error', 'সংস্থার শুরু হতে প্রতিবেদনকাল পর্যন্ত ক্রম পুঞ্জীভূত সর্বমোট ক্রয়মূল্য সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#current_status'+mainId).val()){
+
+alertify.alert('Error', 'বর্তমান অবস্থা সম্পর্কিত তথ্য দিন');
+
+}else{
+
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+
+
+var decode_id = $('#decode_id'+mainId).val();
+var wealth_descrip = $('#wealth_descrip'+mainId).val();
+var sub_property = $('#sub_property'+mainId).val();
+var quantity = $('#quantity'+mainId).val();
+var collect_date = $('#collect_date'+mainId).val();
+var real_buying_price = $('#real_buying_price'+mainId).val();
+var fund_source =$('#fund_source'+mainId).val();
+var what_is_it_used_for = $('#what_is_it_used_for'+mainId).val();
+var place = $('#place'+mainId).val();
+var assets_sold_transferred_number_or_quantity = $('#assets_sold_transferred_number_or_quantity'+mainId).val();
+var quantity_during_start_of_organization = $('#quantity_during_start_of_organization'+mainId).val();
+var total_during_start_of_organization = $('#total_during_start_of_organization'+mainId).val();
+var current_status = $('#current_status'+mainId).val();
+
+
+$.ajax({
+url: "{{ route('formNoFiveStepFourUpdate') }}",
+method: 'POST',
+data: {mainId:mainId,decode_id:decode_id,current_status:current_status,total_during_start_of_organization:total_during_start_of_organization,quantity_during_start_of_organization:quantity_during_start_of_organization,assets_sold_transferred_number_or_quantity:assets_sold_transferred_number_or_quantity,place:place,what_is_it_used_for:what_is_it_used_for,fund_source:fund_source,real_buying_price:real_buying_price,collect_date:collect_date,quantity:quantity,sub_property:sub_property,wealth_descrip:wealth_descrip},
+success: function(data) {
+
+$('#exampleModal'+mainId).modal('hide');
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Updated Successfully');
+
+$("#tableAjaxData").html('');
+$("#tableAjaxData").html(data);
+
+
+$("#jomadinButton").html('');
+$("#jomadinButton").html('<button type="submit" class="btn btn-registration res">আপডেট করুন</button>');
+
+
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+
+
+
+}
+
+});
+
+
+//for edit end
+
+
 
 
 
@@ -481,6 +643,23 @@ $(document).on('click', '#finalFormSubmit', function () {
       $("#tableAjaxData").html('');
       $("#tableAjaxData").html(data);
 
+
+      $("#jomadinButton").html('');
+      $("#jomadinButton").html('<button type="submit" class="btn btn-registration res">জমা দিন</button>');
+
+   var wealth_descrip = $('#wealth_descrip').val('');
+   var sub_property = $('#sub_property').val('');
+   var quantity = $('#quantity').val('');
+   var collect_date = $('#collect_date').val('');
+   var real_buying_price = $('#real_buying_price').val('');
+   var fund_source =$('#fund_source').val('');
+   var what_is_it_used_for = $('#what_is_it_used_for').val('');
+   var place = $('#place').val('');
+   var assets_sold_transferred_number_or_quantity = $('#assets_sold_transferred_number_or_quantity').val('');
+   var quantity_during_start_of_organization = $('#quantity_during_start_of_organization').val('');
+   var total_during_start_of_organization = $('#total_during_start_of_organization').val('');
+   var current_status = $('#current_status').val('');
+
     },
     beforeSend: function(){
        $('#pageloader').show()
@@ -500,20 +679,42 @@ $(document).on('click', '#finalFormSubmit', function () {
 
 
 
+//edit for estabor data
+
+$(document).on('change', 'select.wealth_descrip', function () {
+
+    var mainValue = $(this).val();
+    var mainId = $(this).attr('id');
+
+    if(mainValue == 'অস্থাবর'){
+
+$('#secondWealth'+mainId).html('');
+$('#secondWealth'+mainId).html('<select id="sub_property"  name="sub_property"  type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="যানবাহন">যানবাহন</option><option value="এয়ার কন্ডিশনার">এয়ার কন্ডিশনার</option></select>');
+}else{
+$('#secondWealth'+mainId).html('');
+$('#secondWealth'+mainId).html('<select id="sub_property"  name="sub_property"  type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="জমি">জমি</option><option value="বিল্ডিং">বিল্ডিং</option><option value="অন্যান্য">অন্যান্য</option></select>');
+
+
+}
+
+});
+/// edit for esthabor data
+
 //esthabor data start
 
 $(document).on('change', 'select#wealth_descrip', function () {
 
     var mainValue = $(this).val();
 
+    //alert(12);
 
     if(mainValue == 'অস্থাবর'){
 
         $('#secondWealth').html('');
-        $('#secondWealth').html('<select id="sub_property" required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="যানবাহন">যানবাহন</option><option value="এয়ার কন্ডিশনার">এয়ার কন্ডিশনার</option></select>');
+        $('#secondWealth').html('<select id="sub_property"  name="sub_property"  type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="যানবাহন">যানবাহন</option><option value="এয়ার কন্ডিশনার">এয়ার কন্ডিশনার</option></select>');
     }else{
-        $('secondWealth').html('');
-        $('#secondWealth').html('<select id="sub_property" required name="sub_property" required type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="জমি">জমি</option><option value="বিল্ডিং">বিল্ডিং</option><option value="অন্যান্য">অন্যান্য</option></select>');
+        $('#secondWealth').html('');
+        $('#secondWealth').html('<select id="sub_property"  name="sub_property"  type="text" class="form-control"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option><option value="জমি">জমি</option><option value="বিল্ডিং">বিল্ডিং</option><option value="অন্যান্য">অন্যান্য</option></select>');
 
 
     }

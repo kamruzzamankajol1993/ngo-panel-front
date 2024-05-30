@@ -110,7 +110,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -169,6 +169,33 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                         <div class="card">
                             <div class="card-body">
                                 <div class="name_change_box">
+
+                                      <!-- new code start --->
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <div class="">
+
+
+                                </div>
+                                <div class="">
+
+                                    @if($nameChangeInfo->status == 'Ongoing')
+
+
+                                    @else
+
+                                    <button class="btn btn-info" onclick="location.href = '{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}';" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান"><i class="fa fa-send-o"></i></button>
+
+
+
+                                    @endif
+
+
+                                </div>
+                            </div>
+
+                            <!-- new code end -->
+
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="others_inner_section">
@@ -236,7 +263,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 
                                                        @elseif(($key+1) ==7)
 
-                                                        এনজিও বিষয়ক ব্যুরোর মুল সনদপত্র
+                                                        এনজিও বিষয়ক ব্যুরোর মূল সনদপত্র
 
                                                        @elseif(($key+1) ==8)
 
@@ -347,5 +374,40 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 @endsection
 
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ trans('notification.success_three')}}',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
 
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    '{{ trans('notification.success_six')}} :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 @endsection

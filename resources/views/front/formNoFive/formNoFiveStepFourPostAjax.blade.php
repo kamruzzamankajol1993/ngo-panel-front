@@ -69,12 +69,21 @@
                 </td>
                 <td>
 
-                    <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
-                    <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepFourDatas->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+
+                    <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $formNoFiveStepFourDatas->id }}" >
+                        <i class="fa fa-pencil"></i>
+                    </button>
+
+                                          <!-- edit modal start -->
+
+                                          @include('front.formNoFive._partila.stepFourModalEdit')
+
+                                          <!-- edit  modal end -->
+
                     <button type="button" onclick="deleteTag({{ $formNoFiveStepFourDatas->id}})" class="btn btn-sm btn-outline-danger"><i
                         class="bi bi-trash"></i></button>
 
-                        <form id="delete-form-{{ $formNoFiveStepFourDatas->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepFourDatas->id) }}" method="POST" style="display: none;">
+                        <form id="delete-form-{{ $formNoFiveStepFourDatas->id }}" action="{{ route('formNoFiveStepFourDelete',$formNoFiveStepFourDatas->id) }}" method="POST" style="display: none;">
 
                             @csrf
                             @method('DELETE')

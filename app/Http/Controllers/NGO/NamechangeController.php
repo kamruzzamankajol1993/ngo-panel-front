@@ -521,6 +521,21 @@ class NamechangeController extends Controller
 
 
 
+    public function finalNamechangeSubmit($id){
+
+
+        $new_data_add = NgoNameChange::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/nameChange')->with('success','Submit To Ngo Sucessfully');
+
+
+    }
+
+
+
+
     public function storeOtherDoc(Request $request){
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $time_dy = time().date("Ymd");
@@ -545,10 +560,13 @@ class NamechangeController extends Controller
         $new_data_add->previous_name_ban = Session::get('previous_name_ban');
         $new_data_add->present_name_eng = Session::get('new_name');
         $new_data_add->present_name_ban = Session::get('new_name_ban');
-        $new_data_add->status = 'Ongoing';
+        // $new_data_add->status = 'Ongoing';
+         $new_data_add->status = 'Review';
         $new_data_add->time_for_api = $main_time;
-         
+
         $new_data_add->save();
+
+        $new_data_add_id = $new_data_add->id;
 
 
 
@@ -557,7 +575,7 @@ class NamechangeController extends Controller
             DB::beginTransaction();
 
             $fdOneFormId = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->value('id');
-            $ngo_name_change_id = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOneFormId)->where('status','Ongoing')->value('id');
+            $ngo_name_change_id = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOneFormId)->where('status','Review')->value('id');
 
             foreach($condition_main_image as $key => $all_condition_main_image){
 
@@ -574,7 +592,7 @@ class NamechangeController extends Controller
             }
 
             DB::commit();
-            return redirect('/nameChange')->with('success','Request Send Successfully');
+            return redirect('nameChange/'.base64_encode($new_data_add_id))->with('success','Review Your Information Then Submi To Ngo');
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -163,9 +163,27 @@
                                 </div>
                                 <div class="col-lg-5 col-sm-12">
                                     <div class="d-grid d-md-flex justify-content-end">
+
+
+                                        <?php
+
+
+$getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_all->id )->value('status');
+
+
+
+                                        ?>
+
+
+       {{-- @if($getPendingData == 'pending')
+
+       @else --}}
+
+
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('formNoFive.create') }}';">নতুন ফরম যোগ করুন
                                         </button>
+                                        {{-- @endif --}}
                                     </div>
                                 </div>
                             </div>
@@ -186,7 +204,7 @@
                                     <tr>
                                         <th>ক্র : নং :</th>
                                         <th>প্রকল্পের নাম</th>
-                                        <th>প্রকল্পের বিষয়</th>
+                                        {{-- <th>প্রকল্পের বিষয়</th> --}}
                                         <th>প্রকল্পের মোট মেয়াদকাল</th>
                                         <th>প্রতিবেদনকাল (প্রকল্প বর্ষ)</th>
                                         <th>স্ট্যাটাস</th>
@@ -196,11 +214,31 @@
                                     <tr>
                                         <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
                                         <td>{{ $formNoFiveListAll->prokolpo_name }}</td>
-                                        <td>{{ $formNoFiveListAll->prokolpo_subject}}</td>
+                                        {{-- <td>{{ $formNoFiveListAll->prokolpo_subject}}</td> --}}
                                         <td>{{ $formNoFiveListAll->prokolpo_duration}}</td>
                                         <td>{{ $formNoFiveListAll->report_year }}</td>
-                                        <td><span class="text-success">{{ $formNoFiveListAll->status }}</span></td>
                                         <td>
+
+
+
+                                            @if($formNoFiveListAll->status  == "Review")
+                                            <span class="text-danger">you have not submit yet,review your data and submit to ngo </span>
+
+                                            @else
+
+
+                                            <span class="text-success">{{ $formNoFiveListAll->status }}</span>
+                                            @endif
+
+
+
+                                        </td>
+                                        <td>
+
+                                            @if($formNoFiveListAll->status == 'pending')
+
+                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+                                            @else
 
                                             <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
                                             <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
@@ -213,6 +251,8 @@
                                                     @method('DELETE')
 
                                                 </form>
+
+                                                @endif
 
                                         </td>
                                     </tr>

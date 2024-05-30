@@ -121,7 +121,7 @@
                                 <p class="{{ Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.view')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
                             </a>
                         </div>
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('complain.index') }}">
                                 <p class="{{ Route::is('complain.index') ||  Route::is('complain.create') || Route::is('complain.view')  || Route::is('complain.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.complain')}}</p>
@@ -162,7 +162,7 @@
                     <div class="card-body">
                         <div class="step_box">
                             <ul class="process-model more-icon-preocess">
-                                <li class="active visited">
+                                <li class="active ">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <p>নতুন নাম</p>
 
@@ -204,17 +204,17 @@ $fdOneFormId = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->val
 
                                     <div class=" mb-3">
                                         <label for="" class="form-label">নতুন নাম (English)</label>
-                                        <input type="text" value="{{ Session::get('new_name') }}" name="new_name" class="form-control" id="">
+                                        <input type="text" required value="{{ Session::get('new_name') }}" name="new_name" class="form-control" id="">
                                     </div>
 
 
                                     <div class=" mb-3">
                                         <label for="" class="form-label">নতুন নাম (বাংলা)</label>
-                                        <input type="text" value="{{ Session::get('new_name_ban')}}"  name="new_name_ban" class="form-control" id="">
+                                        <input type="text" required value="{{ Session::get('new_name_ban')}}"  name="new_name_ban" class="form-control" id="">
                                     </div>
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="submit" class="btn btn-registration"
-                                               >Next
+                                               >পরবর্তী ধাপ
                                         </button>
                                     </div>
                                 </form>

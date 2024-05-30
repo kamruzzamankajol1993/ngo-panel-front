@@ -112,7 +112,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -169,6 +169,48 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                         <div class="card">
                             <div class="card-body">
                                 <div class="name_change_box">
+
+                                     <!-- new code start --->
+
+                            <div class="d-flex justify-content-between mt-3">
+                                <div class="">
+
+
+                                </div>
+                                <div class="">
+
+                                    @if($nameChangeInfo->status == 'Ongoing')
+
+
+                                    @else
+
+
+
+
+
+                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $nameChangeInfo->id}})" class="btn btn-sm btn-success">
+                                        <i class="fa fa-send-o"></i>
+                                    </button>
+
+                                        <form id="delete-form-{{ $nameChangeInfo->id }}" action="{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}" method="get" style="display: none;">
+
+                                            @csrf
+
+
+                                        </form>
+
+
+
+
+                                    @endif
+
+
+                                </div>
+                            </div>
+
+                            <!-- new code end -->
+
+
                                     <div class="row">
                                         <div class="col-lg-6 col-sm-12">
                                             <div class="others_inner_section">
@@ -221,7 +263,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 
                                                         @elseif(($key+1) ==2)
 
-                                                            নাম পরিবর্তন ফি বাবদ-২৬,০০০/- (ছাব্বিশ হাজার) টাকার (কোড নং-১-০৩২৩-০০০০- ১৮৩৬) চালানের মূলকপি এবং ১৫% ভ্যাট (কোড নং - ১-১১৩৩ -০০৩৫ - ০৩১১) প্রদানপূর্বক চালানের মূলকপিসহ
+                                                        নাম পরিবর্তন ফি বাবদ- ২৬,০০০/- (ছাব্বিশ হাজার) টাকার (কোড নং-১-০৩২৩-০০০০- ১৮৩৬) চালানের মূলকপিসহ অনুলিপি
 
 
                                                        @elseif(($key+1) ==3)
@@ -258,7 +300,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                                        @elseif(($key+1) ==7)
 
 
-                                                        এনজিও বিষয়ক ব্যুরোর মুল সনদপত্র
+                                                        এনজিও বিষয়ক ব্যুরোর মূল সনদপত্র
 
 
                                                        @elseif(($key+1) ==8)
@@ -284,7 +326,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                                         @elseif(($key+1) == 11)
 
 
-                                                            নাম পরিবর্তন সংক্রান্ত বিষয়ে সাধারণ সভার কা্যবিবরণীর (উপস্থিত সদস্যদের তালিকাসহ) সত্যায়িত কপি
+                                                            নাম পরিবর্তন সংক্রান্ত বিষয়ে সাধারণ সভার কার্যবিবরণীর (উপস্থিত সদস্যদের তালিকাসহ) সত্যায়িত কপি
 
 
 
@@ -297,7 +339,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                                                 @elseif(($key+1) == 13)
 
 
-                                                                    দাখিলকৃত চালানের ডপর ১৫% ভ্যাট নির্ধারিত কোডে জমাপূর্বক চালানের মূলকলিসহ (কোড নং-১-১১৩৩-০০৩৫-০৩১১)
+                                                                    দাখিলকৃত চালানের উপর ১৫% ভ্যাট নির্ধারিত কোডে জমাপূর্বক চালানের মূলকপিসহ (কোড নং-১-১১৩৩-০০৩৫-০৩১১)
 
 
 
@@ -376,5 +418,40 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 @endsection
 
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
 
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 @endsection

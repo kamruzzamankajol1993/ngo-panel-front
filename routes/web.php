@@ -57,6 +57,7 @@ Route::controller(FrontController::class)->group(function () {
 
 Route::controller(NamechangeController::class)->group(function () {
 
+    Route::get('finalNamechangeSubmit/{id}', 'finalNamechangeSubmit')->name('finalNamechangeSubmit');
 
     Route::get('addOtherDoc', 'addOtherDoc')->name('addOtherDoc');
     Route::post('storeOtherDoc', 'storeOtherDoc')->name('storeOtherDoc');
@@ -241,21 +242,56 @@ Route::group(['middleware' => ['auth']], function() {
     Route::controller(FormNoFiveController::class)->group(function () {
 
 
+        Route::get('formNoFiveSend/{id}', 'formNoFiveSend')->name('formNoFiveSend');
+
+
+
+        Route::get('formNoFiveRetaltedPdf/{title}/{id}', 'formNoFiveRetaltedPdf')->name('formNoFiveRetaltedPdf');
+
+
         Route::get('formNoFiveStepThreeExtra', 'formNoFiveStepThreeExtra')->name('formNoFiveStepThreeExtra');
 
         Route::get('formNoFiveStepTwo/{id}', 'formNoFiveStepTwo')->name('formNoFiveStepTwo');
         Route::post('formNoFiveStepTwoPost', 'formNoFiveStepTwoPost')->name('formNoFiveStepTwoPost');
+
+        Route::post('formNoFiveStepTwoUpdate', 'formNoFiveStepTwoUpdate')->name('formNoFiveStepTwoUpdate');
+        Route::delete('formNoFiveStepTwoDelete/{id}', 'formNoFiveStepTwoDelete')->name('formNoFiveStepTwoDelete');
+
         Route::get('formNoFiveStepThree/{id}', 'formNoFiveStepThree')->name('formNoFiveStepThree');
         Route::post('formNoFiveStepThreePost', 'formNoFiveStepThreePost')->name('formNoFiveStepThreePost');
+
+
+        Route::post('formNoFiveStepThreeUpdate', 'formNoFiveStepThreeUpdate')->name('formNoFiveStepThreeUpdate');
+        Route::delete('formNoFiveStepThreeDelete/{id}', 'formNoFiveStepThreeDelete')->name('formNoFiveStepThreeDelete');
+
+
         Route::get('formNoFiveStepFour/{id}', 'formNoFiveStepFour')->name('formNoFiveStepFour');
         Route::post('formNoFiveStepFourPost', 'formNoFiveStepFourPost')->name('formNoFiveStepFourPost');
 
-        Route::post('formNoFiveStepFourPostAjax', 'formNoFiveStepFourPostAjax')->name('formNoFiveStepFourPostAjax');
 
+        Route::post('formNoFiveStepFourUpdate', 'formNoFiveStepFourUpdate')->name('formNoFiveStepFourUpdate');
+        Route::delete('formNoFiveStepFourDelete/{id}', 'formNoFiveStepFourDelete')->name('formNoFiveStepFourDelete');
+
+
+
+        Route::post('formNoFiveStepFourPostAjax', 'formNoFiveStepFourPostAjax')->name('formNoFiveStepFourPostAjax');
+        Route::post('formNoFiveStepFivePostAjax', 'formNoFiveStepFivePostAjax')->name('formNoFiveStepFivePostAjax');
+
+        Route::post('formNoFiveStepSixPostAjax', 'formNoFiveStepSixPostAjax')->name('formNoFiveStepSixPostAjax');
 
 
         Route::get('formNoFiveStepFive/{id}', 'formNoFiveStepFive')->name('formNoFiveStepFive');
-        Route::post('formNoFiveStepPost', 'formNoFiveStepPost')->name('formNoFiveStepPost');
+        Route::post('formNoFiveStepFivePost', 'formNoFiveStepFivePost')->name('formNoFiveStepFivePost');
+
+        Route::post('formNoFiveStepFiveUpdate', 'formNoFiveStepFiveUpdate')->name('formNoFiveStepFiveUpdate');
+        Route::get('formNoFiveStepFiveDelete', 'formNoFiveStepFiveDelete')->name('formNoFiveStepFiveDelete');
+
+
+        Route::post('formNoFiveStepSixUpdate', 'formNoFiveStepSixUpdate')->name('formNoFiveStepSixUpdate');
+        Route::get('formNoFiveStepSixDelete', 'formNoFiveStepSixDelete')->name('formNoFiveStepSixDelete');
+
+
+
         Route::get('formNoFivePdfDownload/{id}', 'formNoFivePdfDownload')->name('formNoFivePdfDownload');
     });
 

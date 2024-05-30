@@ -179,7 +179,7 @@
                                                 মহাপরিচালক <br>
                                                 এনজিও বিষয় ব্যুরো <br>
                                                 প্রধানমন্ত্রীর কার্যালয়</p>
-                                            <p>নিষয়ঃ সংস্থার বিদেশি বিশেষজ্ঞউপদেষ্টা/কর্মকর্ত/সেচ্ছাসেবী “<span style="color:red;">*</span><input
+                                            <p>বিষয়: সংস্থার বিদেশি বিশেষজ্ঞউপদেষ্টা/কর্মকর্ত/সেচ্ছাসেবী “<span style="color:red;">*</span><input
                                                         type="text" class="form-control custom-form" value="{{ $fd9OneList->foreigner_name_for_subject }}" name="foreigner_name_for_subject" required> ”' এর ওয়ার্ক পারমিট প্রসঙ্গে।
                                             </p>
                                             <p>

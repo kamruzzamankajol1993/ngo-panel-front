@@ -430,8 +430,12 @@
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
+
+
                 event.preventDefault();
                 document.getElementById('delete-form-'+id).submit();
+
+                
             } else if (
                 // Read more about handling dismissals
                 result.dismiss === swal.DismissReason.cancel

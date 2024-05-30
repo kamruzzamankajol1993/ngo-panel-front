@@ -190,7 +190,7 @@
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">প্রকল্পের মেয়াদকাল<span class="text-danger">*</span></label>
+                                            <label for="" class="form-label">প্রকল্পের মোট মেয়াদকাল<span class="text-danger">*</span></label>
                                             <input type="text" required name="prokolpo_duration"  class="form-control" id=""placeholder="">
                                         </div>
 

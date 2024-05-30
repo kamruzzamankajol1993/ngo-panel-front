@@ -118,7 +118,7 @@
         </a>
     </div>
 
-    
+
 
     <div class="profile_link_box">
         <a href="{{ route('formNoFive.index') }}">
@@ -186,7 +186,7 @@
 
                                 </li>
 
-                                <li class="active visited">
+                                <li class="active ">
                                     <i class="fa fa-newspaper-o" aria-hidden="true"></i>
                                     <p>নথিপত্র</p>
 
@@ -294,7 +294,7 @@
 
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        এনজিও বিষয়ক ব্যুরোর মুল সনদপত্র <span class="text-danger">*</span>
+                                        এনজিও বিষয়ক ব্যুরোর মূল সনদপত্র <span class="text-danger">*</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -368,7 +368,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         ০২ টি জাতীয় পত্রিকায় ( বাংলা ও ইংরেজী পত্রিকায়) নাম পরিবর্তন বিষয়ে বিজ্ঞাপনের মূলকপি <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -382,8 +382,8 @@
                                 </div>
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        নাম পরিবর্তন ফি বাবদ- ২৬,০০০/- (ছাব্বিশ হাজার) টাকার (কোড নং-১-০৩২৩-০০০০- ১৮৩৬) চালানের মূলকপি এবং ১৫% ভ্যাট (কোড নং - ১-১১৩৩ -০০৩৫ - ০৩১১) প্রদানপূর্বক চালানের মূলকপিসহ <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500KB)</span>
+                                        নাম পরিবর্তন ফি বাবদ- ২৬,০০০/- (ছাব্বিশ হাজার) টাকার (কোড নং-১-০৩২৩-০০০০- ১৮৩৬) চালানের মূলকপিসহ অনুলিপি <span class="text-danger">*</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -397,7 +397,7 @@
 <div class="card mb-3">
                                     <div class="card-header">
                                         গঠনতন্ত্র পরিবর্তন ফি বাবদ- ১৩,০০০/- (তের হাজার) টাকার (কোড নং-১-০৩২৩-০০০০- ১৮৩৬) চালানের মূলকপিসহ <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -410,7 +410,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         ফরম -৮ মোতাবেক নির্বাহী কমিটির তালিকা <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -427,7 +427,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         নির্বাহী কমিটির সদস্যদের ভোটার আইডি কার্ডের ফটোকপিসহ সত্যায়িত পাসপোর্ট সাইজের ছবি <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 5 MB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 5 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -444,7 +444,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         ৩০০/- (তিনশত) টাকার স্টাম্পে নাম পরিবর্তনের বিষয়ে এফিডেবিট এর কপি <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -459,8 +459,8 @@
 
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        এনজিও বিষয়ক ব্যুরোর মুল সনদপত্র <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        এনজিও বিষয়ক ব্যুরোর মূল সনদপত্র <span class="text-danger">*</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -475,7 +475,7 @@
                                     <div class="card-header">
                                         পরিবর্তিত নামে প্রাথমিক নিবন্ধন প্রদানকারী কর্তৃপক্ষের সত্যায়িত সনদপত্রের কপি <span class="text-danger">*</span>
 
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -489,7 +489,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         প্রাথমিক নিবন্ধন প্রদানকারী কর্তৃপক্ষের অনুমোদিত নির্বাহী কমিটির তালিকার সত্যায়িত কপি <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -505,7 +505,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         সর্বশেষ সাধারণ সদস্যদের তালিকা <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -521,7 +521,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         নাম পরিবর্তন সংক্রান্ত বিষয়ে সাধারণ সভার কার্যবিবরণীর (উপস্থিত সদস্যদের তালিকাসহ) সত্যায়িত কপি <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -535,7 +535,7 @@
                                 <div class="card mb-3">
                                     <div class="card-header">
                                         পূর্ববর্তী নামের সকল দায়-দায়িত্ব বর্তমানে পরিবর্তিত নামের সংস্থার উপর বর্তাইবে মর্মে অংগীকার নামা (সভাপতি ও সাধারণ সম্পাদক কর্তৃক স্বাক্ষরিত)। <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -548,8 +548,8 @@
                                 </div>
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        দাখিলকৃত চালানের উপর ১৫% ভ্যাট নির্ধারিত কোডে জমাপূর্বক চালানের মূলকলিসহ (কোড নং-১-১১৩৩-০০৩৫-০৩১১) <span class="text-danger">*</span>
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        দাখিলকৃত চালানের উপর ১৫% ভ্যাট নির্ধারিত কোডে জমাপূর্বক চালানের মূলকপিসহ (কোড নং-১-১১৩৩-০০৩৫-০৩১১) <span class="text-danger">*</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -564,7 +564,7 @@
                                     <div class="card-header">
                                         ২০১০-২০১১ অর্থবছর হতে হালনাগাদ পর্যন্ত সংস্থার নিবন্ধন/নিবন্ধন নবায়ন/নাম পরিবর্তন/গঠনতন্ত্রের যে কোন ধারা পরিবর্তনের বিষয়ে দাখিলকৃত ফি এর উপর ১৫% বকেয়া ভ্যাট (যদি ইতোমধ্যে প্রদান না করা হয়ে থাকে) সংশ্লিষ্ট কোডে জমাপূর্বক চালানের মুলকপিসহ
 
-                                        <br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                                        <span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -581,7 +581,7 @@
                                         >পিছনে যান
                             </a>
 
-                                    <button type="submit" class="btn btn-registration"
+                                    <button type="submit" style="margin-left: 10px;" class="btn btn-registration"
                                             >যুক্ত করুন
                                     </button>
                                 </div>

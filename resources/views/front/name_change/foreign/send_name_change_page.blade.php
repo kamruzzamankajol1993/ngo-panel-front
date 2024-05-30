@@ -109,7 +109,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -158,7 +158,7 @@
                     <div class="card-body">
                         <div class="step_box">
                             <ul class="process-model more-icon-preocess">
-                                <li class="active visited">
+                                <li class="active ">
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <p>নতুন নাম</p>
 
@@ -200,17 +200,17 @@ $fdOneFormId = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->val
 
 <div class=" mb-3">
     <label for="" class="form-label">নতুন নাম (English)</label>
-    <input type="text" value="{{ Session::get('new_name') }}" name="new_name" class="form-control" id="">
+    <input type="text" value="{{ Session::get('new_name') }}" required name="new_name" class="form-control" id="">
 </div>
 
 
 <div class=" mb-3">
     <label for="" class="form-label">নতুন নাম (বাংলা)</label>
-    <input type="text" value="{{ Session::get('new_name_ban')}}"  name="new_name_ban" class="form-control" id="">
+    <input type="text" value="{{ Session::get('new_name_ban')}}" required  name="new_name_ban" class="form-control" id="">
 </div>
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="submit" class="btn btn-registration"
-                                               >Next
+                                               >পরবর্তী ধাপ
                                         </button>
                                     </div>
                                 </form>

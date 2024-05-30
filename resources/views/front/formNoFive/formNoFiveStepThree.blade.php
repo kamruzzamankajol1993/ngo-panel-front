@@ -213,12 +213,12 @@
                                      <div class="row mt-4">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্পের নাম<span class="text-danger">*</span></label>
-                                            <input type="text" required name="prokolpo_name_one"  class="form-control" id="prokolpo_name_one" placeholder="">
+                                            <input type="text" required name="prokolpo_name_one" value="{{ $formFiveData->prokolpo_name_one }}"  class="form-control" id="prokolpo_name_one" placeholder="">
                                         </div>
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রতিবেদনাধীন সময়<span class="text-danger">*</span></label>
-                                            <input type="text" required name="reporting_period"  class="form-control" id="reporting_period" placeholder="">
+                                            <input type="text" required name="reporting_period" value="{{ $formFiveData->reporting_period }}"  class="form-control" id="reporting_period" placeholder="">
                                         </div>
 
                                     </div>
@@ -291,12 +291,21 @@
                                                         <td>{{ $formNoFiveStepThreeDatass->comment }}</td>
                                                         <td>
 
-                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepThreeDatass->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
-                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepThreeDatass->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+
+                                                            <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $formNoFiveStepThreeDatass->id }}" >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                                                  <!-- edit modal start -->
+
+                                                                                  @include('front.formNoFive._partila.stepThreeModalEdit')
+
+                                                                                  <!-- edit  modal end -->
+
                                                             <button type="button" onclick="deleteTag({{ $formNoFiveStepThreeDatass->id}})" class="btn btn-sm btn-outline-danger"><i
                                                                 class="bi bi-trash"></i></button>
 
-                                                                <form id="delete-form-{{ $formNoFiveStepThreeDatass->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepThreeDatass->id) }}" method="POST" style="display: none;">
+                                                                <form id="delete-form-{{ $formNoFiveStepThreeDatass->id }}" action="{{ route('formNoFiveStepThreeDelete',$formNoFiveStepThreeDatass->id) }}" method="POST" style="display: none;">
 
                                                                     @csrf
                                                                     @method('DELETE')
@@ -348,7 +357,37 @@
 
 <script>
 
-    /////
+var name = sessionStorage.getItem("prokolpo_name_one");
+    var period = sessionStorage.getItem("reporting_period");
+
+
+    $('#prokolpo_name_one').val(name);
+    $('#reporting_period').val(period);
+
+    </script>
+
+<script>
+
+
+//////
+
+$(document).on('click', '#sessionDataStore', function () {
+
+    var prokolpo_name_one = $('#prokolpo_name_one').val();
+    var reporting_period = $('#reporting_period').val();
+
+    sessionStorage.clear()
+
+    //alert(prokolpo_name_one);
+
+    sessionStorage.setItem("prokolpo_name_one", prokolpo_name_one);
+    sessionStorage.setItem("reporting_period", reporting_period);
+
+
+
+
+});
+ ///   /////
 
 
     $(document).on('click', '#final_button', function () {

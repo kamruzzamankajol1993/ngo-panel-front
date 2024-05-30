@@ -5,7 +5,29 @@
 @endsection
 
 @section('css')
+<style>
 
+    .alertify .ajs-body .ajs-content {
+        font-weight: bolder;
+        color:red;
+        font-size: 20px;
+    }
+
+    .alertify .ajs-header{
+
+        color:red;
+        font-size: 20px;
+
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button{
+
+        background-color: #006A4E;
+        color: #fff;
+
+    }
+
+</style>
 <style>
     .ui-widget.ui-widget-content {
     top: 0px !important;
@@ -170,8 +192,9 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
 
-                                    <form action="{{ route('formNoFive.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('formNoFiveStepFivePost') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
+                                        <input type="hidden" class="form-control" value="{{ $formFiveData->id }}" name="main_id" id=""  >
                                     <div class="form9_upper_box">
                                         <h3>ফরম নং-৫</h3>
                                         <h4 style="font-weight: 900;">বার্ষিক প্রতিবেদন</h4>
@@ -240,8 +263,58 @@
 
                                             <div class="table-responsive">
 
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th rowspan="2">ক্র : নং :</th>
+                                                        <th rowspan="2">কর্মকর্তা কর্মচারীর নাম ও পদবি</th>
+                                                        <th rowspan="2">যোগদানের তারিখ</th>
+                                                        <th rowspan="2">যে দেশ ভ্রমণ করেছে তার নাম</th>
+                                                        <th rowspan="2">সভা, প্রশিক্ষণ সেমিনার আয়োজনকারী প্রতিষ্ঠানের নাম ও ঠিকানা</th>
+                                                        <th rowspan="2">প্রশিক্ষণ কোর্সের নাম</th>
+                                                        <th rowspan="2">কোর্সের মেয়াদ</th>
+
+                                                        <th rowspan="2">মোট ব্যয়</th>
+                                                        <th colspan="2">ব্যয়ের উৎস</th>
+                                                        {{-- <th >ব্যয়ের উৎস (দাতা সংস্থার দেশ)</th> --}}
+                                                        <th rowspan="2" >কর্ম পরিকল্পনা</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th colspan="2">দাতা সংস্থার নাম,দেশ</th>
+                                                    </tr>
+                                                    @foreach($formNoFiveStepFiveData as $key=>$formNoFiveStepFiveDatas)
+                                                    <tr>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->name_of_the_officer }}({{ $formNoFiveStepFiveDatas->designation_of_the_officer }})</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->joining_date}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->travel_country}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->organizing_organization_name }}({{ $formNoFiveStepFiveDatas->organizing_organization_address }})</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->name_of_training_course }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->course_duration }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->total_expense}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->name_of_donor_organization}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->country_name_of_donor_organization }}</td>
+
+                                                        <td>
+
+                                                            <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $formNoFiveStepFiveDatas->id }}" >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                                                  <!-- edit modal start -->
+
+                                                                                  @include('front.formNoFive._partila.stepFiveModalEdit')
+
+                                                                                  <!-- edit  modal end -->
+
+                                                            <button type="button" onclick="deleteTagStepFive({{ $formNoFiveStepFiveDatas->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                                class="bi bi-trash"></i></button>
 
 
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </table>
 
                                             </div>
 
@@ -253,13 +326,42 @@
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">সভা, সেমিনার, কর্মশালা,সম্মেলন ইত্যাদিও প্রশিক্ষণ হিসাবে গণ্য হবে <span class="text-danger">*</span></label>
-                                            <textarea required name="foreign_tour_detail"  class="form-control" id=""placeholder=""></textarea>
+                                            <textarea required name="foreign_tour_detail"  class="form-control" id=""placeholder="">{{ $formFiveData->foreign_tour_detail }}</textarea>
                                         </div>
+
+                                        @if(empty($formFiveData->foreign_tour_file))
+
+
 
                                         <div class="mb-3 col-lg-12">
                                             <label for="" class="form-label">দাপ্তরিক কাজে বিদেশ ভ্রমণ শেষে ভ্রমণের অর্জন উল্লেখপূর্বক প্রতিবেদন দাখিলের প্রমাণক সংযুক্ত করতে হবে<span class="text-danger">*</span></label>
                                             <input type="file" accept=".pdf" required name="foreign_tour_file"  class="form-control" id=""placeholder="">
                                         </div>
+
+
+
+                                        @else
+
+                                        <?php
+
+                                        $file_path = url($formFiveData->foreign_tour_file);
+                                        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                        $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                        ?>
+
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">দাপ্তরিক কাজে বিদেশ ভ্রমণ শেষে ভ্রমণের অর্জন উল্লেখপূর্বক প্রতিবেদন দাখিলের প্রমাণক সংযুক্ত করতে হবে<span class="text-danger">*</span></label>
+                                            <input type="file" accept=".pdf"  name="foreign_tour_file"  class="form-control" id=""placeholder="">
+                                        </div>
+
+                                        <b>{{ $filename.'.'.$extension }}</b>
+
+                                        @endif
 
 
 
@@ -312,7 +414,56 @@
 
                                             <div class="table-responsive">
 
+                                                <table class="table table-bordered">
+                                                    <tr>
+                                                        <th>ক্র : নং :</th>
+                                                        <th >কর্মকর্তা/কর্মচারীর নাম ও জাতীয়তা(দেশি /বিদেশি)</th>
+                                                        <th >পদবি ও দায়িত্ব </th>
+                                                        <th >শিক্ষাগত যোগ্যতা ও অভিজ্ঞতা</th>
+                                                        <th >বয়স</th>
+                                                        <th >বেতন</th>
+                                                        <th >অন্যান্য ভাতা/সুবিধাদি</th>
 
+                                                        <th >সংস্থায় চাকুরীর মেয়াদ</th>
+                                                        <th >অন্য কোনো প্রকল্প থেকে/গৃহীত আর্থিক বা অন্যান্য সুবিধার বর্ণনা</th>
+                                                        <th >মন্তব্য</th>
+                                                        <th >কর্ম পরিকল্পনা</th>
+                                                    </tr>
+
+                                                    @foreach($formNoFiveStepFiveOther as $key=>$formNoFiveStepFiveDatas)
+                                                    <tr>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->name_of_the_officer_depend_on_salary }} ও {{ $formNoFiveStepFiveDatas->nationality_of_the_officer_depend_on_salary }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->designation_of_the_officer_depend_on_salary}} ও {{ $formNoFiveStepFiveDatas->responsbility_of_the_officer_depend_on_salary}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->education_of_the_officer_depend_on_salary}} ও {{ $formNoFiveStepFiveDatas->experience_of_the_officer_depend_on_salary}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->age_of_the_officer_depend_on_salary }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->salary_of_the_officer_depend_on_salary }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->other_allowances_or_benefits_of_the_officer_depend_on_salary }}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->job_duration_of_the_officer_depend_on_salary}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->financial_benefit_received_from_any_other_scheme}}</td>
+                                                        <td>{{ $formNoFiveStepFiveDatas->comment }}</td>
+
+                                                        <td>
+
+                                                            <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModalSix{{ $formNoFiveStepFiveDatas->id }}" >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                                                  <!-- edit modal start -->
+
+                                                                                  @include('front.formNoFive._partila.stepSixModalEdit')
+
+                                                                                  <!-- edit  modal end -->
+
+                                                            <button type="button" onclick="deleteTagStepSix({{ $formNoFiveStepFiveDatas->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                                class="bi bi-trash"></i></button>
+
+
+
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </table>
 
 
                                             </div>
@@ -343,6 +494,14 @@
 
                                     </div>
 
+                                    @if(empty($formFiveData->report_preparar_sign))
+
+                                    @else
+
+                                    <img src="{{ asset('/') }}{{ $formFiveData->report_preparar_sign }}" />
+
+                                    @endif
+
 
                                     <div class="mb-3">
                                         <label for="" class="form-label">রিপোর্ট প্রস্তুতকারীর {{ trans('zoom.digitalSeal')}}: <span class="text-danger">*</span>
@@ -359,6 +518,14 @@
                                         <!-- new code for image cropper end -->
                                     </div>
                                     <!-- end new code -->
+
+                                    @if(empty($formFiveData->report_preparar_seal))
+
+                                    @else
+
+                                    <img src="{{ asset('/') }}{{ $formFiveData->report_preparar_seal }}" />
+
+                                    @endif
 
                                         </div>
                                      </div>
@@ -390,6 +557,577 @@
 @endsection
 
 @section('script')
+
+<script type="text/javascript">
+    function deleteTagStepSix(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ trans('notification.success_three')}}',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                $.ajax({
+    url: "{{ route('formNoFiveStepSixDelete') }}",
+    method: 'GET',
+    data: {id:id},
+    success: function(data) {
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.error('Data Delete Successfully');
+
+      location.reload(true);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+                // event.preventDefault();
+                // document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    '{{ trans('notification.success_six')}} :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
+
+<script type="text/javascript">
+    function deleteTagStepFive(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ trans('notification.success_three')}}',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                $.ajax({
+    url: "{{ route('formNoFiveStepFiveDelete') }}",
+    method: 'GET',
+    data: {id:id},
+    success: function(data) {
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.error('Data Delete Successfully');
+
+      location.reload(true);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+                // event.preventDefault();
+                // document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    '{{ trans('notification.success_six')}} :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
+<script>
+
+
+//last update ajax code strat
+
+$(document).on('click', '.stepSixAjaxUpdate', function () {
+
+
+
+    var mainId = $(this).attr('id');
+
+    if(!$('#name_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#nationality_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর জাতীয়তা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#designation_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর পদ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#responsbility_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর দায়িত্ব সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#education_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর শিক্ষাগত যোগ্যতা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#experience_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অভিজ্ঞতা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#age_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর বয়স সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#salary_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর বেতন সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#other_allowances_or_benefits_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্যান্য ভাতা/সুবিধাদি সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#job_duration_of_the_officer_depend_on_salary'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর সংস্থায় চাকুরীর মেয়াদ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#financial_benefit_received_from_any_other_scheme'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্য কোনো প্রকল্প থেকে/গৃহীত আর্থিক বা অন্যান্য সুবিধার বর্ণনা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#financial_benefit_received_from_any_other_scheme'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্য কোনো প্রকল্প থেকে/গৃহীত আর্থিক বা অন্যান্য সুবিধার বর্ণনা সম্পর্কিত তথ্য দিন');
+
+}else{
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+
+var decode_id = $('#decode_id'+mainId).val();
+var name_of_the_officer_depend_on_salary = $('#name_of_the_officer_depend_on_salary'+mainId).val();
+var nationality_of_the_officer_depend_on_salary = $('#nationality_of_the_officer_depend_on_salary'+mainId).val();
+var designation_of_the_officer_depend_on_salary = $('#designation_of_the_officer_depend_on_salary'+mainId).val();
+var responsbility_of_the_officer_depend_on_salary = $('#responsbility_of_the_officer_depend_on_salary'+mainId).val();
+var education_of_the_officer_depend_on_salary = $('#education_of_the_officer_depend_on_salary'+mainId).val();
+var experience_of_the_officer_depend_on_salary =$('#experience_of_the_officer_depend_on_salary'+mainId).val();
+var age_of_the_officer_depend_on_salary = $('#age_of_the_officer_depend_on_salary'+mainId).val();
+var salary_of_the_officer_depend_on_salary = $('#salary_of_the_officer_depend_on_salary'+mainId).val();
+var other_allowances_or_benefits_of_the_officer_depend_on_salary = $('#other_allowances_or_benefits_of_the_officer_depend_on_salary'+mainId).val();
+var job_duration_of_the_officer_depend_on_salary = $('#job_duration_of_the_officer_depend_on_salary'+mainId).val();
+var financial_benefit_received_from_any_other_scheme = $('#financial_benefit_received_from_any_other_scheme'+mainId).val();
+var comment = $('#comment'+mainId).val();
+
+
+$.ajax({
+url: "{{ route('formNoFiveStepSixUpdate') }}",
+method: 'POST',
+data: {mainId:mainId,name_of_the_officer_depend_on_salary:name_of_the_officer_depend_on_salary,nationality_of_the_officer_depend_on_salary:nationality_of_the_officer_depend_on_salary,designation_of_the_officer_depend_on_salary:designation_of_the_officer_depend_on_salary,responsbility_of_the_officer_depend_on_salary:responsbility_of_the_officer_depend_on_salary,education_of_the_officer_depend_on_salary:education_of_the_officer_depend_on_salary,experience_of_the_officer_depend_on_salary:experience_of_the_officer_depend_on_salary,age_of_the_officer_depend_on_salary:age_of_the_officer_depend_on_salary,salary_of_the_officer_depend_on_salary:salary_of_the_officer_depend_on_salary,other_allowances_or_benefits_of_the_officer_depend_on_salary:other_allowances_or_benefits_of_the_officer_depend_on_salary,job_duration_of_the_officer_depend_on_salary:job_duration_of_the_officer_depend_on_salary,decode_id:decode_id,financial_benefit_received_from_any_other_scheme:financial_benefit_received_from_any_other_scheme,comment:comment},
+success: function(data) {
+    location.reload(true);
+$('#exampleModalSix'+mainId).modal('hide');
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Added Successfully');
+
+$("#tableAjaxDataOther").html('');
+$("#tableAjaxDataOther").html(data);
+
+
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+}
+
+});
+
+//last update ajax code end
+
+    //last step six
+
+    $(document).on('click', '#stepSixAjax', function () {
+
+
+            if(!$('#name_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর নাম সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#nationality_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর জাতীয়তা সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#designation_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর পদ সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#responsbility_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর দায়িত্ব সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#education_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর শিক্ষাগত যোগ্যতা সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#experience_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অভিজ্ঞতা সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#age_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর বয়স সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#salary_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর বেতন সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#other_allowances_or_benefits_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্যান্য ভাতা/সুবিধাদি সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#job_duration_of_the_officer_depend_on_salary').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর সংস্থায় চাকুরীর মেয়াদ সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#financial_benefit_received_from_any_other_scheme').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্য কোনো প্রকল্প থেকে/গৃহীত আর্থিক বা অন্যান্য সুবিধার বর্ণনা সম্পর্কিত তথ্য দিন');
+
+            }else if(!$('#financial_benefit_received_from_any_other_scheme').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা/কর্মচারীর অন্য কোনো প্রকল্প থেকে/গৃহীত আর্থিক বা অন্যান্য সুবিধার বর্ণনা সম্পর্কিত তথ্য দিন');
+
+          }else{
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+
+            var decode_id = $('#decode_id').val();
+            var name_of_the_officer_depend_on_salary = $('#name_of_the_officer_depend_on_salary').val();
+            var nationality_of_the_officer_depend_on_salary = $('#nationality_of_the_officer_depend_on_salary').val();
+            var designation_of_the_officer_depend_on_salary = $('#designation_of_the_officer_depend_on_salary').val();
+            var responsbility_of_the_officer_depend_on_salary = $('#responsbility_of_the_officer_depend_on_salary').val();
+            var education_of_the_officer_depend_on_salary = $('#education_of_the_officer_depend_on_salary').val();
+            var experience_of_the_officer_depend_on_salary =$('#experience_of_the_officer_depend_on_salary').val();
+            var age_of_the_officer_depend_on_salary = $('#age_of_the_officer_depend_on_salary').val();
+            var salary_of_the_officer_depend_on_salary = $('#salary_of_the_officer_depend_on_salary').val();
+            var other_allowances_or_benefits_of_the_officer_depend_on_salary = $('#other_allowances_or_benefits_of_the_officer_depend_on_salary').val();
+            var job_duration_of_the_officer_depend_on_salary = $('#job_duration_of_the_officer_depend_on_salary').val();
+            var financial_benefit_received_from_any_other_scheme = $('#financial_benefit_received_from_any_other_scheme').val();
+            var comment = $('#comment').val();
+
+
+            $.ajax({
+    url: "{{ route('formNoFiveStepSixPostAjax') }}",
+    method: 'POST',
+    data: {name_of_the_officer_depend_on_salary:name_of_the_officer_depend_on_salary,nationality_of_the_officer_depend_on_salary:nationality_of_the_officer_depend_on_salary,designation_of_the_officer_depend_on_salary:designation_of_the_officer_depend_on_salary,responsbility_of_the_officer_depend_on_salary:responsbility_of_the_officer_depend_on_salary,education_of_the_officer_depend_on_salary:education_of_the_officer_depend_on_salary,experience_of_the_officer_depend_on_salary:experience_of_the_officer_depend_on_salary,age_of_the_officer_depend_on_salary:age_of_the_officer_depend_on_salary,salary_of_the_officer_depend_on_salary:salary_of_the_officer_depend_on_salary,other_allowances_or_benefits_of_the_officer_depend_on_salary:other_allowances_or_benefits_of_the_officer_depend_on_salary,job_duration_of_the_officer_depend_on_salary:job_duration_of_the_officer_depend_on_salary,decode_id:decode_id,financial_benefit_received_from_any_other_scheme:financial_benefit_received_from_any_other_scheme,comment:comment},
+    success: function(data) {
+
+        $('#exampleModalSix').modal('hide');
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.success('Data Added Successfully');
+
+      $("#tableAjaxDataOther").html('');
+      $("#tableAjaxDataOther").html(data);
+
+       $('#name_of_the_officer_depend_on_salary').val('');
+       $('#nationality_of_the_officer_depend_on_salary').val('');
+       $('#designation_of_the_officer_depend_on_salary').val('');
+       $('#responsbility_of_the_officer_depend_on_salary').val('');
+       $('#education_of_the_officer_depend_on_salary').val('');
+       $('#experience_of_the_officer_depend_on_salary').val('');
+       $('#age_of_the_officer_depend_on_salary').val('');
+       $('#salary_of_the_officer_depend_on_salary').val('');
+       $('#other_allowances_or_benefits_of_the_officer_depend_on_salary').val('');
+       $('#job_duration_of_the_officer_depend_on_salary').val('');
+       $('#financial_benefit_received_from_any_other_scheme').val('');
+       $('#comment').val('');
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+            }
+
+
+
+    });
+    // end last step six
+
+
+
+    //step Five update code start
+
+    $(document).on('click', '.stepFiveAjaxUpdate', function () {
+
+        var mainId = $(this).attr('id');
+
+
+
+        if(!$('#name_of_the_officer'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা কর্মচারীর নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#designation_of_the_officer'+mainId).val()){
+
+alertify.alert('Error', 'কর্মকর্তা কর্মচারীর পদবি সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#joining_date'+mainId).val()){
+
+alertify.alert('Error', 'যোগদানের তারিখ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#travel_country'+mainId).val()){
+
+alertify.alert('Error', 'যে দেশ ভ্রমণ করেছে তার নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#organizing_organization_name'+mainId).val()){
+
+alertify.alert('Error', 'সভা, প্রশিক্ষণ সেমিনার আয়োজনকারী প্রতিষ্ঠানের নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#organizing_organization_address'+mainId).val()){
+
+alertify.alert('Error', 'সভা, প্রশিক্ষণ সেমিনার আয়োজনকারী প্রতিষ্ঠানের ঠিকানা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#name_of_training_course'+mainId).val()){
+
+alertify.alert('Error', 'প্রশিক্ষণ কোর্সের নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#course_duration'+mainId).val()){
+
+alertify.alert('Error', 'কোর্সের মেয়াদ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#total_expense'+mainId).val()){
+
+alertify.alert('Error', 'মোট ব্যয় সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#name_of_donor_organization'+mainId).val()){
+
+alertify.alert('Error', 'ব্যয়ের উৎস (দাতা সংস্থার নাম) সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#country_name_of_donor_organization'+mainId).val()){
+
+alertify.alert('Error', 'ব্যয়ের উৎস (দাতা সংস্থার দেশ) সম্পর্কিত তথ্য দিন');
+
+}else{
+
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+var decode_id = $('#decode_id'+mainId).val();
+
+//alert(decode_id);
+
+var name_of_the_officer = $('#name_of_the_officer'+mainId).val();
+var designation_of_the_officer = $('#designation_of_the_officer'+mainId).val();
+var joining_date = $('#joining_date'+mainId).val();
+var travel_country = $('#travel_country'+mainId).val();
+var organizing_organization_name = $('#organizing_organization_name'+mainId).val();
+var organizing_organization_address =$('#organizing_organization_address'+mainId).val();
+var name_of_training_course = $('#name_of_training_course'+mainId).val();
+var course_duration = $('#course_duration'+mainId).val();
+var total_expense = $('#total_expense'+mainId).val();
+var name_of_donor_organization = $('#name_of_donor_organization'+mainId).val();
+var country_name_of_donor_organization = $('#country_name_of_donor_organization'+mainId).val();
+
+
+$.ajax({
+url: "{{ route('formNoFiveStepFiveUpdate') }}",
+method: 'POST',
+data: {mainId:mainId,country_name_of_donor_organization:country_name_of_donor_organization,name_of_donor_organization:name_of_donor_organization,total_expense:total_expense,course_duration:course_duration,name_of_training_course:name_of_training_course,organizing_organization_address:organizing_organization_address,organizing_organization_name:organizing_organization_name,travel_country:travel_country,joining_date:joining_date,decode_id:decode_id,name_of_the_officer:name_of_the_officer,designation_of_the_officer:designation_of_the_officer},
+success: function(data) {
+    location.reload(true);
+$('#exampleModal'+mainId).modal('hide');
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Updated Successfully');
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+}
+
+    });
+    //step Five update code end
+
+
+
+    $(document).on('click', '#stepFiveAjax', function () {
+
+        if(!$('#name_of_the_officer').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা কর্মচারীর নাম সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#designation_of_the_officer').val()){
+
+            alertify.alert('Error', 'কর্মকর্তা কর্মচারীর পদবি সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#joining_date').val()){
+
+            alertify.alert('Error', 'যোগদানের তারিখ সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#travel_country').val()){
+
+            alertify.alert('Error', 'যে দেশ ভ্রমণ করেছে তার নাম সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#organizing_organization_name').val()){
+
+            alertify.alert('Error', 'সভা, প্রশিক্ষণ সেমিনার আয়োজনকারী প্রতিষ্ঠানের নাম সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#organizing_organization_address').val()){
+
+            alertify.alert('Error', 'সভা, প্রশিক্ষণ সেমিনার আয়োজনকারী প্রতিষ্ঠানের ঠিকানা সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#name_of_training_course').val()){
+
+            alertify.alert('Error', 'প্রশিক্ষণ কোর্সের নাম সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#course_duration').val()){
+
+            alertify.alert('Error', 'কোর্সের মেয়াদ সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#total_expense').val()){
+
+            alertify.alert('Error', 'মোট ব্যয় সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#name_of_donor_organization').val()){
+
+            alertify.alert('Error', 'ব্যয়ের উৎস (দাতা সংস্থার নাম) সম্পর্কিত তথ্য দিন');
+
+        }else if(!$('#country_name_of_donor_organization').val()){
+
+            alertify.alert('Error', 'ব্যয়ের উৎস (দাতা সংস্থার দেশ) সম্পর্কিত তথ্য দিন');
+
+        }else{
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var decode_id = $('#decode_id').val();
+            var name_of_the_officer = $('#name_of_the_officer').val();
+            var designation_of_the_officer = $('#designation_of_the_officer').val();
+            var joining_date = $('#joining_date').val();
+            var travel_country = $('#travel_country').val();
+            var organizing_organization_name = $('#organizing_organization_name').val();
+            var organizing_organization_address =$('#organizing_organization_address').val();
+            var name_of_training_course = $('#name_of_training_course').val();
+            var course_duration = $('#course_duration').val();
+            var total_expense = $('#total_expense').val();
+            var name_of_donor_organization = $('#name_of_donor_organization').val();
+            var country_name_of_donor_organization = $('#country_name_of_donor_organization').val();
+
+
+            $.ajax({
+    url: "{{ route('formNoFiveStepFivePostAjax') }}",
+    method: 'POST',
+    data: {country_name_of_donor_organization:country_name_of_donor_organization,name_of_donor_organization:name_of_donor_organization,total_expense:total_expense,course_duration:course_duration,name_of_training_course:name_of_training_course,organizing_organization_address:organizing_organization_address,organizing_organization_name:organizing_organization_name,travel_country:travel_country,joining_date:joining_date,decode_id:decode_id,name_of_the_officer:name_of_the_officer,designation_of_the_officer:designation_of_the_officer},
+    success: function(data) {
+
+        $('#exampleModal').modal('hide');
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.success('Data Added Successfully');
+
+      $("#tableAjaxData").html('');
+      $("#tableAjaxData").html(data);
+
+      $('#name_of_the_officer').val('');
+      $('#designation_of_the_officer').val('');
+      $('#joining_date').val('');
+      $('#travel_country').val('');
+      $('#organizing_organization_name').val('');
+      $('#organizing_organization_address').val('');
+      $('#name_of_training_course').val('');
+      $('#course_duration').val('');
+      $('#total_expense').val('');
+      $('#name_of_donor_organization').val('');
+      $('#country_name_of_donor_organization').val('')
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+        }
+    });
+
+</script>
+
+
 @include('front.zoomButtonImage')
 <script>
     var i = 0;

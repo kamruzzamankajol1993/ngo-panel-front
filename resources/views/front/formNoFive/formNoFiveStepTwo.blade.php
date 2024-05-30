@@ -265,12 +265,20 @@
                                                         <td>{{ $formNoFiveStepTwoDatas->comment }}</td>
                                                         <td>
 
-                                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveStepTwoDatas->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
-                                                            <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveStepTwoDatas->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                                            <button type="button" onclick="deleteTag({{ $formNoFiveStepTwoDatas->id}})" class="btn btn-sm btn-outline-danger"><i
+                                                            <button class="btn btn-sm btn-primary btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{ $formNoFiveStepTwoDatas->id }}" >
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>
+
+                                                            <!-- edit modal start -->
+
+                                                            @include('front.formNoFive._partila.modalEdit')
+
+                                                            <!-- edit  modal end -->
+
+                                                            <button type="button" onclick="deleteTag({{ $formNoFiveStepTwoDatas->id}})" class="btn btn-sm btn-danger"><i
                                                                 class="bi bi-trash"></i></button>
 
-                                                                <form id="delete-form-{{ $formNoFiveStepTwoDatas->id }}" action="{{ route('formNoFive.destroy',$formNoFiveStepTwoDatas->id) }}" method="POST" style="display: none;">
+                                                                <form id="delete-form-{{ $formNoFiveStepTwoDatas->id }}" action="{{ route('formNoFiveStepTwoDelete',$formNoFiveStepTwoDatas->id) }}" method="POST" style="display: none;">
 
                                                                     @csrf
                                                                     @method('DELETE')

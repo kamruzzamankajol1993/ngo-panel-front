@@ -36,6 +36,7 @@ $ngoOtherDocLists = DB::table('ngo_other_docs')->where('fd_one_form_id',$fdOneFo
 
             @else
 
+
             <table class="table table-border">
 
                 @if(empty($ngoOtherDocListsFirst->fd_eight_form_data))
@@ -1512,6 +1513,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
                </table>
             <!-- new table code end -->
+           @endif
 
 
         </div>
@@ -1580,7 +1582,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
 
                         @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
-                        <h6>দাতা সংস্হার প্রতিশুতিপত্র</h6>
+                        <h6>দাতা সংস্থার প্রতিশুতিপত্র</h6>
                         @else
 
                         <h6>Decision Of the Committee/Board To Open Office In Bangladesh</h6>
@@ -1663,7 +1665,7 @@ style="width:300px; height:150px;" frameborder="0"></iframe>
 
 
                                                     @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
-                                                    <h6>দাতা সংস্হার প্রতিশুতিপত্র</h6>
+                                                    <h6>দাতা সংস্থার প্রতিশুতিপত্র</h6>
                                                     @else
 
                                                     <h6>Decision Of the Committee/Board To Open Office In Bangladesh</h6>
