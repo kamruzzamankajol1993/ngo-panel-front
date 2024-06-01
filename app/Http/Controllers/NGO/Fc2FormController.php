@@ -27,6 +27,7 @@ use App\Models\Fd2Fc1OtherInfo;
 use App\Models\Fd2FormForFc2Form;
 use App\Models\Fd2Fc2OtherInfo;
 use Illuminate\Support\Facades\App;
+use App\Models\ProkolpoArea;
 class Fc2FormController extends Controller
 {
     public function index(){
@@ -67,8 +68,8 @@ class Fc2FormController extends Controller
         $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
         $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id) ->where('id',$fd6Id)->latest()->first();
 
-
-        return view('front.fc2Form.edit',compact('cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $prokolpoAreaList =ProkolpoArea::where('formId',$fd6Id)->where('type','fcTwo')->latest()->get();
+        return view('front.fc2Form.edit',compact('prokolpoAreaList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
@@ -92,9 +93,7 @@ class Fc2FormController extends Controller
             'person_email' => 'required|string',
             'ngo_prokolpo_start_date' => 'required|string',
             'ngo_prokolpo_end_date' => 'required|string',
-            'ngo_district' => 'required|string',
-            'ngo_sub_district' => 'required|string',
-            'total_number_of_beneficiaries' => 'required|string',
+
             'foreigner_donor_full_name' => 'required|string',
             'foreigner_donor_occupation' => 'required|string',
             'foreigner_donor_address' => 'required|string',
@@ -132,12 +131,13 @@ class Fc2FormController extends Controller
             DB::beginTransaction();
 
             $fdOneFormID = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $subject_all = implode(",",$request->subject_id);
 
             $fc2FormInfo = new Fc2Form();
             $fc2FormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
             $fc2FormInfo->fd_one_form_id =$fdOneFormID->id;
             $fc2FormInfo->person_full_name =$request->person_full_name;
-            $fc2FormInfo->subject_id =$request->subject_id;
+            $fc2FormInfo->subject_id =$subject_all;
             $fc2FormInfo->person_father_name =$request->person_father_name;
             $fc2FormInfo->person_mother_name =$request->person_mother_name;
             $fc2FormInfo->person_occupation =$request->person_occupation;
@@ -184,7 +184,7 @@ class Fc2FormController extends Controller
             $fc2FormInfo->bank_address =$request->bank_address;
             $fc2FormInfo->bank_account_name =$request->bank_account_name;
             $fc2FormInfo->bank_account_number =$request->bank_account_number;
-            $fc2FormInfo->status ='Ongoing';
+            $fc2FormInfo->status ='Review';
 
             $filePath="FcOneForm";
 
@@ -205,6 +205,91 @@ class Fc2FormController extends Controller
             $fc2FormInfo->save();
 
             $fc2FormInfoId = $fc2FormInfo->id;
+
+            // ad new code strat
+
+
+        $input = $request->all();
+
+        $divisionName = $input['division_name'];
+
+
+
+        foreach($divisionName as $key => $divisionName){
+            $form= new ProkolpoArea();
+            $form->formId=$fc2FormInfoId;
+            $form->type='fcTwo';
+            $form->division_name=$input['division_name'][$key];
+            $form->district_name=$input['district_name'][$key];
+            $form->city_corparation_name=$input['city_corparation_name'][$key];
+
+            if(empty($input['upozila_name'][$key])){
+
+
+            }else{
+
+                $form->upozila_name=$input['upozila_name'][$key];
+            }
+
+
+            if(empty($input['thana_name'][$key])){
+
+
+            }else{
+
+                $form->thana_name=$input['thana_name'][$key];
+            }
+
+
+
+            if(empty($input['municipality_name'][$key])){
+
+
+            }else{
+
+                $form->municipality_name=$input['municipality_name'][$key];
+            }
+
+
+
+            if(empty($input['ward_name'][$key])){
+
+
+            }else{
+
+                $form->ward_name=$input['ward_name'][$key];
+            }
+
+
+
+            if(empty($input['beneficiaries_total'][$key])){
+
+
+            }else{
+
+                $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+            }
+
+            if(empty($input['prokolpoType'][$key])){
+
+
+            }else{
+
+                $form->prokolpo_type=$input['prokolpoType'][$key];
+            }
+
+            if(empty($input['allocated_budget'][$key])){
+
+
+            }else{
+
+                $form->allocated_budget=$input['allocated_budget'][$key];
+            }
+
+            $form->save();
+        }
+
+    // ad new code end
 
             DB::commit();
             return redirect()->route('addFd2DetailForFc2',base64_encode($fc2FormInfoId))->with('success','Added Successfuly');
@@ -220,9 +305,11 @@ class Fc2FormController extends Controller
         try{
             DB::beginTransaction();
 
+            $subject_all = implode(",",$request->subject_id);
+
             $fc2FormInfo = Fc2Form::find($id);
             $fc2FormInfo->person_full_name =$request->person_full_name;
-            $fc2FormInfo->subject_id =$request->subject_id;
+            $fc2FormInfo->subject_id =$subject_all;
             $fc2FormInfo->person_father_name =$request->person_father_name;
             $fc2FormInfo->person_mother_name =$request->person_mother_name;
             $fc2FormInfo->person_occupation =$request->person_occupation;
@@ -269,7 +356,7 @@ class Fc2FormController extends Controller
             $fc2FormInfo->bank_address =$request->bank_address;
             $fc2FormInfo->bank_account_name =$request->bank_account_name;
             $fc2FormInfo->bank_account_number =$request->bank_account_number;
-            $fc2FormInfo->status ='Ongoing';
+            
 
             $filePath="FcOneForm";
 
@@ -293,6 +380,92 @@ class Fc2FormController extends Controller
             $fc2FormInfo->save();
 
             $fc2FormInfoId = $fc2FormInfo->id;
+
+            // ad new code strat
+
+
+        $input = $request->all();
+
+        $divisionName = $input['division_name'];
+
+        ProkolpoArea::where('formId',$fc2FormInfoId)->where('type','fcTwo')->delete();
+
+        foreach($divisionName as $key => $divisionName){
+            $form= new ProkolpoArea();
+            $form->formId=$fc2FormInfoId;
+            $form->type='fcTwo';
+            $form->division_name=$input['division_name'][$key];
+            $form->district_name=$input['district_name'][$key];
+            $form->city_corparation_name=$input['city_corparation_name'][$key];
+
+            if(empty($input['upozila_name'][$key])){
+
+
+            }else{
+
+                $form->upozila_name=$input['upozila_name'][$key];
+            }
+
+
+            if(empty($input['thana_name'][$key])){
+
+
+            }else{
+
+                $form->thana_name=$input['thana_name'][$key];
+            }
+
+
+
+            if(empty($input['municipality_name'][$key])){
+
+
+            }else{
+
+                $form->municipality_name=$input['municipality_name'][$key];
+            }
+
+
+
+            if(empty($input['ward_name'][$key])){
+
+
+            }else{
+
+                $form->ward_name=$input['ward_name'][$key];
+            }
+
+
+
+            if(empty($input['beneficiaries_total'][$key])){
+
+
+            }else{
+
+                $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+            }
+
+            if(empty($input['prokolpoType'][$key])){
+
+
+            }else{
+
+                $form->prokolpo_type=$input['prokolpoType'][$key];
+            }
+
+            if(empty($input['allocated_budget'][$key])){
+
+
+            }else{
+
+                $form->allocated_budget=$input['allocated_budget'][$key];
+            }
+
+            $form->save();
+        }
+
+    // ad new code end
+
             DB::commit();
             return redirect()->route('editFd2DetailForFc2',base64_encode($fc2FormInfoId))->with('success','Updated Successfuly');
 
@@ -300,6 +473,20 @@ class Fc2FormController extends Controller
             DB::rollBack();
             return redirect()->route('error_404');
         }
+    }
+
+
+
+    public function finalFcTwoApplicationSubmit($id){
+
+
+        $new_data_add = Fc2Form::find(base64_decode($id));
+        $new_data_add->status = 'Ongoing';
+        $new_data_add->save();
+
+        return redirect('/fc2Form')->with('success','Submit To Ngo Sucessfully');
+
+
     }
 
 
@@ -336,7 +523,9 @@ class Fc2FormController extends Controller
         $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
         $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc2Id)->latest()->first();
 
-        return view('front.fc2Form.view',compact('fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $prokolpoAreaList =ProkolpoArea::where('formId',$fc2Id)->where('type','fcTwo')->latest()->get();
+
+        return view('front.fc2Form.view',compact('prokolpoAreaList','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
    }
 

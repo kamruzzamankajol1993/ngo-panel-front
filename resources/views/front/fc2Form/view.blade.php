@@ -106,7 +106,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -152,6 +152,41 @@
 
                 <div class="card">
                     <div class="card-body">
+
+                        <!-- new code start --->
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+
+
+                        @if($fc2FormList->status == 'Ongoing' || $fc2FormList->status == 'Accepted')
+
+                                        @else
+
+                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fc2FormList->id}})" class="btn btn-info">
+                                            <i class="fa fa-send-o"></i>
+                                        </button>
+
+                                            <form id="delete-form-{{ $fc2FormList->id }}" action="{{ route('finalFcTwoApplicationSubmit',base64_encode($fc2FormList->id)) }}" method="get" style="display: none;">
+
+                                                @csrf
+
+
+                                            </form>
+
+                        <button class="btn btn-primary" onclick="location.href = '{{ route('fc2Form.edit',base64_encode($fc2FormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+                        @endif
+
+
+                    </div>
+                </div>
+
+                <!-- new code end -->
                         <div class="form9_upper_box">
                             <h3>এফসি - ২ ফরম</h3>
                             <h4>ব্যক্তি কর্তৃক বৈদেশিক অনুদানে গৃহীত প্রকল্প প্রস্তাব ফরম</h4>
@@ -241,19 +276,16 @@
 
                         <table class="table table-bordered">
                             <tr>
-                                <td>কর্ম এলাকা জেলা</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc2FormList->ngo_district) }}</td>
+                                <th>বিভাগ</th>
+                                <th>জেলা/সিটি কর্পোরেশন</th>
+                                <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
+                                <th>প্রকল্পের ধরণ</th>
+                                <th>বরাদ্দকৃত বাজেট</th>
+                                <th>মোট উপকারভোগীর সংখ্যা</th>
                             </tr>
-                            <tr>
-                                <td>কর্ম এলাকা উপজেলা</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc2FormList->ngo_sub_district) }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>মোট উপকারভোগীর সংখ্যা</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc2FormList->total_number_of_beneficiaries) }}</td>
-                            </tr>
-
+                            @foreach($prokolpoAreaList as $prokolpoAreaListAll)
+                          @include('front.include.globalTableView')
+                            @endforeach
                         </table>
 
 
@@ -329,9 +361,36 @@
                             </tr>
 
 
+                            <?php
+                            $subjectIdList  = explode(",",$fc2FormList->subject_id);
+                            $subjectListMain = DB::table('project_subjects')->whereIn('id',$subjectIdList)->select('name')
+                            ->get();
+
+                            ?>
                             <tr>
                                 <td>প্রকল্পের বিষয়</td>
-                                <td>: {{ DB::table('project_subjects')->where('id',$fc2FormList->subject_id)->value('name')}}</td>
+                                <td>:
+                                     @foreach($subjectListMain as $key=>$subjectListMains)
+
+                                     @if(count($subjectListMain) == 1 )
+
+                                     {{ $subjectListMains->name }}
+
+                                     @else
+
+                                     @if(count($subjectListMain) == ($key+1))
+                                     {{ $subjectListMains->name }} |
+
+                                     @else
+
+                                     {{ $subjectListMains->name }},
+
+                                     @endif
+
+                                     @endif
+
+                                     @endforeach
+                                </td>
                             </tr>
 
 
@@ -550,5 +609,45 @@
 
 </section>
 
+
+@endsection
+@section('script')
+
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 
 @endsection

@@ -36,8 +36,22 @@ use Illuminate\Support\Str;
 use Session;
 use App\Models\FdOneForm;
 use Illuminate\Support\Facades\App;
+use App\Models\ProkolpoArea;
 class Fd2FormController extends Controller
 {
+
+    public function fd2PdfUpdateModalFd7(Request $request){
+
+
+
+        $fd2OtherPdf = Fd2Fd7OtherInfo::where('id',$request->main_id)->first();
+
+        $data = view('front.fd2Form.fd2PdfUpdateModalFd7',compact('fd2OtherPdf'))->render();
+        return response()->json($data);
+
+
+    }
+
     public function index(){
 
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
@@ -721,7 +735,7 @@ class Fd2FormController extends Controller
 
           }
           DB::commit();
-          return redirect()->route('fd7Form.index')->with('success','Added Successfuly');
+          return redirect()->route('fd7Form.show',$request->fd7_form_id)->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -802,7 +816,7 @@ class Fd2FormController extends Controller
 
         }
           DB::commit();
-          return redirect()->route('fc1Form.index')->with('success','Added Successfuly');
+          return redirect()->route('fc1Form.show',$request->fc1_form_id)->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -882,7 +896,7 @@ class Fd2FormController extends Controller
                 }
             }
           DB::commit();
-          return redirect()->route('fc2Form.index')->with('success','Added Successfuly');
+          return redirect()->route('fc2Form.show',$request->fc2_form_id)->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -105,7 +105,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -218,7 +218,7 @@
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">ব্যুরোর নিবন্ধন তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_registration_date" value="{{ $fd7FormList->ngo_registration_date }}" class="form-control datepicker" id=""
+                                            <input type="text" required name="ngo_registration_date" value="{{ $fd7FormList->ngo_registration_date }}" class="form-control datepickerOne" id=""
                                                    placeholder="">
                                         </div>
 
@@ -228,13 +228,19 @@
                                                    placeholder="" required>
                                         </div>
 
+                                        <?php
+                                        $subjectIdList  = explode(",",$fd7FormList->subject_id);
+
+                                        ?>
+
+
                                         <div class="mb-3 col-lg-12">
-                                            <label for="" class="form-label">প্রকল্পের বিষয়<span class="text-danger">*</span></label>
-                                            <select required name="subject_id" class="form-control" id=""
+                                            <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
+                                            <select required multiple name="subject_id[]" class="form-control js-example-basic-multiple" id=""
                                                    placeholder="">
                                                    <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
                                                    @foreach($projectSubjectList as $projectSubjectLists)
-                                                   <option value="{{ $projectSubjectLists->id }}" {{ $fd7FormList->subject_id == $projectSubjectLists->id ? 'selected':'' }}>{{ $projectSubjectLists->name }}</option>
+                                                   <option value="{{ $projectSubjectLists->id }}" {{ (in_array($projectSubjectLists->id,$subjectIdList)) ? 'selected' : '' }}>{{ $projectSubjectLists->name }}</option>
                                                    @endforeach
                                             </select>
                                         </div>
@@ -313,7 +319,7 @@
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">ব্যুরোর অনুমোদনের তারিখ</label>
-                                                    <input type="text" value="{{ $fd7FormList->date_of_bureau_approval }}" name="date_of_bureau_approval" class="form-control datepicker" id=""
+                                                    <input type="text" value="{{ $fd7FormList->date_of_bureau_approval }}" name="date_of_bureau_approval" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
@@ -391,113 +397,13 @@
                                                     </div>
                                                     <div class="mb-3 col-lg-12">
                                                         <table class="table table-bordered" id="dynamicAddRemove">
-                                                            <tr>
-                                                                <th>বিভাগ</th>
-                                                                <th>জেলা/সিটি কর্পোরেশন</th>
-                                                                <th>উপজেলা/থানা/পৌরসভা/</th>
-<th>ইউনিয়ন/ওয়ার্ড</th>
-                                                                <th>বরাদ্দকৃত বাজেট <span class="text-danger">*</span></th>
-                                                                <th>উপকারভোগীর সংখ্যা <span class="text-danger">*</span></th>
-                                                                <th></th>
-                                                            </tr>
+
 
                                                             @foreach($prokolpoAreaList as $key=>$prokolpoAreaListAll)
-                                                            <tr>
-                                                                <td style="width: 20%">
-                                                                    <label for="" class="form-label">বিভাগ <span class="text-danger">*</span></label>
-                                                                    {{-- <input type="text" required name="division_name[]" class="form-control" id=""
-                                                                    placeholder=""> --}}
-
-
-
-                                                                    <select required name="division_name[]" class="form-control division_name" id="division_name0">
-                                                                        <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-                                                                        @foreach($divisionList as $districtListAll)
-
-                                                                        <option value="{{ $districtListAll->division_bn }}" {{ $districtListAll->division_bn == $prokolpoAreaListAll->division_name ? 'selected':'' }}>{{ $districtListAll->division_bn }}</option>
-                                                                        @endforeach
-
-                                                                    </select>
-                                                                </td>
-                                                                <td style="width: 30%">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12 mb-3">
-                                                                            <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                                                            {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                                                            placeholder=""> --}}
-
-                                                                            <select required name="district_name[]" class="form-control district_name" id="district_name{{ $key+60000 }}">
-                                                                                <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-                                                                                @foreach($districtList as $districtListAll)
-                                                                                <option value="{{ $districtListAll->district_bn }}" {{ $districtListAll->district_bn == $prokolpoAreaListAll->district_name ? 'selected':'' }}>{{ $districtListAll->district_bn }}</option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </div>
-                                                                        <div class="col-lg-12 mb-3">
-                                                                            <label for="" class="form-label">সিটি কর্পোরেশন</label>
-                                                                            {{-- <input type="text" name="city_corparation_name[]" class="form-control" id=""
-                                                                            placeholder=""> --}}
-
-
-                                                                            <select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name0">
-                                                                                <option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-                                                                                @foreach($cityCorporationList as $districtListAll)
-                                                                                <option value="{{ $districtListAll->city_orporation }}" {{ $districtListAll->city_orporation == $prokolpoAreaListAll->city_corparation_name ? 'selected':'' }}>{{ $districtListAll->city_orporation }}</option>
-                                                                                @endforeach
-
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-                                                                <td style="width: 30%">
-                                                                    <div class="row">
-                                                                        <div class="col-lg-12 mb-3">
-                                                                            <label for="" class="form-label">উপজেলা</label>
-                                                                            <input type="text" value="{{ $prokolpoAreaListAll->upozila_name }}" name="upozila_name[]" class="form-control" id=""
-                                                                            placeholder="">
-                                                                        </div>
-                                                                        <div class="col-lg-12 mb-3">
-                                                                            <label for="" class="form-label">থানা</label>
-                                                                            <input type="text" value="{{ $prokolpoAreaListAll->thana_name }}" name="thana_name[]" class="form-control" id=""
-                                                                            placeholder="" required>
-                                                                        </div>
-                                                                        <div class="col-lg-12 mb-3">
-                                                                            <label for="" class="form-label">পৌরসভা</label>
-                                                                            <input type="text" value="{{ $prokolpoAreaListAll->municipality_name }}" name="municipality_name[]" class="form-control" id=""
-                                                                            placeholder="">
-                                                                        </div>
-
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-
-                                                                        <label for="" class="form-label">ইউনিয়ন/ওয়ার্ড</label>
-                                                                        <input type="text" value="{{ $prokolpoAreaListAll->ward_name }}" name="ward_name[]" class="form-control" id=""
-                                                                        placeholder="">
-
-                                                                </td>
-
-                                                                <td>
-                                                                    <input type="number" value="{{ $prokolpoAreaListAll->allocated_budget }}" name="allocated_budget[]" required class="form-control" id=""
-                                                                           placeholder="">
-                                                                </td>
-                                                                <td>
-                                                                    <input type="number" value="{{ $prokolpoAreaListAll->number_of_beneficiaries }}" name="number_of_beneficiaries[]" required class="form-control" id=""
-                                                                           placeholder="">
-                                                                </td>
-
-
-                                                                @if($key == 0)
-                                                    <td>
-                                                        <a class="btn btn-primary btn-sm" id="dynamic-ar"><i class="fa fa-plus"></i></a>
-                                                    </td>
-                                                    @else
-
-<td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="bi bi-file-earmark-x-fill"></i></button></td>
-                                                    @endif
-                                                            </tr>
-                                                            @endforeach
+                                                <!-- global table  start --->
+                                           @include('front.include.globalTableEdit')
+                                           <!-- global table end --->
+                                                @endforeach
                                                         </table>
                                                     </div>
                                                 </div>
@@ -514,12 +420,12 @@
 
                                             <div class="mb-3 col-lg-6">
                                                 <label for="" class="form-label">আরম্ভের তারিখ <span class="text-danger">*</span></label>
-                                                <input type="text" name="ngo_prokolpo_start_date" value="{{ $fd7FormList->ngo_prokolpo_start_date }}" class="form-control datepicker" id="ngo_prokolpo_start_date"
+                                                <input type="text" name="ngo_prokolpo_start_date" value="{{ $fd7FormList->ngo_prokolpo_start_date }}" class="form-control datepickerOne" id="ngo_prokolpo_start_date"
                                                        placeholder="" required>
                                             </div>
                                             <div class="mb-3 col-lg-6">
                                                 <label for="" class="form-label">সমাপ্তির তারিখ <span class="text-danger">*</span></label>
-                                                <input type="text" name="ngo_prokolpo_end_date" value="{{ $fd7FormList->ngo_prokolpo_end_date }}" class="form-control datepicker" id="ngo_prokolpo_end_date"
+                                                <input type="text" name="ngo_prokolpo_end_date" value="{{ $fd7FormList->ngo_prokolpo_end_date }}" class="form-control datepickerOne" id="ngo_prokolpo_end_date"
                                                        placeholder="" required>
                                             </div>
 
@@ -658,7 +564,12 @@ $("#donor_organization_name").keyup(function(){
 
 
 
-<script>
+@include('front.include.globalScript')
+
+
+
+
+{{-- <script>
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
@@ -667,6 +578,6 @@ $("#donor_organization_name").keyup(function(){
         $(this).parents('tr').remove();
     });
 
-</script>
+</script> --}}
 
 @endsection

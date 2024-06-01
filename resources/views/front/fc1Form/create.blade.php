@@ -256,8 +256,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">প্রকল্পের বিষয়<span class="text-danger">*</span></label>
-                                                    <select required name="subject_id" class="form-control" id=""
+                                                    <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
+                                                    <select multiple required name="subject_id[]" class="form-control js-example-basic-multiple" id=""
                                                            placeholder="">
                                                            <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
                                                            @foreach($projectSubjectList as $projectSubjectLists)
@@ -269,17 +269,41 @@
 
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">প্রকল্পের আরম্ভের তারিখ <span class="text-danger">*</span></label>
-                                                    <input required type="text" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
+                                                    <input required type="text" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">প্রকল্পের সমাপ্তির তারিখ <span class="text-danger">*</span></label>
-                                                    <input type="text" required name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
+                                                    <input type="text" required name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    <div class="mb-3 col-lg-12">
+                                        <div class="card-header">
+                                            প্রকল্প এলাকা
+                                        </div>
+                                        <div class="card-body">
+
+                                            <div class="row">
+                                                <div class="mb-3 col-lg-12">
+                                                    <label for="" class="form-label">প্রকল্প এলাকা</label>
+                                                </div>
+                                                <div class="mb-3 col-lg-12">
+                                                   <!-- global table  start --->
+                                       @include('front.include.globalTable')
+                                       <!-- global table end --->
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+{{-- 
                                     <div class="mb-3 col-lg-12">
                                         <div class="card-header">
                                             কর্ম এলাকা ও বাজেট
@@ -308,7 +332,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="mb-3 col-lg-12">
                                         <div class="card-header">
                                             যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ
@@ -634,9 +658,9 @@ $("#donor_organization_name").keyup(function(){
 </script>
 
 
+@include('front.include.globalScript')
 
-
-<script>
+{{-- <script>
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
@@ -645,6 +669,6 @@ $("#donor_organization_name").keyup(function(){
         $(this).parents('tr').remove();
     });
 
-</script>
+</script> --}}
 
 @endsection

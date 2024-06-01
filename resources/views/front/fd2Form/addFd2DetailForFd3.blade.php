@@ -104,7 +104,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -213,12 +213,12 @@
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">আরম্ভের তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
+                                            <input type="text" required value="" name="ngo_prokolpo_start_date" class="form-control datePickerOne" id=""
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">সমাপ্তির তারিখ </label>
-                                            <input type="text" required value="" name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
+                                            <input type="text" required value="" name="ngo_prokolpo_end_date" class="form-control datePickerOne" id=""
                                                    placeholder="">
                                         </div>
                                     </div>

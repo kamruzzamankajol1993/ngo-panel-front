@@ -215,12 +215,12 @@
                                     <div class="row">
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">আরম্ভের তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datePickerOne" id=""
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">সমাপ্তির তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datePickerOne" id=""
                                                    placeholder="">
                                         </div>
                                     </div>

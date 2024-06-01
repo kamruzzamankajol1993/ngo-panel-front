@@ -105,7 +105,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -244,26 +244,32 @@
                                         <div class="card-body">
                                             <div class="row">
 
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">প্রকল্পের বিষয়<span class="text-danger">*</span></label>
-                                                    <select required name="subject_id" class="form-control" id=""
-                                                           placeholder="">
-                                                           <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
-                                                           @foreach($projectSubjectList as $projectSubjectLists)
-                                                           <option value="{{ $projectSubjectLists->id }}" {{ $fc1FormList->subject_id == $projectSubjectLists->id ? 'selected':'' }}>{{ $projectSubjectLists->name }}</option>
-                                                           @endforeach
-                                                    </select>
-                                                </div>
+                                                <?php
+                                        $subjectIdList  = explode(",",$fc1FormList->subject_id);
+
+                                        ?>
+
+
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
+                                            <select required multiple name="subject_id[]" class="form-control js-example-basic-multiple" id=""
+                                                   placeholder="">
+                                                   <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
+                                                   @foreach($projectSubjectList as $projectSubjectLists)
+                                                   <option value="{{ $projectSubjectLists->id }}" {{ (in_array($projectSubjectLists->id,$subjectIdList)) ? 'selected' : '' }}>{{ $projectSubjectLists->name }}</option>
+                                                   @endforeach
+                                            </select>
+                                        </div>
 
 
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">প্রকল্পের আরম্ভের তারিখ</label>
-                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepicker" id=""
+                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">প্রকল্পের সমাপ্তির তারিখ</label>
-                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepicker" id=""
+                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
                                             </div>
@@ -271,32 +277,29 @@
                                     </div>
                                     <div class="mb-3 col-lg-12">
                                         <div class="card-header">
-                                            কর্ম এলাকা ও বাজেট
+                                            প্রকল্প এলাকা
                                         </div>
                                         <div class="card-body">
+
                                             <div class="row">
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label"> কর্ম এলাকা জেলা</label>
-
-                                                    <input type="text" value="{{ $fc1FormList->ngo_district }}" name="ngo_district" class="form-control" id=""
-                                                           placeholder="">
-
-
-
-
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">কর্ম এলাকা উপজেলা</label>
-                                                    <input type="text" value="{{ $fc1FormList->ngo_sub_district }}" name="ngo_sub_district" class="form-control" id=""
-                                                    placeholder="">
+                                                <div class="mb-3 col-lg-12">
+                                                    <label for="" class="form-label">প্রকল্প এলাকা</label>
                                                 </div>
                                                 <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা</label>
-                                                    <input type="number" value="{{ $fc1FormList->total_number_of_beneficiaries }}" name="total_number_of_beneficiaries" class="form-control" id=""
-                                                           placeholder="">
+                                                    <table class="table table-bordered" id="dynamicAddRemove">
+
+
+                                                        @foreach($prokolpoAreaList as $key=>$prokolpoAreaListAll)
+                                            <!-- global table  start --->
+                                       @include('front.include.globalTableEdit')
+                                       <!-- global table end --->
+                                            @endforeach
+                                                    </table>
                                                 </div>
                                             </div>
+
                                         </div>
+
                                     </div>
                                     <div class="mb-3 col-lg-12">
                                         <div class="card-header">
@@ -566,7 +569,7 @@
 @endsection
 
 @section('script')
-
+@include('front.include.globalScript')
 <script>
 
     ///
@@ -649,7 +652,7 @@ $("#donor_organization_name").keyup(function(){
 
 
 
-<script>
+{{-- <script>
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
@@ -658,6 +661,6 @@ $("#donor_organization_name").keyup(function(){
         $(this).parents('tr').remove();
     });
 
-</script>
+</script> --}}
 
 @endsection

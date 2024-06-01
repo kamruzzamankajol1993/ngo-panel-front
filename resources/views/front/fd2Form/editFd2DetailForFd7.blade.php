@@ -110,7 +110,7 @@
                         </div>
 
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -242,90 +242,49 @@
                                     </div>
                                     <p class="mb-3">গুরুত্বপূর্ণ যেকোনো তথ্য</p>
 
+                                    <!-- start new code --->
 
                                     @if(count($fd2OtherInfo) == 0)
 
 
                                     @else
                                     <div class="row">
-                                @foreach($fd2OtherInfo as $key=>$fd2OtherInfoAll)
-                                <div class="col-md-3 mt-2">
-                                    <div class="card card-custom-color">
-                                        <div class="card-body">
 
 
-                                            <p><b>{{ $fd2OtherInfoAll->file_name }}:</b> <a target="_blank" href="{{ route('downloadFd2DetailForFd7',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
-                                                <i class="fa fa-download" aria-hidden="true"></i>
-                                            </a></p>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button type="button" class="btn btn-custom next_button btn-sm" data-bs-toggle="modal" data-bs-target="#mmexampleModal{{ $key+1 }}">
-                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                        <table class="table table-bordered">
+                                            @foreach($fd2OtherInfo as $key=>$fd2OtherInfoAll)
+                                            <tr>
+                                                <td>{{ $fd2OtherInfoAll->file_name }}</td>
+                                                <td>
 
-                                              </button>
+                                                    <a target="_blank" href="{{ route('downloadFd2DetailForFd7',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
+                                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                                </a>
 
-                                              <a href="{{ route('deleteFd2DetailForFd7',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></a>
+                                                <button type="button" class="btn btn-custom next_button btn-sm mmexampleModal" id="{{ $fd2OtherInfoAll->id }}">
+                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
 
+                                                  </button>
 
-
-
-
-
-                                              <!-- Modal -->
-                            <div class="modal fade" id="mmexampleModal{{ $key+1 }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-                            <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">ডেটা আপডেট করুন</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                            <form method="post" action="{{ route('fd2ForFd7PdfUpdate') }}" enctype="multipart/form-data" id="form">
-                            @csrf
-
-
-                            <input type="hidden" name="mid" value="{{ $fd2OtherInfoAll->id }}" class="form-control" id="exampleFormControlInput1" >
+                                                  <a href="{{ route('deleteFd2DetailForFd7',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
+                                                    class="bi bi-trash"></i></a>
 
 
 
+                                            </td>
+                                            </tr>
+                                            @endforeach
 
-                            <div class="mb-3">
-                                <?php
-
-                                $file_path = url($fd2OtherInfoAll->file);
-                                $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+                                        </table>
 
 
-
-
-                                ?>
-                            <label for="exampleFormControlInput1" class="form-label">{{ $fd2OtherInfoAll->file_name }}:</label>
-                            <input type="file" accept=".pdf" name="file" class="form-control" id="exampleFormControlInput1">
-                            <b>{{ $filename.'.'.$extension }}</b>
-
-
-                        </div>
-
-                            <button type="submit" class="btn btn-custom next_button btn-sm">
-                                জমা দিন
-                            </button>
-                            </form>
-
-                            </div>
-
-                            </div>
-                            </div>
-                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                    @endforeach
-                                    </div>
 
                                     @endif
+
+                                    <!-- end new code --->
+
+
+                                  
 
 
                                     <table class="table table-bordered mt-2" id="dynamicAddRemove">
@@ -397,10 +356,50 @@
 </form>
 </section>
 
+ <!-- Modal -->
+ <div class="modal fade" id="mmexampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">ডেটা আপডেট করুন</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" id="formBody">
+
+
+    </div>
+
+    </div>
+    </div>
+    </div>
+
 
 @endsection
 
 @section('script')
+
+<script>
+
+    $(document).on('click', '.mmexampleModal', function () {
+
+        var main_id = $(this).attr('id');
+        $('#mmexampleModal').modal('show');
+
+
+
+        $.ajax({
+        url: "{{ route('fd2PdfUpdateModalFd7') }}",
+        method: 'GET',
+        data: {main_id:main_id},
+        success: function(data) {
+          $("#formBody").html('');
+          $("#formBody").html(data);
+        }
+        });
+
+
+    });
+    </script>
 
 <script>
 

@@ -104,14 +104,19 @@ class Fd7FormController extends Controller
 
         ]);
 
+        //dd($request->all());
+
        try{
 
             DB::beginTransaction();
             $fdOneFormID = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $subject_all = implode(",",$request->subject_id);
+
+
             $fd7FormInfo = new Fd7Form();
             $fd7FormInfo->fd_one_form_id =$fdOneFormID->id;
             $fd7FormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
-            $fd7FormInfo->subject_id =$request->subject_id;
+            $fd7FormInfo->subject_id =$subject_all;
             $fd7FormInfo->ngo_name =$request->ngo_name;
             $fd7FormInfo->ngo_address =$request->ngo_address;
             $fd7FormInfo->ngo_registration_number =$request->ngo_registration_number;
@@ -133,7 +138,7 @@ class Fd7FormController extends Controller
             $fd7FormInfo->adverse_impact_on_the_ongoing_project =$request->adverse_impact_on_the_ongoing_project;
             $fd7FormInfo->ngo_prokolpo_start_date =$request->ngo_prokolpo_start_date;
             $fd7FormInfo->ngo_prokolpo_end_date =$request->ngo_prokolpo_end_date;
-            $fd7FormInfo->status ='Ongoing';
+            $fd7FormInfo->status ='Review';
 
             $filePath="FdSevenForm";
 
@@ -223,22 +228,28 @@ class Fd7FormController extends Controller
 
 
 
+                if(empty($input['beneficiaries_total'][$key])){
+
+
+                }else{
+
+                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+                }
+
+                if(empty($input['prokolpoType'][$key])){
+
+
+                }else{
+
+                    $form->prokolpo_type=$input['prokolpoType'][$key];
+                }
+
                 if(empty($input['allocated_budget'][$key])){
 
 
                 }else{
 
                     $form->allocated_budget=$input['allocated_budget'][$key];
-                }
-
-
-
-                if(empty($input['number_of_beneficiaries'][$key])){
-
-
-                }else{
-
-                    $form->number_of_beneficiaries=$input['number_of_beneficiaries'][$key];
                 }
 
                 $form->save();
@@ -259,9 +270,11 @@ class Fd7FormController extends Controller
 
            try{
             DB::beginTransaction();
+            $subject_all = implode(",",$request->subject_id);
+
             $fd7FormInfo = Fd7Form::find($id);
             $fd7FormInfo->ngo_name =$request->ngo_name;
-            $fd7FormInfo->subject_id =$request->subject_id;
+            $fd7FormInfo->subject_id =$subject_all;
             $fd7FormInfo->ngo_address =$request->ngo_address;
             $fd7FormInfo->ngo_registration_number =$request->ngo_registration_number;
             $fd7FormInfo->ngo_registration_date =$request->ngo_registration_date;
@@ -367,22 +380,28 @@ class Fd7FormController extends Controller
 
 
 
+                if(empty($input['beneficiaries_total'][$key])){
+
+
+                }else{
+
+                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
+                }
+
+                if(empty($input['prokolpoType'][$key])){
+
+
+                }else{
+
+                    $form->prokolpo_type=$input['prokolpoType'][$key];
+                }
+
                 if(empty($input['allocated_budget'][$key])){
 
 
                 }else{
 
                     $form->allocated_budget=$input['allocated_budget'][$key];
-                }
-
-
-
-                if(empty($input['number_of_beneficiaries'][$key])){
-
-
-                }else{
-
-                    $form->number_of_beneficiaries=$input['number_of_beneficiaries'][$key];
                 }
 
 
@@ -415,6 +434,8 @@ class Fd7FormController extends Controller
     public function show($id){
 
         $fd7Id = base64_decode($id);
+
+        //dd($id);
 
        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
@@ -449,6 +470,19 @@ class Fd7FormController extends Controller
 
 
    }
+
+
+   public function finalFdSevenApplicationSubmit($id){
+
+
+    $new_data_add = Fd7Form::find(base64_decode($id));
+    $new_data_add->status = 'Ongoing';
+    $new_data_add->save();
+
+    return redirect('/fd7Form')->with('success','Submit To Ngo Sucessfully');
+
+
+}
 
 
    public function authorizationLetter($id){

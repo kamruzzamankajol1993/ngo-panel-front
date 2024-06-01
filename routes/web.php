@@ -320,7 +320,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('fc1Form',Fc1FormController::class);
 
     Route::controller(Fc1FormController::class)->group(function () {
-
+        Route::get('finalFcOneApplicationSubmit/{id}', 'finalFcOneApplicationSubmit')->name('finalFcOneApplicationSubmit');
         Route::get('fc1PdfDownload/{id}', 'fc1PdfDownload')->name('fc1PdfDownload');
         Route::get('verifiedFcOneForm/{id}', 'verifiedFcOneForm')->name('verifiedFcOneForm');
     });
@@ -329,7 +329,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('fc2Form',Fc2FormController::class);
 
     Route::controller(Fc2FormController::class)->group(function () {
-
+        Route::get('finalFcTwoApplicationSubmit/{id}', 'finalFcTwoApplicationSubmit')->name('finalFcTwoApplicationSubmit');
         Route::get('fc2PdfDownload/{id}', 'fc2PdfDownload')->name('fc2PdfDownload');
         Route::get('verifiedFcTwoForm/{id}', 'verifiedFcTwoForm')->name('verifiedFcTwoForm');
     });
@@ -356,6 +356,13 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('fd2Form',Fd2FormController::class);
     Route::resource('fd6Form',Fd6FormController::class);
     Route::resource('fd7Form',Fd7FormController::class);
+
+    Route::controller(Fd7FormController::class)->group(function () {
+
+        Route::get('finalFdSevenApplicationSubmit/{id}', 'finalFdSevenApplicationSubmit')->name('finalFdSevenApplicationSubmit');
+
+
+    });
 
     Route::resource('fdFiveForm',FdFiveFormController::class);
 
@@ -404,6 +411,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::controller(Fd2FormController::class)->group(function () {
+
+
+        Route::get('fd2PdfUpdateModalFd7', 'fd2PdfUpdateModalFd7')->name('fd2PdfUpdateModalFd7');
 
         Route::get('downloadFd2DetailForFd3/{id}', 'downloadFd2DetailForFd3')->name('downloadFd2DetailForFd3');
         Route::get('downloadFd2DetailForFc2Other/{id}', 'downloadFd2DetailForFc2Other')->name('downloadFd2DetailForFc2Other');

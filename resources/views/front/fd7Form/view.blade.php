@@ -106,7 +106,7 @@
                             </a>
                         </div>
 
-                        
+
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -152,6 +152,42 @@
 
                 <div class="card">
                     <div class="card-body">
+
+                            <!-- new code start --->
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+
+
+                        @if($fd7FormList->status == 'Ongoing' || $fd7FormList->status == 'Accepted')
+
+                                        @else
+
+                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fd7FormList->id}})" class="btn btn-info">
+                                            <i class="fa fa-send-o"></i>
+                                        </button>
+
+                                            <form id="delete-form-{{ $fd7FormList->id }}" action="{{ route('finalFdSevenApplicationSubmit',base64_encode($fd7FormList->id)) }}" method="get" style="display: none;">
+
+                                                @csrf
+
+
+                                            </form>
+
+                        <button class="btn btn-primary" onclick="location.href = '{{ route('fd7Form.edit',base64_encode($fd7FormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+                        @endif
+
+
+                    </div>
+                </div>
+
+                <!-- new code end -->
+
                         <div class="form9_upper_box">
                             <h3>এফডি-৭ ফরম</h3>
                             <h4>দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম</h4>
@@ -278,23 +314,12 @@
                                 <th>বিভাগ</th>
                                 <th>জেলা/সিটি কর্পোরেশন</th>
                                 <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
+                                <th>প্রকল্পের ধরণ</th>
+                                <th>বরাদ্দকৃত বাজেট</th>
+                                <th>মোট উপকারভোগীর সংখ্যা</th>
                             </tr>
                             @foreach($prokolpoAreaList as $prokolpoAreaListAll)
-                            <tr>
-                                <td>বিভাগ: {{ $prokolpoAreaListAll->division_name }}</td>
-                                <td>
-                                    জেলা: {{ $prokolpoAreaListAll->district_name }} <br>
-                                    সিটি কর্পোরেশন: {{ $prokolpoAreaListAll->city_corparation_name }}
-                                </td>
-                                <td>
-                                    উপজেলা: {{ $prokolpoAreaListAll->upozila_name }} <br>
-                                    থানা: {{ $prokolpoAreaListAll->thana_name }} <br>
-                                    পৌরসভা: {{ $prokolpoAreaListAll->municipality_name }} <br>
-                                    ওয়ার্ড: {{ $prokolpoAreaListAll->ward_name }} <br>
-                                    বরাদ্দকৃত বাজেট: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->allocated_budget) }} <br>
-                                    উপকারভোগীর সংখ্যা: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->number_of_beneficiaries) }}
-                                </td>
-                            </tr>
+                          @include('front.include.globalTableView')
                             @endforeach
                         </table>
 
@@ -343,9 +368,36 @@
                                 <td>প্রকল্প নাম</td>
                                 <td>: {{ $fd2FormList->ngo_prokolpo_name }}</td>
                             </tr>
+                            <?php
+                            $subjectIdList  = explode(",",$fd7FormList->subject_id);
+                            $subjectListMain = DB::table('project_subjects')->whereIn('id',$subjectIdList)->select('name')
+                            ->get();
+
+                            ?>
                             <tr>
                                 <td>প্রকল্পের বিষয়</td>
-                                <td>: {{ DB::table('project_subjects')->where('id',$fd7FormList->subject_id)->value('name')}}</td>
+                                <td>:
+                                     @foreach($subjectListMain as $key=>$subjectListMains)
+
+                                     @if(count($subjectListMain) == 1 )
+
+                                     {{ $subjectListMains->name }}
+
+                                     @else
+
+                                     @if(count($subjectListMain) == ($key+1))
+                                     {{ $subjectListMains->name }} |
+
+                                     @else
+
+                                     {{ $subjectListMains->name }},
+
+                                     @endif
+
+                                     @endif
+
+                                     @endforeach
+                                </td>
                             </tr>
                             <tr>
                                 <td>কোন দেশীয় সংস্থা</td>
@@ -399,5 +451,44 @@
 
 </section>
 
+
+@endsection
+@section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 
 @endsection

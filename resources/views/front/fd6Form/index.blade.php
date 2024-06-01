@@ -173,10 +173,14 @@
                                     <div class="d-grid d-md-flex justify-content-end">
 
                                         @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
-                                        <button disabled type="button" class="btn btn-registration"
+                                        <button disabled type="button"  class="btn btn-registration"
                                         onclick="location.href = '{{ route('fd6Form.create') }}';">নতুন ফরম যোগ করুন
                                 </button>
+
+
                                         @else
+
+
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('fd6Form.create') }}';">নতুন ফরম যোগ করুন
                                         </button>

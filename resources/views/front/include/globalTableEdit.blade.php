@@ -8,9 +8,11 @@
 
         <select required name="division_name[]" class="form-control division_name" id="division_name{{ $key+60000 }}">
             <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
+
+            <option value="{{ $prokolpoAreaListAll->division_name }}" selected>{{ $prokolpoAreaListAll->division_name }}</option>
             @foreach($divisionList as $districtListAll)
 
-            <option value="{{ $districtListAll->division_bn }}" {{ $districtListAll->division_bn == $prokolpoAreaListAll->division_name ? 'selected':'' }}>{{ $districtListAll->division_bn }}</option>
+            <option value="{{ $districtListAll->division_bn }}" >{{ $districtListAll->division_bn }}</option>
             @endforeach
 
         </select>
