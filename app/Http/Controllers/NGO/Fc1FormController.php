@@ -8,6 +8,7 @@ use App\Models\NVisa;
 use App\Models\NgoStatus;
 use App\Models\Country;
 use App\Models\NgoDuration;
+use App\Models\ProkolpoDetail;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use PDF;
@@ -224,6 +225,12 @@ class Fc1FormController extends Controller
 
         $fc1FormInfo->save();
         $fc1FormInfoId = $fc1FormInfo->id;
+
+
+            $prokolpoDetail = new ProkolpoDetail();
+            $prokolpoDetail->formId=$fc1FormInfoId;
+            $prokolpoDetail->type='fc1';
+            $prokolpoDetail->save();
 
 
         // ad new code strat

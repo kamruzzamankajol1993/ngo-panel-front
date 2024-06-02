@@ -12,6 +12,7 @@ use App\Models\Fd2FormOtherInfo;
 use App\Models\NgoStatus;
 use App\Models\Country;
 use App\Models\Fd9Form;
+use App\Models\ProkolpoDetail;
 use App\Models\NgoDuration;
 use App\Models\Fd9ForeignerEmployeeFamilyMemberList;
 use Illuminate\Support\Facades\Crypt;
@@ -70,7 +71,7 @@ class Fd6FormController extends Controller
     }
 
 
-   
+
 
 
     public function getCityCorporationList(Request $request){
@@ -234,6 +235,12 @@ class Fd6FormController extends Controller
             $input = $request->all();
             $divisionName = $input['division_name'];
             $fd6FormInfoId = $fd6FormInfo->id;
+
+
+            $prokolpoDetail = new ProkolpoDetail();
+            $prokolpoDetail->formId=$fd6FormInfoId;
+            $prokolpoDetail->type='fd6';
+            $prokolpoDetail->save();
 
             foreach($divisionName as $key => $divisionName){
                 $form= new Fd6FormProkolpoArea();

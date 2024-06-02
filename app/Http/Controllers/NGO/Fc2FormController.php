@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\NVisa;
 use App\Models\NgoStatus;
 use App\Models\Country;
+use App\Models\ProkolpoDetail;
 use App\Models\NgoDuration;
 use Illuminate\Support\Facades\Crypt;
 use DB;
@@ -206,6 +207,11 @@ class Fc2FormController extends Controller
 
             $fc2FormInfoId = $fc2FormInfo->id;
 
+            $prokolpoDetail = new ProkolpoDetail();
+            $prokolpoDetail->formId=$fc2FormInfoId;
+            $prokolpoDetail->type='fc2';
+            $prokolpoDetail->save();
+
             // ad new code strat
 
 
@@ -356,7 +362,7 @@ class Fc2FormController extends Controller
             $fc2FormInfo->bank_address =$request->bank_address;
             $fc2FormInfo->bank_account_name =$request->bank_account_name;
             $fc2FormInfo->bank_account_number =$request->bank_account_number;
-            
+
 
             $filePath="FcOneForm";
 

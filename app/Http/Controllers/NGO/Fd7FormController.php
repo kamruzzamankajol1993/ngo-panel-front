@@ -12,6 +12,7 @@ use App\Models\Fd2FormOtherInfo;
 use App\Models\NgoStatus;
 use App\Models\Country;
 use App\Models\Fd9Form;
+use App\Models\ProkolpoDetail;
 use App\Models\NgoDuration;
 use App\Models\Fd9ForeignerEmployeeFamilyMemberList;
 use Illuminate\Support\Facades\Crypt;
@@ -179,6 +180,11 @@ class Fd7FormController extends Controller
 
 
             $fd7FormInfoId = $fd7FormInfo->id;
+
+            $prokolpoDetail = new ProkolpoDetail();
+            $prokolpoDetail->formId=$fd7FormInfoId;
+            $prokolpoDetail->type='fd7';
+            $prokolpoDetail->save();
 
 
 
