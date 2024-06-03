@@ -165,8 +165,7 @@
                                 </div>
                             </div>
 
-                            <div class="card mt-3 card-custom-color">
-                                <div class="card-body">
+
                                     <form action="{{ route('formNoSeven.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                     <div class="form9_upper_box">
@@ -174,163 +173,438 @@
                                         <h4>প্রকল্প বাস্তবায়ন সম্পর্কিত প্রত্যয়নপত্রের ছক</h4>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-6">
+
+                                            <table class="table table-borderless">
+
+                                                <tr>
+                                                    <td>স্মারক নং:</td>
+                                                    <td> <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder=""></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+
+                                            <table class="table table-borderless">
+
+                                                <tr>
+                                                    <td>তারিখ:</td>
+                                                    <td> <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder=""></td>
+                                                </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
+
                                     <!-- step one start -->
 
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12">
 
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <center>এনজিও সংক্রান্ত তথ্য</center>
-                                                </div>
 
-                                                <div class="card-body">
+                                            <table class="table table-bordered " style="width:100%">
 
-                                                    <div class="row">
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">এনজিও'র নাম <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">এনজিও'র ঠিকানা <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
+                                                <tr>
+                                                    <th style="text-align: center;" colspan="2">ক্র: নং:</th>
+                                                    <th style="text-align: center;">বিবরণ</th>
+                                                    <th style="text-align: center;">তথ্যাদি</th>
+                                                    <th style="text-align: center;"> মন্তব্য (যদি থাকে)</th>
+                                                </tr>
+
+                                                <tr>
+                                                    <th style="text-align: center;" colspan="2">(০১)</th>
+                                                    <th>এনজিও সংক্রান্ত তথ্য <span style="text-align: center;">(০২)</span></th>
+                                                    <th style="text-align: center;">(০৩)</th>
+                                                    <th style="text-align: center;">(০৪)</th>
+                                                </tr>
+                                              <!-- step one start  -->
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="4">০১.</td>
+                                                    <td style="text-align: center;">ক)</td>
+                                                    <td> এনজিও'র নাম ও ঠিকানা <span style="color:red;">*</span> </td>
+                                                    <td>
+
+
+                                                                <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                                       placeholder="এনজিও'র নাম">
+
+
+                                                                <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                                       placeholder="এনজিও'র ঠিকানা">
+
+                                                    </td>
+                                                    <td>
+
+
                                                             <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
+                                                                   placeholder="মন্তব্য"></textarea>
 
-                                                    </div>
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
+                                                    </td>
+                                                </tr>
+                                                <tr>
 
-                                                    <div class="row mt-2">
-
-                                                        <div class="others_inner_section">
-                                                            <h6>এনজিও প্রধানের তথ্যাদি</h6>
-                                                            <div class="notice_underline"></div>
-                                                        </div>
+                                                    <td style="text-align: center;">খ)</td>
+                                                    <td> এনজিও প্রধানের নাম, পদবি, দাপ্তরিক মোবাইল নম্বর ও ইমেইল এড্রেস <span style="color:red;">*</span></td>
+                                                    <td>
 
 
-                                                        <div class="mb-3 col-lg-6 mt-3">
-                                                            <label for="" class="form-label">নাম <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-6 mt-3">
-                                                            <label for="" class="form-label">পদবি <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">দাপ্তরিক মোবাইল নম্বর <span style="color:red;">*</span></label>
-                                                            <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number"
-                                                            maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label"> ইমেইল এড্রেস <span style="color:red;">*</span></label>
-                                                            <input type="email" required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="নাম">
 
 
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">এনজিও নিবন্ধন নম্বর <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">এনজিও নিবন্ধনের তারিখ <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="total_prokolpo_cost" class="form-control datepicker" id=""
-                                                                   placeholder="">
-                                                        </div>
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="পদবি">
 
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">সর্বশেষ নবায়নের তারিখ <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="total_prokolpo_cost" class="form-control datepicker" id=""
-                                                                   placeholder="">
-                                                        </div>
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="দাপ্তরিক মোবাইল নম্বর">
 
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="ইমেইল এড্রেস">
 
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">এনজিও মেয়াদকাল  <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                                   placeholder="মন্তব্য"></textarea>
+                                                    </td>
+                                                </tr>
 
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
+                                                <tr>
 
-                                                    </div>
+                                                    <td style="text-align: center;">গ)</td>
+                                                    <td>
 
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
+                                                        <span>১. এনজিও'র নিবন্ধন নম্বর ও তারিখ <br>
+
+                                                            ২. সর্বশেষ নবায়নের তারিখ ও মেয়াদকাল
+                                                    </span>
+
+                                                </td>
+                                                    <td>
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="নিবন্ধন নম্বর">
 
 
-                                                    <div class="row mt-2">
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="নিবন্ধন তারিখ">
 
-                                                        <div class="others_inner_section">
-                                                            <h6>জেলা/আঞ্চলিক  অফিসের দায়িত্বপ্রাপ্ত এনজিও কর্মকর্তার তথ্যাদি </h6>
-                                                            <div class="notice_underline"></div>
-                                                        </div>
-
-
-                                                        <div class="mb-3 col-lg-6 mt-3">
-                                                            <label for="" class="form-label">নাম <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-6 mt-3">
-                                                            <label for="" class="form-label">পদবি <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">দাপ্তরিক মোবাইল নম্বর <span style="color:red;">*</span></label>
-                                                            <input type="number" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                                            type = "number"
-                                                            maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label"> ইমেইল এড্রেস <span style="color:red;">*</span></label>
-                                                            <input type="email" required name="total_prokolpo_cost" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="নবায়নের তারিখ">
 
 
-                                                </div>
-                                            </div>
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="নবায়নের মেয়াদকাল">
+
+                                                    </td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ঘ)</td>
+                                                    <td>জেলা/আঞ্চলিক  অফিসের দায়িত্বপ্রাপ্ত এনজিও কর্মকর্তার নাম, পদবি, দাপ্তরিক মোবাইল নম্বর ও ইমেইল এড্রেস</td>
+                                                    <td>
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="নাম">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="পদবি">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="দাপ্তরিক মোবাইল নম্বর">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="ইমেইল এড্রেস">
+                                                    </td>
+                                                    <td>
+                                                        <textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <!-- step one end -->
+
+                                                <!-- step two strat --->
+
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="7">০২.</td>
+                                                    <td></td>
+                                                    <td style="font-weight:bold;">প্রকল্প সংক্রান্ত তথ্য</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ক)</td>
+                                                    <td><span>১. প্রকল্পের নাম <br>
+
+                                                        ২.  মেয়াদকাল <br>
+                                                        ৩.  টাকার পরিমাণ
+                                                </span></td>
+                                                    <td>
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="নাম">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="মেয়াদকাল">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="টাকার পরিমাণ">
+                                                    </td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td style="text-align: center;">খ)</td>
+                                                    <td>প্রকল্প অনুমোদনের তারিখ ও স্মারক নম্বর, প্রত্যয়নপত্র প্রদানের বছর / সময় </td>
+                                                    <td> <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="তারিখ">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="স্মারক নম্বর">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="প্রত্যয়নপত্র প্রদানের বছর / সময়"></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">গ)</td>
+                                                    <td>প্রকল্পের উদ্দেশ্য</td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="প্রকল্পের উদ্দেশ্য"></textarea></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ঘ)</td>
+                                                    <td>জেলা/উপজেলায় ব্যুরো কতৃক অনুমোদিত প্রকল্পের কপি স্থানীয় প্রশাসন কতৃক গ্রহণের তারিখ</td>
+                                                    <td><input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="তারিখ"></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ঙ)</td>
+                                                    <td style="font-weight:bold;">তার এখতিয়ারাধীন এলাকার সংশ্লিষ্ট তথ্য</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td><span>১. তাঁর জেলা/উপজেলায় প্রকল্পের জন্য বরাদ্দ <br>
+
+                                                        ২.  বহুবর্ষী প্রকল্পের ক্ষেত্রে আলোচ্য বর্ষে বরাদ্দ <br>
+                                                        ৩.  বহুবর্ষী প্রকল্পের ক্ষেত্রে আলোচ্য বর্ষে প্রকৃত ব্যয়<br>
+                                                        ৪. প্রকল্পে উপকারভোগীর সংখ্যা<br>
+                                                        <span style="padding-left: 10px;">ক. প্রত্যক্ষ উপকারভোগীর সংখ্যা <br>
+                                                            <span style="padding-left: 10px;">খ. পরোক্ষ উপকারভোগীর সংখ্যা(প্রযোজ্য ক্ষেত্রে)</span>
+                                                        </span>
+
+                                                </span></td>
+                                                    <td>
+
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="প্রকল্পের জন্য বরাদ্দ">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="আলোচ্য বর্ষে বরাদ্দ">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="আলোচ্য বর্ষে প্রকৃত ব্যয়">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="প্রত্যক্ষ উপকারভোগীর সংখ্যা">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="পরোক্ষ উপকারভোগীর সংখ্যা">
+
+                                                    </td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+
+
+                                                <!-- step two end --->
+
+                                                <!-- step three start -->
+
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="5">০৩.</td>
+                                                    <td></td>
+                                                    <td style="font-weight:bold;">জেলা প্রশাসন/উপজেলা প্রশাসন সংক্রান্ত</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td style="text-align: center;">ক)</td>
+                                                    <td><span>১. স্থানীয় প্রশাসন কতৃক কত বার প্রকল্পটি পরিদর্শন করা হয়েছে <br>
+
+                                                        ২.  পরিদর্শনকারী কর্মকর্তার নাম, পদবি, মোবাইল নম্বর ও ইমেইল এড্রেস
+                                                </span></td>
+                                                    <td>
+
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
+                                                        placeholder="প্রকল্পটি পরিদর্শন করা হয়েছে">
+
+
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control mt-1" id=""
+                                                        placeholder="নাম">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="পদবি">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="মোবাইল নম্বর">
+
+                                                        <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="ইমেইল এড্রেস">
+
+
+
+                                                    </td>
+                                                    <td>
+                                                        <textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td style="text-align: center;">খ)</td>
+                                                    <td>উপকারভোগী নির্বাচনে স্থানীয় প্রশাসনকে সম্পৃক্ত করা হয়েছে কিনা, হয়ে থাকলে তার সংক্ষিপ্ত বিবরণী *</td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="সংক্ষিপ্ত বিবরণী"></textarea></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">গ)</td>
+                                                    <td>এনজিও প্রতিনিধি জেলা/উপজেলায় এনজিও বিষয়ক সমন্বয় সভায় নিয়মিত অংশগ্রহণ করেন কিনা *</td>
+                                                    <td><input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="অংশগ্রহণ করেন কিনা"></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ঘ)</td>
+                                                    <td>এনজিও বিষয়ক ব্যুরোর অনুমোদন পত্রের শর্তাদি যথাযথভাবে প্রতিপালিত হয়েছে কিনা </td>
+                                                    <td><input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="শর্তাদি যথাযথভাবে প্রতিপালিত হয়েছে কিনা"></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <!-- step three end -->
+
+                                                <!-- step four start --->
+
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="2">০৪.</td>
+                                                    <td></td>
+                                                    <td>পার্টনার এনজিও হলে মূল এনজিও বিষয়ক তথ্যাদি (প্রযোজ্য ক্ষেত্রে)</td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="তথ্যাদি (প্রযোজ্য ক্ষেত্রে"></textarea></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td></td>
+                                                    <td>মূল এনজিও'র নাম ও ঠিকানা</td>
+                                                    <td>
+                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control mt-1" id=""
+                                                        placeholder="নাম">
+
+
+                                                 <input type="text" required name="total_prokolpo_cost" class="form-control mt-1" id=""
+                                                        placeholder="ঠিকানা">
+
+                                                    </td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+
+                                                <!-- steap four end -->
+
+                                                <!-- step five start -->
+
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="2">০৫.</td>
+                                                    <td></td>
+                                                    <td style="font-weight:bold;">প্রকল্পের অর্জিত লক্ষ্যমাত্রা বিষয়ক</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ক)</td>
+                                                    <td>প্রকল্প সমাপনী প্রতিবেদন /বার্ষিক প্রতিবেদনে জেলা প্রশাসক/উপজেলা নির্বাহী অফিসারের প্রতিস্বাক্ষর গ্রহণ করা হয়েছে কিনা</td>
+                                                    <td><input type="text" required name="ongoing_prokolpo_name" class="form-control mt-1" id=""
+                                                        placeholder="প্রতিস্বাক্ষর গ্রহণ করা হয়েছে কিনা"></td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <!-- step five end --->
+
+                                                <!-- step six start -->
+
+                                                <tr>
+                                                    <td style="text-align: center;" rowspan="2">০৬.</td>
+                                                    <td></td>
+                                                    <td>
+                                                        <span>১. বাস্তবায়িত প্রকল্প সম্পর্কে মতামত<br>
+
+                                                            ২.  বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ (প্রত্যয়নকারী কর্মকর্তার স্বহস্তে লিখা কাম্য)
+                                                    </span>
+                                                    </td>
+                                                    <td>
+
+                                                        <textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে মতামত"></textarea>
+
+
+                                                        <textarea required name="date_of_bureau_approval" class="form-control mt-1" id=""
+                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ"></textarea>
+
+
+                                                    </td>
+                                                    <td><textarea required name="date_of_bureau_approval" class="form-control" id=""
+                                                        placeholder="মন্তব্য"></textarea></td>
+                                                </tr>
+
+                                                <!-- step six end -->
+
+                                            </table>
+
+
 
 
                                         </div>
@@ -338,393 +612,10 @@
                                     <!-- step one end --->
 
 
-                                    <!-- step two start -->
 
 
-                                    <div class="row mt-2">
-                                        <div class="col-lg-12 col-sm-12">
 
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <center>প্রকল্প সংক্রান্ত তথ্য</center>
-                                                </div>
 
-                                                <div class="card-body">
-                                                    <div class="row mt-2">
-                                                    <div class="mb-3 col-lg-4">
-                                                        <label for="" class="form-label">প্রকল্পের নাম <span style="color:red;">*</span></label>
-                                                        <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                               placeholder="">
-                                                    </div>
-                                                    <div class="mb-3 col-lg-4">
-                                                        <label for="" class="form-label">প্রকল্পের মেয়াদকাল <span style="color:red;">*</span></label>
-                                                        <input type="text" required name="total_prokolpo_cost" class="form-control" id=""
-                                                               placeholder="">
-                                                    </div>
-
-                                                    <div class="mb-3 col-lg-4">
-                                                        <label for="" class="form-label">প্রকল্পের টাকার পরিমাণ <span style="color:red;">*</span></label>
-                                                        <input type="text" required name="total_prokolpo_cost" class="form-control" id=""
-                                                               placeholder="">
-                                                    </div>
-
-                                                    <div class="mb-3 col-lg-12">
-                                                        <label for="" class="form-label">মন্তব্য</label>
-                                                        <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                               placeholder=""></textarea>
-                                                    </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">প্রকল্প অনুমোদনের তারিখ <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control datepicker" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">স্মারক নম্বর <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">প্রত্যয়নপত্র প্রদানের বছর / সময় <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">প্রকল্পের উদ্দেশ্য <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">জেলা/উপজেলায় ব্যুরো কতৃক অনুমোদিত প্রকল্পের কপি স্থানীয় প্রশাসন কতৃক গ্রহণের তারিখ<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control datepicker" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <!-- step Two end -->
-
-
-                                    <!-- step three start -->
-
-
-                                    <div class="row mt-2">
-                                        <div class="col-lg-12 col-sm-12">
-
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <center>তার এখতিয়ারাধীন এলাকার সংশ্লিষ্ট তথ্য</center>
-                                                </div>
-
-                                                <div class="card-body">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">তাঁর জেলা/উপজেলায় প্রকল্পের জন্য বরাদ্দ <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">বহুবর্ষী প্রকল্পের ক্ষেত্রে আলোচ্য বর্ষে বরাদ্দ <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-4">
-                                                            <label for="" class="form-label">বহুবর্ষী প্রকল্পের ক্ষেত্রে আলোচ্য বর্ষে প্রকৃত ব্যয়<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">প্রকল্পে প্রত্যক্ষ উপকারভোগীর সংখ্যা <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">প্রকল্পে পরোক্ষ  উপকারভোগীর সংখ্যা (প্রযোজ্য ক্ষেত্রে) <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <!-- step Three end -->
-
-
-                                    <!-- step three start -->
-
-
-                                    <div class="row mt-2">
-                                        <div class="col-lg-12 col-sm-12">
-
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <center>জেলা প্রশাসন/উপজেলা প্রশাসন সংক্রান্ত</center>
-                                                </div>
-
-                                                <div class="card-body">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">স্থানীয় প্রশাসন কতৃক কত বার প্রকল্পটি পরিদর্শন করা হয়েছে <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">পরিদর্শনকারী কর্মকর্তার নাম  <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">পরিদর্শনকারী কর্মকর্তার পদবি  <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">পরিদর্শনকারী কর্মকর্তার মোবাইল নম্বর  <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">পরিদর্শনকারী কর্মকর্তার ইমেইল এড্রেস <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">উপকারভোগী নির্বাচনে স্থানীয় প্রশাসনকে সম্পৃক্ত করা হয়েছে কিনা, হয়ে থাকলে তার সংক্ষিপ্ত বিবরণী <span style="color:red;">*</span></label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                            placeholder=""></textarea>
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">এনজিও প্রতিনিধি জেলা/উপজেলায় এনজিও বিষয়ক সমন্বয় সভায় নিয়মিত অংশগ্রহণ করেন কিনা <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">এনজিও বিষয়ক ব্যুরোর অনুমোদন পত্রের শর্তাদি যথাযথভাবে প্রতিপালিত হয়েছে কিনা <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">পার্টনার এনজিও হলে মূল এনজিও বিষয়ক তথ্যাদি (প্রযোজ্য ক্ষেত্রে) <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <hr style="height:2px;background-color:#075E24 !important;">
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">মূল এনজিও'র নাম  <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">মূল এনজিও'র ঠিকানা <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <!-- step Three end -->
-
-
-                                     <!-- step four start -->
-
-
-                                     <div class="row mt-2">
-                                        <div class="col-lg-12 col-sm-12">
-
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <center>প্রকল্পের অর্জিত লক্ষ্যমাত্রা বিষয়ক</center>
-                                                </div>
-
-                                                <div class="card-body">
-
-
-                                                    <div class="row mt-2">
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">প্রকল্প সমাপনী প্রতিবেদন /বার্ষিক প্রতিবেদনে জেলা প্রশাসক/উপজেলা নির্বাহী অফিসারের প্রতিস্বাক্ষর গ্রহণ করা হয়েছে কিনা<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">বাস্তবায়িত প্রকল্প সম্পর্কে মতামত <span style="color:red;">*</span></label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                            placeholder=""></textarea>
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ (প্রত্যয়নকারী কর্মকর্তার স্বহস্তে লিখা কাম্য)<span style="color:red;">*</span></label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                            placeholder=""></textarea>
-                                                        </div>
-
-                                                        <div class="mb-3 col-lg-12">
-                                                            <label for="" class="form-label">মন্তব্য</label>
-                                                            <textarea required name="date_of_bureau_approval" class="form-control" id=""
-                                                                   placeholder=""></textarea>
-                                                        </div>
-
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-
-                                    <!-- step four end -->
 
 
 
@@ -756,19 +647,7 @@
                                                         </div>
 
 
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">স্মারক নম্বর<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
-
-                                                        <div class="mb-3 col-lg-6">
-                                                            <label for="" class="form-label">জমাদানের তারিখ<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="ongoing_prokolpo_name" class="form-control" id=""
-                                                                   placeholder="">
-                                                        </div>
-
+                                        
                                                         <div class="mb-3 col-lg-12">
                                                             <label for="" class="form-label">অনুলিপি</label>
                                                             <textarea required name="date_of_bureau_approval" class="form-control" id=""
@@ -824,8 +703,7 @@
                                         </button>
                                     </div>
                                 </form>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

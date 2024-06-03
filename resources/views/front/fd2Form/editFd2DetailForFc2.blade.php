@@ -110,7 +110,11 @@
                         </div>
 
 
-
+                        <div class="profile_link_box">
+                            <a href="{{ route('formNoSeven.index') }}">
+                                <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
+                            </a>
+                        </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -259,7 +263,7 @@
                                                     <a target="_blank" href="{{ route('downloadFd2DetailForFc2',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
                                                         <i class="fa fa-download" aria-hidden="true"></i>
                                                     </a>
-                                               
+
                                                     <button type="button" class="btn btn-custom next_button btn-sm" data-bs-toggle="modal" data-bs-target="#mmexampleModal{{ $key+1 }}">
                                                         <i class="fa fa-pencil" aria-hidden="true"></i>
 

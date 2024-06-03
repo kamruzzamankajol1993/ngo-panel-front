@@ -107,7 +107,11 @@
                         </div>
 
 
-
+                        <div class="profile_link_box">
+                            <a href="{{ route('formNoSeven.index') }}">
+                                <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
+                            </a>
+                        </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
