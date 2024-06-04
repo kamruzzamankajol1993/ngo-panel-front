@@ -169,42 +169,120 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 
                 <div class="card">
                     <div class="card-body">
-<div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12 mb-3">
-                            <a href="">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-center">
-                                            <img style="height:120px" src="{{ asset('/') }}public/front/assets/img/icon/pdf.png" alt="">
+
+                         <!-- new code start --->
+
+                         <div class="d-flex justify-content-between mt-3">
+                            <div class="">
+
+
+                            </div>
+                            <div class="">
+
+                                @if($fdFiveFormPdf->status == 'Ongoing')
+
+
+                                @else
+
+
+                                <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fdFiveFormPdf->id}})" class="btn btn-info">
+                                    <i class="fa fa-send-o"></i>
+                                </button>
+
+                                    <form id="delete-form-{{ $fdFiveFormPdf->id }}" action="{{ route('fdFiveFormSend',base64_encode($fdFiveFormPdf->id)) }}" method="get" style="display: none;">
+
+                                        @csrf
+
+
+                                    </form>
+
+                                <button class="btn btn-primary" onclick="location.href = '{{ route('fdFiveForm.edit',base64_encode($fdFiveFormPdf->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+
+                                @endif
+
+
+
+
+                            </div>
+                        </div>
+
+                        <!-- new code end -->
+
+                        <div class="form9_upper_box">
+                            <h3>এফডি - ৫ ফরম</h3>
+                            <h4 style="font-weight:bold;">বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম </h4>
+                        </div>
+                        <div class="row">
+
+
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>এনজিও'র নাম : </td>
+                                    <td>@if(session()->get('locale') == 'en' || empty(session()->get('locale')))
+
+
+                                       {{ $ngoListAll->organization_name_ban }}
+
+                                        @else
+
+
+                                      {{ $ngoListAll->organization_name }}">
+
+
+                                        @endif
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>সংস্থার ঠিকানা : </td>
+                                    <td>{{ $ngoListAll->organization_address }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>টেলিফোন: </td>
+                                    <td>{{ $ngoListAll->tele_phone_number }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>মোবাইল নম্বর: </td>
+                                    <td>{{ $ngoListAll->phone }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>ইমেইল ঠিকানা: </td>
+                                    <td>{{ $ngoListAll->email }}</td>
+                                </tr>
+
+                                <tr>
+                                    <td>ওয়েবসাইট : </td>
+                                    <td>
+
+
+                                        @if(empty($ngoListAll->web_site_name))
+                                        {{ $renewWebsiteName }}
                                         </div>
-                                    </div>
-                                    <div class="card-footer text-center text-dark">
+                                        @else
+                                        {{ $ngoListAll->web_site_name }}
+                                        </div>
+
+                                        @endif
 
 
+                                    </td>
+                                </tr>
 
+                                <tr>
+                                    <td>বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম  এর পিডিএফ: </td>
+                                    <td>     <a target="_blank" class="btn btn-success"  href="{{route('fdFiveFormPdf',['id'=>$fdFiveFormPdf->id])}}" >
+                                        <i class="fa fa-print"></i>
+                                    </a></td>
+                                </tr>
 
+                            </table>
 
-
-                                        <a target="_blank"  href="{{route('fdFiveFormPdf',['id'=>$fdFiveFormPdf->id])}}" >
-                                            বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম  এর পিডিএফ
-                                       </a>
-
-
-
-
-
-
-
-
-                                    </div>
-                                </div>
-                            </a>
                         </div>
 
 
-
-
-                    </div>
 
 
                     </div>
@@ -218,5 +296,40 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 @endsection
 
 @section('script')
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
 
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 @endsection

@@ -183,7 +183,7 @@
 
                                                 <tr>
                                                     <td>স্মারক নং: <span style="color:red;">*</span></td>
-                                                    <td> <input type="text" required name="sarok_number" class="form-control" id=""
+                                                    <td> <input type="text" value="{{ $formSevenData->ngo_name }}" required name="sarok_number" class="form-control" id=""
                                                         placeholder=""></td>
                                                 </tr>
 
@@ -195,7 +195,7 @@
 
                                                 <tr>
                                                     <td>তারিখ: <span style="color:red;">*</span></td>
-                                                    <td> <input type="text" required name="submit_date" class="form-control datepickerOne" id=""
+                                                    <td> <input type="text" value="{{ $formSevenData->ngo_name }}" required name="submit_date" class="form-control datepickerOne" id=""
                                                         placeholder=""></td>
                                                 </tr>
 
@@ -232,18 +232,18 @@
                                                     <td>
 
 
-                                                                <input type="text" required name="ngo_name" class="form-control" id=""
+                                                                <input type="text" value="{{ $formSevenData->ngo_name }}" required name="ngo_name" class="form-control" id=""
                                                                        placeholder="এনজিও'র নাম">
 
 
-                                                                <input type="text" required name="ngo_address" class="form-control mt-1" id=""
+                                                                <input type="text" required name="ngo_address" value="{{ $formSevenData->ngo_name }}" class="form-control mt-1" id=""
                                                                        placeholder="এনজিও'র ঠিকানা">
 
                                                     </td>
                                                     <td>
 
 
-                                                            <textarea name="ngo_name_address_comment" class="form-control" id=""
+                                                            <textarea name="ngo_name_address_comment"  class="form-control" id=""
                                                                    placeholder="মন্তব্য"></textarea>
 
                                                     </td>

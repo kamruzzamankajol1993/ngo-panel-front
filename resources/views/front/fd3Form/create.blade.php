@@ -227,7 +227,7 @@
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">ব্যুরোর নিবন্ধন তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_registration_date" value="{{ date("d-m-Y", strtotime($ngoDurationReg)) }}" class="form-control datepicker" id=""
+                                            <input type="text" required name="ngo_registration_date" value="{{ date("d-m-Y", strtotime($ngoDurationReg)) }}" class="form-control datepickerOne" id=""
                                                    placeholder="">
                                         </div>
 
@@ -249,7 +249,7 @@
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্প অনুমোদনপত্র ও অর্থছাড়পত্রের স্মারক তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required name="project_approval_exemption_letter_date" class="form-control datepicker" id=""
+                                            <input type="text" required name="project_approval_exemption_letter_date" class="form-control datepickerOne" id=""
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
@@ -273,7 +273,7 @@
                                             <div class="row">
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">অর্থগ্রহনের তারিখ <span class="text-danger">*</span></label>
-                                                    <input type="text" required name="date_of_payment" class="form-control datepicker" id=""
+                                                    <input type="text" required name="date_of_payment" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
 

@@ -174,12 +174,22 @@
                                 </div>
                                 <div class="">
 
-                                    @if($formFiveData->status == 'pending')
+                                    @if($formFiveData->status == 'Ongoing')
 
 
                                     @else
 
-                                    <button class="btn btn-info" onclick="location.href = '{{ route('formNoFiveSend',base64_encode($formFiveData->id)) }}';" data-toggle="tooltip" data-placement="top" title="প্রতিবেদন এনজিওতে পাঠান"><i class="fa fa-send-o"></i></button>
+
+                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $formFiveData->id}})" class="btn btn-info">
+                                        <i class="fa fa-send-o"></i>
+                                    </button>
+
+                                        <form id="delete-form-{{ $formFiveData->id }}" action="{{ route('formNoFiveSend',base64_encode($formFiveData->id)) }}" method="get" style="display: none;">
+
+                                            @csrf
+
+
+                                        </form>
 
                                     <button class="btn btn-primary" onclick="location.href = '{{ route('formNoFive.edit',base64_encode($formFiveData->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
@@ -691,5 +701,40 @@ $("#donor_organization_name").keyup(function(){
     });
 
 </script>
+<script type="text/javascript">
+    function editTag(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'হ্যাঁ, এটি পাঠান !',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
 
+
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    'আপনার আবেদন পাঠানো হয়নি :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 @endsection

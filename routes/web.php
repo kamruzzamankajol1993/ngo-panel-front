@@ -247,6 +247,10 @@ Route::group(['middleware' => ['auth']], function() {
     Route::controller(FormNoSevenController::class)->group(function () {
 
         Route::get('formNoSevenPdfDownload/{id}', 'formNoSevenPdfDownload')->name('formNoSevenPdfDownload');
+        Route::get('formNoSevenSend/{id}', 'formNoSevenSend')->name('formNoSevenSend');
+        Route::get('getDistrictListForFormSeven', 'getDistrictListForFormSeven')->name('getDistrictListForFormSeven');
+
+        Route::get('formNoSevenPdfDownload/{id}', 'formNoSevenPdfDownload')->name('formNoSevenPdfDownload');
     });
 
     Route::controller(FormNoFiveController::class)->group(function () {
@@ -309,6 +313,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(Fd3FormController::class)->group(function () {
 
+        Route::get('fd3FormSend/{id}', 'fd3FormSend')->name('fd3FormSend');
         Route::get('fd3PdfDownload/{id}', 'fd3PdfDownload')->name('fd3PdfDownload');
         Route::get('verifiedFdThreeForm/{id}', 'verifiedFdThreeForm')->name('verifiedFdThreeForm');
 
@@ -368,6 +373,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(FdFiveFormController::class)->group(function () {
 
+        Route::get('fdFiveFormSend/{id}', 'fdFiveFormSend')->name('fdFiveFormSend');
         Route::get('fdFiveFormPdf/{id}', 'fdFiveFormPdf')->name('fdFiveFormPdf');
     });
 

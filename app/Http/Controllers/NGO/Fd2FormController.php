@@ -1310,7 +1310,7 @@ class Fd2FormController extends Controller
             }
 
           DB::commit();
-          return redirect()->route('fd3Form.index')->with('success','Added Successfuly');
+          return redirect()->route('fd3Form.show',$request->fd3_form_id)->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();

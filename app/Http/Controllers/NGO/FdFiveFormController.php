@@ -67,7 +67,7 @@ class FdFiveFormController extends Controller
             DB::beginTransaction();
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
             $fd9FormInfo = new FdFiveForm();
-            $fd9FormInfo->status = 'Ongoing';
+            $fd9FormInfo->status = 'Review';
             $fd9FormInfo->file_last_check_date = Date('Y-m-d', strtotime('+3 days'));
             $fd9FormInfo->fdId = $ngo_list_all->id;
 
@@ -81,7 +81,7 @@ class FdFiveFormController extends Controller
             $fd9FormInfo->save();
 
         DB::commit();
-        return redirect()->route('fdFiveForm.index')->with('success','Created Successfully');
+        return redirect()->route('fdFiveForm.show',base64_encode($fd9FormInfo->id))->with('success','Created Successfully');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');
@@ -96,7 +96,7 @@ class FdFiveFormController extends Controller
         $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
 
         $ngoListAll = FdOneForm::where('user_id',Auth::user()->id)->first();
-        $fdFiveForm =  FdFiveForm::where('id',$id)->first();
+        $fdFiveForm =  FdFiveForm::where('id',base64_decode($id))->first();
 
         CommonController::checkNgotype(1);
 
@@ -105,6 +105,24 @@ class FdFiveFormController extends Controller
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngoListAll->id)
         ->value('web_site_name');
         return view('front.fdFiveForm.edit',compact('renewWebsiteName','ngoListAll','fdFiveForm'));
+    }
+
+    public function fdFiveFormSend($id){
+
+        try{
+
+
+        $fd3FormInfo = FdFiveForm::find(base64_decode($id));
+        $fd3FormInfo->status ='Ongoing';
+        $fd3FormInfo->save();
+
+        return redirect()->back()->with('success','Send Successfuly');
+
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
     }
 
 
@@ -141,7 +159,7 @@ class FdFiveFormController extends Controller
         $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')->where('user_id',Auth::user()->id)->value('ngo_type');
 
         $ngoListAll = FdOneForm::where('user_id',Auth::user()->id)->first();
-        $fdFiveFormPdf =  FdFiveForm::where('id',$id)->first();
+        $fdFiveFormPdf =  FdFiveForm::where('id',base64_decode($id))->first();
 
         CommonController::checkNgotype(1);
 

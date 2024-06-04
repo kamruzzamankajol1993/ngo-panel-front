@@ -169,11 +169,80 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 
                 <div class="card">
                     <div class="card-body">
-
+                        <div class="form9_upper_box">
+                            <h3>এফডি - ৫ ফরম</h3>
+                            <h4 style="font-weight:bold;">বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম </h4>
+                        </div>
                         <form method="post" action="{{ route('fdFiveForm.update',$fdFiveForm->id) }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
 
                             @csrf
 @method('PUT')
+
+<div class="row">
+
+
+
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">এনজিও'র নাম <span class="text-danger">*</span></label>
+
+
+        @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
+
+
+<input type="text" readonly name="ngo_name" value="{{ $ngoListAll->organization_name_ban }}" class="form-control" id=""
+placeholder="">
+
+@else
+
+
+<input type="text" readonly name="ngo_name" value="{{ $ngoListAll->organization_name }}" class="form-control" id=""
+placeholder="">
+
+
+@endif
+
+
+
+    </div>
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">সংস্থার ঠিকানা <span class="text-danger">*</span></label>
+        <input type="text" readonly name="ngo_address" class="form-control" value="{{ $ngoListAll->organization_address }}" id=""
+               placeholder="">
+    </div>
+
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">টেলিফোন <span class="text-danger">*</span></label>
+        <input type="text" readonly name="ngo_telephone_number" value="{{ $ngoListAll->tele_phone_number }}" class="form-control" id=""
+               placeholder="">
+    </div>
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">মোবাইল নম্বর <span class="text-danger">*</span></label>
+        <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+        type = "number" readonly required
+        maxlength = "11"  minlength="11"  data-parsley-trigger=“keyup” name="ngo_mobile_number" value="{{ $ngoListAll->phone }}" class="form-control" id=""
+               placeholder="">
+    </div>
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">ইমেইল ঠিকানা <span class="text-danger">*</span></label>
+        <input type="text" readonly name="ngo_email" class="form-control" id=""
+               placeholder="" value="{{ $ngoListAll->email }}">
+    </div>
+
+    @if(empty($ngoListAll->web_site_name))
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">ওয়েবসাইট</label>
+        <input type="text" readonly value="{{ $renewWebsiteName }}" name="ngo_website" class="form-control" id=""
+               placeholder="">
+    </div>
+    @else
+    <div class="mb-3 col-lg-6">
+        <label for="" class="form-label">ওয়েবসাইট </label>
+        <input type="text" readonly value="{{ $ngoListAll->web_site_name }}" name="ngo_website" class="form-control" id=""
+               placeholder="">
+    </div>
+
+    @endif
+</div>
                             <div class="card mb-3">
                                 <div class="card-header">
                                     বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম  এর পিডিএফ <span class="text-danger">*</span>

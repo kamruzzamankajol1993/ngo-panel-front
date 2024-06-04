@@ -172,22 +172,26 @@
                                         <?php
 
 
-$getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_all->id )->value('status');
+$getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_all->id )->latest()->value('status');
 
 
 
                                         ?>
 
 
-       {{-- @if($getPendingData == 'pending')
+       @if($getPendingData == 'Ongoing' || $getPendingData == 'Review' )
 
-       @else --}}
+       <button type="button" disabled class="btn btn-registration"
+                                                onclick="location.href = '{{ route('formNoFive.create') }}';">নতুন ফরম যোগ করুন
+                                        </button>
+
+       @else
 
 
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('formNoFive.create') }}';">নতুন ফরম যোগ করুন
                                         </button>
-                                        {{-- @endif --}}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -239,7 +243,7 @@ $getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_a
                                         </td>
                                         <td>
 
-                                            @if($formNoFiveListAll->status == 'pending')
+                                            @if($formNoFiveListAll->status == 'Ongoing' || $formNoFiveListAll->status == 'Review')
 
                                             <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
                                             @else

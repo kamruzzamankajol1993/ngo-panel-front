@@ -166,11 +166,31 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-5 col-sm-12">
+
+                                    <?php
+                                    $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->first();
+                                    $name_change_list = DB::table('form_no_sevens')->where('fd_one_form_id',$fdOneFormid->id)->latest()->value('status');
+
+
+
+
+                                                ?>
+
+@if($name_change_list == 'Ongoing' || $name_change_list == 'Review')
+
+<div class="d-grid d-md-flex justify-content-end">
+    <button type="button" disabled class="btn btn-registration"
+            onclick="location.href = '{{ route('formNoSeven.create') }}';">নতুন ফরম যোগ করুন
+    </button>
+</div>
+
+@else
                                     <div class="d-grid d-md-flex justify-content-end">
                                         <button type="button" class="btn btn-registration"
                                                 onclick="location.href = '{{ route('formNoSeven.create') }}';">নতুন ফরম যোগ করুন
                                         </button>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
 
@@ -206,17 +226,15 @@
                                         <td><span class="text-success">{{ $formNoSevenListAll->status }}</span></td>
                                         <td>
 
+                                            @if(  $formNoSevenListAll->status == 'Ongoing' || $formNoSevenListAll->status == 'Accepted')
+
+                                            @else
+
                                             <a  href="{{ route('formNoSeven.edit',base64_encode($formNoSevenListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+
+                                            @endif
                                             <a  href="{{ route('formNoSeven.show',base64_encode($formNoSevenListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
-                                            <button type="button" onclick="deleteTag({{ $formNoSevenListAll->id}})" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $formNoSevenListAll->id }}" action="{{ route('formNoSeven.destroy',$formNoSevenListAll->id) }}" method="POST" style="display: none;">
-
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
 
                                         </td>
                                     </tr>

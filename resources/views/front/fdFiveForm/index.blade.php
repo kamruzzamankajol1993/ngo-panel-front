@@ -159,7 +159,7 @@
 
             <?php
 $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->first();
-$name_change_list = DB::table('document_for_duplicate_certificates')->where('fd_one_form_id',$fdOneFormid->id)->latest()->value('status');
+$name_change_list = DB::table('fd_five_forms')->where('fdId',$fdOneFormid->id)->latest()->value('status');
 
 
 
@@ -182,13 +182,16 @@ $name_change_list = DB::table('document_for_duplicate_certificates')->where('fd_
                                 <div class="col-lg-6 col-sm-12">
                                     <div class="d-grid d-md-flex justify-content-end">
 
-                                        @if($name_change_list == 'Ongoing')
+                                        @if($name_change_list == 'Ongoing' || $name_change_list == 'Review')
 
+                                        <button type="button" disabled  class="btn btn-registration"
+                                        onclick="location.href = '{{ route('fdFiveForm.create') }}';">আবেদন ফরম তৈরি করুন
+                                </button>
 
                                         @else
 
                                         <button type="button"  class="btn btn-registration"
-                                        onclick="location.href = '{{ route('fdFiveForm.create') }}';">ডুপ্লিকেট সনদপত্রের জন্য আবেদন
+                                        onclick="location.href = '{{ route('fdFiveForm.create') }}';">আবেদন ফরম তৈরি করুন
                                 </button>
 @endif
 
@@ -233,19 +236,11 @@ $name_change_list = DB::table('document_for_duplicate_certificates')->where('fd_
 
                                             @if($fd6FormListAll->status  == 'Ongoing' || $fd6FormListAll->status  == 'Accepted' )
 @else
-                                            <a  href="{{ route('fdFiveForm.edit',$fd6FormListAll->id) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+                                            <a  href="{{ route('fdFiveForm.edit',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
 
-                                            <button type="button" onclick="deleteTag({{ $fd6FormListAll->id}})" class="btn btn-sm btn-outline-danger"><i
-                                                class="bi bi-trash"></i></button>
 
-                                                <form id="delete-form-{{ $fd6FormListAll->id }}" action="{{ route('fdFiveForm.destroy',$fd6FormListAll->id) }}" method="POST" style="display: none;">
-
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                </form>
 @endif
-<a  href="{{ route('fdFiveForm.show',$fd6FormListAll->id) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
+<a  href="{{ route('fdFiveForm.show',base64_encode($fd6FormListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
                                         </td>
                                     </tr>
                                     @endforeach

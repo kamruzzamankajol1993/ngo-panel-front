@@ -80,6 +80,15 @@ return new class extends Migration
             $table->string('name_certifying_officer')->nullable();
             $table->string('designation_certifying_officer')->nullable();
             $table->string('date_certifying_officer')->nullable();
+            $table->string('file_last_check_date')->nullable();
+            $table->string('check_status')->nullable();
+            $table->longText('comment')->nullable();
+            $table->string('sarok_number')->nullable();
+            $table->string('mian_ngo_detail')->nullable();
+            $table->longText('main_ngo_detail_comment')->nullable();
+            $table->longText('last_comment')->nullable();
+            $table->string('project_copy_approved_by_burea')->nullable();
+            $table->longText('project_copy_approved_by_burea_comment')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

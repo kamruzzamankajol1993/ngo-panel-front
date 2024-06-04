@@ -221,7 +221,7 @@
 
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">ব্যুরোর নিবন্ধন তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required name="ngo_registration_date" value="{{ $fd3FormList->ngo_registration_date }}" class="form-control datepicker" id=""
+                                            <input type="text" required name="ngo_registration_date" value="{{ $fd3FormList->ngo_registration_date }}" class="form-control datepickerOne" id=""
                                                    placeholder="">
                                         </div>
 
@@ -243,7 +243,7 @@
                                         </div>
                                         <div class="mb-3 col-lg-6">
                                             <label for="" class="form-label">প্রকল্প অনুমোদনপত্র ও অর্থছাড়পত্রের স্মারক তারিখ <span class="text-danger">*</span></label>
-                                            <input type="text" required value="{{ $fd3FormList->project_approval_exemption_letter_date }}" name="project_approval_exemption_letter_date" class="form-control datepicker" id=""
+                                            <input type="text" required value="{{ $fd3FormList->project_approval_exemption_letter_date }}" name="project_approval_exemption_letter_date" class="form-control datepickerOne" id=""
                                                    placeholder="">
                                         </div>
                                         <div class="mb-3 col-lg-6">
@@ -267,7 +267,7 @@
                                             <div class="row">
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">অর্থগ্রহনের তারিখ <span class="text-danger">*</span></label>
-                                                    <input type="text" required name="date_of_payment" value="{{ $fd3FormList->money_received_in_the_previous_year }}" class="form-control datepicker" id=""
+                                                    <input type="text" required name="date_of_payment" value="{{ $fd3FormList->money_received_in_the_previous_year }}" class="form-control datepickerOne" id=""
                                                            placeholder="">
                                                 </div>
 

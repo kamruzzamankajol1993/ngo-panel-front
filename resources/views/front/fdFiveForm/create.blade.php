@@ -170,6 +170,11 @@ $name_change_list = DB::table('document_for_duplicate_certificates')->where('fd_
                 <div class="card">
                     <div class="card-body">
 
+                        <div class="form9_upper_box">
+                            <h3>এফডি - ৫ ফরম</h3>
+                            <h4 style="font-weight:bold;">বিদেশ থেকে প্রাপ্ত জিনিসপত্র /দ্রব্যসামগ্র্রীর সংরক্ষণ সংক্রান্ত ফরম </h4>
+                        </div>
+
                         <form method="post" action="{{ route('fdFiveForm.store') }}" enctype="multipart/form-data" id="form" data-parsley-validate="">
 
                             @csrf
@@ -214,7 +219,7 @@ $name_change_list = DB::table('document_for_duplicate_certificates')->where('fd_
                                 <div class="mb-3 col-lg-6">
                                     <label for="" class="form-label">মোবাইল নম্বর <span class="text-danger">*</span></label>
                                     <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                    type = "number" required
+                                    type = "number" readonly required
                                     maxlength = "11"  minlength="11"  data-parsley-trigger=“keyup” name="ngo_mobile_number" value="{{ $ngoListAll->phone }}" class="form-control" id=""
                                            placeholder="">
                                 </div>

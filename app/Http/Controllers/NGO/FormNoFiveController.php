@@ -277,7 +277,7 @@ class FormNoFiveController extends Controller
 
 
         $formNoFiveInfo = FormNoFive::find(base64_decode($id));
-        $formNoFiveInfo->status ='pending';
+        $formNoFiveInfo->status ='Ongoing';
         $formNoFiveInfo->save();
 
         return redirect()->back()->with('success','Send Successfuly');

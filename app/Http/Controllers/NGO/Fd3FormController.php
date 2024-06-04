@@ -86,7 +86,7 @@ class Fd3FormController extends Controller
 
          ]);
 
-         
+
          try{
             DB::beginTransaction();
 
@@ -141,7 +141,7 @@ class Fd3FormController extends Controller
             $fd3FormInfo->bank_address =$request->bank_address;
             $fd3FormInfo->bank_account_name =$request->bank_account_name;
             $fd3FormInfo->bank_account_number =$request->bank_account_number;
-            $fd3FormInfo->status ='Ongoing';
+            $fd3FormInfo->status ='Review';
             $filePath="FdThreeForm";
             if ($request->hasfile('verified_fd_three_form')) {
 
@@ -163,6 +163,24 @@ class Fd3FormController extends Controller
         }
 
      }
+
+     public function fd3FormSend($id){
+
+        try{
+
+
+        $fd3FormInfo = Fd3Form::find(base64_decode($id));
+        $fd3FormInfo->status ='Ongoing';
+        $fd3FormInfo->save();
+
+        return redirect()->back()->with('success','Send Successfuly');
+
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
+    }
 
      public function update(Request $request,$id){
 
