@@ -169,8 +169,9 @@
                             @include('flash_message')
 
 
-                                    <form action="{{ route('formNoSeven.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('formNoSeven.update',$formSevenData->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
+                                        @method('PUT')
                                     <div class="form9_upper_box">
                                         <h3>{{ trans('formNoSeven.formNoSeven')}}</h3>
                                         <h4>প্রকল্প বাস্তবায়ন সম্পর্কিত প্রত্যয়নপত্রের ছক</h4>
@@ -183,7 +184,7 @@
 
                                                 <tr>
                                                     <td>স্মারক নং: <span style="color:red;">*</span></td>
-                                                    <td> <input type="text" value="{{ $formSevenData->ngo_name }}" required name="sarok_number" class="form-control" id=""
+                                                    <td> <input type="text" value="{{ $formSevenData->sarok_number }}" required name="sarok_number" class="form-control" id=""
                                                         placeholder=""></td>
                                                 </tr>
 
@@ -195,7 +196,7 @@
 
                                                 <tr>
                                                     <td>তারিখ: <span style="color:red;">*</span></td>
-                                                    <td> <input type="text" value="{{ $formSevenData->ngo_name }}" required name="submit_date" class="form-control datepickerOne" id=""
+                                                    <td> <input type="text" value="{{ $formSevenData->submit_date }}" required name="submit_date" class="form-control datepickerOne" id=""
                                                         placeholder=""></td>
                                                 </tr>
 
@@ -236,7 +237,7 @@
                                                                        placeholder="এনজিও'র নাম">
 
 
-                                                                <input type="text" required name="ngo_address" value="{{ $formSevenData->ngo_name }}" class="form-control mt-1" id=""
+                                                                <input type="text" required name="ngo_address" value="{{ $formSevenData->ngo_address }}" class="form-control mt-1" id=""
                                                                        placeholder="এনজিও'র ঠিকানা">
 
                                                     </td>
@@ -244,7 +245,7 @@
 
 
                                                             <textarea name="ngo_name_address_comment"  class="form-control" id=""
-                                                                   placeholder="মন্তব্য"></textarea>
+                                                                   placeholder="মন্তব্য">{{ $formSevenData->ngo_name_address_comment }}</textarea>
 
                                                     </td>
                                                 </tr>
@@ -255,25 +256,25 @@
                                                     <td>
 
 
-                                                        <input type="text" required name="ngo_head_name" class="form-control" id=""
+                                                        <input type="text" required value="{{ $formSevenData->ngo_head_name }}" name="ngo_head_name" class="form-control" id=""
                                                         placeholder="নাম">
 
 
-                                                 <input type="text" required name="ngo_head_organization" class="form-control mt-1" id=""
+                                                 <input type="text" required value="{{ $formSevenData->ngo_head_organization }}" name="ngo_head_organization" class="form-control mt-1" id=""
                                                         placeholder="পদবি">
 
                                                         <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                         type = "number"
-                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required name="ngo_head_office_mobile" class="form-control mt-1" id=""
+                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required value="{{ $formSevenData->ngo_head_office_mobile }}" name="ngo_head_office_mobile" class="form-control mt-1" id=""
                                                         placeholder="দাপ্তরিক মোবাইল নম্বর">
 
-                                                        <input type="text" required name="ngo_head_office_email" class="form-control mt-1" id=""
+                                                        <input type="text" required value="{{ $formSevenData->ngo_head_office_email }}" name="ngo_head_office_email" class="form-control mt-1" id=""
                                                         placeholder="ইমেইল এড্রেস">
 
                                                     </td>
                                                     <td>
                                                         <textarea name="ngo_head_comment" class="form-control" id=""
-                                                                   placeholder="মন্তব্য"></textarea>
+                                                                   placeholder="মন্তব্য">{{ $formSevenData->ngo_head_comment }}</textarea>
                                                     </td>
                                                 </tr>
 
@@ -289,23 +290,23 @@
 
                                                 </td>
                                                     <td>
-                                                        <input type="text" required name="ngo_registration" class="form-control" id=""
+                                                        <input type="text" required name="ngo_registration" value="{{ $formSevenData->ngo_registration }}" class="form-control" id=""
                                                         placeholder="নিবন্ধন নম্বর">
 
 
-                                                 <input type="text" required name="ngo_registration_date" class="form-control mt-1 datepickerOne" id=""
+                                                 <input type="text" required name="ngo_registration_date" value="{{ $formSevenData->ngo_registration_date }}" class="form-control mt-1 datepickerOne" id=""
                                                         placeholder="নিবন্ধন তারিখ">
 
-                                                        <input type="text" required name="ngo_last_renewal_date" class="form-control mt-1 datepickerOne" id=""
+                                                        <input type="text" required name="ngo_last_renewal_date" value="{{ $formSevenData->ngo_last_renewal_date }}" class="form-control mt-1 datepickerOne" id=""
                                                         placeholder="নবায়নের তারিখ">
 
 
-                                                        <input type="text" required name="ngo_duration" class="form-control mt-1" id=""
+                                                        <input type="text" required name="ngo_duration" value="{{ $formSevenData->ngo_duration }}" class="form-control mt-1" id=""
                                                         placeholder="নবায়নের মেয়াদকাল">
 
                                                     </td>
                                                     <td><textarea name="ngo_reg_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->ngo_reg_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
@@ -313,24 +314,24 @@
                                                     <td style="text-align: center;">ঘ)</td>
                                                     <td>জেলা/আঞ্চলিক  অফিসের দায়িত্বপ্রাপ্ত এনজিও কর্মকর্তার নাম, পদবি, দাপ্তরিক মোবাইল নম্বর ও ইমেইল এড্রেস <span style="color:red;">*</span></td>
                                                     <td>
-                                                        <input type="text" required name="ngo_local_officer_name" class="form-control" id=""
+                                                        <input type="text" required value="{{ $formSevenData->ngo_local_officer_name }}" name="ngo_local_officer_name" class="form-control" id=""
                                                         placeholder="নাম">
 
 
-                                                 <input type="text" required name="ngo_local_officer_designation" class="form-control mt-1" id=""
+                                                 <input type="text" required value="{{ $formSevenData->ngo_local_officer_designation }}" name="ngo_local_officer_designation" class="form-control mt-1" id=""
                                                         placeholder="পদবি">
 
                                                         <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                         type = "number"
-                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required name="ngo_local_officer_mobile" class="form-control mt-1" id=""
+                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required value="{{ $formSevenData->ngo_local_officer_mobile }}" name="ngo_local_officer_mobile" class="form-control mt-1" id=""
                                                         placeholder="দাপ্তরিক মোবাইল নম্বর">
 
-                                                        <input type="text" required name="ngo_local_officer_email" class="form-control mt-1" id=""
+                                                        <input type="text" required value="{{ $formSevenData->ngo_local_officer_email }}" name="ngo_local_officer_email" class="form-control mt-1" id=""
                                                         placeholder="ইমেইল এড্রেস">
                                                     </td>
                                                     <td>
                                                         <textarea name="ngo_local_officer_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->ngo_local_officer_comment }}</textarea>
                                                     </td>
                                                 </tr>
                                                 <!-- step one end -->
@@ -354,34 +355,34 @@
                                                         ৩.  টাকার পরিমাণ <span style="color:red;">*</span>
                                                 </span></td>
                                                     <td>
-                                                        <input type="text" required name="prokolpo_name" class="form-control" id=""
+                                                        <input type="text" required value="{{ $formSevenData->prokolpo_name }}" name="prokolpo_name" class="form-control" id=""
                                                         placeholder="নাম">
 
 
-                                                 <input type="text" required name="prokolpo_duration" class="form-control mt-1" id=""
+                                                 <input type="text" required value="{{ $formSevenData->prokolpo_duration }}" name="prokolpo_duration" class="form-control mt-1" id=""
                                                         placeholder="মেয়াদকাল">
 
-                                                        <input type="text" required name="prokolpo_fund" class="form-control mt-1" id=""
+                                                        <input type="text" required value="{{ $formSevenData->prokolpo_fund }}" name="prokolpo_fund" class="form-control mt-1" id=""
                                                         placeholder="টাকার পরিমাণ">
                                                     </td>
                                                     <td><textarea name="prokolpo_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->prokolpo_comment }}</textarea></td>
                                                 </tr>
                                                 <tr>
 
                                                     <td style="text-align: center;">খ)</td>
                                                     <td>প্রকল্প অনুমোদনের তারিখ ও স্মারক নম্বর, প্রত্যয়নপত্র প্রদানের বছর / সময় <span style="color:red;">*</span> </td>
-                                                    <td> <input type="text" required name="prokolpo_approval_date" class="form-control datepickerOne" id=""
+                                                    <td> <input type="text" value="{{ $formSevenData->prokolpo_approval_date }}" required name="prokolpo_approval_date" class="form-control datepickerOne" id=""
                                                         placeholder="তারিখ">
 
 
-                                                 <input type="text" required name="prokolpo_sarok_number" class="form-control mt-1" id=""
+                                                 <input type="text" required  value="{{ $formSevenData->prokolpo_sarok_number }}"name="prokolpo_sarok_number" class="form-control mt-1" id=""
                                                         placeholder="স্মারক নম্বর">
 
-                                                        <input type="text" required name="prokolpo_certificate_year_and_time" class="form-control mt-1" id=""
+                                                        <input type="text" value="{{ $formSevenData->prokolpo_certificate_year_and_time }}" required name="prokolpo_certificate_year_and_time" class="form-control mt-1" id=""
                                                         placeholder="প্রত্যয়নপত্র প্রদানের বছর / সময়"></td>
                                                     <td><textarea name="prokolpo_approval_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->prokolpo_approval_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
@@ -389,19 +390,19 @@
                                                     <td style="text-align: center;">গ)</td>
                                                     <td>প্রকল্পের উদ্দেশ্য <span style="color:red;">*</span></td>
                                                     <td><textarea required name="prokolpo_objecttive" class="form-control" id=""
-                                                        placeholder="প্রকল্পের উদ্দেশ্য"></textarea></td>
+                                                        placeholder="প্রকল্পের উদ্দেশ্য">{{ $formSevenData->prokolpo_objecttive }}</textarea></td>
                                                     <td><textarea name="prokolpo_objecttive_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->prokolpo_objecttive_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
 
                                                     <td style="text-align: center;">ঘ)</td>
                                                     <td>জেলা/উপজেলায় ব্যুরো কতৃক অনুমোদিত প্রকল্পের কপি স্থানীয় প্রশাসন কতৃক গ্রহণের তারিখ <span style="color:red;">*</span></td>
-                                                    <td><input type="text" required name="project_copy_approved_by_burea" class="form-control datepickerOne" id=""
+                                                    <td><input type="text" required value="{{ $formSevenData->project_copy_approved_by_burea }}" name="project_copy_approved_by_burea" class="form-control datepickerOne" id=""
                                                         placeholder="তারিখ"></td>
                                                     <td><textarea name="project_copy_approved_by_burea_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->project_copy_approved_by_burea_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
@@ -427,25 +428,25 @@
                                                 </span></td>
                                                     <td>
 
-                                                        <input type="text" required name="allocation_for_projects_in_district_or_upazila" class="form-control" id=""
+                                                        <input type="text" value="{{ $formSevenData->allocation_for_projects_in_district_or_upazila }}" required name="allocation_for_projects_in_district_or_upazila" class="form-control" id=""
                                                         placeholder="প্রকল্পের জন্য বরাদ্দ">
 
 
-                                                 <input type="text" required name="this_year_under_discussion_multi_year_projects" class="form-control mt-1" id=""
+                                                 <input type="text" required value="{{ $formSevenData->this_year_under_discussion_multi_year_projects }}" name="this_year_under_discussion_multi_year_projects" class="form-control mt-1" id=""
                                                         placeholder="আলোচ্য বর্ষে বরাদ্দ">
 
-                                                        <input type="text" required name="actual_expenditure_multi_year_projects" class="form-control mt-1" id=""
+                                                        <input type="text" value="{{ $formSevenData->actual_expenditure_multi_year_projects }}" required name="actual_expenditure_multi_year_projects" class="form-control mt-1" id=""
                                                         placeholder="আলোচ্য বর্ষে প্রকৃত ব্যয়">
 
-                                                        <input type="text" required name="direct_beneficiaries_quantity" class="form-control mt-1" id=""
+                                                        <input type="text" value="{{ $formSevenData->direct_beneficiaries_quantity }}" required name="direct_beneficiaries_quantity" class="form-control mt-1" id=""
                                                         placeholder="প্রত্যক্ষ উপকারভোগীর সংখ্যা">
 
-                                                        <input type="text" required name="indirect_beneficiaries_quantity" class="form-control mt-1" id=""
+                                                        <input type="text" value="{{ $formSevenData->indirect_beneficiaries_quantity }}" required name="indirect_beneficiaries_quantity" class="form-control mt-1" id=""
                                                         placeholder="পরোক্ষ উপকারভোগীর সংখ্যা">
 
                                                     </td>
                                                     <td><textarea name="jurisdiction_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->jurisdiction_comment }}</textarea></td>
                                                 </tr>
 
 
@@ -470,23 +471,23 @@
                                                 </span></td>
                                                     <td>
 
-                                                        <input type="text" required name="project_inspected_time" class="form-control" id=""
+                                                        <input type="text" required value="{{ $formSevenData->project_inspected_time }}" name="project_inspected_time" class="form-control" id=""
                                                         placeholder="প্রকল্পটি পরিদর্শন করা হয়েছে">
 
 
-                                                        <input type="text" required name="inspector_name" class="form-control mt-1" id=""
+                                                        <input type="text" required value="{{ $formSevenData->inspector_name }}" name="inspector_name" class="form-control mt-1" id=""
                                                         placeholder="নাম">
 
 
-                                                 <input type="text" required name="inspector_designation" class="form-control mt-1" id=""
+                                                 <input type="text" required value="{{ $formSevenData->inspector_designation }}" name="inspector_designation" class="form-control mt-1" id=""
                                                         placeholder="পদবি">
 
                                                         <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                         type = "number"
-                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required name="inspector_mobile" class="form-control mt-1" id=""
+                                                        maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” required value="{{ $formSevenData->inspector_mobile }}" name="inspector_mobile" class="form-control mt-1" id=""
                                                         placeholder="মোবাইল নম্বর">
 
-                                                        <input type="text" required name="inspector_email" class="form-control mt-1" id=""
+                                                        <input type="text" required value="{{ $formSevenData->inspector_email }}" name="inspector_email" class="form-control mt-1" id=""
                                                         placeholder="ইমেইল এড্রেস">
 
 
@@ -494,7 +495,7 @@
                                                     </td>
                                                     <td>
                                                         <textarea name="inspector_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->inspector_comment }}</textarea>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -502,29 +503,29 @@
                                                     <td style="text-align: center;">খ)</td>
                                                     <td>উপকারভোগী নির্বাচনে স্থানীয় প্রশাসনকে সম্পৃক্ত করা হয়েছে কিনা, হয়ে থাকলে তার সংক্ষিপ্ত বিবরণী <span style="color:red;">*</span></td>
                                                     <td><textarea required name="beneficiaries_involved_with_local_administration" class="form-control" id=""
-                                                        placeholder="সংক্ষিপ্ত বিবরণী"></textarea></td>
+                                                        placeholder="সংক্ষিপ্ত বিবরণী">{{ $formSevenData->beneficiaries_involved_with_local_administration }}</textarea></td>
                                                     <td><textarea name="beneficiaries_involved_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->beneficiaries_involved_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
 
                                                     <td style="text-align: center;">গ)</td>
                                                     <td>এনজিও প্রতিনিধি জেলা/উপজেলায় এনজিও বিষয়ক সমন্বয় সভায় নিয়মিত অংশগ্রহণ করেন কিনা <span style="color:red;">*</span></td>
-                                                    <td><input type="text" required name="regular_participation_in_meeting" class="form-control mt-1" id=""
+                                                    <td><input type="text" required value="{{ $formSevenData->regular_participation_in_meeting }}" name="regular_participation_in_meeting" class="form-control mt-1" id=""
                                                         placeholder="অংশগ্রহণ করেন কিনা"></td>
                                                     <td><textarea name="regular_participation_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->regular_participation_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
 
                                                     <td style="text-align: center;">ঘ)</td>
                                                     <td>এনজিও বিষয়ক ব্যুরোর অনুমোদন পত্রের শর্তাদি যথাযথভাবে প্রতিপালিত হয়েছে কিনা <span style="color:red;">*</span></td>
-                                                    <td><input type="text" required name="conditions_properly_met" class="form-control mt-1" id=""
+                                                    <td><input type="text" required  value="{{ $formSevenData->conditions_properly_met }}" name="conditions_properly_met" class="form-control mt-1" id=""
                                                         placeholder="শর্তাদি যথাযথভাবে প্রতিপালিত হয়েছে কিনা"></td>
                                                     <td><textarea name="conditions_properly_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->conditions_properly_comment }}</textarea></td>
                                                 </tr>
 
                                                 <!-- step three end -->
@@ -536,9 +537,9 @@
                                                     <td></td>
                                                     <td>পার্টনার এনজিও হলে মূল এনজিও বিষয়ক তথ্যাদি (প্রযোজ্য ক্ষেত্রে)</td>
                                                     <td><textarea name="mian_ngo_detail" class="form-control" id=""
-                                                        placeholder="তথ্যাদি (প্রযোজ্য ক্ষেত্রে"></textarea></td>
+                                                        placeholder="তথ্যাদি (প্রযোজ্য ক্ষেত্রে">{{ $formSevenData->mian_ngo_detail }}</textarea></td>
                                                     <td><textarea name="main_ngo_detail_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->main_ngo_detail_comment }}</textarea></td>
                                                 </tr>
 
                                                 <tr>
@@ -546,16 +547,16 @@
                                                     <td></td>
                                                     <td>মূল এনজিও'র নাম ও ঠিকানা</td>
                                                     <td>
-                                                        <input type="text" required name="main_ngo_name" class="form-control mt-1" id=""
+                                                        <input type="text" value="{{ $formSevenData->main_ngo_name }}" required name="main_ngo_name" class="form-control mt-1" id=""
                                                         placeholder="নাম">
 
 
-                                                 <input type="text" required name="main_ngo_address" class="form-control mt-1" id=""
+                                                 <input type="text" value="{{ $formSevenData->main_ngo_address }}" required name="main_ngo_address" class="form-control mt-1" id=""
                                                         placeholder="ঠিকানা">
 
                                                     </td>
                                                     <td><textarea name="main_ngo_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->main_ngo_comment }}</textarea></td>
                                                 </tr>
 
 
@@ -575,10 +576,10 @@
 
                                                     <td style="text-align: center;">ক)</td>
                                                     <td>প্রকল্প সমাপনী প্রতিবেদন /বার্ষিক প্রতিবেদনে জেলা প্রশাসক/উপজেলা নির্বাহী অফিসারের প্রতিস্বাক্ষর গ্রহণ করা হয়েছে কিনা <span style="color:red;">*</span></td>
-                                                    <td><input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                    <td><input type="text" required value="{{ $formSevenData->sign_in_closing_report }}" name="sign_in_closing_report" class="form-control mt-1" id=""
                                                         placeholder="প্রতিস্বাক্ষর গ্রহণ করা হয়েছে কিনা"></td>
                                                     <td><textarea name="sign_in_closing_report_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->sign_in_closing_report_comment }}</textarea></td>
                                                 </tr>
 
                                                 <!-- step five end --->
@@ -597,16 +598,16 @@
                                                     <td>
 
                                                         <textarea required name="feedback_on_projects_implementedt" class="form-control" id=""
-                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে মতামত"></textarea>
+                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে মতামত">{{ $formSevenData->feedback_on_projects_implementedt }}</textarea>
 
 
                                                         <textarea required name="recommendation_on_projects_implementedt" class="form-control mt-1" id=""
-                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ"></textarea>
+                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ">{{ $formSevenData->recommendation_on_projects_implementedt }}</textarea>
 
 
                                                     </td>
                                                     <td><textarea name="last_comment" class="form-control" id=""
-                                                        placeholder="মন্তব্য"></textarea></td>
+                                                        placeholder="মন্তব্য">{{ $formSevenData->last_comment }}</textarea></td>
                                                 </tr>
 
                                                 <!-- step six end -->
@@ -643,7 +644,7 @@
 
                                                                 @foreach($districtList as $districtLists)
 
-                                                                <option value="{{ $districtLists->district_bn }}">{{ $districtLists->district_bn }}</option>
+                                                                <option value="{{ $districtLists->district_bn }}" {{ $districtLists->district_bn == $formSevenData->district_address ? 'selected':'' }}>{{ $districtLists->district_bn }}</option>
 
                                                                 @endforeach
                                                             </select>
@@ -654,6 +655,12 @@
                                                             <select required name="upazila_address" class="form-control" id="upazila_id">
                                                                 <option value="">--- নির্বাচন করুন ---</option>
 
+                                                                @foreach($thanaList as $districtLists)
+
+                                                                <option value="{{ $districtLists->thana_bn }}" {{ $districtLists->thana_bn == $formSevenData->upazila_address ? 'selected':'' }}>{{ $districtLists->thana_bn }}</option>
+
+                                                                @endforeach
+
                                                             </select>
                                                         </div>
 
@@ -662,7 +669,7 @@
                                                         <div class="mb-3 col-lg-12">
                                                             <label for="" class="form-label">অনুলিপি</label>
                                                             <textarea name="onulipi" class="form-control" id=""
-                                                                   placeholder=""></textarea>
+                                                                   placeholder="">{{ $formSevenData->onulipi }}</textarea>
                                                         </div>
 
                                                     </div>
@@ -671,14 +678,14 @@
 
                                                         <div class="col-lg-6">
                                                             <label for="" class="form-label">প্রত্যয়নকারি কর্মকর্তার নাম <span style="color:red;">*</span></label>
-                                                            <input type="text" required name="name_certifying_officer" class="form-control" id=""
+                                                            <input type="text" required value="{{ $formSevenData->name_certifying_officer }}" name="name_certifying_officer" class="form-control" id=""
                                                                    placeholder="">
 
                                                         </div>
 
                                                         <div class="col-lg-6">
                                                             <label for="" class="form-label">প্রত্যয়নকারি কর্মকর্তার পদবি<span style="color:red;">*</span></label>
-                                                            <input type="text" required name="designation_certifying_officer" class="form-control" id=""
+                                                            <input type="text" required value="{{ $formSevenData->designation_certifying_officer }}" name="designation_certifying_officer" class="form-control" id=""
                                                                    placeholder="">
 
                                                         </div>
@@ -701,6 +708,14 @@
 
                                                     </div>
 
+                                                    @if(empty($formSevenData->signature_certifying_officer))
+
+                                                    @else
+
+                                                    <img src="{{ asset('/') }}{{ $formSevenData->signature_certifying_officer }}" />
+
+                                                    @endif
+
 
 
 
@@ -719,6 +734,14 @@
                                                         <!-- new code for image cropper end -->
                                                     </div>
                                                     <!-- end new code -->
+
+                                                    @if(empty($formSevenData->seal_certifying_officer))
+
+                                                    @else
+
+                                                    <img src="{{ asset('/') }}{{ $formSevenData->seal_certifying_officer }}" />
+
+                                                    @endif
 
 
 

@@ -178,7 +178,7 @@
                                 </div>
                                 <div class="">
 
-                                    @if($formSevenData->status == 'pending')
+                                    @if($formSevenData->status == 'Ongoing' || $formSevenData->status == 'Accepted')
 
 
                                     @else
