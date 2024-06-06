@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('report_preparar_sign')->nullable();
             $table->string('report_preparar_date')->nullable();
             $table->string('file_last_check_date')->nullable();
+            $table->string('check_status')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

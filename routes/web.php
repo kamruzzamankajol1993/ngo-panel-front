@@ -29,6 +29,9 @@ use App\Http\Controllers\NGO\FdFiveFormController;
 use App\Http\Controllers\Front\ComplainMonitorController;
 use App\Http\Controllers\NGO\FormNoSevenController;
 use App\Http\Controllers\NGO\FormNoFiveController;
+use App\Http\Controllers\NGO\FormNoFourController;
+use App\Http\Controllers\NGO\FdFourFormController;
+use App\Http\Controllers\NGO\FdFourOneController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -241,8 +244,27 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
+
+
+    Route::resource('fdFourForm',FdFourFormController::class);
+    Route::resource('fdFourOneForm',FdFourOneController::class);
     Route::resource('formNoSeven',FormNoSevenController::class);
     Route::resource('formNoFive',FormNoFiveController::class);
+    Route::resource('formNoFour',FormNoFourController::class);
+
+    Route::controller(FdFourFormController::class)->group(function () {
+
+        Route::get('addFdFourFormData/{id}', 'addFdFourFormData')->name('addFdFourFormData');
+        Route::get('editFdFourFormData/{id}', 'editFdFourFormData')->name('editFdFourFormData');
+    });
+
+    Route::controller(FormNoFourController::class)->group(function () {
+
+        Route::get('formNoFourPdfDownload/{id}', 'formNoFourPdfDownload')->name('formNoFourPdfDownload');
+        Route::get('formNoFourSend/{id}', 'formNoFourSend')->name('formNoFourSend');
+        Route::get('getDistrictListForFormFour', 'getDistrictListForFormFour')->name('getDistrictListForFormFour');
+        //Route::get('formNoFourPdfDownload/{id}', 'formNoFourPdfDownload')->name('formNoFourPdfDownload');
+    });
 
     Route::controller(FormNoSevenController::class)->group(function () {
 
