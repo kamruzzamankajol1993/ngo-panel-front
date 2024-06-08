@@ -72,67 +72,67 @@
 
                         <div class="profile_link_box">
                             <a href="{{ route('fd6Form.index') }}">
-                                <p class="{{ Route::is('fd6Form.index') ||  Route::is('fd6Form.create') || Route::is('fd6Form.show') || Route::is('fd2Form.create') || Route::is('fd2Form.index') || Route::is('fd6Form.edit') || Route::is('fd2Form.view') || Route::is('fd2Form.edit')? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd6')}}</p>
+                                <p class="{{ Route::is('fd6Form.index') ||  Route::is('fd6Form.create') || Route::is('fd6Form.show') || Route::is('fd2Form.create') || Route::is('fd2Form.index') || Route::is('fd6Form.edit') || Route::is('fd2Form.show') || Route::is('fd2Form.edit')? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd6')}}</p>
                             </a>
                         </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('fd7Form.index') }}">
-                                <p class="{{ Route::is('fd7Form.index') ||  Route::is('fd7Form.create') || Route::is('fd7Form.view') || Route::is('addFd2DetailForFd7') || Route::is('editFd2DetailForFd7') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd7')}}</p>
+                                <p class="{{ Route::is('fd7Form.index') ||  Route::is('fd7Form.create') || Route::is('fd7Form.show') || Route::is('addFd2DetailForFd7') || Route::is('editFd2DetailForFd7') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd7')}}</p>
                             </a>
                         </div>
 
 
                         <div class="profile_link_box">
                             <a href="{{ route('fc1Form.index') }}">
-                                <p class="{{ Route::is('fc1Form.index') ||  Route::is('fc1Form.create') || Route::is('fc1Form.view') || Route::is('addFd2DetailForFc1') || Route::is('editFd2DetailForFc1') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc1')}}</p>
+                                <p class="{{ Route::is('fc1Form.index') ||  Route::is('fc1Form.create') || Route::is('fc1Form.show') || Route::is('addFd2DetailForFc1') || Route::is('editFd2DetailForFc1') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc1')}}</p>
                             </a>
                         </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('fc2Form.index') }}">
-                                <p class="{{ Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.view') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
+                                <p class="{{ Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.show') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
                             </a>
                         </div>
 
 
                         <div class="profile_link_box">
                             <a href="{{ route('fd3Form.index') }}">
-                                <p class="{{ Route::is('fd3Form.index') ||  Route::is('fd3Form.create') || Route::is('fd3Form.view') || Route::is('addFd2DetailForFd3') || Route::is('editFd2DetailForFd3') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd3')}}</p>
+                                <p class="{{ Route::is('fd3Form.index') ||  Route::is('fd3Form.create') || Route::is('fd3Form.show') || Route::is('addFd2DetailForFd3') || Route::is('editFd2DetailForFd3') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd3')}}</p>
                             </a>
                         </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('fdFiveForm.index') }}">
-                                <p class="{{ Route::is('fdFiveForm.index') ||  Route::is('fdFiveForm.create') || Route::is('fdFiveForm.view')  || Route::is('fdFiveForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd5')}}</p>
+                                <p class="{{ Route::is('fdFiveForm.index') ||  Route::is('fdFiveForm.create') || Route::is('fdFiveForm.show')  || Route::is('fdFiveForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd5')}}</p>
                             </a>
                         </div>
                         <div class="profile_link_box">
                             <a href="{{ route('fdFourOneForm.index') }}">
-                                <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
+                                <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.show')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
-                                <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
+                                <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.show')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
                             </a>
                         </div>
                         <div class="profile_link_box">
                             <a href="{{ route('formNoSeven.index') }}">
-                                <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
+                                <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.show')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
                             </a>
                         </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
-                                <p class="{{ Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.view')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
+                                <p class="{{ Route::is('formNoFive.index') ||  Route::is('formNoFive.create') || Route::is('formNoFive.show')  || Route::is('formNoFive.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFive.formNoFive')}}</p>
                             </a>
                         </div>
 
 
                         <div class="profile_link_box">
                             <a href="{{ route('complain.index') }}">
-                                <p class="{{ Route::is('complain.index') ||  Route::is('complain.create') || Route::is('complain.view')  || Route::is('complain.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.complain')}}</p>
+                                <p class="{{ Route::is('complain.index') ||  Route::is('complain.create') || Route::is('complain.show')  || Route::is('complain.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.complain')}}</p>
                             </a>
                         </div>
                         {{-- <div class="profile_link_box">
@@ -168,6 +168,8 @@
                 <div class="card">
                     <div class="card-body">
 
+                        @include('flash_message')
+
                           <!-- new code start --->
 
                   <div class="d-flex justify-content-between mt-3">
@@ -179,22 +181,22 @@
 
 
 
-                        @if($fd6FormList->status == 'Ongoing' || $fd6FormList->status == 'Accepted')
+                        @if($fdFourOneFormList->status == 'Ongoing' || $fdFourOneFormList->status == 'Accepted')
 
                                         @else
 
-                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fd6FormList->id}})" class="btn btn-info">
+                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fdFourOneFormList->id}})" class="btn btn-info">
                                             <i class="fa fa-send-o"></i>
                                         </button>
 
-                                            <form id="delete-form-{{ $fd6FormList->id }}" action="{{ route('finalFdSixApplicationSubmit',base64_encode($fd6FormList->id)) }}" method="get" style="display: none;">
+                                            <form id="delete-form-{{ $fdFourOneFormList->id }}" action="{{ route('fdFourOneSend',base64_encode($fdFourOneFormList->id)) }}" method="get" style="display: none;">
 
                                                 @csrf
 
 
                                             </form>
 
-                        <button class="btn btn-primary" onclick="location.href = '{{ route('fd6Form.edit',base64_encode($fd6FormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
+                        <button class="btn btn-primary" onclick="location.href = '{{ route('fdFourOneForm.edit',base64_encode($fdFourOneFormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
                         @endif
 
 
@@ -210,23 +212,23 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td>প্রকল্পের নাম</td>
-                                <td>: {{ $fd6FormList->ngo_name }}</td>
+                                <td>: {{ $fdFourOneFormList->prokolpo_name }}</td>
                             </tr>
                             <tr>
                                 <td>প্রকল্প অনুমোদনের স্বারক নং ও তারিখ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_registration_date) }}</td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourOneFormList->prokolpo_permission_sarok_no.' ও '.$fdFourOneFormList->prokolpo_permission_sarok_date) }}</td>
                             </tr>
                             <tr>
                                 <td>প্রকল্প বর্ষ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_last_renew_date) }}</td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourOneFormList->prokolpo_year) }}</td>
                             </tr>
                             <tr>
-                                <td>ছাড়কৃত অর্থের পরিমাণ ও তারিখ (বাংলাদেশী মুদ্রায় খরচ ) /td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_expiration_date) }}</td>
+                                <td>ছাড়কৃত অর্থের পরিমাণ ও তারিখ (বাংলাদেশী মুদ্রায় খরচ ) </td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourOneFormList->prokolpo_amount_sarkrito_bangla_amount. ' ও '.$fdFourOneFormList->prokolpo_amount_sarkrito_date	) }}</td>
                             </tr>
                             <tr>
                                 <td>গৃহীত অর্থের পরিমাণ ও তারিখ</td>
-                                <td>: {{ $fd6FormList->ngo_address }}</td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourOneFormList->prokolpo_amount_grihito. ' ও '.$fdFourOneFormList->prokolpo_amount_grihito_date	) }}</td>
                             </tr>
 
                         </table>
@@ -247,12 +249,12 @@
 
                             <tr>
 
-                                <th >খরচের খাতসমূহের বিস্তারিত(প্রকল্প বিবরণ এ প্রদত্ত এফডি -৬ অনুযায়ী )</th>
-                                <th >অনুমোদিত বাজেট অনুযায়ী অর্থের পরিমাণ</th>
-                                <th >প্রকৃত ব্যয়</th>
-                                <th >পার্থক্য </th>
-                                <th >শতকরা হার (%)</th>
-                                <th >পার্থক্য এর  কারণ</th>
+                                <td>{{ $prokolpoAreaListAll->expenditure_sectors }}</td>
+                                <td>{{ $prokolpoAreaListAll->approved_budget_money }}</td>
+                                <td>{{ $prokolpoAreaListAll->actual_cost }}</td>
+                                <td>{{ $prokolpoAreaListAll->difference }} </td>
+                                <td>{{ $prokolpoAreaListAll->percentage }} </td>
+                                <td>{{ $prokolpoAreaListAll->reason_for_the_difference	 }} </td>
                             </tr>
 
                             @endforeach
@@ -269,66 +271,59 @@
                         <table class="table table-borderless">
                             <tr>
                                 <td>এনজিও'র নাম</td>
-                                <td>: {{ $fd6FormList->ngo_name }}</td>
+                                <td>: {{ $fdFourFormList->ngo_name }}</td>
                             </tr>
                             <tr>
-                                <td>ব্যুরোর নিবন্ধন তারিখ </td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_registration_date) }}</td>
+                                <td>নিবন্ধন নম্বর</td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourFormList->registration_number) }}</td>
                             </tr>
-                            <tr>
-                                <td>সর্বশেষ নবায়ন</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_last_renew_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>মেয়াদ উত্তীর্ণের তারিখ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_expiration_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>ঠিকানা</td>
-                                <td>: {{ $fd6FormList->ngo_address }}</td>
-                            </tr>
+
                             <tr>
                                 <td>টেলিফোন </td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_telephone_number) }}</td>
+                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fdFourFormList->ngo_telephone) }}</td>
                             </tr>
-                            <tr>
-                                <td>মোবাইল নম্বর</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd6FormList->ngo_mobile_number) }}</td>
-                            </tr>
+
                             <tr>
                                 <td>ইমেইল ঠিকানা</td>
-                                <td>: {{ $fd6FormList->ngo_email_address }}</td>
+                                <td>: {{ $fdFourFormList->ngo_email }}</td>
                             </tr>
                             <tr>
                                 <td>ওয়েবসাইট</td>
-                                <td>: {{ $fd6FormList->ngo_website }}</td>
+                                <td>: {{ $fdFourFormList->ngo_website }}</td>
                             </tr>
                             <tr>
-                                <td>প্রকল্প নাম</td>
-                                <td>: {{ $fd6FormList->ngo_prokolpo_name }}</td>
+                                <td>প্রকল্প নাম ও প্রকল্পের মেয়াদকাল</td>
+                                <td>: {{ $fdFourFormList->prokolpo_name.' ও '.$fdFourFormList->prokolpo_duration_one }}</td>
                             </tr>
+
                             <tr>
-                                <td>প্রস্তাবিত অর্থছাড়ের পরিমান (বৈদেশিক মুদ্রায় )</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->proposed_rebate_amount_in_foreign_currency) }}</td>
+                                <td>নিরীক্ষায় বিবেচ্য সময়কাল</td>
+                                <td>: {{ $fdFourFormList->exam_time}}</td>
                             </tr>
+
                             <tr>
-                                <td>এফডি ২ ফর্ম উপলোড </td>
-                                <td><a href="{{ route('fd2MainPdfDownload',$fd2FormList->id) }}" target="_blank" class="btn btn-success">View</a></td>
+                                <td>বর্ষের প্রারম্ভিক জের</td>
+                                <td>: {{ $fdFourFormList->start_balance}}</td>
                             </tr>
-                        </table>
-                        <table class="table table-bordered">
+
                             <tr>
-                                <th>ফাইলের নাম</th>
-                                <th>ফাইল</th>
+                                <td>নিরীক্ষা বর্ষে গৃহীত বৈদেশিক অনুদান</td>
+                                <td>: {{ $fdFourFormList->foreign_grant_taken_exam_year}}</td>
                             </tr>
-                            @foreach($fd2OtherInfo as $fd2OtherInfoAll)
+
                             <tr>
-                                <td>{{ $fd2OtherInfoAll->file_name }}</td>
-                                <td><a href="{{ route('fd2PdfDownload',$fd2OtherInfoAll->id) }}" target="_blank" class="btn btn-success">View</a></td>
+                                <td>নিরীক্ষা বর্ষে ব্যয়িত বৈদেশিক অনুদান</td>
+                                <td>: {{ $fdFourFormList->foreign_grant_cost_exam_year}}</td>
                             </tr>
-                            @endforeach
+
+                            <tr>
+                                <td>নিরীক্ষা বর্ষ শেষে অবশিষ্ট বৈদেশিক অনুদান</td>
+                                <td>: {{ $fdFourFormList->foreign_grant_remaining_exam_year}}</td>
+                            </tr>
+
 
                         </table>
+
                     </div>
                 </div>
 

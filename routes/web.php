@@ -252,6 +252,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('formNoFive',FormNoFiveController::class);
     Route::resource('formNoFour',FormNoFourController::class);
 
+    Route::controller(FdFourOneController::class)->group(function () {
+
+        Route::get('fdFourOneSend/{id}', 'fdFourOneSend')->name('fdFourOneSend');
+    });
+
     Route::controller(FdFourFormController::class)->group(function () {
 
         Route::get('addFdFourFormData/{id}', 'addFdFourFormData')->name('addFdFourFormData');

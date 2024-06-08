@@ -177,6 +177,9 @@
                             @include('flash_message')
 
 
+                            @if(!$fdFourFormList)
+
+
                                     <form action="{{ route('fdFourForm.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
 
@@ -298,6 +301,134 @@
                                         </button>
                                     </div>
                                 </form>
+
+                                @else
+
+
+                                <form action="{{ route('fdFourForm.update',$fdFourFormList->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <input type="hidden" required name="decodeId" value="{{ $decodeId }}" class="form-control" id=""
+                                placeholder="">
+
+                                <div class="form9_upper_box">
+                                    <h3>এফডি - ৪ ফরম</h3>
+                                    <h4>সিএ ফার্ম কতৃক প্রদেয় প্রত্যয়নপত্র </h4>
+                                </div>
+
+                                <div class="row">
+
+
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">এনজিও'র নাম <span class="text-danger">*</span></label>
+
+
+                                        @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
+
+
+                                <input type="text" required name="ngo_name" value="{{ $ngo_list_all->organization_name_ban }}" class="form-control" id=""
+                                placeholder="">
+
+                                @else
+
+
+                                <input type="text" required name="ngo_name" value="{{ $ngo_list_all->organization_name }}" class="form-control" id=""
+                                placeholder="">
+
+
+                                @endif
+
+
+
+                                    </div>
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">নিবন্ধন নম্বর <span class="text-danger">*</span></label>
+                                        <input type="text" required name="registration_number" value="{{ $ngo_list_all->registration_number }}" class="form-control " id=""
+                                               placeholder="">
+                                    </div>
+
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">টেলিফোন <span class="text-danger">*</span></label>
+                                        <input type="text" required name="ngo_telephone" value="{{ $ngo_list_all->tele_phone_number }}" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">ইমেইল ঠিকানা <span class="text-danger">*</span></label>
+                                        <input type="text" required name="ngo_email" class="form-control" id=""
+                                               placeholder="" value="{{ $ngo_list_all->email }}">
+                                    </div>
+
+                                    @if(empty($ngo_list_all->web_site_name))
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">ওয়েবসাইট <span class="text-danger">*</span></label>
+                                        <input type="text" required value="{{ $renewWebsiteName }}" name="ngo_website" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+                                    @else
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">ওয়েবসাইট <span class="text-danger">*</span></label>
+                                        <input type="text" required value="{{ $ngo_list_all->web_site_name }}" name="ngo_website" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+
+                                    @endif
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">প্রকল্পের নাম<span class="text-danger">*</span></label>
+                                        <input type="text" required name="prokolpo_name" value="{{ $fdFourFormList->prokolpo_name }}" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">প্রকল্পের মেয়াদকাল<span class="text-danger">*</span></label>
+                                        <input type="text" required name="prokolpo_duration_one" value="{{ $fdFourFormList->prokolpo_duration_one }}" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">নিরীক্ষায় বিবেচ্য সময়কাল <span class="text-danger">*</span></label>
+                                        <input type="text" required name="exam_time" value="{{ $fdFourFormList->exam_time }}" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">বর্ষের প্রারম্ভিক জের <span class="text-danger">*</span></label>
+                                        <input type="text" required name="start_balance" value="{{ $fdFourFormList->start_balance }}" class="form-control " value="" id=""
+                                               placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">নিরীক্ষা বর্ষে গৃহীত বৈদেশিক অনুদান<span class="text-danger">*</span></label>
+                                        <input type="text" required name="foreign_grant_taken_exam_year"  value="{{ $fdFourFormList->foreign_grant_taken_exam_year }}" class="form-control" id=""
+                                               placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">নিরীক্ষা বর্ষে ব্যয়িত বৈদেশিক অনুদান <span class="text-danger">*</span></label>
+                                        <input type ="number" required required name="foreign_grant_cost_exam_year" value="{{ $fdFourFormList->foreign_grant_cost_exam_year }}" class="form-control" id="" placeholder="">
+                                    </div>
+                                    <div class="mb-3 col-lg-6">
+                                        <label for="" class="form-label">নিরীক্ষা বর্ষ শেষে অবশিষ্ট বৈদেশিক অনুদান<span class="text-danger">*</span></label>
+                                        <input type="text" required name="foreign_grant_remaining_exam_year" value="{{ $fdFourFormList->foreign_grant_remaining_exam_year }}" class="form-control" id=""
+                                               placeholder="" value="">
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                                <div class="d-grid d-md-flex justify-content-md-end mt-4">
+                                    <button type="submit" class="btn btn-registration"
+                                            >জমা দিন
+                                    </button>
+                                </div>
+                            </form>
+
+                                @endif
 
                         </div>
                     </div>
