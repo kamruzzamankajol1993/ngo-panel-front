@@ -62,7 +62,7 @@ class Fc1FormController extends Controller
         }
 
 
-        return view('front.fc1Form.create',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        return view('front.fc1Form.newAddForm',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
