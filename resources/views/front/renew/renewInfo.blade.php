@@ -126,7 +126,7 @@ color:white !important;
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
@@ -211,18 +211,6 @@ color:white !important;
 
                                             @else
 
-
-
-                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $getUserIdFrom->id}})" class="btn btn-sm btn-success">
-                                        <i class="fa fa-send-o"></i>
-                                    </button>
-
-                                        <form id="delete-form-{{ $getUserIdFrom->id }}" action="{{ route('finalRenewApplicationSubmit',base64_encode($getUserIdFrom->id)) }}" method="get" style="display: none;">
-
-                                            @csrf
-
-
-                                        </form>
 
                                             <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('ngoRenewStepOne') }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
@@ -682,6 +670,41 @@ $getngoForLanguage = DB::table('ngo_type_and_languages')->where('user_id',$all_p
                     </div>
                 </div>
 
+                  <!--new code start -->
+                  <div class="d-flex justify-content-between ">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+                        @if($getUserIdFrom->status == 'Ongoing' || $getUserIdFrom->status == 'Accepted')
+
+                        @else
+
+
+
+                <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $getUserIdFrom->id}})" class="btn btn-lg btn-success">
+                    এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                </button>
+
+                    <form id="delete-form-{{ $getUserIdFrom->id }}" action="{{ route('finalRenewApplicationSubmit',base64_encode($getUserIdFrom->id)) }}" method="get" style="display: none;">
+
+                        @csrf
+
+
+                    </form>
+
+
+
+                        @endif
+
+                    </div>
+                </div>
+
+
+                <!-- new code end -->
+
             </div>
         </div>
     </div>
@@ -693,8 +716,8 @@ $getngoForLanguage = DB::table('ngo_type_and_languages')->where('user_id',$all_p
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

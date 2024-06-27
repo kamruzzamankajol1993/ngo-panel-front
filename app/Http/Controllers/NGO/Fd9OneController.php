@@ -143,7 +143,7 @@ class Fd9OneController extends Controller
             if ($request->hasfile('verified_fd_nine_one_form')) {
                 $filePath="ngoHead";
                 $file = $request->file('verified_fd_nine_one_form');
-                $fd9FormInfo->verified_fd_nine_one_form =CommonController::imageUpload($request,$file,$filePath);
+                $fd9OneFormInfo->verified_fd_nine_one_form =CommonController::imageUpload($request,$file,$filePath);
 
             }
 
@@ -152,7 +152,7 @@ class Fd9OneController extends Controller
 
                 $filePath="ngoHead";
                 $file = $request->file('digital_signature');
-                $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
+                $fd9OneFormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
                 }
 
@@ -161,7 +161,7 @@ class Fd9OneController extends Controller
 
                 $filePath="ngoHead";
                 $file = $request->file('digital_seal');
-                $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
+                $fd9OneFormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
                 }
 
@@ -249,7 +249,7 @@ class Fd9OneController extends Controller
             if ($request->hasfile('verified_fd_nine_one_form')) {
                 $filePath="ngoHead";
                 $file = $request->file('verified_fd_nine_one_form');
-                $fd9FormInfo->verified_fd_nine_one_form =CommonController::imageUpload($request,$file,$filePath);
+                $fd9OneFormInfo->verified_fd_nine_one_form =CommonController::imageUpload($request,$file,$filePath);
 
             }
 
@@ -258,7 +258,7 @@ class Fd9OneController extends Controller
 
                 $filePath="ngoHead";
                 $file = $request->file('digital_signature');
-                $fd9FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
+                $fd9OneFormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
 
                 }
 
@@ -267,7 +267,7 @@ class Fd9OneController extends Controller
 
                 $filePath="ngoHead";
                 $file = $request->file('digital_seal');
-                $fd9FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
+                $fd9OneFormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
 
                 }
 

@@ -207,16 +207,7 @@ color:white !important;
 
                                         @else
 
-                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fdNineData->id}})" class="btn btn-info">
-                                            <i class="fa fa-send-o"></i>
-                                        </button>
 
-                                            <form id="delete-form-{{ $fdNineData->id }}" action="{{ route('finalFdNineApplicationSubmit',base64_encode($fdNineData->id)) }}" method="get" style="display: none;">
-
-                                                @csrf
-
-
-                                            </form>
 
 
                                         <button class="btn btn-primary" onclick="location.href = '{{ route('fdNineForm.edit',base64_encode($fdNineData->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
@@ -234,7 +225,7 @@ color:white !important;
                                         <div class="form9_upper_box">
                                             <h3>এফডি-৯ ফরম</h3>
                                             <h4>বিদেশি নাগরিক নিয়োগপত্র সত্যায়ন ফরম</h4>
-                                            <h5>(আবশ্যকাবে বাংলা নিকস ফন্টে পুরণ করে দাখিল করতে হবে)</h5>
+                                            {{-- <h5>(আবশ্যকাবে বাংলা নিকস ফন্টে পুরণ করে দাখিল করতে হবে)</h5> --}}
 
                                             <div>
                                                 <p>বরাবর <br>
@@ -245,13 +236,13 @@ color:white !important;
                                                     <p>নিম্নলখিত নিয়োগপ্রাপ্ত বিদেশি নাগরিক/নাগরিকগণকে এ সংস্থায় (নিবন্ধন নম্বরঃ {{App\Http\Controllers\NGO\CommonController::englishToBangla($checkNgoTypeForForeginNgo->registration)}}
                                                         তারিখঃ {{ App\Http\Controllers\NGO\CommonController::englishToBangla(date('d-m-Y', strtotime($ngoStatus->updated_at->format('d-m-Y')))) }}) বৈদেশিক
                                                         অনুদান (স্বেচ্ছাসেবামূলক কর্মকান্ড) রেগুলেশন আইন ২০১৬ অনুযায়ী নিয়োগপত্র সত্যায়ন ও
-                                                        এনডিসা প্রাপ্তির সুপারিশপত্র
+                                                        এন-ভিসা প্রাপ্তির সুপারিশপত্র
                                                         পাওয়ার জন্য আবেদন করছিঃ</p>
                                                     @else
                                                     <p>নিম্নলখিত নিয়োগপ্রাপ্ত বিদেশি নাগরিক/নাগরিকগণকে এ সংস্থায় (নিবন্ধন নম্বরঃ {{App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->registration_number)}}
                                                         তারিখঃ {{ App\Http\Controllers\NGO\CommonController::englishToBangla(date('d-m-Y', strtotime($ngoStatus->updated_at->format('d-m-Y')))) }}) বৈদেশিক
                                                         অনুদান (স্বেচ্ছাসেবামূলক কর্মকান্ড) রেগুলেশন আইন ২০১৬ অনুযায়ী নিয়োগপত্র সত্যায়ন ও
-                                                        এনডিসা প্রাপ্তির সুপারিশপত্র
+                                                        এন-ভিসা প্রাপ্তির সুপারিশপত্র
                                                         পাওয়ার জন্য আবেদন করছিঃ</p>
                                                     @endif
                                             </div>
@@ -579,6 +570,45 @@ color:white !important;
                 </div>
 
             </div>
+
+              <!-- new code start --->
+
+              <div class="d-flex justify-content-between mt-3">
+                <div class="">
+
+
+                </div>
+                <div class="">
+                    <input type="hidden" data-parsley-required  name="id"  value="{{ $fdNineData->id }}" class="form-control" id="mainId">
+                    <button class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ trans('form 8_bn.download_pdf')}}"  id="downloadButton">
+                        <i class="fa fa-print"></i>
+                    </button>
+
+                    @if($fdNineData->status == 'Ongoing' || $fdNineData->status == 'Accepted')
+
+                    @else
+
+                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fdNineData->id}})" class="btn btn-info">
+                        এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                    </button>
+
+                        <form id="delete-form-{{ $fdNineData->id }}" action="{{ route('finalFdNineApplicationSubmit',base64_encode($fdNineData->id)) }}" method="get" style="display: none;">
+
+                            @csrf
+
+
+                        </form>
+
+
+
+
+                    @endif
+
+
+                </div>
+            </div>
+
+            <!-- new code end -->
         </div>
     </div>
 </section>
@@ -587,8 +617,8 @@ color:white !important;
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

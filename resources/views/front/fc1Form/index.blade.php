@@ -183,7 +183,7 @@
                                         ->latest()->value('status');
                                                     ?>
 
-@if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
+@if(  $name_change_list == 'Ongoing1' || $name_change_list == 'Review1')
 <button type="button" disabled class="btn btn-registration"
 onclick="location.href = '{{ route('fc1Form.create') }}';">নতুন ফরম যোগ করুন
 </button>

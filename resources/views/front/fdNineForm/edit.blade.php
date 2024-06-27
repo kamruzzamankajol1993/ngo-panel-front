@@ -185,7 +185,7 @@
                                         <div class="form9_upper_box">
                                             <h3>এফডি-৯ ফরম</h3>
                                             <h4>বিদেশি নাগরিক নিয়োগপত্র সত্যায়ন ফরম</h4>
-                                            <h5>(আবশ্যকাবে বাংলা নিকস ফন্টে পুরণ করে দাখিল করতে হবে)</h5>
+                                            {{-- <h5>(আবশ্যকাবে বাংলা নিকস ফন্টে পুরণ করে দাখিল করতে হবে)</h5> --}}
 
                                             <div>
                                                 <p>বরাবর <br>
@@ -196,13 +196,13 @@
                                                 <p>নিম্নলখিত নিয়োগপ্রাপ্ত বিদেশি নাগরিক/নাগরিকগণকে এ সংস্থায় (নিবন্ধন নম্বরঃ {{App\Http\Controllers\NGO\CommonController::englishToBangla($checkNgoTypeForForeginNgo->registration)}}
                                                     তারিখঃ {{ App\Http\Controllers\NGO\CommonController::englishToBangla(date('d-m-Y', strtotime($ngoStatus->updated_at->format('d-m-Y')))) }}) বৈদেশিক
                                                     অনুদান (স্বেচ্ছাসেবামূলক কর্মকান্ড) রেগুলেশন আইন ২০১৬ অনুযায়ী নিয়োগপত্র সত্যায়ন ও
-                                                    এনডিসা প্রাপ্তির সুপারিশপত্র
+                                                    এন-ভিসা প্রাপ্তির সুপারিশপত্র
                                                     পাওয়ার জন্য আবেদন করছিঃ</p>
                                                 @else
                                                 <p>নিম্নলখিত নিয়োগপ্রাপ্ত বিদেশি নাগরিক/নাগরিকগণকে এ সংস্থায় (নিবন্ধন নম্বরঃ {{App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->registration_number)}}
                                                     তারিখঃ {{ App\Http\Controllers\NGO\CommonController::englishToBangla(date('d-m-Y', strtotime($ngoStatus->updated_at->format('d-m-Y')))) }}) বৈদেশিক
                                                     অনুদান (স্বেচ্ছাসেবামূলক কর্মকান্ড) রেগুলেশন আইন ২০১৬ অনুযায়ী নিয়োগপত্র সত্যায়ন ও
-                                                    এনডিসা প্রাপ্তির সুপারিশপত্র
+                                                    এন-ভিসা প্রাপ্তির সুপারিশপত্র
                                                     পাওয়ার জন্য আবেদন করছিঃ</p>
                                                 @endif
                                             </div>
@@ -232,7 +232,7 @@
     </div>
     <div class="mb-3 col-lg-6">
         <label for="" class="form-label">বিদেশি নাগরিকের পাসপোর্ট সাইজের ছবি <span
-            class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 200 KB & Image Format:PNG)</span></label>
+            class="text-danger">*</span><span class="text-danger" style="font-size: 12px;">(Maximum 200 KB & Image Format:PNG)</span></label>
             <input type="file" class="form-control" id="fdNinePdf6"
                    placeholder="" accept="image/png" name="fd9_foreigner_passport_size_photo" >
 
@@ -245,7 +245,7 @@
     </div>
     <div class="mb-3 col-lg-6">
         <label for="" class="form-label">পাসপোর্টের কপি সংযুক্ত<span
-            class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
+            class="text-danger">*</span><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
             <input type="file" accept=".pdf" class="form-control" id="fdNinePdf7"
             placeholder=""  name="fd9_copy_of_passport" >
             <p id="fdNinePdf7_text" class="text-loght mt-2" style="font-size:12px;"></p>
@@ -470,7 +470,7 @@
 
                 একাডেমিক যোগ্যতা(একাডেমিক যোগ্যতার সমর্থনে সনদপত্রের কপি সংযুক্ত করতে হবে)
                 <span
-            class="text-danger">*</span><br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+            class="text-danger">*</span><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
 
             </div>
             <div class="card-body">
@@ -522,7 +522,7 @@
         <div class="card">
 
             <div class="card-header">
-                কারিগরি ও অন্যান্য যোগ্যতা যদি থাকে (প্রাসঙ্গিক সনদপত্রের কপি সংযুক্ত করতে হবে)<br><span class="text-white" style="font-size: 12px;">(Maximum 500 KB)</span>
+                কারিগরি ও অন্যান্য যোগ্যতা যদি থাকে (প্রাসঙ্গিক সনদপত্রের কপি সংযুক্ত করতে হবে)<span class="text-white" style="font-size: 12px;">(Maximum 1 MB)</span>
 
             </div>
             <div class="card-body">
@@ -574,7 +574,7 @@
 
             <div class="card-header">
                 অতীত অভিজ্ঞতা এবং যে কাজে তাঁকে নিয়োগ দেয়া হচ্ছে তাতে তার দক্ষতা (প্রমাণকসহ)<span
-                class="text-danger">*</span><br><span class="text-white" style="font-size: 12px;">(Maximum 500 KB)</span>
+                class="text-danger">*</span><span class="text-white" style="font-size: 12px;">(Maximum 1 MB)</span>
 
             </div>
             <div class="card-body">
@@ -682,7 +682,7 @@ $convert_new_ass_cat  = explode(",",$fdNineData->fd9_countries_that_have_travele
                     <div class="col-md-6">
 
                         <label for="" class="form-label mt-2">নিয়োগপত্র<span
-                            class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
+                            class="text-danger">*</span><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
                         <input type="file" accept=".pdf"   class="form-control" id="fdNinePdf4"
                                placeholder="" name="fd9_offered_post_niyog">
                                <p id="fdNinePdf4_text" class="text-danger mt-2" style="font-size:12px;"></p>
@@ -708,7 +708,7 @@ $convert_new_ass_cat  = explode(",",$fdNineData->fd9_countries_that_have_travele
                     <div class="col-md-6">
 
                         <label for="" class="form-label mt-2">চুক্তিপত্র<span
-                            class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
+                            class="text-danger">*</span><span class="text-danger" style="font-size: 12px;">(Maximum 1 MB)</span></label>
                         <input type="file" accept=".pdf"   class="form-control" id="fdNinePdf55"
                                placeholder="" name="fd9_offered_post">
                                <p id="fdNinePdf55_text" class="text-danger mt-2" style="font-size:12px;"></p>
@@ -745,7 +745,7 @@ $convert_new_ass_cat  = explode(",",$fdNineData->fd9_countries_that_have_travele
 
             <div class="card-header">
                 যে প্রকল্পে তাকে নিয়োগের প্রস্থাব করা হয়েছে তার নাম ও মেয়াদ ব্যুরোর অনুমোদন পত্র সংযুক্ত করতে হবে)<span
-                class="text-danger">*</span><br><span class="text-light" style="font-size: 12px;">(Maximum 500 KB)</span>
+                class="text-danger">*</span><span class="text-light" style="font-size: 12px;">(Maximum 1 MB)</span>
 
             </div>
             <div class="card-body">

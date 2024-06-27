@@ -310,7 +310,7 @@
                                                                 placeholder="">
                                                             </div>
                                                             <div class="col-lg-6 mb-3">
-                                                                <label for="" class="form-label">থানা</label>
+                                                                <label for="" class="form-label">থানা <span class="text-danger">*</span></label>
                                                                 <input type="text" name="thana_name[]" class="form-control" id=""
                                                                 placeholder="" required>
                                                             </div>

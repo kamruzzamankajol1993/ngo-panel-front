@@ -202,16 +202,7 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 
                                     <button class="btn btn-sm btn-primary" onclick="location.href = '{{ route('namechangeApplicationEdit',base64_encode($nameChangeInfo->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
-                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $nameChangeInfo->id}})" class="btn btn-sm btn-success">
-                                        <i class="fa fa-send-o"></i>
-                                    </button>
 
-                                        <form id="delete-form-{{ $nameChangeInfo->id }}" action="{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}" method="get" style="display: none;">
-
-                                            @csrf
-
-
-                                        </form>
 
 
 
@@ -390,6 +381,46 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
                                     </div>
                                 </div>
                             </div>
+
+                              <!-- new code start --->
+
+                              <div class="d-flex justify-content-between mt-3">
+                                <div class="">
+
+
+                                </div>
+                                <div class="">
+
+                                    @if($nameChangeInfo->status == 'Ongoing' || $nameChangeInfo->status == 'Accepted')
+
+
+                                    @else
+
+
+
+
+
+                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $nameChangeInfo->id}})" class="btn btn-lg btn-success">
+                                        এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                                    </button>
+
+                                        <form id="delete-form-{{ $nameChangeInfo->id }}" action="{{ route('finalNamechangeSubmit',base64_encode($nameChangeInfo->id)) }}" method="get" style="display: none;">
+
+                                            @csrf
+
+
+                                        </form>
+
+
+
+
+                                    @endif
+
+
+                                </div>
+                            </div>
+
+                            <!-- new code end -->
                         </div>
                     </div>
                 </div>
@@ -405,8 +436,8 @@ $fdOneFormid = DB::table('fd_one_forms')->where('user_id',Auth::user()->id)->fir
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

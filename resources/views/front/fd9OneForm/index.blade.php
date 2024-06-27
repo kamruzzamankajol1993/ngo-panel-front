@@ -184,7 +184,7 @@
 
                                     <div class="d-grid d-md-flex justify-content-end">
 
-                                        @if(  $name_change_list == 'Ongoing' || $name_change_list == 'Review')
+                                        @if(  $name_change_list == 'Ongoing1' || $name_change_list == '1Review')
 
                                         <button type="button" disabled class="btn btn-registration"
                                         onclick="location.href = '{{ route('fdNineOneForm.create') }}';">নতুন অ্যাপ্লিকেশন যোগ করুন

@@ -179,17 +179,7 @@
 
                                         @else
 
-                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fc1FormList->id}})" class="btn btn-info">
-                                            <i class="fa fa-send-o"></i>
-                                        </button>
-
-                                            <form id="delete-form-{{ $fc1FormList->id }}" action="{{ route('finalFcOneApplicationSubmit',base64_encode($fc1FormList->id)) }}" method="get" style="display: none;">
-
-                                                @csrf
-
-
-                                            </form>
-
+                                     
                         <button class="btn btn-primary" onclick="location.href = '{{ route('fc1Form.edit',base64_encode($fc1FormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
                         @endif
 
@@ -578,7 +568,40 @@
                         </table>
                     </div>
                 </div>
+  <!-- new code start --->
 
+  <div class="d-flex justify-content-between mt-3">
+    <div class="">
+
+
+    </div>
+    <div class="">
+
+
+
+        @if($fc1FormList->status == 'Ongoing' || $fc1FormList->status == 'Accepted')
+
+                        @else
+
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fc1FormList->id}})" class="btn btn-info">
+                            এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                        </button>
+
+                            <form id="delete-form-{{ $fc1FormList->id }}" action="{{ route('finalFcOneApplicationSubmit',base64_encode($fc1FormList->id)) }}" method="get" style="display: none;">
+
+                                @csrf
+
+
+                            </form>
+
+
+        @endif
+
+
+    </div>
+</div>
+
+<!-- new code end -->
             </div>
         </div>
 
@@ -594,8 +617,8 @@
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

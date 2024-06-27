@@ -375,8 +375,8 @@ var name = sessionStorage.getItem("prokolpo_name_one");
     var period = sessionStorage.getItem("reporting_period");
 
 
-    $('#prokolpo_name_one').val(name);
-    $('#reporting_period').val(period);
+    // $('#prokolpo_name_one').val(name);
+    // $('#reporting_period').val(period);
 
     </script>
 
@@ -394,8 +394,8 @@ $(document).on('click', '#sessionDataStore', function () {
 
     //alert(prokolpo_name_one);
 
-    sessionStorage.setItem("prokolpo_name_one", prokolpo_name_one);
-    sessionStorage.setItem("reporting_period", reporting_period);
+    // sessionStorage.setItem("prokolpo_name_one", prokolpo_name_one);
+    // sessionStorage.setItem("reporting_period", reporting_period);
 
 
 

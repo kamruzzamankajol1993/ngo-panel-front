@@ -77,33 +77,33 @@ class Fd7FormController extends Controller
 
     public function store(Request $request){
 
-        $request->validate([
+        // $request->validate([
 
-            'ngo_name' => 'required|string',
-            'ngo_address' => 'required|string',
-            'ngo_registration_number' => 'required|string',
-            'ngo_registration_date' => 'required|string',
-            'ngo_prokolpo_name' => 'required|string',
-            'donor_organization_description' => 'required|string',
-            'donor_organization_chief_type' => 'required|string',
-            'donor_organization_chief_name' => 'required|string',
-            'donor_organization_name' => 'required|string',
-            'donor_organization_address' => 'required|string',
-            'donor_organization_phone' => 'required|string',
-            'donor_organization_email' => 'required|string',
-            'donor_organization_website' => 'required|string',
-            'ongoing_prokolpo_name' => 'required|string',
-            'total_prokolpo_cost' => 'required|string',
-            'date_of_bureau_approval' => 'required|string',
-            'percentage_of_the_original_project' => 'required|string',
-            'adverse_impact_on_the_ongoing_project' => 'required|string',
-            'ngo_prokolpo_start_date' => 'required|string',
-            'ngo_prokolpo_end_date' => 'required|string',
-            'bureau_approval_pdf' => 'required|file',
-            'letter_from_donor_agency_pdf' => 'required|file',
-            'relief_assistance_project_proposal_pdf' => 'required|file',
+        //     'ngo_name' => 'required|string',
+        //     'ngo_address' => 'required|string',
+        //     'ngo_registration_number' => 'required|string',
+        //     'ngo_registration_date' => 'required|string',
+        //     'ngo_prokolpo_name' => 'required|string',
+        //     'donor_organization_description' => 'required|string',
+        //     'donor_organization_chief_type' => 'required|string',
+        //     'donor_organization_chief_name' => 'required|string',
+        //     'donor_organization_name' => 'required|string',
+        //     'donor_organization_address' => 'required|string',
+        //     'donor_organization_phone' => 'required|string',
+        //     'donor_organization_email' => 'required|string',
+        //     'donor_organization_website' => 'required|string',
+        //     'ongoing_prokolpo_name' => 'required|string',
+        //     'total_prokolpo_cost' => 'required|string',
+        //     'date_of_bureau_approval' => 'required|string',
+        //     'percentage_of_the_original_project' => 'required|string',
+        //     'adverse_impact_on_the_ongoing_project' => 'required|string',
+        //     'ngo_prokolpo_start_date' => 'required|string',
+        //     'ngo_prokolpo_end_date' => 'required|string',
+        //     'bureau_approval_pdf' => 'required|file',
+        //     'letter_from_donor_agency_pdf' => 'required|file',
+        //     'relief_assistance_project_proposal_pdf' => 'required|file',
 
-        ]);
+        // ]);
 
         //dd($request->all());
 

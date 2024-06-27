@@ -557,7 +557,7 @@
                                         <div class="card-body">
 
                                             <div class="mb-3 col-lg-12">
-                                                <label for="" class="form-label">এককালীন অনুদান গ্রহণের আবেদন ফরম /এফসি -১ ফরম <br><span class="text-danger" style="font-size: 12px;">(Maximum 10 MB)</span></label>
+                                                <label for="" class="form-label">এককালীন অনুদান গ্রহণের আবেদন ফরম /এফসি -১ ফরম<span class="text-danger">*</span> <br><span class="text-danger" style="font-size: 12px;">(Maximum 10 MB)</span></label>
                                                 <input type="file" name="verified_fc_one_form" class="form-control" id="fc1PdfN2"
                                                        placeholder="" accept=".pdf" required>
 

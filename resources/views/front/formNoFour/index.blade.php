@@ -110,7 +110,7 @@
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
@@ -187,7 +187,7 @@
 
                                                 ?>
 
-@if($name_change_list == 'Ongoing' || $name_change_list == 'Review')
+@if($name_change_list == 'Ongoing1' || $name_change_list == 'Review1')
 
 <div class="d-grid d-md-flex justify-content-end">
     <button type="button" disabled class="btn btn-registration"

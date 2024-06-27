@@ -76,15 +76,15 @@ class Fd3FormController extends Controller
 
     public function store(Request $request){
 
-         $request->validate([
+        //  $request->validate([
 
-             'ngo_name' => 'required|string',
-             'ngo_address' => 'required|string',
-             'ngo_registration_number' => 'required|string',
-             'ngo_registration_date' => 'required|string',
-             'ngo_prokolpo_name' => 'required|string',
+        //      'ngo_name' => 'required|string',
+        //      'ngo_address' => 'required|string',
+        //      'ngo_registration_number' => 'required|string',
+        //      'ngo_registration_date' => 'required|string',
+        //      'ngo_prokolpo_name' => 'required|string',
 
-         ]);
+        //  ]);
 
 
          try{

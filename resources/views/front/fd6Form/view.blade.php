@@ -167,7 +167,7 @@
 
                 <div class="card">
                     <div class="card-body">
-
+@include('flash_message')
                           <!-- new code start --->
 
                   <div class="d-flex justify-content-between mt-3">
@@ -183,16 +183,7 @@
 
                                         @else
 
-                                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fd6FormList->id}})" class="btn btn-info">
-                                            <i class="fa fa-send-o"></i>
-                                        </button>
 
-                                            <form id="delete-form-{{ $fd6FormList->id }}" action="{{ route('finalFdSixApplicationSubmit',base64_encode($fd6FormList->id)) }}" method="get" style="display: none;">
-
-                                                @csrf
-
-
-                                            </form>
 
                         <button class="btn btn-primary" onclick="location.href = '{{ route('fd6Form.edit',base64_encode($fd6FormList->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
                         @endif
@@ -520,6 +511,41 @@
                     </div>
                 </div>
 
+                        <!-- new code start --->
+
+                        <div class="d-flex justify-content-between mt-3">
+                            <div class="">
+
+
+                            </div>
+                            <div class="">
+
+
+
+                                @if($fd6FormList->status == 'Ongoing' || $fd6FormList->status == 'Accepted')
+
+                                                @else
+
+                                                <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $fd6FormList->id}})" class="btn btn-lg btn-info">
+                                                    এনজিও তে পাঠান  <i class="fa fa-send-o"></i>
+                                                </button>
+
+                                                    <form id="delete-form-{{ $fd6FormList->id }}" action="{{ route('finalFdSixApplicationSubmit',base64_encode($fd6FormList->id)) }}" method="get" style="display: none;">
+
+                                                        @csrf
+
+
+                                                    </form>
+
+
+                                @endif
+
+
+                            </div>
+                        </div>
+
+                        <!-- new code end -->
+
             </div>
         </div>
 
@@ -534,8 +560,8 @@
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

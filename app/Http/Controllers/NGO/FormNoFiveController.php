@@ -375,19 +375,19 @@ class FormNoFiveController extends Controller
 
     public function store(Request $request){
 
-        $request->validate([
+        // $request->validate([
 
-            'prokolpo_name' => 'required|string',
-            'prokolpo_duration' => 'required|string',
-            'ngo_registration_number' => 'required|string',
-            'ngo_registration_date' => 'required|string',
-            'approved_estimated_expenditure_year_wise' => 'required|string',
-            'received_money_during_report' => 'required|string',
-            'report_year' => 'required|string',
-            'percentage_of_achievement_during_project' => 'required|string',
-            'prokolpo_araea' => 'required|string',
+        //     'prokolpo_name' => 'required|string',
+        //     'prokolpo_duration' => 'required|string',
+        //     'ngo_registration_number' => 'required|string',
+        //     'ngo_registration_date' => 'required|string',
+        //     'approved_estimated_expenditure_year_wise' => 'required|string',
+        //     'received_money_during_report' => 'required|string',
+        //     'report_year' => 'required|string',
+        //     'percentage_of_achievement_during_project' => 'required|string',
+        //     'prokolpo_araea' => 'required|string',
 
-        ]);
+        // ]);
 
         try{
             DB::beginTransaction();

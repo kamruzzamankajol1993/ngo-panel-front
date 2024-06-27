@@ -110,7 +110,7 @@
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
@@ -190,7 +190,7 @@ $getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_a
                                         ?>
 
 
-       @if($getPendingData == 'Ongoing' || $getPendingData == 'Review' )
+       @if($getPendingData == 'Ongoing1' || $getPendingData == 'Review1' )
 
        <button type="button" disabled class="btn btn-registration"
                                                 onclick="location.href = '{{ route('formNoFive.create') }}';">নতুন ফরম যোগ করুন
@@ -253,13 +253,16 @@ $getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_a
 
                                         </td>
                                         <td>
+                                            @if(  $formNoSevenListAll->status == 'Ongoing' || $formNoSevenListAll->status == 'Accepted')
 
+                                            @else
+                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
+@endif
                                             @if($formNoFiveListAll->status == 'Ongoing' || $formNoFiveListAll->status == 'Review')
 
                                             <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
                                             @else
 
-                                            <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>
                                             <a  href="{{ route('formNoFive.show',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-success"> <i class="fa fa-eye"></i> </a>
                                             <button type="button" onclick="deleteTag({{ $formNoFiveListAll->id}})" class="btn btn-sm btn-outline-danger"><i
                                                 class="bi bi-trash"></i></button>

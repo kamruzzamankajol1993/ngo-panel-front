@@ -526,9 +526,14 @@ class Fd6FormController extends Controller
 
         $fd6Id = base64_decode($id);
 
+//dd($fd6Id);
+
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
-        $fd2FormList = Fd2Form::where('fd_one_form_id',$ngo_list_all->id)->where('fd_six_form_id',$id)->latest()->first();
+        $fd2FormList = Fd2Form::where('fd_one_form_id',$ngo_list_all->id)
+        ->where('fd_six_form_id',$fd6Id)->latest()->first();
+
+
         $fd2OtherInfo = Fd2FormOtherInfo::where('fd2_form_id',$fd2FormList->id)->latest()->get();
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');

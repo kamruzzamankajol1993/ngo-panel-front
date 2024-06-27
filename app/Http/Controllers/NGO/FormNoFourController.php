@@ -113,20 +113,20 @@ class FormNoFourController extends Controller
         //dd($request->all());
 
 
-        $request->validate([
+        // $request->validate([
 
-            'ngo_name' => 'required|string',
-            'prokolpo_name' => 'required|string',
-            'prokolpo_duration' => 'required|string',
-            'prokolpo_permission_no' => 'required|string',
-            'prokolpo_date' => 'required|string',
-            'prokolpo_report_time' => 'required|string',
-            'prokolpo_total_cost' => 'required|string',
-            'allocation_amount' => 'required|string',
-            'district_upazila_wise_total_expenditure' => 'required|string',
-            'district_upazila_wise_annual_allocation' => 'required|string',
-            'sign_board_avaiable_or_not' => 'required|string'
-        ]);
+        //     'ngo_name' => 'required|string',
+        //     'prokolpo_name' => 'required|string',
+        //     'prokolpo_duration' => 'required|string',
+        //     'prokolpo_permission_no' => 'required|string',
+        //     'prokolpo_date' => 'required|string',
+        //     'prokolpo_report_time' => 'required|string',
+        //     'prokolpo_total_cost' => 'required|string',
+        //     'allocation_amount' => 'required|string',
+        //     'district_upazila_wise_total_expenditure' => 'required|string',
+        //     'district_upazila_wise_annual_allocation' => 'required|string',
+        //     'sign_board_avaiable_or_not' => 'required|string'
+        // ]);
 
 
         //dd($request->all());

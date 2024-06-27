@@ -144,15 +144,24 @@ class Fd2FormController extends Controller
 
 
     public function edit($id){
+        
+        //dd($id);
 
         $fd6Id = base64_decode($id);
 
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
-        $fd2FormList = Fd2Form::where('fd_one_form_id',$ngo_list_all->id)->where('fd_six_form_id',$id)->latest()->first();
+        $fd2FormList = Fd2Form::where('fd_one_form_id',$ngo_list_all->id)
+        ->where('fd_six_form_id',$fd6Id)->latest()->first();
         $fd6FormList = Fd6Form::where('fd_one_form_id',$ngo_list_all->id) ->where('id',$fd6Id)->latest()->first();
+        
+        
+        if(!$fd2FormList){
+            $fd2OtherInfo = Fd2FormOtherInfo::where('fd2_form_id',0)->latest()->get();
+        }else{
+        
         $fd2OtherInfo = Fd2FormOtherInfo::where('fd2_form_id',$fd2FormList->id)->latest()->get();
-
+}
         return view('front.fd2Form.edit',compact('fd2FormList','fd2OtherInfo','fd6Id','ngo_list_all','divisionList','fd6FormList'));
 
     }
@@ -928,7 +937,7 @@ class Fd2FormController extends Controller
             $fdOneFormID = FdOneForm::where('user_id',Auth::user()->id)->first();
             $fd2FormInfo = new Fd2Form();
             $fd2FormInfo->fd_one_form_id =$fdOneFormID->id;
-            $fd2FormInfo->fd_six_form_id =$request->fd_six_form_id;
+            $fd2FormInfo->fd_six_form_id =base64_decode($request->fd_six_form_id);
             $fd2FormInfo->ngo_name =$request->ngo_name;
             $fd2FormInfo->status ='Ongoing';
             $fd2FormInfo->ngo_address =$request->ngo_address;
@@ -978,7 +987,7 @@ class Fd2FormController extends Controller
 
           }
           DB::commit();
-          return redirect()->route('fd6Form.index')->with('success','Added Successfuly');
+          return redirect()->route('fd6Form.show',$request->fd_six_form_id)->with('success','Added Successfuly');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');
@@ -989,6 +998,8 @@ class Fd2FormController extends Controller
 
 
     public function update(Request $request,$id){
+
+        //dd($request->fd_six_form_id);
         try{
             DB::beginTransaction();
 
@@ -1038,7 +1049,7 @@ class Fd2FormController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('fd6Form.index')->with('success','Updated Successfuly');
+            return redirect()->route('fd6Form.show',$request->fd_six_form_id)->with('success','Updated Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -1101,7 +1112,7 @@ class Fd2FormController extends Controller
             }
 
           DB::commit();
-          return redirect()->route('fd7Form.index')->with('success','Updated Successfuly');
+          return redirect()->route('fd7Form.show',$request->fd7_form_id)->with('success','Updated Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -1167,7 +1178,7 @@ class Fd2FormController extends Controller
             }
 
           DB::commit();
-          return redirect()->route('fc1Form.index')->with('success','Updated Successfuly');
+          return redirect()->route('fc1Form.show',$request->fc1_form_id)->with('success','Updated Successfuly');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('error_404');
@@ -1228,7 +1239,7 @@ class Fd2FormController extends Controller
 
           }
           DB::commit();
-          return redirect()->route('fc2Form.index')->with('success','Updated Successfuly');
+          return redirect()->route('fc2Form.show',$request->fc2_form_id)->with('success','Updated Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -1376,7 +1387,7 @@ class Fd2FormController extends Controller
                 }
 
           DB::commit();
-          return redirect()->route('fd3Form.index')->with('success','Updated Successfuly');
+          return redirect()->route('fd3Form.show',$request->fd3_form_id)->with('success','Updated Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();

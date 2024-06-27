@@ -128,17 +128,17 @@ class FdFourOneController extends Controller
 
         //dd($request->all());
 
-        $request->validate([
+        // $request->validate([
 
-            'prokolpo_name' => 'required|string',
-            'prokolpo_permission_sarok_no' => 'required|string',
-            'prokolpo_permission_sarok_date' => 'required|string',
-            'prokolpo_year' => 'required|string',
-            'prokolpo_amount_sarkrito_bangla_amount' => 'required|string',
-            'prokolpo_amount_grihito' => 'required|string',
-            'prokolpo_amount_grihito_date' => 'required|string',
-            'prokolpo_amount_sarkrito_date' => 'required|string',
-        ]);
+        //     'prokolpo_name' => 'required|string',
+        //     'prokolpo_permission_sarok_no' => 'required|string',
+        //     'prokolpo_permission_sarok_date' => 'required|string',
+        //     'prokolpo_year' => 'required|string',
+        //     'prokolpo_amount_sarkrito_bangla_amount' => 'required|string',
+        //     'prokolpo_amount_grihito' => 'required|string',
+        //     'prokolpo_amount_grihito_date' => 'required|string',
+        //     'prokolpo_amount_sarkrito_date' => 'required|string',
+        // ]);
 
         try{
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();

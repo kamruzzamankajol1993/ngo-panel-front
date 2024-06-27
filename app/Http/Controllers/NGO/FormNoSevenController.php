@@ -78,22 +78,22 @@ class FormNoSevenController extends Controller
         //dd($request->all());
 
 
-        $request->validate([
+        // $request->validate([
 
-            'district_address' => 'required|string',
-            'upazila_address' => 'required|string',
-            'ngo_name' => 'required|string',
-            'ngo_address' => 'required|string',
-            'ngo_head_name' => 'required|string',
-            'ngo_head_organization' => 'required|string',
-            'ngo_head_office_mobile' => 'required|string',
-            'ngo_head_office_email' => 'required|string',
-            'ngo_registration' => 'required|string',
-            'ngo_registration_date' => 'required|string',
-            'ngo_last_renewal_date' => 'required|string'
+        //     'district_address' => 'required|string',
+        //     'upazila_address' => 'required|string',
+        //     'ngo_name' => 'required|string',
+        //     'ngo_address' => 'required|string',
+        //     'ngo_head_name' => 'required|string',
+        //     'ngo_head_organization' => 'required|string',
+        //     'ngo_head_office_mobile' => 'required|string',
+        //     'ngo_head_office_email' => 'required|string',
+        //     'ngo_registration' => 'required|string',
+        //     'ngo_registration_date' => 'required|string',
+        //     'ngo_last_renewal_date' => 'required|string'
 
 
-        ]);
+        // ]);
 
 
         //dd($request->all());
@@ -206,7 +206,7 @@ class FormNoSevenController extends Controller
 
         } catch (\Exception $e) {
 
-            return redirect()->route('error_404');
+            return $e;
         }
 
 

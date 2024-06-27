@@ -190,16 +190,7 @@
                                     @else
 
 
-                                    <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $formFiveData->id}})" class="btn btn-info">
-                                        <i class="fa fa-send-o"></i>
-                                    </button>
-
-                                        <form id="delete-form-{{ $formFiveData->id }}" action="{{ route('formNoFiveSend',base64_encode($formFiveData->id)) }}" method="get" style="display: none;">
-
-                                            @csrf
-
-
-                                        </form>
+                            
 
                                     <button class="btn btn-primary" onclick="location.href = '{{ route('formNoFive.edit',base64_encode($formFiveData->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
@@ -606,6 +597,45 @@
                 </div>
 
 
+                  <!-- new code start --->
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+                        @if($formFiveData->status == 'Ongoing')
+
+
+                        @else
+
+
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $formFiveData->id}})" class="btn btn-info">
+                            এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                        </button>
+
+                            <form id="delete-form-{{ $formFiveData->id }}" action="{{ route('formNoFiveSend',base64_encode($formFiveData->id)) }}" method="get" style="display: none;">
+
+                                @csrf
+
+
+                            </form>
+
+
+
+                        @endif
+
+
+
+
+                    </div>
+                </div>
+
+                <!-- new code end -->
+
+
             </div>
         </div>
 
@@ -714,8 +744,8 @@ $("#donor_organization_name").keyup(function(){
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',

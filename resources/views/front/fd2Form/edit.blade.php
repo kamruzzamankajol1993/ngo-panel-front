@@ -196,6 +196,103 @@
                                         <h3>এফডি -২ ফরম</h3>
                                         <h4>অর্থছাড়ের আবেদন ফরম</h4>
                                     </div>
+
+                                    @if(!$fd2FormList)
+                                    <form action="{{ route('fd2Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                        @csrf
+
+                                        <input type="hidden" name="fd_six_form_id" value="{{ base64_encode($fd6Id) }}" />
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">সংস্থার নাম <span class="text-danger">*</span></label>
+                                            <input type="text" required value="{{ $fd6FormList->ngo_name }}" name="ngo_name" class="form-control" id=""
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">সংস্থার ঠিকানা <span class="text-danger">*</span></label>
+                                            <input type="text" required class="form-control" value="{{ $fd6FormList->ngo_address }}" name="ngo_address" id=""
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">প্রকল্প নাম <span class="text-danger">*</span></label>
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_name }}" name="ngo_prokolpo_name" class="form-control" id=""
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-12">
+                                            <label for="" class="form-label">প্রকল্প মেয়াদ <span class="text-danger">*</span></label>
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_duration }}" name="ngo_prokolpo_duration" class="form-control" id=""
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="" class="form-label">আরম্ভের তারিখ <span class="text-danger">*</span></label>
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
+                                                   placeholder="">
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="" class="form-label">সমাপ্তির তারিখ <span class="text-danger">*</span></label>
+                                            <input type="text" required value="{{ $fd6FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="" class="form-label">প্রস্তাবিত অর্থছাড়ের পরিমান (বাংলাদেশী টাকা ) <span class="text-danger">*</span></label>
+                                            <input type="text" required class="form-control" id="" name="proposed_rebate_amount_bangladeshi_taka"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="mb-3 col-lg-6">
+                                            <label for="" class="form-label">প্রস্তাবিত অর্থছাড়ের পরিমান (বৈদেশিক মুদ্রায় ) <span class="text-danger">*</span></label>
+                                            <input type="text" required class="form-control" id="" name="proposed_rebate_amount_in_foreign_currency"
+                                                   placeholder="">
+                                        </div>
+                                    </div>
+                                    <p class="mb-3">গুরুত্বপূর্ণ যেকোনো তথ্য</p>
+                                    <table class="table table-bordered" id="dynamicAddRemove">
+                                        <tr>
+                                            <th>ফাইলের নাম</th>
+                                            <th>ফাইল</th>
+                                            <th></th>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text"  name="file_name[]" class="form-control" id=""
+                                                       placeholder=""></td>
+                                            <td><input type="file" name="file[]" accept=".pdf" class="form-control" id=""
+                                                       placeholder=""></td>
+                                            <td><a class="btn btn-primary" id="dynamic-ar"><i class="fa fa-plus"></i></a></td>
+                                        </tr>
+                                    </table>
+                                    <div class="card mb-3">
+                                        <div class="card-header">
+                                            এফডি ২ পিডিফ
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="mb-3 col-lg-12">
+                                                <label for="" class="form-label">এফডি ২ ফর্ম উপলোড <span class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 2 MB)</span></label>
+                                                <input type="file" required accept=".pdf" name="fd_2_form_pdf" class="form-control" id="fd_2_form_pdf"
+                                                       placeholder="">
+                                                       <p id="fd_2_form_pdf_text" class="text-danger mt-2" style="font-size:12px;"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-grid d-md-flex justify-content-md-end">
+                                        <button type="button" class="btn btn-dark me-2"
+                                                onclick="location.href = '{{ route('fd6Form.edit',base64_encode($fd6Id)) }}';">আগের পৃষ্ঠায় যান
+                                        </button>
+                                        <button type="submit" class="btn btn-registration"
+                                                >তথ্য জমা দিন
+                                        </button>
+                                    </div>
+
+                                </form>
+                                    @else
                                     <form action="{{ route('fd2Form.update',$fd2FormList->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                         @method('PUT')
@@ -346,6 +443,7 @@
                                     </div>
 
                                 </form>
+                                @endif
                                 </div>
                             </div>
 

@@ -119,7 +119,7 @@
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
-                        
+
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.show')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
@@ -196,18 +196,6 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 
 
                                 @else
-
-
-                                <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $formFourData->id}})" class="btn btn-info">
-                                    <i class="fa fa-send-o"></i>
-                                </button>
-
-                                    <form id="delete-form-{{ $formFourData->id }}" action="{{ route('formNoFourSend',base64_encode($formFourData->id)) }}" method="get" style="display: none;">
-
-                                        @csrf
-
-
-                                    </form>
 
                                 <button class="btn btn-primary" onclick="location.href = '{{ route('formNoFour.edit',base64_encode($formFourData->id)) }}';" data-toggle="tooltip" data-placement="top" title="{{ trans('message.update')}}"><i class="fa fa-edit"></i></button>
 
@@ -333,6 +321,44 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 
                     </div>
                 </div>
+
+                  <!-- new code start --->
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+                        @if($formFourData->status == 'Ongoing')
+
+
+                        @else
+
+
+                        <button type="button" data-toggle="tooltip" data-placement="top" title="আবেদন এনজিওতে পাঠান" onclick="editTag({{ $formFourData->id}})" class="btn btn-info">
+                            এনজিওতে পাঠান <i class="fa fa-send-o"></i>
+                        </button>
+
+                            <form id="delete-form-{{ $formFourData->id }}" action="{{ route('formNoFourSend',base64_encode($formFourData->id)) }}" method="get" style="display: none;">
+
+                                @csrf
+
+
+                            </form>
+
+
+
+                        @endif
+
+
+
+
+                    </div>
+                </div>
+
+                <!-- new code end -->
             </div>
         </div>
     </div>
@@ -345,8 +371,8 @@ $name_change_list = DB::table('ngo_name_changes')->where('fd_one_form_id',$fdOne
 <script type="text/javascript">
     function editTag(id) {
         swal({
-            title: '{{ trans('notification.success_one')}}',
-            text: "{{ trans('notification.success_two')}}",
+            title: 'আপনি কি ফর্ম সাবমিট করতে চাচ্ছেন?',
+            text: "সাবমিট বাটনে ক্লিক করলে, আর তথ্য সংশোধন করবেন না। আপনি কি রাজি?",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
