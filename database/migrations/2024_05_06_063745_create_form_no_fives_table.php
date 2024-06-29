@@ -15,9 +15,6 @@ return new class extends Migration
     {
         Schema::create('form_no_fives', function (Blueprint $table) {
             $table->id();
-
-
-
             $table->bigInteger('fd_one_form_id')->unsigned();
             $table->foreign('fd_one_form_id')->references('id')->on('fd_one_forms')->onDelete('cascade');
             $table->string('prokolpo_name')->nullable();
@@ -43,6 +40,8 @@ return new class extends Migration
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();
             $table->string('status')->nullable();
+            $table->longText('comment')->nullable();
+            $table->string('sent_status')->nullable();
             $table->timestamps();
         });
     }

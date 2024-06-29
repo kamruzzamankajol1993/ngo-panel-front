@@ -17,6 +17,7 @@ class FdFiveForm extends Model
         'status',
         'file_last_check_date',
         'check_status',
+        'sent_status'
 
 ];
 }

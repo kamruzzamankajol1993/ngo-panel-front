@@ -201,7 +201,7 @@
                                         <div class="col-lg-12 col-sm-12">
 
 
-                                            <table class="table table-bordered " style="width:100%">
+                                            <table class="table table-bordered" style="width:100%">
 
                                                 <tr>
                                                     <th style="text-align: center;" colspan="2">ক্র: নং:</th>
@@ -297,8 +297,8 @@
 
                                                 <tr>
                                                     <th style="text-align: center;" rowspan="3">২.</th>
-                                                    <td></td>
-                                                    <td style="font-weight:bold;">প্রকল্পের মেয়াদ</td>
+
+                                                    <td style="font-weight:bold;text-align: center;" colspan="2">প্রকল্পের মেয়াদ</td>
                                                     <td></td>
 
                                                 </tr>
@@ -331,8 +331,8 @@
                                                 <!-- step three start -->
 
                                                 <tr>
-                                                    <th style="text-align: center;" colspan="2">৩.</th>
-                                                    <td style="text-align: center;">অনুদান গ্রহণের উদ্দেশ্য<span style="color:red;">*</span>:</td>
+                                                    <th style="text-align: center;" >৩.</th>
+                                                    <td style="font-weight:bold;text-align: center;" colspan="2">অনুদান গ্রহণের উদ্দেশ্য<span style="color:red;">*</span></td>
                                                     <th style="text-align: center;">
                                                         <textarea required name="purpose_of_donation" class="form-control" id=""
                                                         placeholder="বিস্তারিত বিবরণ"></textarea>
@@ -343,46 +343,66 @@
 
                                                 <tr>
                                                     <th style="text-align: center;" rowspan="4">৪.</th>
-                                                    <td></td>
-                                                    <td style="font-weight:bold;">কর্ম এলাকা ও বাজেট</td>
-                                                    <td></td>
+
+                                                    <td style="font-weight:bold;text-align:center;" colspan="2">কর্ম এলাকা ও বাজেট</td>
+                                                    <td> <div class="d-flex justify-content-between ">
+                                                        <div class="p-2">
+
+
+                                                        </div>
+                                                        <div class="p-2">
+                                                            <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                                                 যুক্ত করুন
+                                                            </button>
+                                                        </div>
+                                                    </div></td>
 
                                                 </tr>
                                                 <tr>
 
-                                                    <td style="text-align: center;">ক.</td>
-                                                    <td> কর্ম এলাকা (জেলা ও উপজেলা উল্লেখসহ) <span style="color:red;">*</span>
-                                                </span></td>
-                                                    <td  rowspan="3">
+                                                    {{-- <td style="text-align: center;">ক.</td> --}}
+                                                    <td colspan="3" rowspan="3">
 
-                                                              <!-- global table  start --->
-                                       @include('front.include.globalTable')
-                                       <!-- global table end --->
+                                                        <div class="table-responsive">
 
 
+                                                            <table class="table table-bordered">
+
+                                                                <tr style="text-align: center;">
+                                                                    <th colspan="2">ক. কর্ম এলাকা (জেলা ও উপজেলা উল্লেখসহ) <span style="color:red;">*</span></th>
+                                                                    <th rowspan="2">খ. বিস্তারিত বাজেট বিবরণী (জেলা ও উপজেলাভিত্তিক ) </th>
+                                                                    <th rowspan="2">গ. মোট উপকারভোগীর সংখ্যা</th>
+
+                                                                </tr>
+                                                                <tr style="text-align: center;">
+                                                                    <th>জেলা</th>
+                                                                    <th>উপজেলা</th>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+
+                                                            </table>
+                                                        </div>
 
 
 
-                                                    </td>
+                                                </span>
+
+
+                                            </td>
+
 
                                                 </tr>
                                                 <tr>
-
-                                                    <td style="text-align: center;">খ.</td>
-                                                    <td>বিস্তারিত বাজেট বিবরণী (জেলা ও উপজেলাভিত্তিক) <span style="color:red;">*</span></td>
-
-
                                                 </tr>
 
                                                 <tr>
-
-                                                    <td style="text-align: center;">গ.</td>
-                                                    <td>মোট উপকারভোগীর সংখ্যা <span style="color:red;">*</span></td>
-
-
                                                 </tr>
-
-
 
                                                 <!-- step three end -->
 
@@ -390,9 +410,8 @@
 
                                                 <tr>
                                                     <th style="text-align: center;" rowspan="19">৫.</th>
-                                                    <td></td>
-                                                    <th></th>
-                                                    <th style="text-align: center;">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
+
+                                                    <th style="text-align: center;" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
 
                                                 </tr>
 
@@ -401,7 +420,7 @@
                                                 <tr >
 
                                                     <td style="text-align: center;">অ.</td>
-                                                    <td>ব্যক্তির ক্ষেত্রে</td>
+                                                    <th>ব্যক্তির ক্ষেত্রে</th>
                                                     <td>
 
                                                     </td>
@@ -507,7 +526,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="text-align: center;"> আ.</td>
-                                                <td>সংস্থার ক্ষেত্রে</td>
+                                                <th>সংস্থার ক্ষেত্রে</th>
                                                 <td>
 
                                                 </td>
@@ -667,6 +686,15 @@
                                                     <td colspan="3"><input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
                                                         placeholder="প্রতিশ্রতিপত্র আছে কি না">
 
+                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        placeholder="কাজের নাম">
+
+                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        placeholder="অর্থের পরিমাণ">
+
+                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        placeholder="মেয়াদকাল">
+
                                                         <input type="file" required name="sign_in_closing_report" class="form-control mt-1" id=""
                                                         placeholder="প্রতিশ্রতিপত্র আছে কি না">
 
@@ -679,25 +707,82 @@
                                                 <!-- step six start -->
 
                                                 <tr>
-                                                    <td style="text-align: center;" rowspan="2">০৬.</td>
+                                                    <th style="text-align: center;" rowspan="4">৭.</th>
                                                     <td></td>
+                                                    <td style="font-weight:bold;">অনুদানের বিস্তারিত বিবরণ</td>
+                                                    <td></td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ক.</td>
+                                                    <td>  বৈদেশিক মুদ্রার পরিমান<span style="color:red;">* </span></td>
                                                     <td>
-                                                        <span>১. বাস্তবায়িত প্রকল্প সম্পর্কে মতামত <span style="color:red;">*</span><br>
-
-                                                            ২.  বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ (প্রত্যয়নকারী কর্মকর্তার স্বহস্তে লিখা কাম্য) <span style="color:red;">*</span>
-                                                    </span>
+                                                        <input required type="number" name="organization_amount_of_foreign_currency" class="form-control" id=""
+                                                           placeholder="বৈদেশিক মুদ্রার পরিমান">
                                                     </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td style="text-align: center;">খ.</td>
+                                                    <td>সমপরিমাণ বাংলাদেশী টাকা<span style="color:red;">*</span> </td>
+                                                    <td><input required type="number" name="equivalent_amount_of_bd_taka" class="form-control" id=""
+                                                        placeholder="সমপরিমাণ বাংলাদেশী টাকা"></td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">গ.</td>
+                                                    <td>পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য)<span style="color:red;">*</span> </td>
+                                                    <td><input required type="number" name="commodities_value_in_bangladeshi_currency" class="form-control" id=""
+                                                        placeholder="পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য)"></td>
+
+                                                </tr>
+
+                                                <tr>
+                                                    <th style="text-align: center;" rowspan="4">৮.</th>
+                                                    <td></td>
+                                                    <td style="font-weight:bold;">ব্যাংক সংক্রান্ত তথ্যাবলী</td>
+                                                    <td></td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">ক.</td>
+                                                    <td>যে ব্যাংকের মাধ্যমে বৈদেশিক অনুদান গ্রহণ করতে ইচ্ছুক তার নাম ও ঠিকানা</td>
                                                     <td>
+                                                        <div class="mb-3 col-lg-12">
 
-                                                        <textarea required name="feedback_on_projects_implementedt" class="form-control" id=""
-                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে মতামত"></textarea>
+                                                            <input type="text" name="bank_name" class="form-control" id=""
+                                                                   placeholder="নাম">
+                                                        </div>
+                                                        <div class="mb-3 col-lg-12">
 
-
-                                                        <textarea required name="recommendation_on_projects_implementedt" class="form-control mt-1" id=""
-                                                        placeholder="বাস্তবায়িত প্রকল্প সম্পর্কে সুপারিশ"></textarea>
-
-
+                                                            <input type="text" name="bank_address" class="form-control" id=""
+                                                                   placeholder="ঠিকানা">
+                                                        </div>
                                                     </td>
+
+                                                </tr>
+                                                <tr>
+
+                                                    <td style="text-align: center;">খ.</td>
+                                                    <td>ব্যাংক হিসাবের নাম</td>
+                                                    <td> <input type="text" name="bank_account_name" class="form-control" id=""
+                                                        placeholder="ব্যাংক হিসাবের নাম"></td>
+
+                                                </tr>
+
+                                                <tr>
+
+                                                    <td style="text-align: center;">গ.</td>
+                                                    <td>ব্যাংক হিসাব নম্বর</td>
+                                                    <td><input type="text"  name="bank_account_number" class="form-control" id=""
+                                                        placeholder="ব্যাংক হিসাব নম্বর"/></td>
 
                                                 </tr>
 
@@ -717,25 +802,7 @@
 
 
 
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            প্রকল্প এলাকা
-                                        </div>
-                                        <div class="card-body">
 
-                                            <div class="row">
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">প্রকল্প এলাকা</label>
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                   <!-- global table  start --->
-                                       @include('front.include.globalTable')
-                                       <!-- global table end --->
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="submit" class="btn btn-registration"
@@ -756,6 +823,118 @@
     </div>
 
 </section>
+
+<!--modal-->
+<div class="modal modal-xl fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+
+                    বিবরণী
+
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+
+
+                            <div class="row">
+
+                      
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">বিভাগ <span class="text-danger">*</span></label>
+                                {{-- <input type="text" required name="division_name[]" class="form-control" id=""
+                                placeholder=""> --}}
+
+
+
+                                <select required name="division_name[]" class="form-control division_name" id="division_name0">
+                                    <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
+                                    @foreach($divisionList as $districtListAll)
+
+                                    <option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>
+                                    @endforeach
+
+                                </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
+                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
+                                        placeholder=""> --}}
+
+                                        <select required name="district_name[]" class="form-control district_name" id="district_name0">
+                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
+
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">সিটি কর্পোরেশন</label>
+                                        {{-- <input type="text" name="city_corparation_name[]" class="form-control" id=""
+                                        placeholder=""> --}}
+
+
+                                        <select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name0">
+                                            <option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
+
+
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-3 mb-3">
+                                        <label for="" class="form-label">উপজেলা</label>
+                                        <input type="text" name="upozila_name[]" class="form-control" id=""
+                                        placeholder="">
+                                    </div>
+                                    <div class="col-lg-3 mb-3">
+                                        <label for="" class="form-label">থানা <span class="text-danger">*</span></label>
+                                        <input type="text" required name="thana_name[]" class="form-control" id=""
+                                        placeholder="" >
+                                    </div>
+                                    <div class="col-lg-3 mb-3">
+                                        <label for="" class="form-label">পৌরসভা</label>
+                                        <input type="text" name="municipality_name[]" class="form-control" id=""
+                                        placeholder="">
+                                    </div>
+                                    <div class="col-lg-3 mb-3">
+                                        <label for="" class="form-label">ওয়ার্ড</label>
+                                        <input type="text" name="ward_name[]" class="form-control" id=""
+                                        placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
+                                        <select  required name="prokolpoType[]" class="form-control " id=""
+                                               placeholder="">
+                                               <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
+                                               @foreach($projectSubjectList as $projectSubjectLists)
+                                               <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
+                                               @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">বরাদ্দকৃত বাজেট<span class="text-danger">*</span></label>
+                                        <input type="text" required name="allocated_budget[]" class="form-control" id="" placeholder="">
+                                    </div>
+                                    <div class="col-lg-4 mb-3">
+                                        <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
+                                        <input type="text" required name="beneficiaries_total[]" class="form-control" id="" placeholder="">
+                                    </div>
+
+                            </div>
+                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- end modal -->
 
 
 @endsection

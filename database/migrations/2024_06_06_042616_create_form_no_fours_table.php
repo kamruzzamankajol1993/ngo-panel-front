@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('check_status')->nullable();
             $table->string('status')->nullable();
             $table->longText('comment')->nullable();
+            $table->string('sent_status')->nullable();
             $table->timestamps();
         });
     }

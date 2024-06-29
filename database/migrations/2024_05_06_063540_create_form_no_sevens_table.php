@@ -90,6 +90,7 @@ return new class extends Migration
             $table->string('project_copy_approved_by_burea')->nullable();
             $table->longText('project_copy_approved_by_burea_comment')->nullable();
             $table->string('status')->nullable();
+            $table->string('sent_status')->nullable();
             $table->timestamps();
         });
     }

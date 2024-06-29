@@ -14,6 +14,7 @@ class Fc1Form extends Model
     protected $fillable = [
         'fd_one_form_id',
         'verified_fc_one_form',
+        'purpose_of_donation',
         'ngo_name',
         'subject_id',
         'ngo_address',
@@ -55,6 +56,7 @@ class Fc1Form extends Model
         'bank_account_name',
         'bank_account_number',
         'status',
+        'sent_status',
         'comment',
         'file_last_check_date',
         'check_status',

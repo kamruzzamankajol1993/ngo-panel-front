@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('status',100)->nullable();
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();
+            $table->string('sent_status')->nullable();
             $table->timestamps();
         });
     }

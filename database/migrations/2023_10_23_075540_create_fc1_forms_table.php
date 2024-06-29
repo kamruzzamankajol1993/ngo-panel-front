@@ -74,6 +74,8 @@ return new class extends Migration
 
             $table->string('status')->nullable();
             $table->text('comment')->nullable();
+            $table->string('purpose_of_donation')->nullable();
+            $table->string('sent_status')->nullable();
 
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();

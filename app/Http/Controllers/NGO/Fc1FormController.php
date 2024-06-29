@@ -66,6 +66,55 @@ class Fc1FormController extends Controller
 
     }
 
+    public function fc1FormStepTwo($id){
+
+        try{
+
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+            $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+            $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+
+            } catch (\Exception $e) {
+
+                return redirect()->route('error_404');
+            }
+
+
+            $fc1Id = base64_decode($id);
+
+
+            return view('front.fc1Form.newAddFormStepTwo',compact('fc1Id','districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    }
+
+
+    public function fc1FormStepThree($id){
+
+        try{
+
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+            $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+            $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+            $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+            $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+
+            } catch (\Exception $e) {
+
+                return redirect()->route('error_404');
+            }
+
+
+            $fc1Id = base64_decode($id);
+
+
+            return view('front.fc1Form.newAddFormStepThree',compact('fc1Id','districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    }
+
 
     public function edit($id){
 

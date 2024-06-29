@@ -355,6 +355,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('finalFcOneApplicationSubmit/{id}', 'finalFcOneApplicationSubmit')->name('finalFcOneApplicationSubmit');
         Route::get('fc1PdfDownload/{id}', 'fc1PdfDownload')->name('fc1PdfDownload');
         Route::get('verifiedFcOneForm/{id}', 'verifiedFcOneForm')->name('verifiedFcOneForm');
+
+        Route::get('fc1FormStepTwo/{id}', 'fc1FormStepTwo')->name('fc1FormStepTwo');
+        Route::get('fc1FormStepThree/{id}', 'fc1FormStepThree')->name('fc1FormStepThree');
     });
 
 
