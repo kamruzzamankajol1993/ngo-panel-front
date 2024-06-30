@@ -1,7 +1,7 @@
 @extends('front.master.master')
 
 @section('title')
-{{ trans('fd9.fc1')}} | {{ trans('header.ngo_ab')}}
+{{ trans('fd9.fc2')}} | {{ trans('header.ngo_ab')}}
 @endsection
 
 @section('css')
@@ -93,6 +93,7 @@
                                 <p class="{{ Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.view') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
                             </a>
                         </div>
+
                         <div class="profile_link_box">
                             <a href="{{ route('fd3Form.index') }}">
                                 <p class="{{ Route::is('fd3Form.index') ||  Route::is('fd3Form.create') || Route::is('fd3Form.view') || Route::is('addFd2DetailForFd3') || Route::is('editFd2DetailForFd3') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd3')}}</p>
@@ -103,23 +104,23 @@
                                 <p class="{{ Route::is('fdFiveForm.index') ||  Route::is('fdFiveForm.create') || Route::is('fdFiveForm.view')  || Route::is('fdFiveForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd5')}}</p>
                             </a>
                         </div>
+
                         <div class="profile_link_box">
                             <a href="{{ route('fdFourOneForm.index') }}">
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
                         </div>
+
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFour.index') }}">
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
                             </a>
                         </div>
-
                         <div class="profile_link_box">
                             <a href="{{ route('formNoSeven.index') }}">
                                 <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
                             </a>
                         </div>
-
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -169,7 +170,7 @@
                                 <ul class="process-model more-icon-preocess">
                                     <li class="active visited">
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        <p>এফসি - ১ </p>
+                                        <p>এফসি - ২ </p>
                                     </li>
                                     <li>
                                         <i class="fa fa-file-text" aria-hidden="true"></i>
@@ -180,7 +181,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     <div class="others_inner_section">
-                                        <h1>এককালীন অনুদান গ্রহণের আবেদন ফরম</h1>
+                                        <h1>ব্যক্তি কর্তৃক বৈদেশিক অনুদানে গৃহীত প্রকল্প প্রস্তাব ফরম</h1>
                                         <div class="notice_underline"></div>
                                     </div>
                                 </div>
@@ -189,152 +190,143 @@
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
                                     <div class="form9_upper_box">
-                                        <h3>এফসি -১ ফরম</h3>
-                                        <h4>এককালীন অনুদান গ্রহণের আবেদন ফরম</h4>
+                                        <h3>এফসি -২ ফরম</h3>
+                                        <h4>ব্যক্তি কর্তৃক বৈদেশিক অনুদানে গৃহীত প্রকল্প প্রস্তাব ফরম</h4>
                                     </div>
 
-                                    <form action="{{ route('fc1Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('fc2Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
-                                     <!-- step one start -->
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12">
+                                                <table class="table table-bordered" style="width:100%">
 
-                                     <div class="row">
-                                        <div class="col-lg-12 col-sm-12">
+                                                    <!-- step one start  -->
 
+                                                      <tr>
+                                                          <th style="text-align: center;" rowspan="6">৯.</th>
 
-                                            <table class="table table-bordered" style="width:100%">
-
-                                              <!-- step one start  -->
-
-                                                <tr>
-                                                    <th style="text-align: center;" rowspan="6">৯.</th>
-
-                                                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">বাজেট<br>
-                                                        ক.খাতভিত্তিক ব্যয় বিভাজন </span></td>
-                                                    <td> <div class="d-flex justify-content-between ">
-                                                        <div class="p-2">
+                                                          <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">বাজেট<br>
+                                                              ক.খাতভিত্তিক ব্যয় বিভাজন </span></td>
+                                                          <td> <div class="d-flex justify-content-between ">
+                                                              <div class="p-2">
 
 
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
-                                                                 যুক্ত করুন
-                                                            </button>
-                                                        </div>
-                                                    </div></td>
+                                                              </div>
+                                                              <div class="p-2">
+                                                                  <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                                                                       যুক্ত করুন
+                                                                  </button>
+                                                              </div>
+                                                          </div></td>
 
-                                                </tr>
-                                                <tr>
+                                                      </tr>
+                                                      <tr>
 
-                                                    {{-- <td style="text-align: center;">ক.</td> --}}
-                                                    <td colspan="3" rowspan="3">
+                                                          {{-- <td style="text-align: center;">ক.</td> --}}
+                                                          <td colspan="3" rowspan="3">
 
-                                                        <div class="table-responsive">
-
-
-                                                            <div class="table-responsive">
+                                                              <div class="table-responsive">
 
 
-                                                                <table class="table table-bordered">
-                                                                    <tr style="text-align: center">
-                                                                        <th>ক্র : নং :</th>
-                                                                        <th>কার্যক্রম</th>
-                                                                        <th>প্রাক্কলিত ব্যয় </th>
-                                                                        <th>কর্ম এলাকা<br> (জেলা ,উপজেলা )</th>
-                                                                        <th>সময়সীমা </th>
-                                                                        <th>উপকারভোগীর সংখ্যা </th>
-                                                                        <th></th>
-                                                                    </tr>
+                                                                  <div class="table-responsive">
 
 
-                                                                </table>
+                                                                      <table class="table table-bordered">
+                                                                          <tr style="text-align: center">
+                                                                              <th>ক্র : নং :</th>
+                                                                              <th>কার্যক্রম</th>
+                                                                              <th>প্রাক্কলিত ব্যয় </th>
+                                                                              <th>কর্ম এলাকা<br> (জেলা ,উপজেলা )</th>
+                                                                              <th>সময়সীমা </th>
+                                                                              <th>উপকারভোগীর সংখ্যা </th>
+                                                                              <th></th>
+                                                                          </tr>
 
-                                                            </div>
-                                                        </div>
+
+                                                                      </table>
+
+                                                                  </div>
+                                                              </div>
 
 
 
-                                                </span>
+                                                      </span>
 
 
-                                            </td>
+                                                  </td>
 
 
-                                                </tr>
+                                                      </tr>
 
-                                                <tr>
+                                                      <tr>
 
-                                                </tr>
-                                                <tr>
+                                                      </tr>
+                                                      <tr>
 
-                                                </tr>
-                                                <tr>
+                                                      </tr>
+                                                      <tr>
 
-                                                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">
-                                                        খ.টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততা</span></td>
+                                                          <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">
+                                                              খ.টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততা</span></td>
 
-                                                        <td> <div class="d-flex justify-content-between ">
-                                                            <div class="p-2">
-
-
-                                                            </div>
-                                                            <div class="p-2">
-                                                                <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                                                                     যুক্ত করুন
-                                                                </button>
-                                                            </div>
-                                                        </div></td>
-                                                </tr>
-
-                                                <tr>
-
-                                                    <td colspan="3">
-
-                                                        <div class="table-responsive">
+                                                              <td> <div class="d-flex justify-content-between ">
+                                                                  <div class="p-2">
 
 
-                                                            <table class="table table-bordered">
-                                                                <tr style="text-align: center">
-                                                                    <th>অভিষ্ঠ(Goal)</th>
-                                                                    <th>লক্ষ্যমাত্রা(Target)</th>
-                                                                    <th>বাজেট বরাদ্দ </th>
-                                                                    <th>যৌক্তিকতা </th>
-                                                                    <th>মন্তব্য</th>
-                                                                    <th></th>
-                                                                </tr>
+                                                                  </div>
+                                                                  <div class="p-2">
+                                                                      <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                                                           যুক্ত করুন
+                                                                      </button>
+                                                                  </div>
+                                                              </div></td>
+                                                      </tr>
+
+                                                      <tr>
+
+                                                          <td colspan="3">
+
+                                                              <div class="table-responsive">
 
 
-                                                            </table>
+                                                                  <table class="table table-bordered">
+                                                                      <tr style="text-align: center">
+                                                                          <th>অভিষ্ঠ(Goal)</th>
+                                                                          <th>লক্ষ্যমাত্রা(Target)</th>
+                                                                          <th>বাজেট বরাদ্দ </th>
+                                                                          <th>যৌক্তিকতা </th>
+                                                                          <th>মন্তব্য</th>
+                                                                          <th></th>
+                                                                      </tr>
 
-                                                        </div>
-                                                    </td>
 
-                                                </tr>
+                                                                  </table>
+
+                                                              </div>
+                                                          </td>
+
+                                                      </tr>
 
 
 
 
-                                                <!-- step three end -->
+                                                      <!-- step three end -->
 
 
 
-                                            </table>
+                                                  </table>
 
-
-
-
+                                            </div>
                                         </div>
 
-                                    </div>
-                                    <!-- step one end --->
-
-                                    <div class="d-grid d-md-flex justify-content-md-end">
-                                        <a href="{{ route('fc1Form.create') }}" class="btn btn-danger"
+                                        <div class="d-grid d-md-flex justify-content-md-end">
+                                            <a href="{{ route('fc2Form.create') }}" class="btn btn-danger"
                                                 >পূর্ববর্তী পৃষ্ঠায় যান
                                     </a>
-                                        <a href="{{ route('fc1FormStepThree',1) }}" style="margin-left:10px;" class="btn btn-registration"
+                                        <a href="{{ route('fc2FormStepThree',1) }}" style="margin-left:10px;" class="btn btn-registration"
                                                 >পরবর্তী পৃষ্ঠা
                                         </a>
-                                    </div>
+                                        </div>
                                 </form>
                                 </div>
                             </div>
@@ -349,7 +341,6 @@
     </div>
 
 </section>
-
 <!--modal-->
 <div class="modal modal-xl fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -488,7 +479,6 @@
 </div>
 
 <!-- end modal -->
-
 
 @endsection
 

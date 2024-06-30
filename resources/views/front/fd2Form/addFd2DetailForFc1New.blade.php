@@ -72,7 +72,7 @@
 
                         <div class="profile_link_box">
                             <a href="{{ route('fd6Form.index') }}">
-                                <p class="{{ Route::is('fd6Form.index') ||  Route::is('fd6Form.create') || Route::is('fd6Form.view') || Route::is('fd2Form.create') || Route::is('fd2Form.index') || Route::is('fd6Form.edit') || Route::is('fd2Form.view') || Route::is('fd2Form.edit')? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd6')}}</p>
+                                <p class="{{ Route::is('fd6Form.index') ||  Route::is('fd6Form.create') || Route::is('fd6Form.view') || Route::is('fd2Form.create') || Route::is('fd2Form.index') || Route::is('fd6Form.edit') || Route::is('fd2Form.view') || Route::is('fd2Form.edit') || Route::is('addFd2Detail') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd6')}}</p>
                             </a>
                         </div>
 
@@ -103,6 +103,7 @@
                                 <p class="{{ Route::is('fdFiveForm.index') ||  Route::is('fdFiveForm.create') || Route::is('fdFiveForm.view')  || Route::is('fdFiveForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fd5')}}</p>
                             </a>
                         </div>
+
                         <div class="profile_link_box">
                             <a href="{{ route('fdFourOneForm.index') }}">
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
@@ -113,13 +114,11 @@
                                 <p class="{{ Route::is('formNoFour.index') ||  Route::is('formNoFour.create') || Route::is('formNoFour.view')  || Route::is('formNoFour.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoFour.formNoFour')}}</p>
                             </a>
                         </div>
-
                         <div class="profile_link_box">
                             <a href="{{ route('formNoSeven.index') }}">
                                 <p class="{{ Route::is('formNoSeven.index') ||  Route::is('formNoSeven.create') || Route::is('formNoSeven.view')  || Route::is('formNoSeven.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('formNoSeven.formNoSeven')}}</p>
                             </a>
                         </div>
-
 
                         <div class="profile_link_box">
                             <a href="{{ route('formNoFive.index') }}">
@@ -151,6 +150,7 @@
                                 <p class="{{ Route::is('executiveCommitteeApproval.index')  ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.cf3')}}</p>
                             </a>
                         </div> --}}
+
                         <div class="profile_link_box">
                             <a href="{{ route('logout') }}">
                                 <p class=""><i class="fa fa-cog pe-2"></i>{{ trans('fd9.l')}}</p>
@@ -167,11 +167,11 @@
                         <div class="name_change_box">
                             <div class="step_box">
                                 <ul class="process-model more-icon-preocess">
-                                    <li class="active visited">
+                                    <li >
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        <p>এফসি - ১ </p>
+                                        <p>এফসি - ১</p>
                                     </li>
-                                    <li>
+                                    <li class="active visited">
                                         <i class="fa fa-file-text" aria-hidden="true"></i>
                                         <p>এফডি - ২</p>
                                     </li>
@@ -180,7 +180,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     <div class="others_inner_section">
-                                        <h1>এককালীন অনুদান গ্রহণের আবেদন ফরম</h1>
+                                        <h1>অর্থছাড়ের আবেদন ফরম</h1>
                                         <div class="notice_underline"></div>
                                     </div>
                                 </div>
@@ -188,156 +188,243 @@
 
                             <div class="card mt-3 card-custom-color">
                                 <div class="card-body">
+
                                     <div class="form9_upper_box">
-                                        <h3>এফসি -১ ফরম</h3>
-                                        <h4>এককালীন অনুদান গ্রহণের আবেদন ফরম</h4>
+                                        <h3>এফডি -২ ফরম</h3>
+                                        <h4>অর্থছাড়ের আবেদন ফরম</h4>
                                     </div>
-
-                                    <form action="{{ route('fc1Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('storeFd2DetailForFc1') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
-                                     <!-- step one start -->
-
-                                     <div class="row">
-                                        <div class="col-lg-12 col-sm-12">
 
 
-                                            <table class="table table-bordered" style="width:100%">
+                                        <table class="table table-bordered" style="width:100%">
 
-                                              <!-- step one start  -->
+                                            <tr>
+                                                <th style="text-align: center;" colspan="2">ক্র: নং:</th>
+                                                <th style="text-align: center; width: 10%">বিবরণ</th>
+                                                <th style="text-align: center;">তথ্যাদি</th>
 
-                                                <tr>
-                                                    <th style="text-align: center;" rowspan="6">৯.</th>
-
-                                                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">বাজেট<br>
-                                                        ক.খাতভিত্তিক ব্যয় বিভাজন </span></td>
-                                                    <td> <div class="d-flex justify-content-between ">
-                                                        <div class="p-2">
-
-
-                                                        </div>
-                                                        <div class="p-2">
-                                                            <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
-                                                                 যুক্ত করুন
-                                                            </button>
-                                                        </div>
-                                                    </div></td>
-
-                                                </tr>
-                                                <tr>
-
-                                                    {{-- <td style="text-align: center;">ক.</td> --}}
-                                                    <td colspan="3" rowspan="3">
-
-                                                        <div class="table-responsive">
-
-
-                                                            <div class="table-responsive">
-
-
-                                                                <table class="table table-bordered">
-                                                                    <tr style="text-align: center">
-                                                                        <th>ক্র : নং :</th>
-                                                                        <th>কার্যক্রম</th>
-                                                                        <th>প্রাক্কলিত ব্যয় </th>
-                                                                        <th>কর্ম এলাকা<br> (জেলা ,উপজেলা )</th>
-                                                                        <th>সময়সীমা </th>
-                                                                        <th>উপকারভোগীর সংখ্যা </th>
-                                                                        <th></th>
-                                                                    </tr>
-
-
-                                                                </table>
-
-                                                            </div>
-                                                        </div>
-
-
-
-                                                </span>
-
-
-                                            </td>
-
-
-                                                </tr>
-
-                                                <tr>
-
-                                                </tr>
-                                                <tr>
-
-                                                </tr>
-                                                <tr>
-
-                                                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">
-                                                        খ.টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততা</span></td>
-
-                                                        <td> <div class="d-flex justify-content-between ">
-                                                            <div class="p-2">
-
-
-                                                            </div>
-                                                            <div class="p-2">
-                                                                <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                                                                     যুক্ত করুন
-                                                                </button>
-                                                            </div>
-                                                        </div></td>
-                                                </tr>
-
-                                                <tr>
-
-                                                    <td colspan="3">
-
-                                                        <div class="table-responsive">
-
-
-                                                            <table class="table table-bordered">
-                                                                <tr style="text-align: center">
-                                                                    <th>অভিষ্ঠ(Goal)</th>
-                                                                    <th>লক্ষ্যমাত্রা(Target)</th>
-                                                                    <th>বাজেট বরাদ্দ </th>
-                                                                    <th>যৌক্তিকতা </th>
-                                                                    <th>মন্তব্য</th>
-                                                                    <th></th>
-                                                                </tr>
-
-
-                                                            </table>
-
-                                                        </div>
-                                                    </td>
-
-                                                </tr>
+                                            </tr>
 
 
 
 
-                                                <!-- step three end -->
+
+
+   <!-- step three start -->
+
+   <tr>
+    <th style="text-align: center;" colspan="2">১.</th>
+    <td style="font-weight:bold;text-align: center;" >সংস্থার নাম ও ঠিকানা <span style="color:red;">*</span></td>
+    <th style="text-align: center;">
+        <input type="text" required value="" name="ngo_name" class="form-control" id=""
+                                                   placeholder="সংস্থার নাম">
+                                                   <input type="text" required class="form-control mt-3" value="" name="ngo_address" id=""
+                                                   placeholder="সংস্থার ঠিকানা">
+    </th>
+
+</tr>
+
+<tr>
+    <th style="text-align: center;" colspan="2">২.</th>
+    <td style="font-weight:bold;text-align: center;" >প্রকল্পের নাম<span style="color:red;">*</span></td>
+    <th style="text-align: center;">
+        <input type="text" required value="" name="ngo_prokolpo_name" class="form-control" id=""
+        placeholder="প্রকল্পের নাম">
+
+    </th>
+
+</tr>
+
+
+<tr>
+    <th style="text-align: center;" colspan="2">৩.</th>
+    <td style="font-weight:bold;text-align: center;" >প্রকল্পের মেয়াদ<span style="color:red;">*</span></td>
+    <th style="text-align: center;">
+        <input type="text" required value="" name="ngo_prokolpo_duration" class="form-control" id=""
+        placeholder="প্রকল্পের মেয়াদ">
+
+        <input type="text" required value="" name="ngo_prokolpo_start_date" class="form-control datepickerOne mt-2" id=""
+        placeholder="আরম্ভের তারিখ">
+
+        <input type="text" required value="" name="ngo_prokolpo_end_date" class="form-control datepickerOne mt-2" id=""
+        placeholder="সমাপ্তির তারিখ">
+
+    </th>
+
+</tr>
+
+<tr>
+    <th style="text-align: center;" colspan="2">৪.</th>
+    <td style="font-weight:bold;text-align: center;" >প্রস্তাবিত অর্থছাড়ের পরিমাণ<span style="color:red;">*</span></td>
+    <th style="text-align: center;">
+        <input type="text" required class="form-control" id="" name="proposed_rebate_amount_bangladeshi_taka"
+        placeholder="প্রস্তাবিত অর্থছাড়ের পরিমান (বাংলাদেশী টাকা )">
+
+        <input type="text" required class="form-control mt-2" id="" name="proposed_rebate_amount_in_foreign_currency"
+        placeholder="প্রস্তাবিত অর্থছাড়ের পরিমান (বৈদেশিক মুদ্রায় )">
+
+    </th>
+
+</tr>
+
+<tr>
+    <th style="text-align: center;" colspan="2">৫.</th>
+    <td style="font-weight:bold;text-align: center;" >১ম/২য়/৩য়/৪র্থ বছরে ব্যাংক হতে উত্তোলিত অর্থের পরিমাণ<span style="color:red;">*</span></td>
+    <th style="text-align: center;">
+        <select required class="form-control" name="proposed_rebate_amount_in_foreign_currency"
+                                                   placeholder="">
+                                            <option value="">-নির্বাচন করুন-</option>
+                                            <option value="1">১ম</option>
+                                            <option value="2">২য়</option>
+                                            <option value="3">৩য়</option>
+                                            <option value="4">৪র্থ</option>
+                                            </select>
+
+                                            <input type="text" required class="form-control mt-2" id="" name="proposed_rebate_amount_in_foreign_currency"
+                                            placeholder="ব্যাংক হতে উত্তোলিত অর্থের পরিমাণ">
+
+    </th>
+
+</tr>
+
+<tr>
+    <th style="text-align: center;" colspan="2" rowspan="2">৬.</th>
+    <td style="font-weight:bold;" colspan="2">সংশ্লিষ্ট প্রকল্পের বিগত বছরের অর্জন<span style="color:red;">*</span></td>
+
+
+</tr>
+<tr>
+    <td colspan="2">
+        <div class="d-flex justify-content-between ">
+            <div class="">
+
+
+            </div>
+            <div class="p-2">
+                <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                     যুক্ত করুন
+                </button>
+            </div>
+        </div>
+        <div class="table-responsive">
+
+
+            <table class="table table-bordered">
+                <tr style="text-align: center">
+                    <th rowspan="2">ক্রমিক নং</th>
+                    <th rowspan="2">কার্যক্রমের নাম </th>
+                    <th colspan="2">বিগত বছরের লক্ষ্যমাত্রা </th>
+                    <th colspan="2">অর্জন(%) </th>
+                    <th rowspan="2">উপকারভোগীর সংখ্যা </th>
+                    <th rowspan="2">মন্তব্য (যদি থাকে)</th>
+                    <th rowspan="2"></th>
+                </tr>
+                <tr style="text-align: center;">
+                    <th>বাস্তব</th>
+                    <th>আর্থিক </th>
+                    <th>বাস্তব</th>
+                    <th>আর্থিক </th>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th colspan="7">মোট উপকারভোগীর সংখ্যা -</th>
+
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            </table>
+
+        </div>
+    </td>
+</tr>
+<tr>
+    <th rowspan="3">৭.</th>
+    <th></th>
+    <th colspan="2">সংস্থার মাদার একাউন্ট সংক্রান্ত তথ্যাবলী</th>
+
+</tr>
+<tr>
+
+    <th>(ক)</th>
+    <th>ব্যাংকের নাম</th>
+    <td><input type="text" required class="form-control" value="" name="ngo_address" id=""
+        placeholder="ব্যাংকের নাম"></td>
+
+</tr>
+<tr>
+
+    <th>(খ) </th>
+    <th>ব্যাংকের ঠিকানা ও হিসাব নম্বর</th>
+    <td>
+        <input type="text" required value="" name="ngo_prokolpo_name" class="form-control" id=""
+        placeholder="ব্যাংকের ঠিকানা">
+
+        <input type="text" required value="" name="ngo_prokolpo_duration" class="form-control mt-2" id=""
+        placeholder="ব্যাংকের হিসাব নম্বর">
+
+    </td>
+
+</tr>
+
+<tr>
+    <th style="text-align: center;" colspan="2">৮.</th>
+    <td style="font-weight:bold;text-align: center;" >গুরুত্বপূর্ণ যেকোনো তথ্য</td>
+    <td style="text-align: center;">
+        <table class="table table-bordered" id="dynamicAddRemove">
+            <tr>
+                <th>ফাইলের নাম</th>
+                <th>ফাইল</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td><input type="text"  name="file_name[]" class="form-control" id=""
+                           placeholder=""></td>
+                <td><input type="file" name="file[]" accept=".pdf" class="form-control" id=""
+                           placeholder=""></td>
+                <td><a class="btn btn-primary" id="dynamic-ar"><i class="fa fa-plus"></i></a></td>
+            </tr>
+        </table>
+
+    </td>
+
+</tr>
 
 
 
-                                            </table>
+
+                                        </table>
 
 
+                                        <input type="hidden" name="fc1_form_id" value="{{ base64_encode($fc1Id) }}" />
 
 
-                                        </div>
-
-                                    </div>
-                                    <!-- step one end --->
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
-                                        <a href="{{ route('fc1Form.create') }}" class="btn btn-danger"
-                                                >পূর্ববর্তী পৃষ্ঠায় যান
-                                    </a>
-                                        <a href="{{ route('fc1FormStepThree',1) }}" style="margin-left:10px;" class="btn btn-registration"
-                                                >পরবর্তী পৃষ্ঠা
-                                        </a>
+                                        <button type="button" class="btn btn-dark me-2"
+                                                onclick="location.href = '{{ route('fc1FormStepThree',1) }}';">আগের পৃষ্ঠায় যান
+                                        </button>
+                                        <button type="submit" disabled class="btn btn-registration"
+                                                >তথ্য জমা দিন
+                                        </button>
                                     </div>
+
                                 </form>
                                 </div>
                             </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -349,82 +436,6 @@
     </div>
 
 </section>
-
-<!--modal-->
-<div class="modal modal-xl fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-
-                    খাতভিত্তিক ব্যয় বিভাজন  বিবরণী
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                        placeholder=""> --}}
-
-                                        <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">উপজেলা</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">কার্যক্রম <span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">প্রাক্কলিত ব্যয়</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">সময়সীমা</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="beneficiaries_total[]" class="form-control" id="" placeholder="">
-                                    </div>
-
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- end modal -->
-
-
 <!--modal-->
 <div class="modal modal-xl fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -432,7 +443,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">
 
-                    টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততার বিবরণী
+                    সংশ্লিষ্ট প্রকল্পের বিগত বছরের অর্জনের বিবরণ
 
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -449,25 +460,39 @@
 
 
                                     <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">অভিষ্ঠ(Goal)</label>
+                                        <label for="" class="form-label">কার্যক্রমের নাম</label>
                                         <input type="text" name="upozila_name[]" class="form-control" id=""
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">লক্ষ্যমাত্রা(Target) <span class="text-danger">*</span></label>
+                                        <label for="" class="form-label">বিগত বছরের লক্ষ্যমাত্রা(বাস্তব)<span class="text-danger">*</span></label>
+                                        <input type="text" required name="thana_name[]" class="form-control" id=""
+                                        placeholder="" >
+                                    </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="" class="form-label">বিগত বছরের লক্ষ্যমাত্রা(আর্থিক)<span class="text-danger">*</span></label>
                                         <input type="text" required name="thana_name[]" class="form-control" id=""
                                         placeholder="" >
                                     </div>
                                     <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">বাজেট বরাদ্দ</label>
+                                        <label for="" class="form-label">অর্জন(%)(বাস্তব)</label>
                                         <input type="text" name="municipality_name[]" class="form-control" id=""
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">যৌক্তিকতা</label>
+                                        <label for="" class="form-label">অর্জন(%)(আর্থিক)</label>
                                         <input type="text" name="ward_name[]" class="form-control" id=""
                                         placeholder="">
                                     </div>
+
+                                    <div class="col-lg-6 mb-3">
+                                        <label for="" class="form-label">উপকারভোগীর সংখ্যা</label>
+                                        <input type="text" name="ward_name[]" class="form-control" id=""
+                                        placeholder="">
+                                    </div>
+
+
 
 
                                     <div class="col-lg-12 mb-3">
@@ -488,7 +513,6 @@
 </div>
 
 <!-- end modal -->
-
 
 @endsection
 
@@ -574,17 +598,18 @@ $("#donor_organization_name").keyup(function(){
 </script>
 
 
-@include('front.include.globalScript')
 
-{{-- <script>
+
+<script>
     var i = 0;
     $("#dynamic-ar").click(function () {
         ++i;
-        $("#dynamicAddRemove").append('<tr><td style="width: 20%"><label for="" class="form-label">বিভাগ</label><select required name="division_name[]" class="form-control division_name" id="division_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>@foreach($divisionList as $districtListAll)<option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>@endforeach</select></td><td style="width: 30%"><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">জেলা</label><select required name="district_name[]" class="form-control district_name" id="district_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div><div class="col-lg-12 mb-3"><label for="" class="form-label">সিটি কর্পোরেশন</label><select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name'+i+'"><option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div></div></td><td><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">উপজেলা</label><input type="text" name="upozila_name[]" class="form-control" id="" placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">থানা</label><input type="text"  required name="thana_name[]" class="form-control" id=""placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">পৌরসভা</label><input type="text" name="municipality_name[]" class="form-control" id=""placeholder=""></div></div></td><td><label for="" class="form-label">ইউনিয়ন/ওয়ার্ড</label><input type="text" name="ward_name[]" class="form-control" id="" placeholder=""></td><td><input type="number" name="allocated_budget[]" required class="form-control" id="" placeholder=""></td><td><input type="number" name="number_of_beneficiaries[]" required class="form-control" id="" placeholder=""></td><td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="bi bi-file-earmark-x-fill"></i></button></td></tr>');});
+        $("#dynamicAddRemove").append('<tr><td><input type="text"  name="file_name[]" class="form-control" id=""placeholder=""></td><td><input type="file" name="file[]" accept=".pdf" class="form-control" id="" placeholder=""></td><td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="bi bi-file-earmark-x-fill"></i></button></td></tr>');
+    });
     $(document).on('click', '.remove-input-field', function () {
         $(this).parents('tr').remove();
     });
 
-</script> --}}
+</script>
 
 @endsection

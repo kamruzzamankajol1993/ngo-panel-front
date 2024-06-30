@@ -51,10 +51,36 @@ class Fc2FormController extends Controller
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
 
-        return view('front.fc2Form.create',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        return view('front.fc2Form.newAddForm',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
+    public function fc2FormStepTwo($id){
+
+
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+
+        return view('front.fc2Form.newAddFormStepTwo',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    }
+    public function fc2FormStepThree($id){
+
+
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+
+        return view('front.fc2Form.newAddFormStepThree',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    }
 
     public function edit($id){
 

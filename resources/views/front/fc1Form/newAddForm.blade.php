@@ -296,9 +296,9 @@
                                                 <!-- step two strat --->
 
                                                 <tr>
-                                                    <th style="text-align: center;" rowspan="3">২.</th>
+                                                    <th style="text-align: center;" rowspan="4">২.</th>
 
-                                                    <td style="font-weight:bold;text-align: center;" colspan="2">প্রকল্পের মেয়াদ</td>
+                                                    <td style="font-weight:bold;" colspan="2">প্রকল্পের মেয়াদ</td>
                                                     <td></td>
 
                                                 </tr>
@@ -306,10 +306,12 @@
                                                 <tr>
 
                                                     <td style="text-align: center;">ক.</td>
-                                                    <td>  আরম্ভের তারিখ <span style="color:red;">* </span></td>
+                                                    <td> আরম্ভের তারিখ <span style="color:red;">* </span></td>
                                                     <td>
                                                         <input required type="text" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
                                                            placeholder="আরম্ভের তারিখ">
+
+
                                                     </td>
 
                                                 </tr>
@@ -322,6 +324,20 @@
 
                                                 </tr>
 
+                                                <tr>
+
+                                                    <td style="text-align: center;">গ.</td>
+                                                    <td>প্রকল্পের ধরণ <span style="color:red;">*</span> </td>
+                                                    <td>  <select multiple required name="subject_id[]" class="form-control js-example-basic-multiple" id=""
+                                                        placeholder="">
+                                                        <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
+                                                        @foreach($projectSubjectList as $projectSubjectLists)
+                                                        <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
+                                                        @endforeach
+                                                 </select></td>
+
+                                                </tr>
+
 
 
 
@@ -331,20 +347,26 @@
                                                 <!-- step three start -->
 
                                                 <tr>
-                                                    <th style="text-align: center;" >৩.</th>
-                                                    <td style="font-weight:bold;text-align: center;" colspan="2">অনুদান গ্রহণের উদ্দেশ্য<span style="color:red;">*</span></td>
-                                                    <th style="text-align: center;">
-                                                        <textarea required name="purpose_of_donation" class="form-control" id=""
-                                                        placeholder="বিস্তারিত বিবরণ"></textarea>
-                                                    </th>
+                                                    <th style="text-align: center;" rowspan="2">৩.</th>
+                                                    <td style="font-weight:bold;" colspan="3">অনুদান গ্রহণের উদ্দেশ্য<span style="color:red;">*</span><span class="text-danger" style="font-size:12px;">যে কোনো একটি ইনপুট ফিল্ড অবশ্যই পূরণ করতে হবে</span></td>
 
+
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3">
+                                                        <textarea required name="purpose_of_donation" class="form-control summernote" id=""
+                                                        placeholder="বিস্তারিত বিবরণ"></textarea>
+
+                                                        <input type="file" name="foreigner_donor_full_name" class="form-control mt-3" id=""
+                                                           placeholder="পূর্ণ নাম">
+                                                    </td>
                                                 </tr>
                                               <!-- step one start  -->
 
                                                 <tr>
                                                     <th style="text-align: center;" rowspan="4">৪.</th>
 
-                                                    <td style="font-weight:bold;text-align:center;" colspan="2">কর্ম এলাকা ও বাজেট</td>
+                                                    <td style="font-weight:bold;" colspan="2">কর্ম এলাকা ও বাজেট</td>
                                                     <td> <div class="d-flex justify-content-between ">
                                                         <div class="p-2">
 
@@ -411,7 +433,7 @@
                                                 <tr>
                                                     <th style="text-align: center;" rowspan="19">৫.</th>
 
-                                                    <th style="text-align: center;" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
+                                                    <th style="" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
 
                                                 </tr>
 
@@ -661,8 +683,8 @@
                                                     <td>সংস্থার উদ্দেশ্যসমূহ <span style="color:red;">* </span></td>
                                                     <td>
 
-                                                        <input type="text" name="objectives_of_the_organization" class="form-control" id=""
-                                                        placeholder="সংস্থার উদ্দেশ্যসমূহ">
+                                                        <textarea name="objectives_of_the_organization" class="form-control summernote" id=""
+                                                        placeholder="সংস্থার উদ্দেশ্যসমূহ"> </textarea>
 
 
                                                     </td>
@@ -805,9 +827,8 @@
 
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-registration"
-                                                >পরবর্তী পৃষ্ঠা
-                                        </button>
+                                    <a href="{{ route('fc1FormStepTwo',1) }}" class="btn btn-registration">পরবর্তী পৃষ্ঠা
+                                    </a>
                                     </div>
                                 </form>
                                 </div>
@@ -843,7 +864,7 @@
 
                             <div class="row">
 
-                      
+
                                     <div class="col-lg-4 mb-3">
                                         <label for="" class="form-label">বিভাগ <span class="text-danger">*</span></label>
                                 {{-- <input type="text" required name="division_name[]" class="form-control" id=""

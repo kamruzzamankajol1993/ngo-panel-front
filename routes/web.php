@@ -367,6 +367,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('finalFcTwoApplicationSubmit/{id}', 'finalFcTwoApplicationSubmit')->name('finalFcTwoApplicationSubmit');
         Route::get('fc2PdfDownload/{id}', 'fc2PdfDownload')->name('fc2PdfDownload');
         Route::get('verifiedFcTwoForm/{id}', 'verifiedFcTwoForm')->name('verifiedFcTwoForm');
+
+
+        Route::get('fc2FormStepTwo/{id}', 'fc2FormStepTwo')->name('fc2FormStepTwo');
+        Route::get('fc2FormStepThree/{id}', 'fc2FormStepThree')->name('fc2FormStepThree');
     });
 
     Route::controller(Fd2FormController::class)->group(function () {
