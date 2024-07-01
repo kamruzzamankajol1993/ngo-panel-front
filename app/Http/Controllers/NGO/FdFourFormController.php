@@ -40,9 +40,9 @@ class FdFourFormController extends Controller
             ->where('fd_four_one_form_id',$decodeId)
             ->first();
 
+//dd(12);
 
-
-            return view('front.fdFourForm.create',compact('renewWebsiteName','ngoDurationLastEx','ngoDurationReg','decodeId','ngo_list_all','fdFourFormList'));
+            return view('front.fdFourForm.newAddForm',compact('renewWebsiteName','ngoDurationLastEx','ngoDurationReg','decodeId','ngo_list_all','fdFourFormList'));
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -49,7 +49,7 @@ class FdFiveFormController extends Controller
 
         $mainNgoType = CommonController::changeView();
 
-        return view('front.fdFiveForm.create',compact('renewWebsiteName','ngoListAll','fdFiveForm'));
+        return view('front.fdFiveForm.newAddForm',compact('renewWebsiteName','ngoListAll','fdFiveForm'));
     }
 
 

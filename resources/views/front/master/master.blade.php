@@ -404,7 +404,7 @@
 <!-- Template Main JS File -->
 <script src="{{ asset('/') }}public/front/assets/js/main.js"></script>
 {{-- <script src="{{ asset('/') }}public/front/assets/js/custom_js.js"></script> --}}
-<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.js"></script>
 <script src="https://unpkg.com/sweetalert2@7.19.1/dist/sweetalert2.all.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>

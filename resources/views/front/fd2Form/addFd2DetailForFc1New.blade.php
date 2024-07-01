@@ -347,6 +347,8 @@
             </table>
 
         </div>
+        <input type="file" required class="form-control" value="" name="ngo_address" id=""
+        placeholder="">
     </td>
 </tr>
 <tr>

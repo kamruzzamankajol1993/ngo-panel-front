@@ -85,7 +85,7 @@ class FdFourOneController extends Controller
             $districtList = DB::table('civilinfos')->groupBy('district_bn')
             ->select('district_bn')->get();
 
-            return view('front.fdFourOneForm.create',compact('ngo_list_all','districtList'));
+            return view('front.fdFourOneForm.newAddForm',compact('ngo_list_all','districtList'));
 
         } catch (\Exception $e) {
             DB::rollBack();
