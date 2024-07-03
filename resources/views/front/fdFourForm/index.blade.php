@@ -1,7 +1,7 @@
 @extends('front.master.master')
 
 @section('title')
-{{ trans('fdFourFormOne.fdFourOneForm')}} | {{ trans('header.ngo_ab')}}
+{{ trans('fdFourForm.fdFourForm')}} | {{ trans('header.ngo_ab')}}
 @endsection
 
 @section('css')
@@ -191,7 +191,7 @@
 
                                                 ?>
 
-@if($name_change_list == 'Ongoing' || $name_change_list == 'Review')
+@if( $name_change_list == 'Review')
 
 <div class="d-grid d-md-flex justify-content-end">
     <button type="button" disabled class="btn btn-registration"
@@ -235,7 +235,7 @@
                                         <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
                                         <td>{{ $ngo_list_all->organization_name_ban }}</td>
                                         <td>{{ $fdFourFormListAll->prokolpo_name}}</td>
-                                      >
+
                                         <td><span class="text-success">{{ $fdFourFormListAll->status }}</span></td>
                                         <td>
 

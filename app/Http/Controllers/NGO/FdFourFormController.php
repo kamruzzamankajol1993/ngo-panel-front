@@ -29,10 +29,10 @@ class FdFourFormController extends Controller
             $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')
             ->where('user_id',Auth::user()->id)->value('ngo_type');
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
-            $fdFourOneFormList = FdFourForm::where('fd_one_form_id',$ngo_list_all->id)
+            $fdFourFormList = FdFourForm::where('fd_one_form_id',$ngo_list_all->id)
             ->latest()->get();
 
-            return view('front.fdFourForm.index',compact('ngo_list_all','fdFourOneFormList'));
+            return view('front.fdFourForm.index',compact('ngo_list_all','fdFourFormList'));
 
         } catch (\Exception $e) {
             DB::rollBack();

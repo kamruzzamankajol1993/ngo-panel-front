@@ -46,7 +46,7 @@ class Fd9OneController extends Controller
 
         $mainNgoType = CommonController::changeView();
 
-        return view('front.fd9OneForm.create',compact('ngo_list_all'));
+        return view('front.fd9OneForm.newAddForm',compact('ngo_list_all'));
 
     }
 

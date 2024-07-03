@@ -257,7 +257,7 @@ $getPendingData = DB::table('form_no_fives')->where('fd_one_form_id',$ngo_list_a
 
                                         </td>
                                         <td>
-                                            @if(  $formNoSevenListAll->status == 'Ongoing' || $formNoSevenListAll->status == 'Accepted')
+                                            @if(  $formNoFiveListAll->status == 'Ongoing' || $formNoFiveListAll->status == 'Accepted')
 
                                             @else
                                             <a  href="{{ route('formNoFive.edit',base64_encode($formNoFiveListAll->id)) }}" class="btn btn-sm btn-outline-primary"> <i class="fa fa-pencil"></i> </a>

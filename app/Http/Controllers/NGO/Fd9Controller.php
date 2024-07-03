@@ -58,7 +58,7 @@ class Fd9Controller extends Controller
             $ngoStatus = NgoRenew::where('fd_one_form_id',$ngo_list_all->id)->first();
 
         }
-        return view('front.fdNineForm.create',compact('ngo_list_all','ngoStatus','checkNgoTypeForForeginNgo'));
+        return view('front.fdNineForm.newAddForm',compact('ngo_list_all','ngoStatus','checkNgoTypeForForeginNgo'));
 
     }
 
