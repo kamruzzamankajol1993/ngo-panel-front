@@ -23,6 +23,51 @@ use App\Models\NgoRenewInfo;
 use App\Models\NgoDuration;
 class FdFourFormController extends Controller
 {
+
+    public function index(){
+        try{
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')
+            ->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+            $fdFourOneFormList = FdFourForm::where('fd_one_form_id',$ngo_list_all->id)
+            ->latest()->get();
+
+            return view('front.fdFourForm.index',compact('ngo_list_all','fdFourOneFormList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+
+
+    }
+    public function create(){
+        try{
+
+            $decodeId = base64_decode(1);
+            $checkNgoTypeForForeginNgo = DB::table('ngo_type_and_languages')
+            ->where('user_id',Auth::user()->id)->value('ngo_type');
+            $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+
+
+            $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+
+            $fdFourFormList = FdFourForm::where('fd_one_form_id',$ngo_list_all->id)
+            ->where('fd_four_one_form_id',$decodeId)
+            ->first();
+
+
+
+            return view('front.fdFourForm.newAddForm',compact('renewWebsiteName','ngoDurationLastEx','ngoDurationReg','decodeId','ngo_list_all','fdFourFormList'));
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+    }
     public function addFdFourFormData($id){
         try{
 
@@ -40,9 +85,9 @@ class FdFourFormController extends Controller
             ->where('fd_four_one_form_id',$decodeId)
             ->first();
 
-//dd(12);
 
-            return view('front.fdFourForm.newAddForm',compact('renewWebsiteName','ngoDurationLastEx','ngoDurationReg','decodeId','ngo_list_all','fdFourFormList'));
+
+            return view('front.fdFourForm.create',compact('renewWebsiteName','ngoDurationLastEx','ngoDurationReg','decodeId','ngo_list_all','fdFourFormList'));
 
         } catch (\Exception $e) {
             DB::rollBack();

@@ -106,6 +106,16 @@
                             </a>
                         </div>
                         <div class="profile_link_box">
+                            <a href="{{ route('fdFourForm.index') }}">
+                                <p class="{{ Route::is('fdFourForm.index') ||  Route::is('fdFourForm.create') || Route::is('fdFourForm.view')  || Route::is('fdFourForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourForm.fdFourForm')}}</p>
+                            </a>
+                        </div>
+                        <div class="profile_link_box">
+                            <a href="{{ route('fdFourForm.index') }}">
+                                <p class="{{ Route::is('fdFourForm.index') ||  Route::is('fdFourForm.create') || Route::is('fdFourForm.view')  || Route::is('fdFourForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourForm.fdFourForm')}}</p>
+                            </a>
+                        </div>
+                        <div class="profile_link_box">
                             <a href="{{ route('fdFourOneForm.index') }}">
                                 <p class="{{ Route::is('editFdFourFormData') || Route::is('addFdFourFormData') || Route::is('fdFourOneForm.index') ||  Route::is('fdFourOneForm.create') || Route::is('fdFourOneForm.view')  || Route::is('fdFourOneForm.edit') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fdFourFormOne.fdFourOneForm')}}</p>
                             </a>
@@ -693,64 +703,48 @@
 
 
                                                 <td style="text-align: center;">ছ.</td>
-                                                <td>সংস্থার প্রধান নির্বাহী কর্মকর্তাসহ উর্দ্ধতন ০৩(তিন ) জন কর্মকর্তার বিবরণ (নাম, পদবি, টেলিফোন, মোবাইল ও ইমেইল নম্বরসহ ) <span style="color:red;">* </span></td>
-                                                <td>
-                                                    <input type="text" name="organization_ceo_name" class="form-control" id=""
-                                                    placeholder="প্রধান নির্বাহী কর্মকর্তার নাম">
+                                                <td colspan="2">
 
-                                                    <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
-                                                    placeholder="প্রধান নির্বাহী কর্মকর্তার পদবি">
+                                                  <span style="font-weight:bold;">সংস্থার প্রধান নির্বাহী কর্মকর্তাসহ উর্দ্ধতন ০৩(তিন ) জন কর্মকর্তার বিবরণ (নাম, পদবি, টেলিফোন, মোবাইল ও ইমেইল নম্বরসহ )</span>   <span style="color:red;">* </span>
 
 
 
-                                                        <input type="text" name="organization_ceo_name" class="form-control mt-2" id=""
-                                                               placeholder="প্রধান নির্বাহী কর্মকর্তার টেলিফোন">
+                                                  <div class="d-flex justify-content-between ">
+                                                    <div class="p-2">
 
 
-                                                        <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
-                                                               placeholder="প্রধান নির্বাহী কর্মকর্তার মোবাইল">
-
-                                                               <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
-                                                               placeholder="প্রধান নির্বাহী কর্মকর্তার ইমেইল">
-
-
-                                                        <input type="text" name="organization_senior_officer_name_one" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০১) নাম">
-
-                                                        <input type="text" name="organization_senior_officer_designation_one" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০১) পদবি">
-
-                                                               <input type="text" name="organization_senior_officer_designation_one" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০১) টেলিফোন">
+                                                    </div>
+                                                    <div class="p-2">
+                                                        <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal1" >
+                                                             যুক্ত করুন
+                                                        </button>
+                                                    </div>
+                                                </div>
 
 
-                                                               <input type="text" name="organization_senior_officer_designation_one" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০১) মোবাইল">
+                                                <div class="table-responsive mt-2">
 
 
-                                                               <input type="text" name="organization_senior_officer_designation_one" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০১) ইমেইল">
+                                                    <table class="table table-bordered">
+                                                        <tr style="text-align: center">
+                                                            <th>ক্র : নং :</th>
+                                                            <th>নাম</th>
+                                                            <th>পদবি</th>
+                                                            <th>টেলিফোন</th>
+                                                            <th>মোবাইল</th>
+                                                            <th>ইমেইল</th>
+                                                            <th></th>
+                                                        </tr>
 
 
-                                                        <input type="text" name="organization_senior_officer_name_two" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০২) নাম">
+                                                    </table>
 
+                                                </div>
 
-                                                        <input type="text" name="organization_senior_officer_designation_two" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০২) পদবি">
-
-                                                               <input type="text" name="organization_senior_officer_designation_two" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০২) টেলিফোন">
-
-
-                                                               <input type="text" name="organization_senior_officer_designation_two" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০২) মোবাইল">
-
-                                                               <input type="text" name="organization_senior_officer_designation_two" class="form-control mt-2" id=""
-                                                               placeholder="উর্দ্ধতন কর্মকর্তার (০২) ইমেইল">
 
 
                                                 </td>
+
 
                                             </tr>
 
@@ -1077,7 +1071,64 @@
     </div>
 
 </section>
+<!--modal-->
+<div class="modal modal-xl fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
 
+                     বিবরণী
+
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+
+
+                            <div class="row">
+                                <div class="col-lg-12 mb-3">
+                                <input type="text" name="organization_ceo_name" class="form-control mt-2" id=""
+                                placeholder="কর্মকর্তার নাম">
+                                </div>
+
+                                <div class="col-lg-6 mb-3">
+
+                                <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
+                                placeholder="কর্মকর্তার পদবি">
+                                </div>
+                                <div class="col-lg-6 mb-3">
+
+
+                                    <input type="text" name="organization_ceo_name" class="form-control mt-2" id=""
+                                           placeholder="কর্মকর্তার টেলিফোন">
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                    <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
+                                           placeholder=" কর্মকর্তার মোবাইল">
+                                </div>
+                                <div class="col-lg-6 mb-3">
+                                           <input type="text"name="organization_ceo_designation" class="form-control mt-2" id=""
+                                           placeholder="কর্মকর্তার ইমেইল">
+                                </div>
+
+
+
+                            </div>
+                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- end modal -->
 
 @endsection
 
