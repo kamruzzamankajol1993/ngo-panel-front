@@ -71,6 +71,20 @@ class Fd6FormController extends Controller
     }
 
 
+    public function getUpozilaListNew(Request $request){
+
+        $divisionList = $request->getMainValue;
+
+        $upozilaList = DB::table('civilinfos')
+        ->where('division_bn',$divisionList)->groupBy('thana_bn')
+            ->select('thana_bn')->get();
+
+        $data = view('front.fd6Form.getUpozilaListNew',compact('upozilaList'))->render();
+        return response()->json($data);
+
+    }
+
+
 
 
 

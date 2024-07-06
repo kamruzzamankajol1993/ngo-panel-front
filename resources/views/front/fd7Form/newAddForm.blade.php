@@ -5,7 +5,34 @@
 @endsection
 
 @section('css')
+<style>
 
+    .alertify .ajs-body .ajs-content {
+        font-weight: bolder;
+        color:red;
+        font-size: 20px;
+    }
+
+    .alertify .ajs-header{
+
+        color:red;
+        font-size: 20px;
+
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button{
+
+        background-color: #006A4E;
+        color: #fff;
+
+    }
+
+</style>
+<style>
+    .ui-widget.ui-widget-content {
+    top: 10px !important;
+    }
+</style>
 @endsection
 
 @section('body')
@@ -207,7 +234,7 @@
                                      <div class="row">
                                         <div class="col-lg-12 col-sm-12">
 
-
+                                            <div class="table-responsive">
                                             <table class="table table-bordered" style="width:100%">
 
                                                 <tr>
@@ -338,27 +365,26 @@
                                                     {{-- <td style="text-align: center;">ক.</td> --}}
                                                     <td colspan="3" rowspan="3">
 
-                                                        <div class="table-responsive">
+                                                        <?php
 
 
-                                                            <table class="table table-bordered">
+        $distributionListOne = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রকল্প খাতের ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
 
-                                                                <tr style="text-align: center;">
-                                                                    <th>ক্র: নং :</th>
-                                                                    <th>জেলা</th>
-                                                                    <th>উপজেলা</th>
-                                                                    <th>ধরণ</th>
-                                                                    <th>দ্রব্যাদির বর্ণনা</th>
-                                                                    <th>পরিমাণ</th>
-                                                                    <th>একক মূল্য</th>
-                                                                    <th>মোট টাকার পরিমাণ</th>
-                                                                    <th>মোট উপকারভোগীর সংখ্যা</th>
-                                                                    <th>মন্তব্য</th>
-                                                                    <th></th>
-                                                                </tr>
+        $distributionListTwo = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রশাসনিক ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        //dd($distributionListTwo);
 
 
-                                                            </table>
+                                                            ?>
+
+                                                        <div class="table-responsive" id="tableAjaxDatadis">
+
+                                                            @include('front.fd7Form._partial.distributionTable')
+
                                                         </div>
 
                                                         <input type="file" name="donor_organization_description" class="form-control" id=""
@@ -633,28 +659,10 @@
                                                     {{-- <td style="text-align: center;">ক.</td> --}}
                                                     <td colspan="3" rowspan="3">
 
-                                                        <div class="table-responsive">
+                                                        <div class="table-responsive" id="tableAjaxDatapro">
 
+                                                          @include('front.fd7Form._partial.prokolpoAreaTable')
 
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <th>বিভাগ</th>
-                                                                    <th>জেলা/সিটি কর্পোরেশন</th>
-                                                                    <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
-                                                                    <th>প্রকল্পের ধরণ</th>
-                                                                    <th>বরাদ্দকৃত বাজেট</th>
-                                                                    <th>মোট উপকারভোগীর সংখ্যা</th>
-                                                                </tr>
-                                                                <tr style="text-align: center;">
-                                                                    <td>১</td>
-                                                                    <td>২</td>
-                                                                    <td>৩</td>
-                                                                    <td>৪</td>
-                                                                    <td>৫</td>
-                                                                    <td>৬</td>
-                                                                </tr>
-
-                                                            </table>
                                                         </div>
                                                         <span>টীকা :জেলা প্রশাসন /উপজেলা নির্বাহী অফিসার সুষ্ঠূ সমন্বয় ও সুষম বন্টনের স্বার্থে প্রকল্প এলাকা পরিবর্তন করার ক্ষমতা রাখে।</span>
 
@@ -799,7 +807,7 @@
 
                                             </table>
 
-
+                                        </div>
 
 
                                         </div>
@@ -903,217 +911,25 @@
 
 </section>
 <!--modal-->
-<div class="modal modal-xl fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-
-                    বিতরণের জন্য প্রস্তাবিত ত্রাণ সামগ্রীর বিবরণ
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-                                <div class="col-lg-6 mb-3">
-                                    <label for="" class="form-label">ধরণ <span class="text-danger">*</span></label>
-                                    {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                    placeholder=""> --}}
-
-                                    <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                        <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-                                        <option value="প্রকল্প খাতের ব্যয়">প্রকল্প খাতের ব্যয়</option>
-                                        <option value="প্রশাসনিক ব্যয়">প্রশাসনিক ব্যয়</option>
-                                    </select>
-                                </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                        placeholder=""> --}}
-
-                                        <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">উপজেলা</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">দ্রব্যাদির বর্ণনা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">পরিমাণ	</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">একক মূল্য</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">মোট টাকার পরিমাণ</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="beneficiaries_total[]" class="form-control" id="" placeholder="">
-                                    </div>
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="" class="form-label">মন্তব্য<span class="text-danger">*</span></label>
-                                        <textarea required name="beneficiaries_total[]" class="form-control" id="" placeholder=""></textarea>
-                                    </div>
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
+@include('front.fd7Form._partial.distributionModal')
 
 <!-- end modal -->
 <!--modal-->
-<div class="modal modal-xl fade" id="exampleModal12"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-
-                    বিবরণী
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">বিভাগ <span class="text-danger">*</span></label>
-                                {{-- <input type="text" required name="division_name[]" class="form-control" id=""
-                                placeholder=""> --}}
-
-
-
-                                <select required name="division_name[]" class="form-control division_name" id="division_name0">
-                                    <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-                                    @foreach($divisionList as $districtListAll)
-
-                                    <option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>
-                                    @endforeach
-
-                                </select>
-                                    </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                        placeholder=""> --}}
-
-                                        <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">সিটি কর্পোরেশন</label>
-                                        {{-- <input type="text" name="city_corparation_name[]" class="form-control" id=""
-                                        placeholder=""> --}}
-
-
-                                        <select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name0">
-                                            <option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <label for="" class="form-label">উপজেলা</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <label for="" class="form-label">থানা <span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <label for="" class="form-label">পৌরসভা</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-3 mb-3">
-                                        <label for="" class="form-label">ওয়ার্ড</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
-                                        <select  required name="prokolpoType[]" class="form-control " id=""
-                                               placeholder="">
-                                               <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
-                                               @foreach($projectSubjectList as $projectSubjectLists)
-                                               <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
-                                               @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">বরাদ্দকৃত বাজেট<span class="text-danger">*</span></label>
-                                        <input type="text" required name="allocated_budget[]" class="form-control" id="" placeholder="">
-                                    </div>
-                                    <div class="col-lg-4 mb-3">
-                                        <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="beneficiaries_total[]" class="form-control" id="" placeholder="">
-                                    </div>
-
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
+@include('front.fd7Form._partial.prokolpoAreaModal')
 
 <!-- end modal -->
 
 @endsection
 
 @section('script')
+@include('front.fd7Form._partial.script')
 @include('front.zoomButtonImage')
 <script>
 
     ///
 
 
-        $(document).on('change', 'select.division_name', function () {
+$(document).on('change', 'select.division_name', function () {
 
 var main_id = $(this).attr('id');
 var get_id_from_main = main_id.slice(13);
@@ -1134,6 +950,22 @@ var getMainValue = $('#division_name'+get_id_from_main).val();
     }
     });
 
+    $.ajax({
+    url: "{{ route('getUpozilaListNew') }}",
+    method: 'GET',
+    data: {getMainValue:getMainValue},
+    success: function(data) {
+      $("#upozila_name"+get_id_from_main).html('');
+      $("#upozila_name"+get_id_from_main).html(data);
+
+      $("#thana_name"+get_id_from_main).html('');
+      $("#thana_name"+get_id_from_main).html(data);
+    }
+    });
+
+
+
+
 // });
 
 
@@ -1144,15 +976,16 @@ $.ajax({
     success: function(data) {
       $("#city_corparation_name"+get_id_from_main).html('');
       $("#city_corparation_name"+get_id_from_main).html(data);
-    }
+    },
+    beforeSend: function(){
+   $('#pageloader').show()
+},
+complete: function(){
+   $('#pageloader').hide();
+}
     });
 
 });
-
-
-
-
-
 
     ///
 $("#ngo_prokolpo_name").keyup(function(){
@@ -1178,17 +1011,7 @@ $("#donor_organization_name").keyup(function(){
 
 });
 
-
-
-
-
-
-
-
 </script>
-
-
-
 
 @include('front.include.globalScript')
 

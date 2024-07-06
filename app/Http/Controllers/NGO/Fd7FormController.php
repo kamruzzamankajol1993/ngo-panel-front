@@ -12,6 +12,7 @@ use App\Models\Fd2FormOtherInfo;
 use App\Models\NgoStatus;
 use App\Models\Country;
 use App\Models\Fd9Form;
+use App\Models\FdSevenDistributionDetail;
 use App\Models\ProkolpoDetail;
 use App\Models\NgoDuration;
 use App\Models\Fd9ForeignerEmployeeFamilyMemberList;
@@ -52,8 +53,91 @@ class Fd7FormController extends Controller
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        return view('front.fd7Form.newAddForm',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
-        return view('front.fd7Form.newAddForm',compact('divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+    }
+
+
+    public function postProkolpoArea(Request $request){
+        
+    }
+
+    public function postDistribution(Request $request){
+
+        $formNoFiveInfo = new FdSevenDistributionDetail();
+        $formNoFiveInfo->comment =$request->comment;
+        $formNoFiveInfo->type =$request->distribution_type;
+        $formNoFiveInfo->district_name =$request->districtNameDis;
+        $formNoFiveInfo->upozila_name =$request->upozila_name;
+        $formNoFiveInfo->product_des =$request->product_des;
+        $formNoFiveInfo->product_quantity =$request->product_quantity;
+        $formNoFiveInfo->unit_price =$request->unit_price;
+        $formNoFiveInfo->total_amount =$request->total_amount;
+        $formNoFiveInfo->total_beneficiaries =$request->total_beneficiaries;
+        $formNoFiveInfo->user_id =Auth::user()->id;
+        $formNoFiveInfo->upload_type =0;
+        $formNoFiveInfo->save();
+
+        $distributionListOne = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রকল্প খাতের ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $distributionListTwo = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রশাসনিক ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
+        return response()->json($data);
+    }
+
+    public function updateDistribution(Request $request){
+
+        $formNoFiveInfo = new FdSevenDistributionDetail($request->mainId);
+        $formNoFiveInfo->comment =$request->comment;
+        $formNoFiveInfo->type =$request->distribution_type;
+        $formNoFiveInfo->district_name =$request->districtNameDis;
+        $formNoFiveInfo->upozila_name =$request->upozila_name;
+        $formNoFiveInfo->product_des =$request->product_des;
+        $formNoFiveInfo->product_quantity =$request->product_quantity;
+        $formNoFiveInfo->unit_price =$request->unit_price;
+        $formNoFiveInfo->total_amount =$request->total_amount;
+        $formNoFiveInfo->total_beneficiaries =$request->total_beneficiaries;
+        $formNoFiveInfo->user_id =Auth::user()->id;
+        $formNoFiveInfo->upload_type =0;
+        $formNoFiveInfo->save();
+
+        $distributionListOne = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রকল্প খাতের ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $distributionListTwo = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রশাসনিক ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
+        return response()->json($data);
+
+    }
+
+    public function deleteDistribution(Request $request){
+
+        $admins = FdSevenDistributionDetail::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+
+        $distributionListOne = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রকল্প খাতের ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $distributionListTwo = DB::table('fd_seven_distribution_details')
+        ->where('type','প্রশাসনিক ব্যয়')
+        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+        $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
+        return response()->json($data);
 
     }
 

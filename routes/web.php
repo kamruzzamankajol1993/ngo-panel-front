@@ -444,6 +444,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('authorizationLetter/{id}', 'authorizationLetter')->name('authorizationLetter');
         Route::get('letterFromDonorAgency/{id}', 'letterFromDonorAgency')->name('letterFromDonorAgency');
 
+        Route::get('deleteDistribution', 'deleteDistribution')->name('deleteDistribution');
+        Route::post('postDistribution', 'postDistribution')->name('postDistribution');
+        Route::post('updateDistribution', 'updateDistribution')->name('updateDistribution');
+
+        Route::get('deleteProkolpoArea', 'deleteProkolpoArea')->name('deleteProkolpoArea');
+        Route::post('postProkolpoArea', 'postProkolpoArea')->name('postProkolpoArea');
+        Route::post('updateProkolpoArea', 'updateProkolpoArea')->name('updateProkolpoArea');
 
 
     });
@@ -496,6 +503,8 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('getCityCorporationList', 'getCityCorporationList')->name('getCityCorporationList');
 
         Route::get('getUpozilaList', 'getUpozilaList')->name('getUpozilaList');
+
+        Route::get('getUpozilaListNew', 'getUpozilaListNew')->name('getUpozilaListNew');
 
 
     });
