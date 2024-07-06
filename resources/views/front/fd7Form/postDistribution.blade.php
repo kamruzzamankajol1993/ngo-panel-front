@@ -54,12 +54,12 @@
             <button type="button" onclick="deleteTag({{ $distributionListOnes->id}})" class="btn btn-sm btn-outline-danger"><i
                 class="bi bi-trash"></i></button>
 
-                <form id="delete-form-{{ $distributionListOnes->id }}" action="{{ route('formNoFiveStepFourDelete',$distributionListOnes->id) }}" method="POST" style="display: none;">
+                {{-- <form id="delete-form-{{ $distributionListOnes->id }}" action="{{ route('formNoFiveStepFourDelete',$distributionListOnes->id) }}" method="POST" style="display: none;">
 
                     @csrf
                     @method('DELETE')
 
-                </form>
+                </form> --}}
         </td>
 
    </tr>
@@ -126,12 +126,12 @@ $totalTotalBeneficiariesTwo = 0;
             <button type="button" onclick="deleteTag({{ $distributionListOnes->id}})" class="btn btn-sm btn-outline-danger"><i
                 class="bi bi-trash"></i></button>
 
-                <form id="delete-form-{{ $distributionListOnes->id }}" action="{{ route('formNoFiveStepFourDelete',$distributionListOnes->id) }}" method="POST" style="display: none;">
+                {{-- <form id="delete-form-{{ $distributionListOnes->id }}" action="{{ route('formNoFiveStepFourDelete',$distributionListOnes->id) }}" method="POST" style="display: none;">
 
                     @csrf
                     @method('DELETE')
 
-                </form>
+                </form> --}}
         </td>
 
    </tr>

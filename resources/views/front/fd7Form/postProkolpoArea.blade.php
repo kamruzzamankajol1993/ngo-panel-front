@@ -1,3 +1,5 @@
+
+
 <table class="table table-bordered">
     <tr>
         <th>বিভাগ</th>
@@ -19,6 +21,7 @@
         <td>৬</td>
         <td></td>
     </tr>
+
     @foreach($prokolpoAreaList as $prokolpoAreaListAll)
     <tr>
         <td>বিভাগ: {{ $prokolpoAreaListAll->division_name }}</td>
@@ -47,7 +50,7 @@
         </td>
         <td>{{ $prokolpoAreaListAll->allocated_budget }}</td>
         <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
-
+        <td>
             <td>
                 <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#prokolpoAreaModalEdit{{ $prokolpoAreaListAll->id }}" >
                     <i class="fa fa-pencil"></i>
@@ -58,9 +61,10 @@
                 <button type="button" onclick="deleteTagProkolpoArea({{ $prokolpoAreaListAll->id}})" class="btn btn-sm btn-outline-danger"><i
                     class="bi bi-trash"></i></button>
             </td>
-      
+        </td>
     </tr>
 
   @endforeach
 
 </table>
+

@@ -225,10 +225,11 @@
                                         <h4>দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম</h4>
                                     </div>
 
-                                    <form action="{{ route('fd7Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('fd7Form.update',$fd7FormList->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
+                                        @method('PUT')
 
-                                        <input type="hidden" id="mainEditId" value="0"/>
+                                        <input type="hidden" id="mainEditId" value="{{ $fd7FormList->id }}"/>
                                            <!-- step one start -->
 
                                      <div class="row">
@@ -314,7 +315,7 @@
     <th style="text-align: center;">
 
 
-                <input name="ngo_prokolpo_name" type="text" class="form-control" id="ngo_prokolpo_name"
+                <input name="ngo_prokolpo_name" value="{{ $fd7FormList->ngo_prokolpo_name }}" type="text" class="form-control" id="ngo_prokolpo_name"
                        placeholder="প্রস্তাবিত প্রকল্পের নাম" required>
 
 
@@ -329,12 +330,15 @@
 
     <th style="" colspan="2">প্রস্তাবিত প্রকল্পের ধরণ<span style="color:red;">*</span></th>
     <th style="text-align: center;">
+        <?php
+        $subjectIdList  = explode(",",$fd7FormList->subject_id);
 
+        ?>
                 <select multiple required name="subject_id[]" class="form-control js-example-basic-multiple" id=""
                        placeholder="">
                        <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
                        @foreach($projectSubjectList as $projectSubjectLists)
-                       <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
+                       <option value="{{ $projectSubjectLists->id }}" {{ (in_array($projectSubjectLists->id,$subjectIdList)) ? 'selected' : '' }}>{{ $projectSubjectLists->name }}</option>
                        @endforeach
                 </select>
 
@@ -370,11 +374,11 @@
 
         $distributionListOne = DB::table('fd_seven_distribution_details')
         ->where('type','প্রকল্প খাতের ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+        ->where('fd7_form_id',$fd7FormList->id)->get();
 
         $distributionListTwo = DB::table('fd_seven_distribution_details')
         ->where('type','প্রশাসনিক ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+        ->where('fd7_form_id',$fd7FormList->id)->get();
 
         //dd($distributionListTwo);
 
@@ -389,6 +393,27 @@
 
                                                         <input type="file" accept=".pdf" name="distribution_pdf" class="form-control" id=""
                                                                    placeholder="দাতা সংস্থার বিবরণ">
+
+
+                                                                   @if(empty($fd7FormList->distribution_pdf))
+
+
+                                                                   @else
+
+
+                                                                   <?php
+
+                                                                   $file_path = url($fd7FormList->distribution_pdf);
+                                                                   $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                                   $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                                   ?>
+                                                                    <b>{{ $filename.'.'.$extension }}</b>
+                                                                    @endif
 
 
 
@@ -435,7 +460,7 @@
                                                     <td>
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="text" name="donor_organization_description" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->donor_organization_description }}" name="donor_organization_description" class="form-control" id=""
                                                                    placeholder="দাতা সংস্থার বিবরণ">
                                                         </div>
 
@@ -453,13 +478,13 @@
                                                         <div class="mb-3 col-lg-12">
 
                                                             <select name="donor_organization_chief_type" class="form-control" id="">
-                                                                <option value="প্রধান নির্বাহী কর্মকর্তা" selected>প্রধান নির্বাহী কর্মকর্তা</option>
-                                                                <option value="দাতার নাম">দাতার নাম</option>
+                                                                <option value="প্রধান নির্বাহী কর্মকর্তা" {{ 'প্রধান নির্বাহী কর্মকর্তা' == $fd7FormList->donor_organization_chief_type ? 'selected':'' }}>প্রধান নির্বাহী কর্মকর্তা</option>
+                                                                <option value="দাতার নাম" {{ 'দাতার নাম' == $fd7FormList->donor_organization_chief_type ? 'selected':'' }}>দাতার নাম</option>
                                                             </select>
                                                         </div>
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="text" name="donor_organization_chief_name" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->donor_organization_chief_name }}" name="donor_organization_chief_name" class="form-control" id=""
                                                                    placeholder="নাম">
                                                         </div>
 
@@ -472,7 +497,7 @@
                                                     <td style="text-align: center;"></td>
                                                     <td>৩. দাতা সংস্থার নাম <span style="color:red;">* </span></td>
                                                     <td>
-                                                        <input type="text" name="donor_organization_name" class="form-control" id=""
+                                                        <input type="text" value="{{ $fd7FormList->donor_organization_name }}"  name="donor_organization_name" class="form-control" id=""
                                                         placeholder="দাতা সংস্থার নাম">
 
 
@@ -490,7 +515,7 @@
 
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="text" name="donor_organization_address" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->donor_organization_phone }}"  name="donor_organization_address" class="form-control" id=""
                                                                    placeholder="যোগাযোগের ঠিকানা">
                                                         </div>
 
@@ -507,7 +532,7 @@
                                                     <td>
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="number" name="donor_organization_phone" class="form-control" id=""
+                                                            <input type="number" value="{{ $fd7FormList->donor_organization_phone }}" name="donor_organization_phone" class="form-control" id=""
                                                                    placeholder="টেলিফোন">
                                                         </div>
 
@@ -523,12 +548,12 @@
                                                     <td>
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="email"name="donor_organization_email" class="form-control" id=""
+                                                            <input type="email" value="{{ $fd7FormList->donor_organization_email }}" name="donor_organization_email" class="form-control" id=""
                                                                    placeholder="ইমেইল">
                                                         </div>
                                                         <div class="mb-3 col-lg-12">
 
-                                                            <input type="text" name="donor_organization_website" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->donor_organization_website }}" name="donor_organization_website" class="form-control" id=""
                                                                    placeholder="ওয়েবসাইট">
                                                         </div>
 
@@ -550,11 +575,11 @@
                                                     <td>১. চলমান প্রকল্পের নাম ও মোট ব্যয় <span style="color:red;">* </span></td>
                                                     <td>
 
-                                                            <input type="text" name="ongoing_prokolpo_name" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->ongoing_prokolpo_name }}" name="ongoing_prokolpo_name" class="form-control" id=""
                                                                    placeholder="চলমান প্রকল্পের নাম">
 
 
-                                                                    <input type="text" name="total_prokolpo_cost" class="form-control mt-2" id=""
+                                                                    <input type="text" value="{{ $fd7FormList->total_prokolpo_cost }}" name="total_prokolpo_cost" class="form-control mt-2" id=""
                                                                            placeholder="মোট ব্যয়">
 
 
@@ -572,7 +597,7 @@
                                                     <td>
 
 
-                                                            <input type="text" name="date_of_bureau_approval" class="form-control datepickerOne" id=""
+                                                            <input type="text" value="{{ $fd7FormList->date_of_bureau_approval }}" name="date_of_bureau_approval" class="form-control datepickerOne" id=""
                                                                    placeholder="ব্যুরোর অনুমোদনের তারিখ">
 
 
@@ -581,6 +606,23 @@
                                                                    placeholder="">
 
                                                                    <p id="fd7PdfN1_text" class="text-danger mt-2" style="font-size:12px;"></p>
+
+                                                                   @if(empty($fd7FormList->bureau_approval_pdf)))
+
+                                                                   @else
+                                                                   <?php
+
+                                                                   $file_path = url($fd7FormList->bureau_approval_pdf);
+                                                                   $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                                   $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                                   ?>
+                                                                    <b>{{ $filename.'.'.$extension }}</b>
+                                                                    @endif
 
 
 
@@ -595,7 +637,7 @@
                                                         প্রকল্পের ব্যায় করা হবে  <span style="color:red;">* </span></td>
                                                     <td>
 
-                                                        <input type="text" name="percentage_of_the_original_project" class="form-control" id=""
+                                                        <input type="text" value="{{ $fd7FormList->percentage_of_the_original_project }}" name="percentage_of_the_original_project" class="form-control" id=""
                                                         placeholder="মূল প্রকল্পের শতকরা কতভাগ এই প্রকল্পের ব্যায় করা হবে ">
 
 
@@ -610,7 +652,7 @@
                                                     <td style="text-align: center;"></td>
                                                     <td>৪. চলমান প্রকল্পের উপর কোন বিরূপ প্রভাব ফেলবে কি না<span style="color:red;">* </span></td>
                                                     <td>
-                                                            <input type="text" name="adverse_impact_on_the_ongoing_project" class="form-control" id=""
+                                                            <input type="text" value="{{ $fd7FormList->adverse_impact_on_the_ongoing_project }}" name="adverse_impact_on_the_ongoing_project" class="form-control" id=""
                                                                    placeholder="চলমান প্রকল্পের উপর কোন বিরূপ প্রভাব ফেলবে কি না">
 
                                                     </td>
@@ -629,6 +671,25 @@
 
                                                                    <p id="fd7PdfN2_text" class="text-danger mt-2" style="font-size:12px;"></p>
 
+
+                                                    @if(empty($fd7FormList->letter_from_donor_agency_pdf))
+
+
+                                                    @else
+
+                                                           <?php
+
+                                                           $file_path = url($fd7FormList->letter_from_donor_agency_pdf);
+                                                           $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                           $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                           ?>
+                                                            <b>{{ $filename.'.'.$extension }}</b>
+@endif
 
                                                     </td>
 
@@ -701,10 +762,31 @@
 
                                                     <td colspan="3"><textarea name="relief_program_detail" class="form-control mt-1 summernote" id=""
                                                          >
+                                                         {!! $fd7FormList->relief_program_detail !!}
                                                         </textarea>
 
                                                         <input type="file" accept=".pdf"  name="relief_program_pdf" class="form-control mt-3" id=""
                                                         placeholder="সমাপ্তির তারিখ" >
+
+                                                        @if(empty($fd7FormList->relief_program_pdf))
+
+
+                                                        @else
+
+                                                               <?php
+
+                                                               $file_path = url($fd7FormList->relief_program_pdf);
+                                                               $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                               $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                               ?>
+                                                                  <b>{{ $filename.'.'.$extension }}</b>
+                                                               @endif
+
                                                     </td>
 
                                                 </tr>
@@ -727,7 +809,7 @@
                                                     <td>  আরম্ভের তারিখ<span style="color:red;">* </span></td>
                                                     <td>
 
-                                                            <input type="text" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id="ngo_prokolpo_start_date"
+                                                            <input type="text" value="{{ $fd7FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id="ngo_prokolpo_start_date"
                                                                    placeholder="আরম্ভের তারিখ" required>
 
 
@@ -741,7 +823,7 @@
                                                     <td>
 
 
-                                                            <input type="text" name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
+                                                            <input type="text" value="{{ $fd7FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
                                                                    placeholder="সমাপ্তির তারিখ" required>
 
                                                     </td>
@@ -767,10 +849,31 @@
 
                                                         <textarea name="relevant_information" class="form-control mt-1 summernote" id=""
                                                          >
+                                                         {!! $fd7FormList->relevant_information !!}
                                                         </textarea>
 
                                                         <input type="file" accept=".pdf" name="relevant_information_pdf" class="form-control mt-3" id=""
                                                                    placeholder="সমাপ্তির তারিখ" >
+
+
+                                                                   @if(empty($fd7FormList->relevant_information_pdf))
+
+
+                                                        @else
+
+                                                               <?php
+
+                                                               $file_path = url($fd7FormList->relevant_information_pdf);
+                                                               $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                               $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                               ?>
+                                                                  <b>{{ $filename.'.'.$extension }}</b>
+                                                               @endif
 
 
                                                     </td>
@@ -793,10 +896,31 @@
 
                                                         <textarea name="bank_detail" class="form-control mt-1 summernote" id=""
                                                          >
+
+                                                         {!! $fd7FormList->bank_detail !!}
                                                         </textarea>
 
                                                         <input type="file" accept=".pdf" name="bank_detail_pdf" class="form-control mt-3" id=""
                                                                    placeholder="সমাপ্তির তারিখ" >
+
+                                                                   @if(empty($fd7FormList->bank_detail_pdf))
+
+
+                                                                   @else
+
+                                                                          <?php
+
+                                                                          $file_path = url($fd7FormList->bank_detail_pdf);
+                                                                          $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                                          $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                                          ?>
+                                                                             <b>{{ $filename.'.'.$extension }}</b>
+                                                                          @endif
 
 
                                                     </td>
@@ -827,12 +951,12 @@
                                                   <!--new code for ngo-->
                                      <div class="mb-3">
                                         <label for="" class="form-label">{{ trans('mview.ttTwo')}}: <span class="text-danger">*</span></label>
-                                             <input type="text" data-parsley-required  name="chief_name"  class="form-control" id="mainName" placeholder="{{ trans('mview.ttTwo')}}">
+                                             <input value="{{ $fd7FormList->chief_name }}" type="text" data-parsley-required  name="chief_name"  class="form-control" id="mainName" placeholder="{{ trans('mview.ttTwo')}}">
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">{{ trans('mview.ttThree')}}: <span class="text-danger">*</span></label>
-                                            <input type="text" data-parsley-required  name="chief_desi"  class="form-control"  placeholder="{{ trans('mview.ttThree')}}">
+                                            <input value="{{ $fd7FormList->chief_desi }}"  type="text" data-parsley-required  name="chief_desi"  class="form-control"  placeholder="{{ trans('mview.ttThree')}}">
                                         </div>
 
 
@@ -845,7 +969,7 @@
                                 <br>
                                             <input type="hidden" required  name="image_base64">
                                             <div class="croppedInput mt-2">
-
+                                                <img src="{{asset('/')}}{{ $fd7FormList->digital_signature }}" style="width: 200px;" class="show-image">
                                             </div>
                                             <!-- new code for image cropper start --->
                                             @include('front.signature_modal.sign_main_modal')
@@ -862,6 +986,7 @@
 
                                             <input type="hidden" required  name="image_seal_base64">
                                             <div class="croppedInputss mt-2">
+                                                <img src="{{asset('/')}}{{ $fd7FormList->digital_seal }}" style="width: 200px;" class="show_image_seal">
 
                                             </div>
                                             <!-- new code for image cropper start --->

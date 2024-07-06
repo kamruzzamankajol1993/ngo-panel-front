@@ -27,6 +27,12 @@ return new class extends Migration
             $table->string('ngo_prokolpo_end_date')->nullable();
             $table->string('proposed_rebate_amount_bangladeshi_taka')->nullable();
             $table->string('proposed_rebate_amount_in_foreign_currency')->nullable();
+            $table->string('amount_withdrawn_year')->nullable();
+            $table->string('amount_withdrawn')->nullable();
+            $table->string('last_year_achivment_pdf')->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('bank_adddress')->nullable();
+            $table->string('bank_account_number')->nullable();
             $table->string('fd_2_form_pdf')->nullable();
             $table->string('status')->nullable();
             $table->text('comment')->nullable();

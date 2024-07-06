@@ -24,6 +24,7 @@ use App\Models\Fc2Form;
 use App\Models\Fd2FormForFc2Form;
 use App\Models\Fd2Fc2OtherInfo;
 use App\Models\Fd9ForeignerEmployeeFamilyMemberList;
+use App\Models\Fd2AllFormLastYearDetail;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use PDF;
@@ -39,6 +40,109 @@ use Illuminate\Support\Facades\App;
 use App\Models\ProkolpoArea;
 class Fd2FormController extends Controller
 {
+
+    public function addlastYearDetail(Request $request){
+
+        $form= new Fd2AllFormLastYearDetail();
+        if($request->mainEditId == 0){
+        $form->user_id =Auth::user()->id;
+        $form->upload_type =0;
+        }else{
+
+        $form->user_id =Auth::user()->id;
+        $form->upload_type =1;
+        $form->main_id=$request->mainEditId;
+        }
+        $form->type=$request->type;
+        $form->prokolpoName=$request->prokolpoName;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->last_year_achievment_real=$request->last_year_achievment_real;
+        $form->last_year_achievment_financial=$request->last_year_achievment_financial;
+        $form->total_benificiari=$request->total_benificiari;
+        $form->comment=$request->comment;
+        $form->save();
+
+        if($request->mainEditId == 0){
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+        ->where('type',$request->type)
+        ->get();
+        }else{
+
+            $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->mainEditId)
+        ->where('type',$request->type)
+        ->get();
+
+
+        }
+
+
+        $data = view('front.fd2Form.addlastYearDetail',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+    }
+
+
+    public function updatelastYearDetail(Request $request){
+
+
+        $form= Fd2AllFormLastYearDetail::find($request->mainId);
+        $form->type=$request->type;
+        $form->prokolpoName=$request->prokolpoName;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->last_year_achievment_real=$request->last_year_achievment_real;
+        $form->last_year_achievment_financial=$request->last_year_achievment_financial;
+        $form->total_benificiari=$request->total_benificiari;
+        $form->comment=$request->comment;
+        $form->save();
+
+        if($request->mainEditId == 0){
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+        ->where('type',$request->type)
+        ->get();
+        }else{
+
+            $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->mainEditId)
+        ->where('type',$request->type)
+        ->get();
+        }
+
+
+        $data = view('front.fd2Form.addlastYearDetail',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+
+    }
+
+
+    public function deletelastYearDetail(Request $request){
+
+        $admins = Fd2AllFormLastYearDetail::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+        if($request->mainEditId == 0){
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+        ->where('type','fd7')
+        ->get();
+
+        }else{
+            $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->mainEditId)
+            ->where('type','fd7')
+            ->get();
+
+        }
+
+
+        $data = view('front.fd2Form.addlastYearDetail',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+    }
 
     public function fd2PdfUpdateModalFd7(Request $request){
 
@@ -95,7 +199,13 @@ class Fd2FormController extends Controller
        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
        $fd7FormList = Fd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd7Id)->latest()->first();
 
-        return view('front.fd2Form.addFd2DetailForFd7',compact('fd7Id','ngo_list_all','divisionList','fd7FormList'));
+
+       $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+       ->where('upload_type',0)
+       ->where('type','fd7')
+       ->get();
+
+        return view('front.fd2Form.addFd2DetailForFd7new',compact('fd2AllFormLastYearDetail','fd7Id','ngo_list_all','divisionList','fd7FormList'));
 
 
     }
@@ -179,16 +289,20 @@ class Fd2FormController extends Controller
         if(!$fd2FormList){
 
             $fd2OtherInfo = Fd2Fd7OtherInfo::where('fd2_form_for_fd7_form_id',0)->latest()->get();
+            $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',0)
+            ->where('type','fd7')
+            ->get();
 
-
-         return view('front.fd2Form.addFd2DetailForFd7',compact('fd2FormList','fd2OtherInfo','fd7Id','ngo_list_all','divisionList','fd7FormList'));
+         return view('front.fd2Form.editFd2DetailForFd7New',compact('fd2AllFormLastYearDetail','fd2FormList','fd2OtherInfo','fd7Id','ngo_list_all','divisionList','fd7FormList'));
 
         }else{
 
            $fd2OtherInfo = Fd2Fd7OtherInfo::where('fd2_form_for_fd7_form_id',$fd2FormList->id)->latest()->get();
+           $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+           ->where('type','fd7')
+           ->get();
 
-
-         return view('front.fd2Form.editFd2DetailForFd7',compact('fd2FormList','fd2OtherInfo','fd7Id','ngo_list_all','divisionList','fd7FormList'));
+         return view('front.fd2Form.editFd2DetailForFd7New',compact('fd2AllFormLastYearDetail','fd2FormList','fd2OtherInfo','fd7Id','ngo_list_all','divisionList','fd7FormList'));
         }
 
     }
@@ -682,9 +796,11 @@ class Fd2FormController extends Controller
             'ngo_prokolpo_end_date' => 'required|string',
             'proposed_rebate_amount_bangladeshi_taka' => 'required|string',
             'proposed_rebate_amount_in_foreign_currency' => 'required|string',
-            'fd_2_form_pdf' => 'required|file',
+
 
         ]);
+
+        //dd($request->all());
 
         try{
             DB::beginTransaction();
@@ -701,8 +817,22 @@ class Fd2FormController extends Controller
         $fd2FormInfo->ngo_prokolpo_start_date =$request->ngo_prokolpo_start_date;
         $fd2FormInfo->ngo_prokolpo_end_date =$request->ngo_prokolpo_end_date;
 
+        $fd2FormInfo->amount_withdrawn_year =$request->amount_withdrawn_year;
+        $fd2FormInfo->amount_withdrawn =$request->amount_withdrawn;
+        $fd2FormInfo->bank_name =$request->bank_name;
+        $fd2FormInfo->bank_adddress =$request->bank_adddress;
+        $fd2FormInfo->bank_account_number =$request->bank_account_number;
         $fd2FormInfo->proposed_rebate_amount_bangladeshi_taka =$request->proposed_rebate_amount_bangladeshi_taka;
         $fd2FormInfo->proposed_rebate_amount_in_foreign_currency =$request->proposed_rebate_amount_in_foreign_currency;
+
+
+        if ($request->hasfile('last_year_achivment_pdf')) {
+            $filePath="FdTwoForm";
+            $file = $request->file('last_year_achivment_pdf');
+
+            $fd2FormInfo->last_year_achivment_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+        }
 
         if ($request->hasfile('fd_2_form_pdf')) {
             $filePath="FdTwoForm";
@@ -717,6 +847,14 @@ class Fd2FormController extends Controller
         $input = $request->all();
 
         $fd2FormInfoId = $fd2FormInfo->id;
+
+
+        Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+   ->update([
+       'upload_type' => 1,
+       'main_id' =>$fd2FormInfoId
+    ]);
 
           if (array_key_exists("file", $input)){
                 $fileData = $input['file'];
@@ -1075,6 +1213,20 @@ class Fd2FormController extends Controller
             $fd2FormInfo->proposed_rebate_amount_bangladeshi_taka =$request->proposed_rebate_amount_bangladeshi_taka;
             $fd2FormInfo->proposed_rebate_amount_in_foreign_currency =$request->proposed_rebate_amount_in_foreign_currency;
 
+            $fd2FormInfo->amount_withdrawn_year =$request->amount_withdrawn_year;
+        $fd2FormInfo->amount_withdrawn =$request->amount_withdrawn;
+        $fd2FormInfo->bank_name =$request->bank_name;
+        $fd2FormInfo->bank_adddress =$request->bank_adddress;
+        $fd2FormInfo->bank_account_number =$request->bank_account_number;
+
+        if ($request->hasfile('last_year_achivment_pdf')) {
+            $filePath="FdTwoForm";
+            $file = $request->file('last_year_achivment_pdf');
+
+            $fd2FormInfo->last_year_achivment_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+        }
+
             if ($request->hasfile('fd_2_form_pdf')) {
                 $filePath="FdTwoForm";
                 $file = $request->file('fd_2_form_pdf');
@@ -1087,6 +1239,13 @@ class Fd2FormController extends Controller
             $input = $request->all();
 
             $fd2FormInfoId = $fd2FormInfo->id;
+
+            Fd2AllFormLastYearDetail::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+   ->update([
+       'upload_type' => 1,
+       'main_id' =>$fd2FormInfoId
+    ]);
 
             if (array_key_exists("file", $input)){
                 $fileData = $input['file'];

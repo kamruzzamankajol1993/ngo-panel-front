@@ -460,6 +460,11 @@ Route::group(['middleware' => ['auth']], function() {
     Route::controller(Fd2FormController::class)->group(function () {
 
 
+        Route::get('deletelastYearDetail', 'deletelastYearDetail')->name('deletelastYearDetail');
+        Route::post('addlastYearDetail', 'addlastYearDetail')->name('addlastYearDetail');
+        Route::post('updatelastYearDetail', 'updatelastYearDetail')->name('updatelastYearDetail');
+
+
         Route::get('fd2PdfUpdateModalFd7', 'fd2PdfUpdateModalFd7')->name('fd2PdfUpdateModalFd7');
 
         Route::get('downloadFd2DetailForFd3/{id}', 'downloadFd2DetailForFd3')->name('downloadFd2DetailForFd3');

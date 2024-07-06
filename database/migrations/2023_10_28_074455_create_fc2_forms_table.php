@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('person_nationality')->nullable();
             $table->string('person_full_address')->nullable();
 
+           
 
             $table->string('person_tele_phone_number')->nullable();
             $table->string('person_mobile')->nullable();

@@ -19,6 +19,17 @@ return new class extends Migration
             $table->foreign('fd_one_form_id')->references('id')->on('fd_one_forms')->onDelete('cascade');
             $table->string('ngo_name')->nullable();
             $table->string('subject_id')->nullable();
+            $table->string('distribution_pdf')->nullable();
+            $table->longText('relief_program_detail')->nullable();
+            $table->string('relief_program_pdf')->nullable();
+            $table->longText('relevant_information')->nullable();
+            $table->string('relevant_information_pdf')->nullable();
+            $table->longText('bank_detail')->nullable();
+            $table->longText('digital_signature')->nullable();
+            $table->longText('digital_seal')->nullable();
+            $table->string('chief_name')->nullable();
+            $table->string('bank_detail_pdf')->nullable();
+            $table->string('chief_desi')->nullable();
             $table->string('ngo_address')->nullable();
             $table->string('ngo_registration_number')->nullable();
             $table->string('ngo_registration_date')->nullable();

@@ -17,10 +17,10 @@
 
                                 <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">ধরণ <span class="text-danger">*</span></label>
-                                    {{-- <input type="text" required name="district_name[]" class="form-control" id=""
+                                    {{-- <input type="text"  name="district_name[]" class="form-control" id=""
                                     placeholder=""> --}}
 
-                                    <select required name="type" class="form-control distribution_type" id="distribution_type">
+                                    <select  name="type" class="form-control distribution_type" id="distribution_type">
                                         <option value="">--- অনুগ্রহ করে ধরণ নির্বাচন করুন ---</option>
                                         <option value="প্রকল্প খাতের ব্যয়">প্রকল্প খাতের ব্যয়</option>
                                         <option value="প্রশাসনিক ব্যয়">প্রশাসনিক ব্যয়</option>
@@ -29,10 +29,10 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
+                                        {{-- <input type="text"  name="district_name[]" class="form-control" id=""
                                         placeholder=""> --}}
 
-                                        <select required name="district_name" class="form-control district_name" id="districtNameDis">
+                                        <select  name="district_name" class="form-control district_name" id="districtNameDis">
                                             <option value="">--- অনুগ্রহ করে জেলা নির্বাচন করুন ---</option>
                                             @foreach($districtList as $districtListAll)
                                             <option value="{{ $districtListAll->district_bn }}" >{{ $districtListAll->district_bn }}</option>
@@ -47,7 +47,7 @@
                                         {{-- <input type="text" name="upozila_name[]" class="form-control" id=""
                                         placeholder=""> --}}
 
-                                        <select required name="upozila_name" class="form-control upozila_name" id="upozila_name">
+                                        <select  name="upozila_name" class="form-control upozila_name" id="upozila_name">
                                             <option value="">--- অনুগ্রহ করে উপজেলা নির্বাচন করুন ---</option>
 
 
@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">দ্রব্যাদির বর্ণনা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="product_des" class="form-control" id="product_des"
+                                        <input type="text"  name="product_des" class="form-control" id="product_des"
                                         placeholder="" >
                                     </div>
                                     <div class="col-lg-6 mb-3">
@@ -77,11 +77,11 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="number" required name="total_beneficiaries" class="form-control" id="total_beneficiaries" placeholder="">
+                                        <input type="number"  name="total_beneficiaries" class="form-control" id="total_beneficiaries" placeholder="">
                                     </div>
                                     <div class="col-lg-12 mb-3">
                                         <label for="" class="form-label">মন্তব্য</label>
-                                        <textarea required name="comment" class="form-control" id="comment" placeholder=""></textarea>
+                                        <textarea  name="comment" class="form-control" id="comment" placeholder=""></textarea>
                                     </div>
                             </div>
                             <a id="distributionAjax"  class="btn btn-registration">জমা দিন</a>

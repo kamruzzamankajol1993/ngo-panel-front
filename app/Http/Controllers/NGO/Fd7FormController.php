@@ -47,23 +47,152 @@ class Fd7FormController extends Controller
 
 
     public function create(){
-
+        $prokolpoAreaList = Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)->get();
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
-        return view('front.fd7Form.newAddForm',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        return view('front.fd7Form.newAddForm',compact('thanaList','subdDistrictList','cityCorporationList','prokolpoAreaList','districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
 
     public function postProkolpoArea(Request $request){
-        
+
+
+
+        $form= new Fd7FormProkolpoArea();
+        //$form->fd7_form_id=0;
+        $form->user_id =Auth::user()->id;
+        $form->upload_type =0;
+
+        if($request->mainEditId == 0){
+            $form->user_id =Auth::user()->id;
+        $form->upload_type =0;
+            }else{
+                $form->fd7_form_id =$request->mainEditId;
+                $form->user_id =Auth::user()->id;
+        $form->upload_type =1;
+            }
+
+        $form->division_name=$request->division_name;
+        $form->district_name=$request->district_name;
+        $form->city_corparation_name=$request->city_corparation_name;
+        $form->upozila_name=$request->upozila_name;
+        $form->thana_name=$request->thana_name;
+        $form->municipality_name=$request->municipality_name;
+        $form->ward_name=$request->ward_name;
+        $form->number_of_beneficiaries=$request->beneficiaries_total;
+        $form->prokolpo_type=$request->prokolpoType;
+        $form->allocated_budget=$request->allocated_budget;
+        $form->save();
+
+        if($request->mainEditId == 0){
+
+        $prokolpoAreaList = Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)->get();
+        }else{
+
+            $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$request->mainEditId)
+            ->get();
+
+
+        }
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd7Form.postProkolpoArea',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+        return response()->json($data);
+
+
+
+    }
+
+    public function updateProkolpoArea(Request $request){
+
+        $form= Fd7FormProkolpoArea::find($request->mainId);
+        $form->division_name=$request->division_name;
+        $form->district_name=$request->district_name;
+        $form->city_corparation_name=$request->city_corparation_name;
+        $form->upozila_name=$request->upozila_name;
+        $form->thana_name=$request->thana_name;
+        $form->municipality_name=$request->municipality_name;
+        $form->ward_name=$request->ward_name;
+        $form->number_of_beneficiaries=$request->beneficiaries_total;
+        $form->prokolpo_type=$request->prokolpoType;
+        $form->allocated_budget=$request->allocated_budget;
+        $form->save();
+
+        if($request->mainEditId == 0){
+
+            $prokolpoAreaList = Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)->get();
+            }else{
+
+                $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$request->mainEditId)
+                ->get();
+
+
+            }
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd7Form.postProkolpoArea',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+        return response()->json($data);
+
+    }
+
+    public function deleteProkolpoArea(Request $request){
+
+        $admins = Fd7FormProkolpoArea::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+        if($request->mainEditId == 0){
+
+            $prokolpoAreaList = Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)->get();
+            }else{
+
+                $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$request->mainEditId)
+                ->get();
+
+
+            }
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd7Form.postProkolpoArea',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+        return response()->json($data);
+
     }
 
     public function postDistribution(Request $request){
+
+
 
         $formNoFiveInfo = new FdSevenDistributionDetail();
         $formNoFiveInfo->comment =$request->comment;
@@ -75,9 +204,18 @@ class Fd7FormController extends Controller
         $formNoFiveInfo->unit_price =$request->unit_price;
         $formNoFiveInfo->total_amount =$request->total_amount;
         $formNoFiveInfo->total_beneficiaries =$request->total_beneficiaries;
+
+        if($request->mainEditId == 0){
         $formNoFiveInfo->user_id =Auth::user()->id;
         $formNoFiveInfo->upload_type =0;
+        }else{
+            $formNoFiveInfo->fd7_form_id =$request->mainEditId;
+            $formNoFiveInfo->user_id =Auth::user()->id;
+        $formNoFiveInfo->upload_type =1;
+        }
         $formNoFiveInfo->save();
+
+        if($request->mainEditId == 0){
 
         $distributionListOne = DB::table('fd_seven_distribution_details')
         ->where('type','প্রকল্প খাতের ব্যয়')
@@ -86,6 +224,19 @@ class Fd7FormController extends Controller
         $distributionListTwo = DB::table('fd_seven_distribution_details')
         ->where('type','প্রশাসনিক ব্যয়')
         ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+        }else{
+
+
+            $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('fd7_form_id',$request->mainEditId)->get();
+
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('fd7_form_id',$request->mainEditId)->get();
+
+
+        }
 
         $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
         return response()->json($data);
@@ -93,7 +244,7 @@ class Fd7FormController extends Controller
 
     public function updateDistribution(Request $request){
 
-        $formNoFiveInfo = new FdSevenDistributionDetail($request->mainId);
+        $formNoFiveInfo = FdSevenDistributionDetail::find($request->mainId);
         $formNoFiveInfo->comment =$request->comment;
         $formNoFiveInfo->type =$request->distribution_type;
         $formNoFiveInfo->district_name =$request->districtNameDis;
@@ -103,17 +254,30 @@ class Fd7FormController extends Controller
         $formNoFiveInfo->unit_price =$request->unit_price;
         $formNoFiveInfo->total_amount =$request->total_amount;
         $formNoFiveInfo->total_beneficiaries =$request->total_beneficiaries;
-        $formNoFiveInfo->user_id =Auth::user()->id;
-        $formNoFiveInfo->upload_type =0;
         $formNoFiveInfo->save();
 
-        $distributionListOne = DB::table('fd_seven_distribution_details')
-        ->where('type','প্রকল্প খাতের ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+        if($request->mainEditId == 0){
 
-        $distributionListTwo = DB::table('fd_seven_distribution_details')
-        ->where('type','প্রশাসনিক ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+            $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+            }else{
+
+
+                $distributionListOne = DB::table('fd_seven_distribution_details')
+                ->where('type','প্রকল্প খাতের ব্যয়')
+                ->where('fd7_form_id',$request->mainEditId)->get();
+
+                $distributionListTwo = DB::table('fd_seven_distribution_details')
+                ->where('type','প্রশাসনিক ব্যয়')
+                ->where('fd7_form_id',$request->mainEditId)->get();
+
+
+            }
 
         $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
         return response()->json($data);
@@ -128,13 +292,28 @@ class Fd7FormController extends Controller
         }
 
 
-        $distributionListOne = DB::table('fd_seven_distribution_details')
-        ->where('type','প্রকল্প খাতের ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+        if($request->mainEditId == 0){
 
-        $distributionListTwo = DB::table('fd_seven_distribution_details')
-        ->where('type','প্রশাসনিক ব্যয়')
-        ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+            $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('user_id',Auth::user()->id)->where('upload_type',0)->get();
+            }else{
+
+
+                $distributionListOne = DB::table('fd_seven_distribution_details')
+                ->where('type','প্রকল্প খাতের ব্যয়')
+                ->where('fd7_form_id',$request->mainEditId)->get();
+
+                $distributionListTwo = DB::table('fd_seven_distribution_details')
+                ->where('type','প্রশাসনিক ব্যয়')
+                ->where('fd7_form_id',$request->mainEditId)->get();
+
+
+            }
 
         $data = view('front.fd7Form.postDistribution',compact('distributionListOne','distributionListTwo'))->render();
         return response()->json($data);
@@ -151,11 +330,19 @@ class Fd7FormController extends Controller
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
-        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
         $fd7FormList = Fd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd6Id)->latest()->first();
         $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$fd6Id)->latest()->get();
 
-        return view('front.fd7Form.edit',compact('cityCorporationList','districtList','prokolpoAreaList','fd7FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        return view('front.fd7Form.newAddFormEdit',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList','fd7FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
@@ -188,6 +375,8 @@ class Fd7FormController extends Controller
         //     'relief_assistance_project_proposal_pdf' => 'required|file',
 
         // ]);
+
+
 
         //dd($request->all());
 
@@ -224,8 +413,62 @@ class Fd7FormController extends Controller
             $fd7FormInfo->ngo_prokolpo_start_date =$request->ngo_prokolpo_start_date;
             $fd7FormInfo->ngo_prokolpo_end_date =$request->ngo_prokolpo_end_date;
             $fd7FormInfo->status ='Review';
+            $fd7FormInfo->chief_name = $request->chief_name;
+            $fd7FormInfo->chief_desi = $request->chief_desi;
+            $fd7FormInfo->relief_program_detail = $request->relief_program_detail;
+            $fd7FormInfo->relevant_information = $request->relevant_information;
+            $fd7FormInfo->bank_detail = $request->bank_detail;
 
             $filePath="FdSevenForm";
+
+            if (!empty($request->image_base64)) {
+
+                $filePath="ngoHead";
+                $file = $request->file('digital_signature');
+                $fd7FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
+
+                }
+
+
+            if (!empty($request->image_seal_base64)) {
+
+                $filePath="ngoHead";
+                $file = $request->file('digital_seal');
+                $fd7FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
+
+                }
+
+                if ($request->hasfile('distribution_pdf')) {
+
+                    $file = $request->file('distribution_pdf');
+
+                    $fd7FormInfo->distribution_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('relief_program_pdf')) {
+
+                    $file = $request->file('relief_program_pdf');
+
+                    $fd7FormInfo->relief_program_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('relevant_information_pdf')) {
+
+                    $file = $request->file('relevant_information_pdf');
+
+                    $fd7FormInfo->relevant_information_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('bank_detail_pdf')) {
+
+                    $file = $request->file('bank_detail_pdf');
+
+                    $fd7FormInfo->bank_detail_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
 
             if ($request->hasfile('bureau_approval_pdf')) {
 
@@ -256,13 +499,6 @@ class Fd7FormController extends Controller
 
             $fd7FormInfo->save();
 
-
-
-            $input = $request->all();
-
-            $divisionName = $input['division_name'];
-
-
             $fd7FormInfoId = $fd7FormInfo->id;
 
             $prokolpoDetail = new ProkolpoDetail();
@@ -271,86 +507,28 @@ class Fd7FormController extends Controller
             $prokolpoDetail->save();
 
 
+            Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)
+       ->update([
+           'upload_type' => 1,
+           'fd7_form_id' =>$fd7FormInfoId
+        ]);
 
-            foreach($divisionName as $key => $divisionName){
-                $form= new Fd7FormProkolpoArea();
-                $form->fd7_form_id=$fd7FormInfoId;
-                $form->division_name=$input['division_name'][$key];
-                $form->district_name=$input['district_name'][$key];
-                $form->city_corparation_name=$input['city_corparation_name'][$key];
-
-                if(empty($input['upozila_name'][$key])){
-
-
-                }else{
-
-                    $form->upozila_name=$input['upozila_name'][$key];
-                }
+        FdSevenDistributionDetail::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)
+       ->update([
+           'upload_type' => 1,
+           'fd7_form_id' =>$fd7FormInfoId
+        ]);
 
 
-                if(empty($input['thana_name'][$key])){
-
-
-                }else{
-
-                    $form->thana_name=$input['thana_name'][$key];
-                }
-
-
-
-                if(empty($input['municipality_name'][$key])){
-
-
-                }else{
-
-                    $form->municipality_name=$input['municipality_name'][$key];
-                }
-
-
-
-                if(empty($input['ward_name'][$key])){
-
-
-                }else{
-
-                    $form->ward_name=$input['ward_name'][$key];
-                }
-
-
-
-                if(empty($input['beneficiaries_total'][$key])){
-
-
-                }else{
-
-                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
-                }
-
-                if(empty($input['prokolpoType'][$key])){
-
-
-                }else{
-
-                    $form->prokolpo_type=$input['prokolpoType'][$key];
-                }
-
-                if(empty($input['allocated_budget'][$key])){
-
-
-                }else{
-
-                    $form->allocated_budget=$input['allocated_budget'][$key];
-                }
-
-                $form->save();
-            }
 
             DB::commit();
             return redirect()->route('addFd2DetailForFd7',base64_encode($fd7FormInfoId))->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('error_404');
+            return $e;
         }
 
     }
@@ -385,7 +563,62 @@ class Fd7FormController extends Controller
             $fd7FormInfo->ngo_prokolpo_start_date =$request->ngo_prokolpo_start_date;
             $fd7FormInfo->ngo_prokolpo_end_date =$request->ngo_prokolpo_end_date;
 
+            $fd7FormInfo->chief_name = $request->chief_name;
+            $fd7FormInfo->chief_desi = $request->chief_desi;
+            $fd7FormInfo->relief_program_detail = $request->relief_program_detail;
+            $fd7FormInfo->relevant_information = $request->relevant_information;
+            $fd7FormInfo->bank_detail = $request->bank_detail;
+
             $filePath="FdSevenForm";
+
+            if (!empty($request->image_base64)) {
+
+                $filePath="ngoHead";
+                $file = $request->file('digital_signature');
+                $fd7FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
+
+                }
+
+
+            if (!empty($request->image_seal_base64)) {
+
+                $filePath="ngoHead";
+                $file = $request->file('digital_seal');
+                $fd7FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
+
+                }
+
+                if ($request->hasfile('distribution_pdf')) {
+
+                    $file = $request->file('distribution_pdf');
+
+                    $fd7FormInfo->distribution_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('relief_program_pdf')) {
+
+                    $file = $request->file('relief_program_pdf');
+
+                    $fd7FormInfo->relief_program_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('relevant_information_pdf')) {
+
+                    $file = $request->file('relevant_information_pdf');
+
+                    $fd7FormInfo->relevant_information_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
+
+                if ($request->hasfile('bank_detail_pdf')) {
+
+                    $file = $request->file('bank_detail_pdf');
+
+                    $fd7FormInfo->bank_detail_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+                }
 
             if ($request->hasfile('bureau_approval_pdf')) {
 
@@ -417,88 +650,27 @@ class Fd7FormController extends Controller
 
             $input = $request->all();
 
-            $divisionName = $input['division_name'];
-
 
             $fd7FormInfoId = $fd7FormInfo->id;
 
-            Fd7FormProkolpoArea::where('fd7_form_id',$fd7FormInfoId)->delete();
 
-            foreach($divisionName as $key => $divisionName){
-                $form= new Fd7FormProkolpoArea();
-                $form->fd7_form_id=$fd7FormInfoId;
-                $form->division_name=$input['division_name'][$key];
-                $form->district_name=$input['district_name'][$key];
-                $form->city_corparation_name=$input['city_corparation_name'][$key];
+            Fd7FormProkolpoArea::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)
+       ->update([
+           'upload_type' => 1,
+           'fd7_form_id' =>$fd7FormInfoId
+        ]);
 
-                if(empty($input['upozila_name'][$key])){
-
-
-                }else{
-
-                    $form->upozila_name=$input['upozila_name'][$key];
-                }
-
-
-                if(empty($input['thana_name'][$key])){
-
-
-                }else{
-
-                    $form->thana_name=$input['thana_name'][$key];
-                }
-
-
-
-                if(empty($input['municipality_name'][$key])){
-
-
-                }else{
-
-                    $form->municipality_name=$input['municipality_name'][$key];
-                }
-
-
-
-                if(empty($input['ward_name'][$key])){
-
-
-                }else{
-
-                    $form->ward_name=$input['ward_name'][$key];
-                }
-
-
-
-                if(empty($input['beneficiaries_total'][$key])){
-
-
-                }else{
-
-                    $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
-                }
-
-                if(empty($input['prokolpoType'][$key])){
-
-
-                }else{
-
-                    $form->prokolpo_type=$input['prokolpoType'][$key];
-                }
-
-                if(empty($input['allocated_budget'][$key])){
-
-
-                }else{
-
-                    $form->allocated_budget=$input['allocated_budget'][$key];
-                }
+        FdSevenDistributionDetail::where('user_id',Auth::user()->id)
+            ->where('upload_type',0)
+       ->update([
+           'upload_type' => 1,
+           'fd7_form_id' =>$fd7FormInfoId
+        ]);
 
 
 
 
-                $form->save();
-            }
 
             DB::commit();
             return redirect()->route('editFd2DetailForFd7',base64_encode($fd7FormInfoId))->with('success','Updated Successfuly');

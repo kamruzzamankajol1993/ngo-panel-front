@@ -451,31 +451,7 @@
 
                                         </div>
 
-                                    <div class="card mb-3">
-                                        <div class="card-header">
-                                            দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম পিডিএফ /এফডি -৭ ফরম
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="mb-3 col-lg-12">
-                                                <label for="" class="form-label">দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম পিডিএফ /এফডি -৭ ফরম  আপলোড করুন <span class="text-danger">*</span><br><span class="text-danger" style="font-size: 12px;">(Maximum 10 MB)</span></label>
-                                                <input type="file" accept=".pdf"  name="relief_assistance_project_proposal_pdf" class="form-control" id="rPdfP"
-                                                       placeholder="">
-                                                       <p id="rPdfP_text" class="text-danger mt-2" style="font-size:12px;"></p>
-                                                       <?php
-
-                                                       $file_path = url($fd7FormList->relief_assistance_project_proposal_pdf);
-                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                                       ?>
-                                                        <b>{{ $filename.'.'.$extension }}</b>
-                                            </div>
-                                        </div>
-                                    </div>
+                                 
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="submit" class="btn btn-registration"
                                                 >পরবর্তী পৃষ্ঠা

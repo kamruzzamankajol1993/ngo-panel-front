@@ -17,10 +17,10 @@
 
                                 <div class="col-lg-6 mb-3">
                                     <label for="" class="form-label">ধরণ <span class="text-danger">*</span></label>
-                                    {{-- <input type="text" required name="district_name[]" class="form-control" id=""
+                                    {{-- <input type="text"  name="district_name[]" class="form-control" id=""
                                     placeholder=""> --}}
 
-                                    <select required name="type" class="form-control distribution_type" id="distribution_type{{ $distributionListOnes->id }}">
+                                    <select  name="type" class="form-control distribution_type" id="distribution_type{{ $distributionListOnes->id }}">
                                         <option value="">--- অনুগ্রহ করে ধরণ নির্বাচন করুন ---</option>
                                         <option value="প্রকল্প খাতের ব্যয়" {{ $distributionListOnes->type == 'প্রকল্প খাতের ব্যয়' ? 'selected':'' }}>প্রকল্প খাতের ব্যয়</option>
                                         <option value="প্রশাসনিক ব্যয়" {{ $distributionListOnes->type == 'প্রশাসনিক ব্যয়' ? 'selected':'' }}>প্রশাসনিক ব্যয়</option>
@@ -29,13 +29,13 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
+                                        {{-- <input type="text"  name="district_name[]" class="form-control" id=""
                                         placeholder=""> --}}
                                         <?php
                                         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
 
                                         ?>
-                                        <select required name="district_name" class="form-control district_name" id="districtNameDis{{ $distributionListOnes->id }}">
+                                        <select  name="district_name" class="form-control district_name" id="districtNameDis{{ $distributionListOnes->id }}">
                                             <option value="">--- অনুগ্রহ করে জেলা নির্বাচন করুন ---</option>
                                             @foreach($districtList as $districtListAll)
                                             <option value="{{ $districtListAll->district_bn }}" {{ $distributionListOnes->district_name == $districtListAll->district_bn ? 'selected':'' }}>{{ $districtListAll->district_bn }}</option>
@@ -53,7 +53,7 @@ $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->g
                                         {{-- <input type="text" name="upozila_name[]" class="form-control" id=""
                                         placeholder=""> --}}
 
-                                        <select required name="upozila_name" class="form-control upozila_name" id="upozila_name{{ $distributionListOnes->id }}">
+                                        <select  name="upozila_name" class="form-control upozila_name" id="upozila_name{{ $distributionListOnes->id }}">
                                             <option value="">--- অনুগ্রহ করে উপজেলা নির্বাচন করুন ---</option>
 
                                             @foreach($thanaList as $districtListAll)
@@ -64,7 +64,7 @@ $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->g
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">দ্রব্যাদির বর্ণনা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="product_des" value="{{ $distributionListOnes->product_des }}" class="form-control" id="product_des{{ $distributionListOnes->id }}"
+                                        <input type="text"  name="product_des" value="{{ $distributionListOnes->product_des }}" class="form-control" id="product_des{{ $distributionListOnes->id }}"
                                         placeholder="" >
                                     </div>
                                     <div class="col-lg-6 mb-3">
@@ -85,11 +85,11 @@ $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->g
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="number" required name="total_beneficiaries" value="{{ $distributionListOnes->total_beneficiaries }}" class="form-control" id="total_beneficiaries{{ $distributionListOnes->id }}" placeholder="">
+                                        <input type="number"  name="total_beneficiaries" value="{{ $distributionListOnes->total_beneficiaries }}" class="form-control" id="total_beneficiaries{{ $distributionListOnes->id }}" placeholder="">
                                     </div>
                                     <div class="col-lg-12 mb-3">
                                         <label for="" class="form-label">মন্তব্য</label>
-                                        <textarea required name="comment" class="form-control" id="comment{{ $distributionListOnes->id }}" placeholder="">{{ $distributionListOnes->comment }}</textarea>
+                                        <textarea  name="comment" class="form-control" id="comment{{ $distributionListOnes->id }}" placeholder="">{{ $distributionListOnes->comment }}</textarea>
                                     </div>
                             </div>
                             <a id="{{ $distributionListOnes->id }}"  class="btn btn-registration distributionAjaxEdit">আপডেট করুন</a>

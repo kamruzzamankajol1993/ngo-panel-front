@@ -1,4 +1,4 @@
-<div class="modal modal-xl fade" id="exampleModal12"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal modal-xl fade" id="prokolpoAreaModalEdit{{ $prokolpoAreaListAll->id }}"  aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -24,11 +24,12 @@
 
 
 
-                                <select  name="division_name" class="form-control division_name" id="division_name0">
+                                <select  name="division_name" class="form-control division_name" id="division_name{{ $prokolpoAreaListAll->id }}">
                                     <option value="">--- অনুগ্রহ করে বিভাগ নির্বাচন করুন ---</option>
+                                    <option value="{{ $prokolpoAreaListAll->division_name }}" selected>{{ $prokolpoAreaListAll->division_name }}</option>
                                     @foreach($divisionList as $districtListAll)
 
-                                    <option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>
+                                    <option value="{{ $districtListAll->division_bn }}" >{{ $districtListAll->division_bn }}</option>
                                     @endforeach
 
                                 </select>
@@ -38,9 +39,11 @@
                                         {{-- <input type="text"  name="district_name[]" class="form-control" id=""
                                         placeholder=""> --}}
 
-                                        <select  name="district_name" class="form-control district_name" id="district_name0">
+                                        <select  name="district_name" class="form-control district_name" id="district_name{{ $prokolpoAreaListAll->id }}">
                                             <option value="">--- অনুগ্রহ করে জেলা নির্বাচন করুন ---</option>
-
+                                            @foreach($districtList as $districtListAll)
+                                            <option value="{{ $districtListAll->district_bn }}" {{ $prokolpoAreaListAll->district_name == $districtListAll->district_bn ? 'selected':'' }}>{{ $districtListAll->district_bn }}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -50,9 +53,11 @@
                                         placeholder=""> --}}
 
 
-                                        <select  name="city_corparation_name" class="form-control city_corparation_name" id="city_corparation_name0">
+                                        <select  name="city_corparation_name" class="form-control city_corparation_name" id="city_corparation_name{{ $prokolpoAreaListAll->id }}">
                                             <option value="">--- অনুগ্রহ করে সিটি কর্পোরেশন নির্বাচন করুন ---</option>
-
+                                            @foreach($cityCorporationList as $districtListAll)
+                                            <option value="{{ $districtListAll->city_orporation }}" {{ $prokolpoAreaListAll->city_corparation_name == $districtListAll->city_orporation ? 'selected':'' }}>{{ $districtListAll->city_orporation }}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -61,9 +66,11 @@
                                         {{-- <input type="text" name="upozila_name[]" class="form-control" id=""
                                         placeholder=""> --}}
 
-                                        <select  name="upozila_name" class="form-control upozila_name" id="upozila_name0">
+                                        <select  name="upozila_name" class="form-control upozila_name" id="upozila_name{{ $prokolpoAreaListAll->id }}">
                                             <option value="">--- অনুগ্রহ করে উপজেলা নির্বাচন করুন ---</option>
-
+                                            @foreach($subdDistrictList as $districtListAll)
+                                            <option value="{{ $districtListAll->thana_bn }}" {{ $prokolpoAreaListAll->upozila_name == $districtListAll->thana_bn ? 'selected':'' }}>{{ $districtListAll->thana_bn }}</option>
+                                            @endforeach
 
                                         </select>
                                     </div>
@@ -72,43 +79,47 @@
                                         {{-- <input type="text"  name="thana_name[]" class="form-control" id=""
                                         placeholder="" > --}}
 
-                                        <select  name="thana_name" class="form-control thana_name" id="thana_name0">
+                                        <select  name="thana_name" class="form-control thana_name" id="thana_name{{ $prokolpoAreaListAll->id }}">
                                             <option value="">--- অনুগ্রহ করে থানা নির্বাচন করুন ---</option>
+
+                                            @foreach($thanaList as $districtListAll)
+                                            <option value="{{ $districtListAll->thana_bn }}" {{ $prokolpoAreaListAll->thana_name == $districtListAll->thana_bn ? 'selected':'' }}>{{ $districtListAll->thana_bn }}</option>
+                                            @endforeach
 
 
                                         </select>
                                     </div>
                                     <div class="col-lg-3 mb-3">
                                         <label for="" class="form-label">পৌরসভা</label>
-                                        <input type="text" name="municipality_name" class="form-control" id="municipality_name0"
+                                        <input type="text" name="municipality_name" value="{{ $prokolpoAreaListAll->municipality_name }}" class="form-control" id="municipality_name{{ $prokolpoAreaListAll->id }}"
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-3 mb-3">
                                         <label for="" class="form-label">ওয়ার্ড</label>
-                                        <input type="text" name="ward_name" class="form-control" id="ward_name0"
+                                        <input type="text" name="ward_name" value="{{ $prokolpoAreaListAll->ward_name }}" class="form-control" id="ward_name{{ $prokolpoAreaListAll->id }}"
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-4 mb-3">
                                         <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
-                                        <select   name="prokolpoType" class="form-control " id="prokolpoType0"
+                                        <select   name="prokolpoType" class="form-control " id="prokolpoType{{ $prokolpoAreaListAll->id }}"
                                                placeholder="">
                                                <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
                                                @foreach($projectSubjectList as $projectSubjectLists)
-                                               <option value="{{ $projectSubjectLists->id }}">{{ $projectSubjectLists->name }}</option>
+                                               <option value="{{ $projectSubjectLists->id }}" {{ $prokolpoAreaListAll->prokolpo_type == $projectSubjectLists->id ? 'selected':'' }}>{{ $projectSubjectLists->name }}</option>
                                                @endforeach
                                         </select>
                                     </div>
                                     <div class="col-lg-4 mb-3">
                                         <label for="" class="form-label">বরাদ্দকৃত বাজেট<span class="text-danger">*</span></label>
-                                        <input type="text"  name="allocated_budget" class="form-control" id="allocated_budget0" placeholder="">
+                                        <input type="text"  name="allocated_budget" value="{{ $prokolpoAreaListAll->allocated_budget }}" class="form-control" id="allocated_budget{{ $prokolpoAreaListAll->id }}" placeholder="">
                                     </div>
                                     <div class="col-lg-4 mb-3">
                                         <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="text"  name="beneficiaries_total" class="form-control" id="beneficiaries_total0" placeholder="">
+                                        <input type="text"  name="beneficiaries_total" value="{{ $prokolpoAreaListAll->number_of_beneficiaries }}" class="form-control" id="beneficiaries_total{{ $prokolpoAreaListAll->id }}" placeholder="">
                                     </div>
 
                             </div>
-                            <a id="prokolpoAreaDataPost"  class="btn btn-registration">জমা দিন</a>
+                            <a id="{{ $prokolpoAreaListAll->id }}"  class="btn btn-registration prokolpoAreaDataUpdate">আপডেট করুন</a>
 
                     </div>
                 </div>

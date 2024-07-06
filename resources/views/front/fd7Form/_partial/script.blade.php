@@ -91,6 +91,7 @@ if(!$('#distribution_type').val()){
 
 
 
+var mainEditId = $('#mainEditId').val();
 var distribution_type = $('#distribution_type').val();
 var districtNameDis = $('#districtNameDis').val();
 var upozila_name = $('#upozila_name').val();
@@ -106,7 +107,7 @@ var comment = $('#comment').val();
 $.ajax({
 url: "{{ route('postDistribution') }}",
 method: 'POST',
-data: {distribution_type:distribution_type,districtNameDis:districtNameDis,upozila_name:upozila_name,product_des:product_des,product_quantity:product_quantity,unit_price:unit_price,total_amount:total_amount,total_beneficiaries:total_beneficiaries,comment:comment},
+data: {mainEditId:mainEditId,distribution_type:distribution_type,districtNameDis:districtNameDis,upozila_name:upozila_name,product_des:product_des,product_quantity:product_quantity,unit_price:unit_price,total_amount:total_amount,total_beneficiaries:total_beneficiaries,comment:comment},
 success: function(data) {
 
     $('#exampleModal1').modal('hide');
@@ -143,7 +144,7 @@ complete: function(){
 // distribution add list end
 
 $(document).on('click', '.distributionAjaxEdit', function () {
-
+    var mainEditId = $('#mainEditId').val();
 var mainId = $(this).attr('id');
 
 if(!$('#distribution_type'+mainId).val()){
@@ -203,7 +204,7 @@ var comment = $('#comment'+mainId).val();
 $.ajax({
 url: "{{ route('updateDistribution') }}",
 method: 'POST',
-data: {mainId:mainId,distribution_type:distribution_type,districtNameDis:districtNameDis,upozila_name:upozila_name,product_des:product_des,product_quantity:product_quantity,unit_price:unit_price,total_amount:total_amount,total_beneficiaries:total_beneficiaries,comment:comment},
+data: {mainEditId:mainEditId,mainId:mainId,distribution_type:distribution_type,districtNameDis:districtNameDis,upozila_name:upozila_name,product_des:product_des,product_quantity:product_quantity,unit_price:unit_price,total_amount:total_amount,total_beneficiaries:total_beneficiaries,comment:comment},
 success: function(data) {
 
 $('#exampleModal'+mainId).modal('hide');
@@ -274,7 +275,7 @@ if(!$('#division_name0').val()){
 });
 
 
-
+var mainEditId = $('#mainEditId').val();
 var division_name = $('#division_name0').val();
 var district_name = $('#district_name0').val();
 var city_corparation_name = $('#city_corparation_name0').val();
@@ -289,11 +290,11 @@ var beneficiaries_total = $('#beneficiaries_total0').val();
 
 $.ajax({
 url: "{{ route('postProkolpoArea') }}",
-method: 'POST',
-data: {beneficiaries_total:beneficiaries_total,division_name:division_name,district_name:district_name,city_corparation_name:city_corparation_name,upozila_name:upozila_name,thana_name:thana_name,municipality_name:municipality_name,ward_name:ward_name,prokolpoType:prokolpoType,allocated_budget:allocated_budget},
+method: 'post',
+data: {mainEditId:mainEditId,beneficiaries_total:beneficiaries_total,division_name:division_name,district_name:district_name,city_corparation_name:city_corparation_name,upozila_name:upozila_name,thana_name:thana_name,municipality_name:municipality_name,ward_name:ward_name,prokolpoType:prokolpoType,allocated_budget:allocated_budget},
 success: function(data) {
 
-    $('#exampleModal').modal('hide');
+    $('#exampleModal12').modal('hide');
 
   alertify.set('notifier','position', 'top-center');
   alertify.success('Data Added Successfully');
@@ -328,6 +329,99 @@ complete: function(){
 
 ////prokolpo area code end
 
+//prokolpo area code update strat
+
+$(document).on('click', '.prokolpoAreaDataUpdate', function () {
+    var mainEditId = $('#mainEditId').val();
+    var mainId = $(this).attr('id');
+
+if(!$('#division_name'+mainId).val()){
+
+    alertify.alert('Error', 'বিভাগ  সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#district_name'+mainId).val()){
+
+    alertify.alert('Error', 'জেলা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#thana_name'+mainId).val()){
+
+    alertify.alert('Error', 'থানা সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#prokolpoType'+mainId).val()){
+
+    alertify.alert('Error', 'প্রকল্পের ধরণ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#allocated_budget'+mainId).val()){
+
+    alertify.alert('Error', 'বরাদ্দকৃত বাজেট সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#beneficiaries_total'+mainId).val()){
+
+    alertify.alert('Error', 'উপকারভোগীর সংখ্যা সম্পর্কিত তথ্য দিন');
+
+}else{
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+
+var division_name = $('#division_name'+mainId).val();
+var district_name = $('#district_name'+mainId).val();
+var city_corparation_name = $('#city_corparation_name'+mainId).val();
+var upozila_name = $('#upozila_name'+mainId).val();
+var thana_name = $('#thana_name'+mainId).val();
+var municipality_name = $('#municipality_name'+mainId).val();
+var ward_name =$('#ward_name'+mainId).val();
+var prokolpoType = $('#prokolpoType'+mainId).val();
+var allocated_budget = $('#allocated_budget'+mainId).val();
+var beneficiaries_total = $('#beneficiaries_total'+mainId).val();
+
+
+$.ajax({
+url: "{{ route('updateProkolpoArea') }}",
+method: 'post',
+data: {mainEditId:mainEditId,mainId:mainId,beneficiaries_total:beneficiaries_total,division_name:division_name,district_name:district_name,city_corparation_name:city_corparation_name,upozila_name:upozila_name,thana_name:thana_name,municipality_name:municipality_name,ward_name:ward_name,prokolpoType:prokolpoType,allocated_budget:allocated_budget},
+success: function(data) {
+
+    $('#prokolpoAreaModalEdit'+mainId).modal('hide');
+
+  alertify.set('notifier','position', 'top-center');
+  alertify.success('Data Added Successfully');
+
+  $("#tableAjaxDatapro").html('');
+  $("#tableAjaxDatapro").html(data);
+
+  var division_name = $('#division_name'+mainId).val('');
+var district_name = $('#district_name'+mainId).val('');
+var city_corparation_name = $('#city_corparation_name'+mainId).val('');
+var upozila_name = $('#upozila_name'+mainId).val('');
+var thana_name = $('#thana_name'+mainId).val('');
+var municipality_name = $('#municipality_name'+mainId).val('');
+var ward_name =$('#ward_name'+mainId).val('');
+var prokolpoType = $('#prokolpoType'+mainId).val('');
+var allocated_budget = $('#allocated_budget'+mainId).val('');
+var beneficiaries_total = $('#beneficiaries_total'+mainId).val('');
+
+},
+beforeSend: function(){
+   $('#pageloader').show()
+},
+complete: function(){
+   $('#pageloader').hide();
+}
+});
+
+}
+
+});
+
+
+//prokolpo area code update end
+
 </script>
 
 
@@ -349,17 +443,77 @@ complete: function(){
         }).then((result) => {
             if (result.value) {
 
-
+                var mainEditId = $('#mainEditId').val();
                 $.ajax({
     url: "{{ route('deleteDistribution') }}",
     method: 'GET',
-    data: {id:id},
+    data: {mainEditId:mainEditId,id:id},
     success: function(data) {
 
       alertify.set('notifier','position', 'top-center');
       alertify.error('Data Delete Successfully');
       $("#tableAjaxDatadis").html('');
       $("#tableAjaxDatadis").html(data);
+      //location.reload(true);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+                // event.preventDefault();
+                // document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    '{{ trans('notification.success_six')}} :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
+
+<script type="text/javascript">
+    function deleteTagProkolpoArea(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ trans('notification.success_three')}}',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                var mainEditId = $('#mainEditId').val();
+
+                $.ajax({
+    url: "{{ route('deleteProkolpoArea') }}",
+    method: 'GET',
+    data: {mainEditId:mainEditId,id:id},
+    success: function(data) {
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.error('Data Delete Successfully');
+      $("#tableAjaxDatapro").html('');
+      $("#tableAjaxDatapro").html(data);
       //location.reload(true);
 
     },
