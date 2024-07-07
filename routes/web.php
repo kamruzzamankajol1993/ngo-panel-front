@@ -355,7 +355,6 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('finalFcOneApplicationSubmit/{id}', 'finalFcOneApplicationSubmit')->name('finalFcOneApplicationSubmit');
         Route::get('fc1PdfDownload/{id}', 'fc1PdfDownload')->name('fc1PdfDownload');
         Route::get('verifiedFcOneForm/{id}', 'verifiedFcOneForm')->name('verifiedFcOneForm');
-
         Route::get('fc1FormStepTwo/{id}', 'fc1FormStepTwo')->name('fc1FormStepTwo');
         Route::get('fc1FormStepThree/{id}', 'fc1FormStepThree')->name('fc1FormStepThree');
     });
@@ -452,6 +451,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::post('postProkolpoArea', 'postProkolpoArea')->name('postProkolpoArea');
         Route::post('updateProkolpoArea', 'updateProkolpoArea')->name('updateProkolpoArea');
 
+        Route::get('fd2pdfview/{id}', 'fd2pdfview')->name('fd2pdfview');
+        Route::get('fd7pdfview/{id}', 'fd7pdfview')->name('fd7pdfview');
+        Route::get('fd7formextrapdf/{title}/{id}', 'fd7formextrapdf')->name('fd7formextrapdf');
+
 
     });
 
@@ -459,6 +462,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(Fd2FormController::class)->group(function () {
 
+
+        Route::get('fd2formextrapdf/{title}/{id}', 'fd2formextrapdf')->name('fd2formextrapdf');
 
         Route::get('deletelastYearDetail', 'deletelastYearDetail')->name('deletelastYearDetail');
         Route::post('addlastYearDetail', 'addlastYearDetail')->name('addlastYearDetail');

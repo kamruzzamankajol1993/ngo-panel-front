@@ -1195,6 +1195,27 @@ class Fd2FormController extends Controller
         }
     }
 
+    public function fd2formextrapdf($title, $id){
+
+        $get_file_data = Fd2FormForFd7Form::where('id',$id)->value($title);
+
+      
+
+        $file_path = url('public/'.$get_file_data);
+        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+        $file= public_path('/'). $get_file_data;
+
+        $headers = array(
+                  'Content-Type: application/pdf',
+                );
+
+        return Response::make(file_get_contents($file), 200, [
+            'content-type'=>'application/pdf',
+        ]);
+
+
+       }
+
 
 
     public function updateFd2DetailForFd7(Request $request){

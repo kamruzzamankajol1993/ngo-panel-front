@@ -18,11 +18,11 @@
         @endif
         থানা: {{ $prokolpoAreaListAll->thana_name }} <br>
         পৌরসভা: {{ $prokolpoAreaListAll->municipality_name }} <br>
-        ওয়ার্ড: {{ $prokolpoAreaListAll->ward_name }}
+        ওয়ার্ড: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->ward_name) }}
     </td>
     <td>
         {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
     </td>
-    <td>{{ $prokolpoAreaListAll->allocated_budget }}</td>
-    <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->allocated_budget) }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->number_of_beneficiaries) }}</td>
 </tr>

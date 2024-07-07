@@ -11,6 +11,7 @@ use App\Models\Fd2Form;
 use App\Models\Fd2FormOtherInfo;
 use App\Models\NgoStatus;
 use App\Models\Country;
+use App\Models\Fd2AllFormLastYearDetail;
 use App\Models\Fd9Form;
 use App\Models\FdSevenDistributionDetail;
 use App\Models\ProkolpoDetail;
@@ -19,6 +20,7 @@ use App\Models\Fd9ForeignerEmployeeFamilyMemberList;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use PDF;
+use Mpdf\Mpdf;
 use DateTime;
 use DateTimezone;
 use Response;
@@ -691,7 +693,135 @@ class Fd7FormController extends Controller
     }
 
 
+    public function fd2pdfview($id){
 
+
+        $fd7Id = base64_decode($id);
+
+        //dd($id);
+
+       $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+       $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+       $fd2FormList = Fd2FormForFd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('fd7_form_id',$fd7Id)->latest()->first();
+       $fd2OtherInfo = Fd2Fd7OtherInfo::where('fd2_form_for_fd7_form_id',$fd2FormList->id)->latest()->get();
+       $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+       $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+       $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+       $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+       $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+       $fd7FormList = Fd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd7Id)->latest()->first();
+       $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$fd7Id)->latest()->get();
+       //FdSevenDistributionDetail
+       $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+       ->where('type','fd7')
+       ->get();
+       $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
+
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
+
+
+
+
+
+       $file_Name_Custome = 'fd_seven_form';
+       $data =view('front.fd7Form.fd2pdfview',[
+        'divisionList'=>$divisionList,
+        'renewWebsiteName'=>$renewWebsiteName,
+        'ngoDurationLastEx'=>$ngoDurationLastEx,
+        'ngoDurationReg'=>$ngoDurationReg,
+        'ngo_list_all'=>$ngo_list_all,
+'fd7FormList'=>$fd7FormList,
+                       'fd2AllFormLastYearDetail'=>$fd2AllFormLastYearDetail,
+                       'distributionListTwo'=>$distributionListTwo,
+                       'distributionListOne'=>$distributionListOne,
+                       'fd2OtherInfo'=>$fd2OtherInfo,
+                       'fd2FormList'=>$fd2FormList,
+                       'cityCorporationList'=>$cityCorporationList,
+                       'districtList'=>$districtList,
+                       'prokolpoAreaList'=>$prokolpoAreaList
+
+                   ])->render();
+
+
+       $pdfFilePath =$file_Name_Custome.'.pdf';
+
+
+       $mpdf = new Mpdf([ 'default_font_size' => 14,'default_font' => 'nikosh']);
+       $mpdf->WriteHTML($data);
+       $mpdf->Output($pdfFilePath, "I");
+       die();
+
+    }
+
+
+
+    public function fd7pdfview($id){
+
+
+        $fd7Id = base64_decode($id);
+
+        //dd($id);
+
+       $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+       $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+       $fd2FormList = Fd2FormForFd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('fd7_form_id',$fd7Id)->latest()->first();
+       $fd2OtherInfo = Fd2Fd7OtherInfo::where('fd2_form_for_fd7_form_id',$fd2FormList->id)->latest()->get();
+       $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+       $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+       $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+       $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+       $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+       $fd7FormList = Fd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd7Id)->latest()->first();
+       $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$fd7Id)->latest()->get();
+       //FdSevenDistributionDetail
+       $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+       ->where('type','fd7')
+       ->get();
+       $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
+
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
+
+
+
+
+
+       $file_Name_Custome = 'fd_seven_form';
+       $data =view('front.fd7Form.fd7pdfview',[
+        'divisionList'=>$divisionList,
+        'renewWebsiteName'=>$renewWebsiteName,
+        'ngoDurationLastEx'=>$ngoDurationLastEx,
+        'ngoDurationReg'=>$ngoDurationReg,
+        'ngo_list_all'=>$ngo_list_all,
+'fd7FormList'=>$fd7FormList,
+                       'fd2AllFormLastYearDetail'=>$fd2AllFormLastYearDetail,
+                       'distributionListTwo'=>$distributionListTwo,
+                       'distributionListOne'=>$distributionListOne,
+                       'fd2OtherInfo'=>$fd2OtherInfo,
+                       'fd2FormList'=>$fd2FormList,
+                       'cityCorporationList'=>$cityCorporationList,
+                       'districtList'=>$districtList,
+                       'prokolpoAreaList'=>$prokolpoAreaList
+
+                   ])->render();
+
+
+       $pdfFilePath =$file_Name_Custome.'.pdf';
+
+
+       $mpdf = new Mpdf([ 'default_font_size' => 14,'default_font' => 'nikosh']);
+       $mpdf->WriteHTML($data);
+       $mpdf->Output($pdfFilePath, "I");
+       die();
+
+    }
 
     public function show($id){
 
@@ -710,8 +840,20 @@ class Fd7FormController extends Controller
        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
        $fd7FormList = Fd7Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd7Id)->latest()->first();
        $prokolpoAreaList = Fd7FormProkolpoArea::where('fd7_form_id',$fd7Id)->latest()->get();
+       //FdSevenDistributionDetail
+       $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+       ->where('type','fd7')
+       ->get();
+       $distributionListOne = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রকল্প খাতের ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
 
-       return view('front.fd7Form.view',compact('fd2OtherInfo','fd2FormList','cityCorporationList','districtList','prokolpoAreaList','fd7FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+            $distributionListTwo = DB::table('fd_seven_distribution_details')
+            ->where('type','প্রশাসনিক ব্যয়')
+            ->where('fd7_form_id',$fd7Id)->get();
+
+
+       return view('front.fd7Form.view',compact('fd2AllFormLastYearDetail','distributionListTwo','distributionListOne','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','prokolpoAreaList','fd7FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
    }
 
@@ -754,6 +896,25 @@ class Fd7FormController extends Controller
     $file_path = url('public/'.$get_file_data);
     $filename  = pathinfo($file_path, PATHINFO_FILENAME);
     $file= public_path('/'). $get_file_data;
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+
+    return Response::make(file_get_contents($file), 200, [
+        'content-type'=>'application/pdf',
+    ]);
+
+
+   }
+
+   public function fd7formextrapdf($title, $id){
+
+    $get_file_data = Fd7Form::where('id',$id)->value($title);
+
+    $file_path = url('public/'.$get_file_data);
+    $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+    $file= public_path('/'). $get_file_data;
+
     $headers = array(
               'Content-Type: application/pdf',
             );

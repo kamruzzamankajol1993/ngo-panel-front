@@ -44,39 +44,35 @@ return new class extends Migration
             $table->string('organization_address')->nullable();
             $table->string('organization_telephone_number')->nullable();
             $table->string('organization_email')->nullable();
-
             $table->string('organization_website')->nullable();
             $table->string('organization_is_verified')->nullable();
             $table->string('organization_ceo_name')->nullable();
             $table->string('organization_ceo_designation')->nullable();
             $table->string('organization_name_of_executive_responsible_for_bd')->nullable();
-
             $table->string('organization_name_of_executive_responsible_for_bd_designation')->nullable();
             $table->string('objectives_of_the_organization')->nullable();
-
             $table->string('relation_with_donor')->nullable();
             $table->string('organization_fax')->nullable();
-
             $table->string('organization_letter_of_commitment')->nullable();
             $table->string('organization_name_of_the_job_amount_of_money_and_duration_pdf')->nullable();
             $table->string('organization_amount_of_foreign_currency')->nullable();
             $table->string('equivalent_amount_of_bd_taka')->nullable();
-
             $table->string('commodities_value_in_bangladeshi_currency')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('bank_address')->nullable();
             $table->string('bank_account_name')->nullable();
             $table->string('bank_account_number')->nullable();
-
-
             $table->string('verified_fc_one_form')->nullable();
-
-
             $table->string('status')->nullable();
             $table->text('comment')->nullable();
             $table->string('purpose_of_donation')->nullable();
+            $table->string('purpose_of_donation_pdf')->nullable();
+            $table->string('bond_paper_available_or_not')->nullable();
+            $table->string('bond_paper_work_name')->nullable();
+            $table->string('bond_paper_amount')->nullable();
+            $table->string('bond_paper_duration')->nullable();
+            $table->string('bond_paper_pdf')->nullable();
             $table->string('sent_status')->nullable();
-
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();
             $table->timestamps();

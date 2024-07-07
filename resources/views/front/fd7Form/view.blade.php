@@ -181,7 +181,9 @@
                     <div class="">
 
 
-
+                        <a target="_blank" href="{{ route('fd7pdfview',base64_encode($fd7FormList->id)) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ trans('form 8_bn.download_pdf')}}"  >
+                            <i class="fa fa-print"></i>
+                        </a>
                         @if($fd7FormList->status == 'Ongoing' || $fd7FormList->status == 'Accepted')
 
                                         @else
@@ -201,255 +203,858 @@
                             <h3>এফডি-৭ ফরম</h3>
                             <h4>দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম</h4>
                         </div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>এনজিও'র নাম</td>
-                                <td>: {{ $fd7FormList->ngo_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>ঠিকানা</td>
-                                <td>: {{ $fd7FormList->ngo_address }}</td>
+
+                        <div class="table-responsive">
+                            <table class="table table-borderless" style="width:100%">
+
+
+
+                                <tr>
+                                    <th style="text-align: center;" >১.</th>
+                                    <td colspan="2">এনজিও'র নাম, ঠিকানা নিবন্ধন নম্বর ও তারিখ :</td>
+                                    <td >
+
+                                                @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
+
+
+                                   {{ $ngo_list_all->organization_name_ban }},
+
+                                        @else
+
+
+                                     {{ $ngo_list_all->organization_name }},
+
+
+                                        @endif
+                           {{ $ngo_list_all->organization_address }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->registration_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla(date("d-m-Y", strtotime($ngoDurationReg))) }}
+                                    </td>
+
+                                </tr>
+                              <!-- step one start  -->
+
+
+<!-- step three start -->
+
+<tr>
+<th style="text-align: center;"  >২.</th>
+
+<td style="" colspan="2">প্রস্তাবিত প্রকল্পের নাম ও ধরণ:</td>
+<td style="">
+
+    <?php
+    $subjectIdList  = explode(",",$fd7FormList->subject_id);
+    $subjectListMain = DB::table('project_subjects')->whereIn('id',$subjectIdList)->select('name')
+    ->get();
+
+    ?>
+{{ $fd7FormList->ngo_prokolpo_name }} ও   @foreach($subjectListMain as $key=>$subjectListMains)
+
+@if(count($subjectListMain) == 1 )
+
+{{ $subjectListMains->name }}
+
+@else
+
+@if(count($subjectListMain) == ($key+1))
+{{ $subjectListMains->name }} |
+
+@else
+
+{{ $subjectListMains->name }},
+
+@endif
+
+@endif
+
+@endforeach
+
+
+
+</td>
+
+</tr>
+
+
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="4">৩.</th>
+
+                                    <td style="font-weight:bold;" colspan="3">বিতরণের জন্য প্রস্তাবিত ত্রাণ সামগ্রীর বিবরণ (আনুমানিক মূল্যসহ):
+                                </td>
+
+
+                                </tr>
+                                <tr>
+
+                                    {{-- <td style="text-align: center;">ক.</td> --}}
+                                    <td colspan="3" rowspan="3">
+
+                                        <?php
+
+
+$distributionListOne = DB::table('fd_seven_distribution_details')
+->where('type','প্রকল্প খাতের ব্যয়')
+->where('fd7_form_id',$fd7FormList->id)->get();
+
+$distributionListTwo = DB::table('fd_seven_distribution_details')
+->where('type','প্রশাসনিক ব্যয়')
+->where('fd7_form_id',$fd7FormList->id)->get();
+
+//dd($distributionListTwo);
+
+
+                                            ?>
+
+                                        <div class="table-responsive" id="tableAjaxDatadis">
+
+                                            <table class="table table-bordered" >
+
+                                                <tr style="text-align: center;">
+                                                    <th>ক্র: নং :</th>
+                                                    <th>ধরণ</th>
+                                                    <th>জেলা</th>
+                                                    <th>উপজেলা</th>
+
+                                                    <th>দ্রব্যাদির বর্ণনা</th>
+                                                    <th>পরিমাণ</th>
+                                                    <th>একক মূল্য</th>
+                                                    <th>মোট টাকার পরিমাণ</th>
+                                                    <th>মোট উপকারভোগীর সংখ্যা</th>
+                                                    <th>মন্তব্য</th>
+
+                                                </tr>
+                                                <?php
+
+                                                $totalProductQuantityOne = 0;
+                                                $totalUnitPriceOne = 0;
+                                                $totalTotalAmountOne = 0;
+                                                $totalTotalBeneficiariesOne = 0;
+
+                                                ?>
+                                                 @foreach($distributionListOne as $key=>$distributionListOnes)
+
+                                                 <?php
+
+                                                    $totalProductQuantityOne = $totalProductQuantityOne + $distributionListOnes->product_quantity;
+                                                    $totalUnitPriceOne = $totalUnitPriceOne + $distributionListOnes->unit_price;
+                                                    $totalTotalAmountOne = $totalTotalAmountOne + $distributionListOnes->total_amount;
+                                                    $totalTotalBeneficiariesOne = $totalTotalBeneficiariesOne + $distributionListOnes->total_beneficiaries;
+                                                 ?>
+                                               <tr>
+
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                    <td>{{ $distributionListOnes->type }}</td>
+                                                    <td>{{ $distributionListOnes->district_name }}</td>
+                                                    <td>{{ $distributionListOnes->upozila_name }}</td>
+
+                                                    <td>{{ $distributionListOnes->product_des }}</td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->product_quantity) }}</td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->unit_price) }}</td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->total_amount) }}</td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->total_beneficiaries) }}</td>
+                                                    <td>{{ $distributionListOnes->comment }}</td>
+
+
+                                               </tr>
+                                               @endforeach
+                                               @if(count($distributionListOne) == 0)
+
+                                               @else
+                                               <tr>
+                                                <td></td>
+                                                <td>প্রাক মোট</td>
+                                                <td></td>
+                                                <td></td>
+
+                                                <td></td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalProductQuantityOne) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalUnitPriceOne) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalAmountOne) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalBeneficiariesOne) }}</td>
+                                                <td></td>
+
+                                               </tr>
+                                               @endif
+                                               <?php
+
+                                               $distributionListOneCount = count($distributionListOne);
+
+
+                                            $totalProductQuantityTwo = 0;
+                                            $totalUnitPriceTwo = 0;
+                                            $totalTotalAmountTwo = 0;
+                                            $totalTotalBeneficiariesTwo = 0;
+
+
+                                               ?>
+                                                @foreach($distributionListTwo as $j=>$distributionListOnes)
+
+                                                <?php
+
+                                                $totalProductQuantityTwo = $totalProductQuantityTwo + $distributionListOnes->product_quantity;
+                                                $totalUnitPriceTwo = $totalUnitPriceTwo + $distributionListOnes->unit_price;
+                                                $totalTotalAmountTwo = $totalTotalAmountTwo + $distributionListOnes->total_amount;
+                                                $totalTotalBeneficiariesTwo = $totalTotalBeneficiariesTwo + $distributionListOnes->total_beneficiaries;
+                                             ?>
+                                                <tr>
+
+
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOneCount+$j+1) }}</td>
+                                                <td>{{ $distributionListOnes->type }}</td>
+                                                <td>{{ $distributionListOnes->district_name }}</td>
+                                                <td>{{ $distributionListOnes->upozila_name }}</td>
+
+                                                <td>{{ $distributionListOnes->product_des }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->product_quantity) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->unit_price) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->total_amount) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($distributionListOnes->total_beneficiaries) }}</td>
+                                                <td>{{ $distributionListOnes->comment }}</td>
+
+
+                                               </tr>
+                                               @endforeach
+                                               @if(count($distributionListTwo) == 0)
+
+                                               @else
+                                               <tr>
+                                                <td></td>
+                                                <td>প্রাক মোট</td>
+                                                <td></td>
+                                                <td></td>
+
+                                                <td></td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalProductQuantityTwo) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalUnitPriceTwo) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalAmountTwo) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalBeneficiariesTwo) }}</td>
+                                                <td></td>
+
+                                               </tr>
+                                               @endif
+                                               <tr>
+                                                <td></td>
+                                                <td colspan="2">সর্বমোট = </td>
+
+                                                <td></td>
+
+                                                <td></td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalProductQuantityTwo + $totalProductQuantityOne)  }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalUnitPriceTwo + $totalUnitPriceOne) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalAmountTwo+$totalTotalAmountOne) }}</td>
+                                                <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalTotalBeneficiariesTwo+$totalTotalBeneficiariesOne) }}</td>
+                                                <td></td>
+
+                                               </tr>
+                                            </table>
+
+                                        </div>
+
+
+
+
+
+
+                                                   @if(empty($fd7FormList->distribution_pdf))
+
+
+                                                   @else
+
+                                                   <a href="{{ route('fd7formextrapdf',['title'=>'distribution_pdf','id'=>$fd7FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                                    @endif
+
+
+
+
+
+
+                            </td>
+
+
+                                </tr>
+                                <tr>
+                                </tr>
+
+                                <tr>
+                                </tr>
+
+                                <!-- step three end -->
+
+                                <!-- step four start --->
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="14">৪.</th>
+
+                                    <th  colspan="3">অর্থ বা ত্রাণ-সামগ্রীর উৎস:</th>
+
+                                </tr>
+
+
+
+                                <tr >
+
+                                    <th style="text-align: center;">ক.</th>
+                                    <th>দাতা সংস্থার প্রতিশ্রুতিপত্র:</th>
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>১. দাতা সংস্থার বিবরণ :</td>
+                                    <td>{{ $fd7FormList->donor_organization_description }}</td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>২. প্রধান নির্বাহী কর্মকর্তা/ দাতার নাম :</td>
+                                    <td>
+ {{$fd7FormList->donor_organization_chief_type }} : {{ $fd7FormList->donor_organization_chief_name }}
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৩. দাতা সংস্থার নাম :</td>
+                                    <td>
+                                        {{ $fd7FormList->donor_organization_name }}
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৪. যোগাযোগের ঠিকানা :</td>
+                                    <td>{{ $fd7FormList->donor_organization_address }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৫. টেলিফোন :</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->donor_organization_phone) }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৬. ইমেইল ও ওয়েবসাইট :</td>
+                                    <td>{{ $fd7FormList->donor_organization_email }} ও {{ $fd7FormList->donor_organization_website }}</td>
+
+                                </tr>
+
+
+                                <tr>
+                                    <th style="text-align: center;"> খ.</th>
+                                <th colspan="2">চলমান অন্য কোনো প্রকল্পের অর্থ দ্বারা প্রস্তাবিত কার্যক্রম বাস্তবায়নের ক্ষেত্রে: </th>
+
+
                             </tr>
 
-                            <tr>
-                                <td>নিবন্ধন নম্বর</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_registration_number) }}</td>
-                            </tr>
-                            <tr>
-                                <td>ব্যুরোর নিবন্ধন তারিখ </td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_registration_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রস্তাবিত প্রকল্পের নাম</td>
-                                <td>: {{ $fd7FormList->ngo_prokolpo_name }}</td>
-                            </tr>
+<tr>
 
-                        </table>
+                                    <td style="text-align: center;"></td>
+                                    <td>১. চলমান প্রকল্পের নাম ও মোট ব্যয় :</td>
+                                    <td>{{ $fd7FormList->ongoing_prokolpo_name }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->total_prokolpo_cost) }} </td>
 
-                        <div class="form9_upper_box">
-                            <h3>অর্থ বা ত্রাণ-সামগ্রীর উৎস <br>
-                                দাতা সংস্থার প্রতিশ্রুতিপত্র</h3>
+                                </tr>
+
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>২. ব্যুরোর অনুমোদনের তারিখ (অনুমোদনপত্র সংযুক্ত করতে হবে) : </td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->date_of_bureau_approval) }}
+                                        <a href="{{ route('authorizationLetter',$fd7FormList->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৩. মূল প্রকল্পের শতকরা কতভাগ এই
+                                        প্রকল্পের ব্যায় করা হবে :</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->percentage_of_the_original_project) }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৪. চলমান প্রকল্পের উপর কোন বিরূপ প্রভাব ফেলবে কি না :</td>
+                                    <td>{{ $fd7FormList->adverse_impact_on_the_ongoing_project }}</td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;"></td>
+                                    <td>৫. দাতা সংস্থার প্রতিশ্রুতিপত্র (কপি
+                                        সংযুক্ত করতে হবে) :</td>
+                                    <td>
+
+
+                                        <a href="{{ route('letterFromDonorAgency',$fd7FormList->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <!-- steap four end -->
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="4">৫.</th>
+
+                                    <td style="font-weight:bold;" colspan="2">প্রকল্প এলাকা:</td>
+                                    <td></td>
+
+                                </tr>
+                                <tr>
+
+                                    {{-- <td style="text-align: center;">ক.</td> --}}
+                                    <td colspan="3" rowspan="3">
+
+                                        <div class="table-responsive">
+
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>ক্রমিক নং</th>
+                                                    <th>জেলা/সিটি কর্পোরেশন</th>
+                                                    <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
+                                                    <th>প্রকল্পের ধরণ</th>
+                                                    <th>বরাদ্দকৃত বাজেট</th>
+                                                    <th>মোট উপকারভোগীর সংখ্যা</th>
+                                                </tr>
+                                                @foreach($prokolpoAreaList as $key=>$prokolpoAreaListAll)
+                                                <tr>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($key+1) }}</td>
+                                                    <td>
+                                                        জেলা: {{ $prokolpoAreaListAll->district_name }} <br>
+
+
+                                                        @if($prokolpoAreaListAll->city_corparation_name == 'অনুগ্রহ করে নির্বাচন করুন')
+
+                                                        @else
+                                                        সিটি কর্পোরেশন: {{ $prokolpoAreaListAll->city_corparation_name }}
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if($prokolpoAreaListAll->upozila_name == 'অনুগ্রহ করে নির্বাচন করুন')
+
+                                                        @else
+                                                        উপজেলা: {{ $prokolpoAreaListAll->upozila_name }} <br>
+                                                        @endif
+                                                        থানা: {{ $prokolpoAreaListAll->thana_name }} <br>
+                                                        পৌরসভা: {{ $prokolpoAreaListAll->municipality_name }} <br>
+                                                        ওয়ার্ড: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->ward_name) }}
+                                                    </td>
+                                                    <td>
+                                                        {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
+                                                    </td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->allocated_budget) }}</td>
+                                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->number_of_beneficiaries) }}</td>
+                                                </tr>
+                                                  @endforeach
+                                            </table>
+
+
+
+                                        </div>
+                                        <span>টীকা :জেলা প্রশাসন /উপজেলা নির্বাহী অফিসার সুষ্ঠূ সমন্বয় ও সুষম বন্টনের স্বার্থে প্রকল্প এলাকা পরিবর্তন করার ক্ষমতা রাখে।</span>
+
+
+
+                                </span>
+
+
+                            </td>
+
+
+                                </tr>
+                                <tr>
+                                </tr>
+
+                                <tr>
+                                </tr>
+
+                                <!-- step three end -->
+
+                                <!-- step five start -->
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="2">৬.</th>
+
+                                    <td style="font-weight:bold;" colspan="3">
+                                        ত্রাণ কর্যক্রম কিভাবে বাস্তবায়িত হবে তার বিবরণ দিতে হবে (এটি সুস্পষ্ট করুন যাহাতে কতৃপক্ষের জন্য তদারকি /পরীক্ষণ সহজ হয়):
+                                    </td>
+
+
+                                </tr>
+
+                                <tr>
+
+
+                                    <td colspan="3">{!! $fd7FormList->relief_program_detail !!}
+
+
+
+
+                                        @if(empty($fd7FormList->relief_program_pdf))
+
+
+                                        @else
+
+                                        <a href="{{ route('fd7formextrapdf',['title'=>'relief_program_pdf','id'=>$fd7FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                               @endif
+
+                                    </td>
+
+                                </tr>
+
+                                <!-- step five end --->
+
+                                <!-- step six start -->
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="3">৭.</th>
+
+                                    <td style="font-weight:bold;" colspan="2">কার্যক্রমের মেয়াদকাল:</td>
+                                    <td></td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td style="text-align: center;">ক.</td>
+                                    <td>  আরম্ভের তারিখ: </td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_prokolpo_start_date) }}</td>
+
+                                </tr>
+                                <tr>
+
+                                    <td style="text-align: center;">খ.</td>
+                                    <td>সমাপ্তির তারিখ:</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_prokolpo_end_date) }}</td>
+
+                                </tr>
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="2">৮.</th>
+
+                                    <td style="font-weight:bold;" colspan="3">
+                                        প্রকল্প বাস্তবায়ন সংক্রান্ত অন্যান্য প্রাসঙ্গিক তথ্য (ভবিষ্যত পরিকল্পনাসহ যদি থাকে):
+
+                                    </td>
+
+
+                                </tr>
+
+                                <tr>
+
+
+                                    <td colspan="3">
+                                         {!! $fd7FormList->relevant_information !!}
+
+
+
+
+
+                                                   @if(empty($fd7FormList->relevant_information_pdf))
+
+
+                                        @else
+
+                                        <a href="{{ route('fd7formextrapdf',['title'=>'relevant_information_pdf','id'=>$fd7FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                               @endif
+
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <th style="text-align: center;" rowspan="2">৯.</th>
+
+                                    <td style="font-weight:bold;" colspan="3">বৈদেশিক অনুদান গ্রহণ সংক্রান্ত ব্যাংকের তথ্যাদি:</td>
+
+
+                                </tr>
+
+                                <tr>
+
+
+                                    <td colspan="3">
+
+
+
+                                         {!! $fd7FormList->bank_detail !!}
+
+
+
+
+                                                   @if(empty($fd7FormList->bank_detail_pdf))
+
+
+                                                   @else
+
+                                                   <a href="{{ route('fd7formextrapdf',['title'=>'bank_detail_pdf','id'=>$fd7FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                                          @endif
+
+
+                                    </td>
+
+                                </tr>
+
+
+
+                            </table>
+
                         </div>
 
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>দাতা সংস্থার বিবরণ</td>
-                                <td>: {{ $fd7FormList->donor_organization_description }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রধান নির্বাহী কর্মকর্তা/ দাতা</td>
-                                <td>: {{ $fd7FormList->donor_organization_chief_type }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>নাম</td>
-                                <td>: {{ $fd7FormList->donor_organization_chief_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>দাতা সংস্থার নাম</td>
-                                <td>: {{ $fd7FormList->donor_organization_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>যোগাযোগগের ঠিকানা</td>
-                                <td>: {{ $fd7FormList->donor_organization_address }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>টেলিফোন</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->donor_organization_phone) }}</td>
-                            </tr>
-
-
-                            <tr>
-                                <td>ইমেইল</td>
-                                <td>: {{ $fd7FormList->donor_organization_email }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>ওয়েবসাইট</td>
-                                <td>: {{ $fd7FormList->donor_organization_website }}</td>
-                            </tr>
-
-                        </table>
-
-                        <div class="form9_upper_box">
-                            <h3>দাতা সংস্থার প্রতিশ্রুতিপত্র</h3>
-                        </div>
-
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>চলমান প্রকল্পের নাম</td>
-                                <td>: {{ $fd7FormList->ongoing_prokolpo_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>মোট ব্যায়</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->total_prokolpo_cost) }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>ব্যুরোর অনুমোদনের তারিখ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->date_of_bureau_approval) }}</td>
-                            </tr>
-                            <tr>
-                                <td>অনুমোদনপত্র সংযুক্ত করতে হবে</td>
-                                <td>:<a href="{{ route('authorizationLetter',$fd7FormList->id) }}" target="_blank" class="btn btn-success">View</a></td>
-                            </tr>
-                            <tr>
-                                <td>মূল প্রকল্পের শতকরা কতভাগ এই প্রকল্পের ব্যায় করা হয়</td>
-                                <td>: {{ $fd7FormList->percentage_of_the_original_project }}</td>
-                            </tr>
-
-                            <tr>
-                                <td>চলমান প্রকল্পের উপর কোন বিরূপ প্রভাব ফেলবে কি না</td>
-                                <td>: {{ $fd7FormList->adverse_impact_on_the_ongoing_project }}</td>
-                            </tr>
-
-
-                            <tr>
-                                <td>দাতা সংস্থার প্রতিশ্রুতিপত্র (কপি সংযুক্ত করতে হবে)</td>
-                                <td>:<a href="{{ route('letterFromDonorAgency',$fd7FormList->id) }}" target="_blank" class="btn btn-success">View</a></td>
-                            </tr>
-
-
-
-                        </table>
-
-
-                        <div class="form9_upper_box">
-                            <h3>প্রকল্প এলাকা</h3>
-                        </div>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>বিভাগ</th>
-                                <th>জেলা/সিটি কর্পোরেশন</th>
-                                <th>উপজেলা/থানা/পৌরসভা/ওয়ার্ড</th>
-                                <th>প্রকল্পের ধরণ</th>
-                                <th>বরাদ্দকৃত বাজেট</th>
-                                <th>মোট উপকারভোগীর সংখ্যা</th>
-                            </tr>
-                            @foreach($prokolpoAreaList as $prokolpoAreaListAll)
-                          @include('front.include.globalTableView')
-                            @endforeach
-                        </table>
-
-                        <div class="form9_upper_box">
-                            <h3>কার্যক্রমের মেয়াদকাল</h3>
-                        </div>
-
-
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>আরম্ভের তারিখ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_prokolpo_start_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>সমাপ্তির তারিখ</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->ngo_prokolpo_end_date) }}</td>
-                            </tr>
-
-                        </table>
-
-
-                        <table class="table table-bordered">
-                            <tr>
-                                <td>দুর্যোগকালীন ও দুর্যোগ পরবর্তী জরুরি ত্রাণ সহায়তা কার্যক্রম/ প্রকল্প প্রস্তাব ফরম পিডিএফ /এফডি -৭ ফরম </td>
-                                <td>: <a href="{{ route('reliefAssistanceProjectProposalPdf',$fd7FormList->id) }}" target="_blank" class="btn btn-success">View</a></td>
-                            </tr>
-                        </table>
                     </div>
                 </div>
                 <div class="card mt-5">
                     <div class="card-body">
+
+
+                               <!-- new code start --->
+
+                  <div class="d-flex justify-content-between mt-3">
+                    <div class="">
+
+
+                    </div>
+                    <div class="">
+
+
+                        <a target="_blank" href="{{ route('fd2pdfview',base64_encode($fd7FormList->id)) }}" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="{{ trans('form 8_bn.download_pdf')}}"  >
+                            <i class="fa fa-print"></i>
+                        </a>
+
+
+
+                    </div>
+                </div>
+
+                <!-- new code end -->
                         <div class="form9_upper_box">
                             <h3>এফডি -২ ফরম</h3>
                             <h4>অর্থছাড়ের আবেদন ফরম</h4>
                         </div>
-                        <table class="table table-borderless">
-                            <tr>
-                                <td>সংস্থার নাম</td>
-                                <td>: {{ $fd2FormList->ngo_name }}</td>
-                            </tr>
-                            <tr>
-                                <td>সংস্থার ঠিকানা</td>
-                                <td>: {{ $fd2FormList->ngo_address }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রকল্প নাম</td>
-                                <td>: {{ $fd2FormList->ngo_prokolpo_name }}</td>
-                            </tr>
-                            <?php
-                            $subjectIdList  = explode(",",$fd7FormList->subject_id);
-                            $subjectListMain = DB::table('project_subjects')->whereIn('id',$subjectIdList)->select('name')
-                            ->get();
 
-                            ?>
-                            <tr>
-                                <td>প্রকল্পের বিষয়</td>
-                                <td>:
-                                     @foreach($subjectListMain as $key=>$subjectListMains)
+                           <!-- start new code --->
 
-                                     @if(count($subjectListMain) == 1 )
+                           <table class="table table-borderless" style="width:100%">
 
-                                     {{ $subjectListMains->name }}
+<!-- step three start -->
 
-                                     @else
+<tr>
+<th style="text-align: center;">১.</th>
+<td style="font-weight:bold;width:30%" >সংস্থার নাম ও ঠিকানা:</td>
+<td style="" colspan="2">
+{{ $fd2FormList->ngo_name }} ও {{ $fd2FormList->ngo_address }}
+</td>
 
-                                     @if(count($subjectListMain) == ($key+1))
-                                     {{ $subjectListMains->name }} |
+</tr>
 
-                                     @else
+<tr>
+<th style="text-align: center;">২.</th>
+<td style="font-weight:bold;width:30%" >প্রকল্পের নাম:</td>
+<td style="" colspan="2">{{ $fd2FormList->ngo_prokolpo_name }}</td>
+</tr>
 
-                                     {{ $subjectListMains->name }},
 
-                                     @endif
+<tr>
+<th style="text-align: center;">৩.</th>
+<td style="font-weight:bold;width:30%" >প্রকল্পের মেয়াদ, আরম্ভের তারিখ, সমাপ্তির তারিখ :</td>
+<td style="" colspan="2">
+{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->ngo_prokolpo_duration) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->ngo_prokolpo_start_date) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->ngo_prokolpo_end_date) }}
+</td>
 
-                                     @endif
+</tr>
 
-                                     @endforeach
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>কোন দেশীয় সংস্থা</td>
-                                <td>: {{ $ngo_list_all->country_of_origin }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রকল্প মেয়াদ </td>
-                                <td>: {{ $fd2FormList->ngo_prokolpo_duration }}</td>
-                            </tr>
-                            <tr>
-                                <td>আরম্ভের তারিখ </td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->ngo_prokolpo_start_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>সমাপ্তির তারিখ </td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->ngo_prokolpo_end_date) }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রস্তাবিত অর্থছাড়ের পরিমান (বাংলাদেশী টাকা )</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->proposed_rebate_amount_bangladeshi_taka) }}</td>
-                            </tr>
-                            <tr>
-                                <td>প্রস্তাবিত অর্থছাড়ের পরিমান (বৈদেশিক মুদ্রায় )</td>
-                                <td>: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->proposed_rebate_amount_in_foreign_currency) }}</td>
-                            </tr>
-                            <tr>
-                                <td>এফডি ২ ফর্ম আপলোড </td>
-                                <td><a href="{{ route('downloadFd2DetailForFd7',$fd2FormList->id) }}" target="_blank" class="btn btn-success">View</a></td>
-                            </tr>
+<tr>
+<th style="text-align: center;" >৪.</th>
+<td style="font-weight:bold;width:30%" >প্রস্তাবিত অর্থছাড়ের পরিমাণ (বাংলাদেশী টাকা ও বৈদেশিক মুদ্রায়):</td>
+<td style="" colspan="2">
+{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->proposed_rebate_amount_bangladeshi_taka) }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->proposed_rebate_amount_in_foreign_currency) }}
+</td>
+
+</tr>
+
+<tr>
+<th style="text-align: center;" >৫.</th>
+<td style="font-weight:bold;width:30%" >১ম/২য়/৩য়/৪র্থ বছরে ব্যাংক হতে উত্তোলিত অর্থের পরিমাণ:</td>
+<td style="" colspan="2">
+
+
+    @if($fd2FormList->amount_withdrawn_year == 1)
+    ১ম বছর : {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->amount_withdrawn)  }}
+    @elseif($fd2FormList->amount_withdrawn_year == 2)
+    ২য় বছর : {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->amount_withdrawn)  }}
+    @elseif($fd2FormList->amount_withdrawn_year == 3)
+    ৩য় বছর : {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->amount_withdrawn)  }}
+
+    @elseif($fd2FormList->amount_withdrawn_year == 4)
+    ৪র্থ বছর : {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->amount_withdrawn)  }}
+    @endif
+
+
+</td>
+
+</tr>
+
+<tr>
+<th style="text-align: center;"  rowspan="2">৬.</th>
+<td style="font-weight:bold;" colspan="3">সংশ্লিষ্ট প্রকল্পের বিগত বছরের অর্জন:</td>
+
+
+</tr>
+<tr>
+<td colspan="3">
+
+<div class="table-responsive" >
+
+
+<table class="table table-bordered">
+<tr style="text-align: center">
+    <th rowspan="2">ক্রমিক নং</th>
+    <th rowspan="2">কার্যক্রমের নাম </th>
+    <th colspan="2">বিগত বছরের লক্ষ্যমাত্রা </th>
+    <th colspan="2">অর্জন(%) </th>
+    <th rowspan="2">উপকারভোগীর সংখ্যা </th>
+    <th rowspan="2">মন্তব্য (যদি থাকে)</th>
+
+</tr>
+<tr style="text-align: center;">
+    <th>বাস্তব</th>
+    <th>আর্থিক </th>
+    <th>বাস্তব</th>
+    <th>আর্থিক </th>
+</tr>
+<?php
+
+$totalBeni = 0;
+
+?>
+@foreach($fd2AllFormLastYearDetail as $key=>$fd2AllFormLastYearDetails)
+<?php
+
+$totalBeni = $totalBeni + $fd2AllFormLastYearDetails->total_benificiari;
+?>
+<tr>
+    <td>{{ $key+1 }}</td>
+    <td>{{ $fd2AllFormLastYearDetails->prokolpoName }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2AllFormLastYearDetails->last_year_target_real) }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2AllFormLastYearDetails->last_year_target_financial) }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2AllFormLastYearDetails->last_year_achievment_real) }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2AllFormLastYearDetails->last_year_achievment_financial) }}</td>
+    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2AllFormLastYearDetails->total_benificiari) }}</td>
+
+    <td>{{ $fd2AllFormLastYearDetails->comment }}</td>
+
+</tr>
+@endforeach
+<tr>
+    <th colspan="6">মোট উপকারভোগীর সংখ্যা - {{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalBeni) }}</th>
+
+    <td></td>
+    <td></td>
+</tr>
+
+</table>
+
+</div>
+
+
+@if(empty($fd2FormList->last_year_achivment_pdf))
+
+
+@else
+
+<a href="{{ route('fd2formextrapdf',['title'=>'last_year_achivment_pdf','id'=>$fd2FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+@endif
+</td>
+</tr>
+<tr>
+<th rowspan="3">৭.</th>
+
+<th colspan="3">সংস্থার মাদার একাউন্ট সংক্রান্ত তথ্যাবলী:</th>
+
+</tr>
+<tr>
+
+
+<th>(ক) ব্যাংকের নাম:</th>
+<td>{{ $fd2FormList->bank_name }}</td>
+
+</tr>
+<tr>
+
+
+<th>(খ) ব্যাংকের ঠিকানা ও হিসাব নম্বর:</th>
+<td>{{ $fd2FormList->bank_adddress }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->bank_account_number) }}</td>
+
+</tr>
+
+<tr>
+<th style="text-align: center;">৮.</th>
+<td style="font-weight:bold;" colspan="3">গুরুত্বপূর্ণ যেকোনো তথ্য:</td>
+
+</tr>
+
+<tr>
+<td style="" colspan="4">
+@if(count($fd2OtherInfo) == 0)
+
+
+@else
+
+
+<div class="table-respnsive">
+<table class="table table-bordered">
+    @foreach($fd2OtherInfo as $fd2OtherInfoAll)
+    <tr>
+        <td>{{ $fd2OtherInfoAll->file_name }}</td>
+        <td><a href="{{ route('downloadFd2DetailForFd7Other',$fd2OtherInfoAll->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a></td>
+    </tr>
+    @endforeach
+
+</table>
+</div>
+
+@endif
+
+
+
+</td>
+
+</tr>
+
+
+
+
                         </table>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>ফাইলের নাম</th>
-                                <th>ফাইল</th>
-                            </tr>
-                            @foreach($fd2OtherInfo as $fd2OtherInfoAll)
-                            <tr>
-                                <td>{{ $fd2OtherInfoAll->file_name }}</td>
-                                <td><a href="{{ route('downloadFd2DetailForFd7Other',$fd2OtherInfoAll->id) }}" target="_blank" class="btn btn-success">View</a></td>
-                            </tr>
-                            @endforeach
 
-                        </table>
+                        <!-- end new code --->
+
                     </div>
                 </div>
 

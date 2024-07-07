@@ -362,7 +362,7 @@
                                                         <textarea required name="purpose_of_donation" class="form-control summernote" id=""
                                                         placeholder="বিস্তারিত বিবরণ"></textarea>
 
-                                                        <input type="file" name="foreigner_donor_full_name" class="form-control mt-3" id=""
+                                                        <input type="file" name="purpose_of_donation_pdf" class="form-control mt-3" id=""
                                                            placeholder="পূর্ণ নাম">
                                                     </td>
                                                 </tr>
@@ -710,19 +710,19 @@
                                                 <tr>
 
 
-                                                    <td colspan="3"><input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                    <td colspan="3"><input type="text" required name="bond_paper_available_or_not" class="form-control mt-1" id=""
                                                         placeholder="প্রতিশ্রতিপত্র আছে কি না">
 
-                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        <input type="text" required name="bond_paper_work_name" class="form-control mt-1" id=""
                                                         placeholder="কাজের নাম">
 
-                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        <input type="text" required name="bond_paper_amount" class="form-control mt-1" id=""
                                                         placeholder="অর্থের পরিমাণ">
 
-                                                        <input type="text" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        <input type="text" required name="bond_paper_duration" class="form-control mt-1" id=""
                                                         placeholder="মেয়াদকাল">
 
-                                                        <input type="file" required name="sign_in_closing_report" class="form-control mt-1" id=""
+                                                        <input type="file" required name="bond_paper_pdf" class="form-control mt-1" id=""
                                                         placeholder="প্রতিশ্রতিপত্র আছে কি না">
 
                                                     </td>
