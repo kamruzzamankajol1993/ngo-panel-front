@@ -357,6 +357,22 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('verifiedFcOneForm/{id}', 'verifiedFcOneForm')->name('verifiedFcOneForm');
         Route::get('fc1FormStepTwo/{id}', 'fc1FormStepTwo')->name('fc1FormStepTwo');
         Route::get('fc1FormStepThree/{id}', 'fc1FormStepThree')->name('fc1FormStepThree');
+
+
+
+        Route::get('fc1FormStepTwoSDGDelete', 'fc1FormStepTwoSDGDelete')->name('fc1FormStepTwoSDGDelete');
+        Route::post('fc1FormStepTwoSDG', 'fc1FormStepTwoSDG')->name('fc1FormStepTwoSDG');
+        Route::post('fc1FormStepTwoSDGUpdate', 'fc1FormStepTwoSDGUpdate')->name('fc1FormStepTwoSDGUpdate');
+
+
+        Route::get('fc1FormStepTwoBudgetDelete', 'fc1FormStepTwoBudgetDelete')->name('fc1FormStepTwoBudgetDelete');
+        Route::post('fc1FormStepTwoBudget', 'fc1FormStepTwoBudget')->name('fc1FormStepTwoBudget');
+        Route::post('fc1FormStepTwoBudgetUpdate', 'fc1FormStepTwoBudgetUpdate')->name('fc1FormStepTwoBudgetUpdate');
+
+        Route::get('prokolpoAreaForFc1Delete', 'prokolpoAreaForFc1Delete')->name('prokolpoAreaForFc1Delete');
+        Route::post('prokolpoAreaForFc1', 'prokolpoAreaForFc1')->name('prokolpoAreaForFc1');
+        Route::post('prokolpoAreaForFc1Update', 'prokolpoAreaForFc1Update')->name('prokolpoAreaForFc1Update');
+
     });
 
 

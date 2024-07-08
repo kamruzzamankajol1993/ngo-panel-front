@@ -14,6 +14,8 @@ class ProkolpoArea extends Model
     protected $fillable = [
         'type',
         'formId',
+        'user_id',
+        'upload_type',
         'division_name',
         'district_name',
         'city_corparation_name',

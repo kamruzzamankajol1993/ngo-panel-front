@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('prokolpo_areas', function (Blueprint $table) {
             $table->id();
             $table->string('type')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('upload_type')->nullable();
             $table->string('formId')->nullable();
             $table->string('division_name')->nullable();
             $table->string('district_name')->nullable();

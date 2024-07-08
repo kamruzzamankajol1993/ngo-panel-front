@@ -60,6 +60,7 @@ class Fc1Form extends Model
         'comment',
         'file_last_check_date',
         'check_status',
+        'step_status',
 
 
 ];

@@ -5,7 +5,29 @@
 @endsection
 
 @section('css')
+<style>
 
+    .alertify .ajs-body .ajs-content {
+        font-weight: bolder;
+        color:red;
+        font-size: 20px;
+    }
+
+    .alertify .ajs-header{
+
+        color:red;
+        font-size: 20px;
+
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button{
+
+        background-color: #006A4E;
+        color: #fff;
+
+    }
+
+</style>
 @endsection
 
 @section('body')
@@ -200,6 +222,8 @@
 
                                     <form action="{{ route('fc1Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
+
+                                    <input type="hidden" id="fcOneId" value="{{ $fd6Id }}"/>
                                      <!-- step one start -->
 
                                      <div class="row">
@@ -233,27 +257,9 @@
                                                     {{-- <td style="text-align: center;">ক.</td> --}}
                                                     <td colspan="3" rowspan="3">
 
-                                                        <div class="table-responsive">
+                                                        <div class="table-responsive" id="tableAjaxDatapro">
 
-
-                                                            <div class="table-responsive">
-
-
-                                                                <table class="table table-bordered">
-                                                                    <tr style="text-align: center">
-                                                                        <th>ক্র : নং :</th>
-                                                                        <th>কার্যক্রম</th>
-                                                                        <th>প্রাক্কলিত ব্যয় </th>
-                                                                        <th>কর্ম এলাকা<br> (জেলা ,উপজেলা )</th>
-                                                                        <th>সময়সীমা </th>
-                                                                        <th>উপকারভোগীর সংখ্যা </th>
-                                                                        <th></th>
-                                                                    </tr>
-
-
-                                                                </table>
-
-                                                            </div>
+                                                    @include('front.fc1Form.fc1FormStepTwoBudget')
                                                         </div>
 
 
@@ -294,22 +300,8 @@
 
                                                     <td colspan="3">
 
-                                                        <div class="table-responsive">
-
-
-                                                            <table class="table table-bordered">
-                                                                <tr style="text-align: center">
-                                                                    <th>অভিষ্ঠ(Goal)</th>
-                                                                    <th>লক্ষ্যমাত্রা(Target)</th>
-                                                                    <th>বাজেট বরাদ্দ </th>
-                                                                    <th>যৌক্তিকতা </th>
-                                                                    <th>মন্তব্য</th>
-                                                                    <th></th>
-                                                                </tr>
-
-
-                                                            </table>
-
+                                                        <div class="table-responsive" id="tableAjaxDataSDG">
+                                            @include('front.fc1Form.fc1FormStepTwoSDG')
                                                         </div>
                                                     </td>
 
@@ -336,9 +328,9 @@
                                         <a href="{{ route('fc1Form.create') }}" class="btn btn-danger"
                                                 >পূর্ববর্তী পৃষ্ঠায় যান
                                     </a>
-                                        <a href="{{ route('fc1FormStepThree',1) }}" style="margin-left:10px;" class="btn btn-registration"
+                                        <button id="finalStepToThree"  style="margin-left:10px;" class="btn btn-registration"
                                                 >পরবর্তী পৃষ্ঠা
-                                        </a>
+                                </button>
                                     </div>
                                 </form>
                                 </div>
@@ -355,241 +347,18 @@
 
 </section>
 
-<!--modal-->
-<div class="modal modal-xl fade" id="exampleModal1"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
 
-                    খাতভিত্তিক ব্যয় বিভাজন  বিবরণী
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">জেলা <span class="text-danger">*</span></label>
-                                        {{-- <input type="text" required name="district_name[]" class="form-control" id=""
-                                        placeholder=""> --}}
-
-                                        <select required name="district_name[]" class="form-control district_name" id="district_name0">
-                                            <option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>
-
-
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">উপজেলা</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">কার্যক্রম <span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">প্রাক্কলিত ব্যয়</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">সময়সীমা</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">মোট উপকারভোগীর সংখ্যা<span class="text-danger">*</span></label>
-                                        <input type="text" required name="beneficiaries_total[]" class="form-control" id="" placeholder="">
-                                    </div>
-
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<!-- end modal -->
 
 
 <!--modal-->
-<div class="modal modal-xl fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-
-                    টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততার বিবরণী
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-
-
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">অভিষ্ঠ(Goal)</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">লক্ষ্যমাত্রা(Target) <span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">বাজেট বরাদ্দ</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">যৌক্তিকতা</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="" class="form-label">মন্তব্য<span class="text-danger">*</span></label>
-                                        <textarea required name="beneficiaries_total[]" class="form-control" id="" placeholder=""></textarea>
-                                    </div>
-
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
+@include('front.fc1Form._partial.stepTwoSDGModal')
+@include('front.fc1Form._partial.stepTwoBudgetModal')
 <!-- end modal -->
 
 
 @endsection
 
 @section('script')
-
-<script>
-
-    ///
-
-
-        $(document).on('change', 'select.division_name', function () {
-
-var main_id = $(this).attr('id');
-var get_id_from_main = main_id.slice(13);
-var getMainValue = $('#division_name'+get_id_from_main).val();
-
- // var getMainValue = $(this).val();
-
-  //alert(getMainValue);
-
-
-  $.ajax({
-    url: "{{ route('getDistrictList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#district_name"+get_id_from_main).html('');
-      $("#district_name"+get_id_from_main).html(data);
-    }
-    });
-
-// });
-
-
-$.ajax({
-    url: "{{ route('getCityCorporationList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#city_corparation_name"+get_id_from_main).html('');
-      $("#city_corparation_name"+get_id_from_main).html(data);
-    }
-    });
-
-});
-
-
-
-
-
-
-    ///
-$("#ngo_prokolpo_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#project_name').val(getMainValue);
-
-});
-
-
-$("#ngo_prokolpo_duration").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#duration_of_project').val(getMainValue);
-
-});
-
-
-$("#donor_organization_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#donor_organization_name_two').val(getMainValue);
-
-});
-
-
-
-
-
-
-
-
-</script>
-
-
+@include('front.fc1Form._partial.script')
 @include('front.include.globalScript')
-
-{{-- <script>
-    var i = 0;
-    $("#dynamic-ar").click(function () {
-        ++i;
-        $("#dynamicAddRemove").append('<tr><td style="width: 20%"><label for="" class="form-label">বিভাগ</label><select required name="division_name[]" class="form-control division_name" id="division_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>@foreach($divisionList as $districtListAll)<option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>@endforeach</select></td><td style="width: 30%"><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">জেলা</label><select required name="district_name[]" class="form-control district_name" id="district_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div><div class="col-lg-12 mb-3"><label for="" class="form-label">সিটি কর্পোরেশন</label><select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name'+i+'"><option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div></div></td><td><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">উপজেলা</label><input type="text" name="upozila_name[]" class="form-control" id="" placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">থানা</label><input type="text"  required name="thana_name[]" class="form-control" id=""placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">পৌরসভা</label><input type="text" name="municipality_name[]" class="form-control" id=""placeholder=""></div></div></td><td><label for="" class="form-label">ইউনিয়ন/ওয়ার্ড</label><input type="text" name="ward_name[]" class="form-control" id="" placeholder=""></td><td><input type="number" name="allocated_budget[]" required class="form-control" id="" placeholder=""></td><td><input type="number" name="number_of_beneficiaries[]" required class="form-control" id="" placeholder=""></td><td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="bi bi-file-earmark-x-fill"></i></button></td></tr>');});
-    $(document).on('click', '.remove-input-field', function () {
-        $(this).parents('tr').remove();
-    });
-
-</script> --}}
-
 @endsection
