@@ -71,7 +71,19 @@
       .custom_table_border tr th,
       .custom_table_border tr td
             {
-                border: 1px solid black;
+                border: 1px solid rgb(255, 255, 255);
+                /* //text-align: center; */
+            }
+
+            .custom_table_borderOne
+      {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .custom_table_borderOne tr th,
+      .custom_table_borderOne tr td
+            {
+                border: 1px solid rgb(15, 15, 15);
                 text-align: center;
             }
     </style>
@@ -91,16 +103,16 @@
      <div class="row">
         <div class="col-lg-12 col-sm-12">
 
-            <table class="table table-borderless" style="width:100%">
+            <table class="table table-borderless custom_table_border" style="width:100%">
 
 
 
                 <tr>
-                    <th style="font-weight:bold;">১. </th>
-                    <td style="font-weight:bold;text-align:left;" colspan="2">সংস্থার নাম, ঠিকানা (ফোন ,মোবাইল, ইমেইল ও ওয়েবসাইটসহ) :</td>
+                    <td style="font-weight:bold;">১. </td>
+                    <td style="text-align:left;font-weight:bold;" colspan="2">সংস্থার নাম, ঠিকানা (ফোন ,মোবাইল, ইমেইল ও ওয়েবসাইটসহ):</td>
                     <td style="">
 
-                        {{ $fc1FormList->ngo_name }}, {{ $ngo_list_all->organization_address }}, {{ $ngo_list_all->tele_phone_number }}, {{ $ngo_list_all->phone }}, {{ $ngo_list_all->email }} ও {{$fc1FormList->ngo_website}}
+                        {{ $fc1FormList->ngo_name }}, {{ $ngo_list_all->organization_address }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->tele_phone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->phone) }}, {{ $ngo_list_all->email }} ও {{$fc1FormList->ngo_website}}
 
                     </td>
 
@@ -112,32 +124,32 @@
                 <!-- step two strat --->
 
                 <tr>
-                    <th style="text-align: center;" rowspan="4">২.</th>
+                    <td style="font-weight:bold;text-align: center;" rowspan="4">২.</td>
 
-                    <td style="font-weight:bold;text-align:left;" colspan="2">প্রকল্পের মেয়াদ</td>
-                    <td></td>
+                    <td style="font-weight:bold;" colspan="3">প্রকল্পের মেয়াদ : </td>
+
 
                 </tr>
 
                 <tr>
 
                     <td style="text-align: center;">ক.</td>
-                    <td> আরম্ভের তারিখ </td>
-                    <td>{{ $fc1FormList->ngo_prokolpo_start_date }}</td>
+                    <td> আরম্ভের তারিখ : </td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->ngo_prokolpo_start_date) }}</td>
 
                 </tr>
                 <tr>
 
                     <td style="text-align: center;">খ.</td>
-                    <td>সমাপ্তির তারিখ</td>
-                    <td>{{ $fc1FormList->ngo_prokolpo_end_date }}</td>
+                    <td>সমাপ্তির তারিখ :</td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->ngo_prokolpo_end_date) }}</td>
 
                 </tr>
 
                 <tr>
 
                     <td style="text-align: center;">গ.</td>
-                    <td>প্রকল্পের ধরণ  </td>
+                    <td>প্রকল্পের ধরণ :</td>
                     <td>
 
                         <?php
@@ -180,58 +192,38 @@
                 <!-- step three start -->
 
                 <tr>
-                    <th style="text-align: center;" rowspan="2">৩.</th>
-                    <td style="font-weight:bold;" colspan="3">অনুদান গ্রহণের উদ্দেশ্য</td>
+                    <td style="text-align: center;font-weight:bold;" rowspan="2">৩.</td>
+                    <td style="font-weight:bold;" colspan="3">অনুদান গ্রহণের উদ্দেশ্য (বিস্তারিত বিবরণ) :</td>
 
 
                 </tr>
                 <tr>
                     <td colspan="3">
-
-
                         {!! $fc1FormList->purpose_of_donation !!}
 
-
-
-
                            @if(empty($fc1FormList->purpose_of_donation_pdf))
-
-
                            @else
-
-
-                           <?php
-
-                           $file_path = url($fc1FormList->purpose_of_donation_pdf);
-                           $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                           $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                           ?>
-                            <b>{{ $filename.'.'.$extension }}</b>
+                           সংযুক্ত
                             @endif
                     </td>
                 </tr>
               <!-- step one start  -->
 
                 <tr>
-                    <th style="text-align: center;" rowspan="4">৪.</th>
+                    <td style="text-align: center;font-weight:bold;" rowspan="2">৪.</td>
 
-                    <td style="font-weight:bold;" colspan="2">কর্ম এলাকা ও বাজেট</td>
-                    <td></td>
+                    <td style="font-weight:bold;" colspan="3">কর্ম এলাকা ও বাজেট</td>
+
 
                 </tr>
                 <tr>
 
                     {{-- <td style="text-align: center;">ক.</td> --}}
-                    <td colspan="3" rowspan="3">
+                    <td colspan="3">
 
-                        <div class="table-responsive" id="tableAjaxDatapro">
 
-                            <table class="table table-bordered">
+
+                            <table class="table table-bordered custom_table_borderOne">
 
                                 <tr style="text-align: center;">
                                     <th >ক. কর্ম এলাকা (জেলা ও উপজেলা উল্লেখসহ) </th>
@@ -270,45 +262,36 @@
 
                                         প্রকল্পের ধরণ: {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
                                         <br>
-                                        বরাদ্দকৃত বাজেট: {{ $prokolpoAreaListAll->allocated_budget }}
+                                        বরাদ্দকৃত বাজেট: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->allocated_budget) }}
                                     </span>
 
                                         </td>
-                                    <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->number_of_beneficiaries) }}</td>
 
                                 </tr>
                                 @endforeach
 
                             </table>
-                        </div>
+
 
             </td>
 
 
                 </tr>
-                <tr>
-                </tr>
 
                 <tr>
-                </tr>
+                    <td style="text-align: center;font-weight:bold;" rowspan="19">৫.</td>
 
-                <!-- step three end -->
-
-                <!-- step four start --->
-
-                <tr>
-                    <th style="text-align: center;" rowspan="19">৫.</th>
-
-                    <th style="" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
+                    <td style="font-weight:bold;" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</td>
 
                 </tr>
 
 
 
-                <tr >
+                <tr>
 
-                    <td style="text-align: center;">অ.</td>
-                    <th>ব্যক্তির ক্ষেত্রে</th>
+                    <td style="">অ.</td>
+                    <td>ব্যক্তির ক্ষেত্রে :</td>
                     <td>
 
                     </td>
@@ -318,7 +301,7 @@
                 <tr>
 
                     <td style="text-align: center;">ক.</td>
-                    <td>পূর্ণ নাম </td>
+                    <td>পূর্ণ নাম : </td>
                     <td>{{ $fc1FormList->foreigner_donor_full_name }}</td>
 
                 </tr>
@@ -326,7 +309,7 @@
                 <tr>
 
                     <td style="text-align: center;">খ.</td>
-                    <td>পেশা </td>
+                    <td>পেশা :</td>
                     <td>{{ $fc1FormList->foreigner_donor_occupation }}</td>
 
                 </tr>
@@ -334,18 +317,17 @@
                 <tr>
 
                     <td style="text-align: center;">গ.</td>
-                    <td>যোগাযোগের ঠিকানা </td>
+                    <td>যোগাযোগের ঠিকানা :</td>
                     <td>{{ $fc1FormList->foreigner_donor_address }}</td>
 
                 </tr>
-
                 <tr>
 
                     <td style="text-align: center;">ঘ.</td>
-                    <td>টেলিফোন, ফ্যাক্স ও ইমেইল নম্বর </td>
+                    <td>টেলিফোন, ফ্যাক্স ও ইমেইল নম্বর :</td>
                     <td>
 
-                            {{ $fc1FormList->foreigner_donor_telephone_number }}, {{ $fc1FormList->foreigner_donor_fax }} ও {{ $fc1FormList->foreigner_donor_email }}
+                            {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->foreigner_donor_telephone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->foreigner_donor_fax) }} ও {{ $fc1FormList->foreigner_donor_email }}
 
 
                     </td>
@@ -355,7 +337,7 @@
                 <tr>
 
                     <td style="text-align: center;">ঙ.</td>
-                    <td>জাতীয়তা/নাগরিকত্ব </td>
+                    <td>জাতীয়তা/নাগরিকত্ব :</td>
                     <td>{{ $fc1FormList->foreigner_donor_nationality }}</td>
 
                 </tr>
@@ -363,9 +345,9 @@
                 <tr>
 
                     <td style="text-align: center;">চ.</td>
-                    <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত
+                    <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত : <br>
                         United Nations Security Council’s Resolution (UNSCR)
-                        কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা </td>
+                        কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা</td>
                     <td>{{ $fc1FormList->foreigner_donor_is_verified }}</td>
 
                 </tr>
@@ -375,13 +357,13 @@
 
 
                     <td style="text-align: center;">ছ.</td>
-                    <td>উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা </td>
+                    <td>উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা :</td>
                     <td>{{ $fc1FormList->foreigner_donor_is_affiliatedrict }}</td>
 
                 </tr>
                 <tr>
                     <td style="text-align: center;"> আ.</td>
-                <th>সংস্থার ক্ষেত্রে</th>
+                <td>সংস্থার ক্ষেত্রে :</td>
                 <td>
 
                 </td>
@@ -391,7 +373,7 @@
 <tr>
 
                     <td style="text-align: center;">ক.</td>
-                    <td>সংস্থার নাম </td>
+                    <td>সংস্থার নাম :</td>
                     <td>{{ $fc1FormList->organization_name }}</td>
 
                 </tr>
@@ -400,7 +382,7 @@
                 <tr>
 
                     <td style="text-align: center;">খ.</td>
-                    <td>অফিস/ সংস্থার ঠিকানা </td>
+                    <td>অফিস/ সংস্থার ঠিকানা :</td>
                     <td>{{$fc1FormList->organization_address }}</td>
 
                 </tr>
@@ -408,15 +390,15 @@
                 <tr>
 
                     <td style="text-align: center;">গ.</td>
-                    <td>টেলিফোন, ফ্যাক্স নম্বর </td>
-                    <td>{{ $fc1FormList->organization_telephone_number }}, {{ $fc1FormList->organization_fax }}</td>
+                    <td>টেলিফোন, ফ্যাক্স নম্বর :</td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_telephone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_fax) }}</td>
 
                 </tr>
 
                 <tr>
 
                     <td style="text-align: center;">ঘ.</td>
-                    <td>ই-মেইল ও ওয়েবসাইট </td>
+                    <td>ই-মেইল ও ওয়েবসাইট :</td>
                     <td>{{ $fc1FormList->organization_email }} ও {{ $fc1FormList->organization_website }}</td>
 
                 </tr>
@@ -424,7 +406,7 @@
                 <tr>
 
                     <td style="text-align: center;">ঙ.</td>
-                    <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত
+                    <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত : <br>
                         United Nations Security Council’s Resolution (UNSCR)
                         কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা </td>
                     <td>
@@ -433,7 +415,6 @@
                     </td>
 
                 </tr>
-
                 <tr>
 
                     <td style="text-align: center;">চ.</td>
@@ -475,57 +456,44 @@
                     <td>{!! $fc1FormList->objectives_of_the_organization !!}</td>
 
                 </tr>
-                <!-- steap four end -->
-
-                <!-- step five start -->
-
                 <tr>
-                    <th style="text-align: center;" rowspan="2">৬.</th>
-
-                    <td style="font-weight:bold;" colspan="3">প্রতিশ্রতিপত্র আছে কি না <br> (কাজের নাম,অর্থের পরিমাণ ও মেয়াদকাল সুস্পষ্টভাবে উল্লেখপূর্বক কপি সংযুক্ত  করতে হবে)</td>
+                    <td style="text-align: center;font-weight:bold;" rowspan="2">৬.</td>
+                    <td style="font-weight:bold;" colspan="3">প্রতিশ্রতিপত্র আছে কি না: <br> (কাজের নাম,অর্থের পরিমাণ ও মেয়াদকাল সুস্পষ্টভাবে উল্লেখপূর্বক কপি সংযুক্ত  করতে হবে)</td>
 
 
                 </tr>
-
                 <tr>
-
-
                     <td colspan="3">
 
-                       {{ $fc1FormList->bond_paper_available_or_not }}, {{ $fc1FormList->bond_paper_work_name }}, {{ $fc1FormList->bond_paper_amount }}, {{ $fc1FormList->bond_paper_duration }}
+
+                            {{ $fc1FormList->bond_paper_available_or_not }}, {{ $fc1FormList->bond_paper_work_name }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bond_paper_amount) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bond_paper_duration) }}
 
 
-<br>
-                        @if(empty($fc1FormList->bond_paper_pdf))
+                            <br>
+                                                                        @if(empty($fc1FormList->bond_paper_pdf))
 
 
-                        @else
+                                                                        @else
 
 
-                        <?php
+                                                                        <?php
 
-                        $file_path = url($fc1FormList->bond_paper_pdf);
-                        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+                                                                        $file_path = url($fc1FormList->bond_paper_pdf);
+                                                                        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
 
-                        $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
+                                                                        $extension = pathinfo($file_path, PATHINFO_EXTENSION);
 
 
-                        ?>
-                         <b>{{ $filename.'.'.$extension }}</b>
-                         @endif
 
+
+                                                                        ?>
+                                                                         সংযুক্ত
+                                                                         @endif
                     </td>
-
                 </tr>
 
-                <!-- step five end --->
-
-                <!-- step six start -->
-
                 <tr>
-                    <th style="text-align: center;" rowspan="4">৭.</th>
+                    <td style="text-align: center;font-weight:bold;" rowspan="4">৭.</td>
 
                     <td style="font-weight:bold;" colspan="2">অনুদানের বিস্তারিত বিবরণ</td>
                     <td></td>
@@ -535,28 +503,27 @@
                 <tr>
 
                     <td style="text-align: center;">ক.</td>
-                    <td>  বৈদেশিক মুদ্রার পরিমান</td>
-                    <td>{{$fc1FormList->organization_amount_of_foreign_currency }}</td>
+                    <td>  বৈদেশিক মুদ্রার পরিমান :</td>
+                    <td>{{App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_amount_of_foreign_currency) }}</td>
 
                 </tr>
                 <tr>
 
                     <td style="text-align: center;">খ.</td>
-                    <td>সমপরিমাণ বাংলাদেশী টাকা </td>
-                    <td>{{ $fc1FormList->equivalent_amount_of_bd_taka }}</td>
+                    <td>সমপরিমাণ বাংলাদেশী টাকা : </td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->equivalent_amount_of_bd_taka) }}</td>
 
                 </tr>
 
                 <tr>
 
                     <td style="text-align: center;">গ.</td>
-                    <td>পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য) </td>
-                    <td>{{ $fc1FormList->commodities_value_in_bangladeshi_currency }}</td>
+                    <td>পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য) :</td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->commodities_value_in_bangladeshi_currency) }}</td>
 
                 </tr>
-
                 <tr>
-                    <th style="text-align: center;" rowspan="4">৮.</th>
+                    <td style="text-align: center;font-weight:bold;" rowspan="4">৮.</td>
 
                     <td style="font-weight:bold;" colspan="2">ব্যাংক সংক্রান্ত তথ্যাবলী</td>
                     <td></td>
@@ -566,7 +533,7 @@
                 <tr>
 
                     <td style="text-align: center;">ক.</td>
-                    <td>যে ব্যাংকের মাধ্যমে বৈদেশিক অনুদান গ্রহণ করতে ইচ্ছুক তার নাম ও ঠিকানা</td>
+                    <td>যে ব্যাংকের মাধ্যমে বৈদেশিক অনুদান গ্রহণ করতে ইচ্ছুক তার নাম ও ঠিকানা :</td>
                     <td>
        {{ $fc1FormList->bank_name }} ও {{ $fc1FormList->bank_address }}
 
@@ -576,7 +543,7 @@
                 <tr>
 
                     <td style="text-align: center;">খ.</td>
-                    <td>ব্যাংক হিসাবের নাম</td>
+                    <td>ব্যাংক হিসাবের নাম :</td>
                     <td>{{ $fc1FormList->bank_account_name }}</td>
 
                 </tr>
@@ -584,31 +551,30 @@
                 <tr>
 
                     <td style="text-align: center;">গ.</td>
-                    <td>ব্যাংক হিসাব নম্বর</td>
-                    <td>{{ $fc1FormList->bank_account_number }}</td>
+                    <td>ব্যাংক হিসাব নম্বর :</td>
+                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bank_account_number) }}</td>
 
                 </tr>
 
-                <!-- step six end -->
 
                 <tr>
-                    <th style="text-align: center;" rowspan="6">৯.</th>
+                    <td style="text-align: center;font-weight:bold;" rowspan="4">৯.</td>
 
-                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">বাজেট<br>
+                    <td style="" colspan="3"><span style="font-weight:bold;">বাজেট<br>
                         ক.খাতভিত্তিক ব্যয় বিভাজন </span></td>
-                    <td></td>
+
 
                 </tr>
                 <tr>
 
                     {{-- <td style="text-align: center;">ক.</td> --}}
-                    <td colspan="3" rowspan="3">
+                    <td colspan="3" >
 
-                        <div class="table-responsive" id="tableAjaxDatapro">
 
-                            <table class="table table-bordered">
-                                <tr style="text-align: center">
-                                    <th>ক্র : নং :</th>
+
+                            <table class="table table-bordered custom_table_borderOne" style="text-align: center">
+                                <tr >
+                                    <th style="width: 5%;">ক্র : নং :</th>
                                     <th>কার্যক্রম</th>
                                     <th>প্রাক্কলিত ব্যয় </th>
                                     <th>কর্ম এলাকা<br> (জেলা ,উপজেলা )</th>
@@ -632,7 +598,7 @@
                                 <tr>
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $sectorWiseExpenditureLists->activities }}</td>
-                                    <td>{{ $sectorWiseExpenditureLists->estimated_expenses }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->estimated_expenses) }}</td>
                                     <td>
 
                                         জেলা: {{ $sectorWiseExpenditureLists->work_area_district }}
@@ -642,8 +608,8 @@
                                         উপজেলা: {{ $sectorWiseExpenditureLists->work_area_sub_district }}
 
                                     </td>
-                                    <td>{{ $sectorWiseExpenditureLists->time_limit }}</td>
-                                    <td>{{ $sectorWiseExpenditureLists->number_of_beneficiaries }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->time_limit) }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->number_of_beneficiaries) }}</td>
 
 
                                 </tr>
@@ -657,17 +623,17 @@
                                 <tr>
                                     <td></td>
                                     <td></td>
-                                    <td>মোট - {{ $totalEstimatedExpense }}</td>
+                                    <td>মোট - {{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalEstimatedExpense) }}</td>
                                     <td></td>
                                     <td></td>
-                                    <td>মোট - {{ $totalBenificiare }}</td>
+                                    <td>মোট - {{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalBenificiare) }}</td>
 
                                 </tr>
 
 
                             </table>
 
-                        </div>
+
 
 
 
@@ -681,25 +647,19 @@
 
                 <tr>
 
-                </tr>
-                <tr>
-
-                </tr>
-                <tr>
-
-                    <td style="font-weight:bold;" colspan="2"><span style="font-weight:bold;">
+                    <td style="" colspan="3"><span style="font-weight:bold;">
                         খ.টেকসই উন্নয়ন অভিষ্ঠ (এসডিজি ) এর সাথে সম্পৃক্ততা</span></td>
 
-                        <td></td>
+
                 </tr>
 
                 <tr>
 
                     <td colspan="3">
 
-                        <div class="table-responsive" id="tableAjaxDataSDG">
-                            <table class="table table-bordered">
-                                <tr style="text-align: center">
+
+                            <table class="table table-bordered custom_table_borderOne"  style="text-align: center">
+                                <tr>
                                     <th>অভিষ্ঠ(Goal)</th>
                                     <th>লক্ষ্যমাত্রা(Target)</th>
                                     <th>বাজেট বরাদ্দ </th>
@@ -711,7 +671,7 @@
                                 <tr>
                                     <td>{{ $SDGDevelopmentGoals->goal }}</td>
                                     <td>{{ $SDGDevelopmentGoals->target }}</td>
-                                    <td>{{ $SDGDevelopmentGoals->budget_allocation }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($SDGDevelopmentGoals->budget_allocation) }}</td>
                                     <td>{{ $SDGDevelopmentGoals->rationality }}</td>
                                     <td>{{ $SDGDevelopmentGoals->comment }}</td>
 
@@ -721,31 +681,25 @@
 
                             </table>
 
-                        </div>
+
                     </td>
 
                 </tr>
-
-
-
-
-                <!-- step three end -->
-
                 <tr>
-                    <th style="text-align: center;" rowspan="4">১০.</th>
+                    <td style="text-align: center;font-weight:bold;" rowspan="2">১০.</td>
 
-                    <td style="font-weight:bold;" colspan="2">ইতোপূর্বে গৃহীত অনুদানের বিবরণ</td>
-                    <td></td>
+                    <td style="font-weight:bold;" colspan="3">ইতোপূর্বে গৃহীত অনুদানের বিবরণ</td>
+
 
                 </tr>
                 <tr>
 
                     {{-- <td style="text-align: center;">ক.</td> --}}
-                    <td colspan="3" rowspan="3">
+                    <td colspan="3" >
 
-                        <div class="table-responsive" id="tableAjaxDataDOnor">
 
-                            <table class="table table-bordered">
+
+                            <table class="table table-bordered custom_table_borderOne">
                                 <tr style="text-align: center">
                                     <th >ক্র : নং :</th>
                                     <th >উদ্দেশ্য / কার্যক্রম</th>
@@ -764,10 +718,10 @@
 
                                     <td>{{ $key+1 }}</td>
                                     <td>{{ $donationLists->purpose_or_activities }}</td>
-                                    <td>{{ $donationLists->registration_sarok_number }} ও {{ $donationLists->registration_date }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->registration_sarok_number) }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->registration_date) }}</td>
 
                                     <td>{{ $donationLists->donor_name }}</td>
-                                    <td>{{ $donationLists->money_amount }}</td>
+                                    <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->money_amount) }}</td>
                                     <td>{{ $donationLists->audit_report }}</td>
                                     <td>{{ $donationLists->final_report }}</td>
                                     <td>{{ $donationLists->local_certificate }}</td>
@@ -780,201 +734,53 @@
 
                             </table>
 
-                        </div>
+            </td>
 
 
+                </tr>
+                <tr>
+                    <td style="text-align: center;font-weight:bold;" rowspan="2">১১.</td>
 
-                </span>
+                    <td style="font-weight:bold;" colspan="3">গুরুত্বপূর্ণ অন্য কোনো তথ্য (যদি থাকে):
+                    </td>
+
+
+                </tr>
+                <tr>
+
+                    {{-- <td style="text-align: center;">ক.</td> --}}
+                    <td colspan="3" >
+
+                        @if(count($fc1OtherFileList) == 0)
+
+
+                        @else
+
+
+                            <div class="table-respnsive">
+                                <table class="table table-bordered">
+                                    @foreach($fc1OtherFileList as $key=>$fd2OtherInfoAll)
+                                    <tr>
+                                        <td>{{ $fd2OtherInfoAll->file_title }} : সংযুক্ত</td>
+
+                                    </tr>
+                                    @endforeach
+
+                                </table>
+                            </div>
+
+                        @endif
 
 
             </td>
 
 
                 </tr>
-
-                <tr>
-
-                </tr>
-                <tr>
-
-                </tr>
-
-
-                <tr>
-                  <th style="text-align: center;" rowspan="4">১১.</th>
-
-                  <td style="font-weight:bold;" colspan="2">গুরুত্বপূর্ণ অন্য কোনো তথ্য (যদি থাকে):
-                  </td>
-                  <td> </td>
-
-              </tr>
-              <tr>
-
-                  {{-- <td style="text-align: center;">ক.</td> --}}
-                  <td colspan="3" rowspan="3">
-
-                      @if(count($fc1OtherFileList) == 0)
-
-
-                      @else
-
-
-                          <div class="table-respnsive">
-                              <table class="table table-bordered">
-                                  @foreach($fc1OtherFileList as $key=>$fd2OtherInfoAll)
-                                  <tr>
-                                      <td>{{ $fd2OtherInfoAll->file_title }}</td>
-                                      <td>
-
-                                          <a target="_blank" href="{{ route('fcOneOtherPdfListdownload',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
-                                          <i class="fa fa-download" aria-hidden="true"></i>
-                                      </a>
-
-
-
-
-
-                                  </td>
-                                  </tr>
-                                  @endforeach
-
-                              </table>
-                          </div>
-
-                      @endif
-
-
-          </td>
-
-
-              </tr>
-
-              <tr>
-
-              </tr>
-              <tr>
-
-              </tr>
-
-
-                <!-- step three end -->
-
-                <tr>
-                    <td colspan="4"><span style="font-weight:bold;">সংযুক্তি:</span></td>
-                </tr>
-                <tr>
-                    <td colspan="3"><span style="font-weight:bold;">১। দাতার প্রতিশ্রুতি পত্র/দাতা সংস্থার প্রতিশ্রুতি পত্র</span></td>
-                    <td> @if(empty($fc1FormList->donor_commitment_letter))
-
-
-                        @else
-
-
-                        <?php
-
-                        $file_path = url($fc1FormList->donor_commitment_letter);
-                        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                        $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                        ?>
-                         <b>{{ $filename.'.'.$extension }}</b>
-                         @endif
-
-                         @if(empty($fc1FormList->donor_agency_commitment_letter))
-
-
-                         @else
-
-
-                         <?php
-
-                         $file_path = url($fc1FormList->donor_agency_commitment_letter);
-                         $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                         $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                         ?>
-                          <b>{{ $filename.'.'.$extension }}</b>
-                          @endif
-                        </td>
-                </tr>
-
-                <tr>
-                    <td colspan="3"><span style="font-weight:bold;">২। ইতোপূর্বে সমাপ্ত প্রকল্পের অডিট রিপোর্ট ব্যুরো হতে গ্রহণের প্রমাণক, সমাপনী প্রতিবেদন, প্রশাসনিক প্রত্যয়নপত্র</span></td>
-                    <td>        @if(empty($fc1FormList->previous_audit_report))
-
-
-                        @else
-
-
-                        <?php
-
-                        $file_path = url($fc1FormList->previous_audit_report);
-                        $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                        $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                        ?>
-                         <b>{{ $filename.'.'.$extension }}</b>
-                         @endif
-
-                         @if(empty($fc1FormList->last_final_report))
-
-
-                         @else
-
-
-                         <?php
-
-                         $file_path = url($fc1FormList->last_final_report);
-                         $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                         $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                         ?>
-                          <b>{{ $filename.'.'.$extension }}</b>
-                          @endif
-
-                          @if(empty($fc1FormList->administrative_certificate))
-
-
-                                   @else
-
-
-                                   <?php
-
-                                   $file_path = url($fc1FormList->administrative_certificate);
-                                   $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                   $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                   ?>
-                                    <b>{{ $filename.'.'.$extension }}</b>
-                                    @endif
-                        </td>
-                </tr>
-
             </table>
 
         <!-- end new code --->
         <h4 style="text-align:center; font-weight:bold; font-size:20px;">{{ trans('fd_one_step_one.tt_1')}}</h4>
-        <p style="text-align: justify">আমি এই মর্মে ঘোষণা করছি যে, উপরোক্ত বিবরণ সত্য ও সঠিক । আমি স্থানীয় প্রশাসনকে ত্রাণ কার্যক্রম এবং কর্ম এলাকা  সম্পর্কে অবহিত করে এবং স্থানীয় প্রশাসনের সাথে কার্যক্রম সমন্বয় করে কার্যক্রমের দ্বৈততা পরিহার করিব । আমি কার্যক্রম সম্পন্ন হওয়ার ০২ (দুই) মাসের মধ্যে কার্যক্রম সমাপনী প্রতিবেদন সংশ্লিষ্ট সকলকে অবহিত করিব। </p>
+        <p style="text-align: justify">আমি / আমরা এই মর্মে ঘোষণা করছি যে, উপরোক্ত বিবরণ সত্য ও সঠিক । অনুদান উপরোক্ত ঘোষিত উদ্দেশ্যে ব্যবহার করা হবে। আমি/আমরা প্রতিশ্রুতি দিতেছি যে আমি /আমরা প্রকল্প সমাপ্ত হওয়ার পরে ২(দুই) মাসের মধ্যে নিরীক্ষা প্রতিবেদন ও সমাপ্তি প্রতিবেদন ও স্থানীয় প্রশাসনের প্রত্যয়নপত্র দাখিল করিব।</p>
 
         <table style=" margin-top: 15px;width:100%">
 
@@ -1010,6 +816,60 @@
 
             </tr>
         </table>
+
+    <table>
+        <tr>
+            <td colspan="4"><span style="font-weight:bold;">সংযুক্তি:</span></td>
+        </tr>
+        <tr>
+            <td colspan="3"><span style="">১। দাতার প্রতিশ্রুতি পত্র/দাতা সংস্থার প্রতিশ্রুতি পত্র :</span></td>
+            <td> @if(empty($fc1FormList->donor_commitment_letter))
+
+
+                @else
+                 <p>সংযুক্ত</p>
+                 @endif
+
+                 @if(empty($fc1FormList->donor_agency_commitment_letter))
+
+
+                 @else
+                  <p>সংযুক্ত </p>
+                  @endif
+                </td>
+        </tr>
+
+        <tr>
+            <td colspan="3"><span style="">২। ইতোপূর্বে সমাপ্ত প্রকল্পের অডিট রিপোর্ট ব্যুরো হতে গ্রহণের প্রমাণক, সমাপনী প্রতিবেদন, প্রশাসনিক প্রত্যয়নপত্র :</span></td>
+            <td>        @if(empty($fc1FormList->previous_audit_report))
+
+
+                @else
+
+                 <p>সংযুক্ত </p>
+                 @endif
+
+                 @if(empty($fc1FormList->last_final_report))
+
+
+                 @else
+
+                  <p>সংযুক্ত</p>
+                  @endif
+
+                  @if(empty($fc1FormList->administrative_certificate))
+
+
+                           @else
+                            <p>সংযুক্ত</p>
+                            @endif
+                </td>
+        </tr>
+        <tr>
+            <td colspan="3"><span style="">৩। ফরম - ২ (আগের এফডি -২) :</span></td>
+            <td><p>সংযুক্ত </p></td>
+        </tr>
+    </table>
 
     </div>
     </div>

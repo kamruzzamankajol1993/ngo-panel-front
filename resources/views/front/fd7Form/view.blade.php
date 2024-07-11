@@ -205,7 +205,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-borderless" style="width:100%">
+                            <table class="table table-bordered" style="width:100%">
 
 
 
@@ -861,7 +861,7 @@ $distributionListTwo = DB::table('fd_seven_distribution_details')
 
                            <!-- start new code --->
 
-                           <table class="table table-borderless" style="width:100%">
+                           <table class="table table-bordered" style="width:100%">
 
 <!-- step three start -->
 

@@ -248,6 +248,7 @@
                     <td>{{ $fd2FormList->bank_adddress }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fd2FormList->bank_account_number) }}</td>
 
                     </tr>
+
                     <tr>
                         <td style="text-align: center;" rowspan="2">৮.</td>
 
@@ -277,6 +278,7 @@
                     </tr>
 
 
+
         </table>
 
         <!-- end new code --->
@@ -286,10 +288,10 @@
         <table style=" margin-top: 15px;width:100%">
 
             <tr>
-                <td style="text-align: right; padding-right: 14%" colspan="3"><img width="150" height="60" src="{{ asset('/') }}{{ $fd7FormList->digital_signature}}"/></td>
+                <td style="text-align: right; padding-right: 14%" colspan="3"><img width="150" height="60" src="{{ asset('/') }}{{ $fc1FormList->digital_signature}}"/></td>
             </tr>
             <tr>
-                <td style="text-align: right; padding-right: 14%" colspan="3"><img width="150" height="60" src="{{ asset('/') }}{{ $fd7FormList->digital_seal}}"/></td>
+                <td style="text-align: right; padding-right: 14%" colspan="3"><img width="150" height="60" src="{{ asset('/') }}{{ $fc1FormList->digital_seal}}"/></td>
             </tr>
         </table>
 
@@ -301,19 +303,19 @@
             <tr>
                 <td style="width: 65%"></td>
                 <td style="text-align: left; width:5%;">{{ trans('fd_one_step_one.tt_5')}}</td>
-                <td style="width:30%; text-align: left;">: {{ $fd7FormList->chief_name }}</td>
+                <td style="width:30%; text-align: left;">: {{ $fc1FormList->chief_name }}</td>
             </tr>
             <tr>
                 <td style="width: 65%"></td>
                 <td style="text-align: left; width: 5%;">{{ trans('fd_one_step_one.tt_6')}}</td>
-                <td style="width:30%; text-align: left;">: {{ $fd7FormList->chief_desi }}</td>
+                <td style="width:30%; text-align: left;">: {{ $fc1FormList->chief_desi }}</td>
             </tr>
 
             <tr>
                 <td style="width: 65%"></td>
                 <td style="text-align: left; width: 5%;">{{ trans('fd_one_step_one.tt_7')}}</td>
 
-                <td style="width:30%; text-align: left;">: {{  App\Http\Controllers\NGO\CommonController::englishToBangla($fd7FormList->created_at->format('d/m/Y')) }}</td>
+                <td style="width:30%; text-align: left;">: {{  App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->created_at->format('d/m/Y')) }}</td>
 
             </tr>
         </table>

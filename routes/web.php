@@ -361,6 +361,8 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::get('fc1pdfview/{id}', 'fc1pdfview')->name('fc1pdfview');
 
+        Route::get('fc1formextrapdf/{title}/{id}', 'fc1formextrapdf')->name('fc1formextrapdf');
+
         Route::get('fd2pdfviewdfc1/{id}', 'fd2pdfviewdfc1')->name('fd2pdfviewdfc1');
 
 
@@ -499,6 +501,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
         Route::get('fd2formextrapdf/{title}/{id}', 'fd2formextrapdf')->name('fd2formextrapdf');
+        Route::get('fd2formextrapdffc1/{title}/{id}', 'fd2formextrapdffc1')->name('fd2formextrapdffc1');
 
         Route::get('deletelastYearDetail', 'deletelastYearDetail')->name('deletelastYearDetail');
         Route::post('addlastYearDetail', 'addlastYearDetail')->name('addlastYearDetail');

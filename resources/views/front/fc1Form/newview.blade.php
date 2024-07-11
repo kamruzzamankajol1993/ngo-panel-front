@@ -213,7 +213,7 @@
                                         <td style="font-weight:bold;text-align:left;" colspan="2">সংস্থার নাম, ঠিকানা (ফোন ,মোবাইল, ইমেইল ও ওয়েবসাইটসহ) :</td>
                                         <td style="">
 
-                                            {{ $fc1FormList->ngo_name }}, {{ $ngo_list_all->organization_address }}, {{ $ngo_list_all->tele_phone_number }}, {{ $ngo_list_all->phone }}, {{ $ngo_list_all->email }} ও {{$fc1FormList->ngo_website}}
+                                            {{ $fc1FormList->ngo_name }}, {{ $ngo_list_all->organization_address }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->tele_phone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($ngo_list_all->phone) }}, {{ $ngo_list_all->email }} ও {{$fc1FormList->ngo_website}}
 
                                         </td>
 
@@ -236,14 +236,14 @@
 
                                         <td style="text-align: center;">ক.</td>
                                         <td> আরম্ভের তারিখ </td>
-                                        <td>{{ $fc1FormList->ngo_prokolpo_start_date }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->ngo_prokolpo_start_date) }}</td>
 
                                     </tr>
                                     <tr>
 
                                         <td style="text-align: center;">খ.</td>
                                         <td>সমাপ্তির তারিখ</td>
-                                        <td>{{ $fc1FormList->ngo_prokolpo_end_date }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->ngo_prokolpo_end_date) }}</td>
 
                                     </tr>
 
@@ -305,26 +305,9 @@
                                             {!! $fc1FormList->purpose_of_donation !!}
 
 
-
-
                                                @if(empty($fc1FormList->purpose_of_donation_pdf))
-
-
                                                @else
-
-
-                                               <?php
-
-                                               $file_path = url($fc1FormList->purpose_of_donation_pdf);
-                                               $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                               $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                               ?>
-                                                <b>{{ $filename.'.'.$extension }}</b>
+                                               <a href="{{ route('fc1formextrapdf',['title'=>'purpose_of_donation_pdf','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                                 @endif
                                         </td>
                                     </tr>
@@ -383,11 +366,11 @@
 
                                                             প্রকল্পের ধরণ: {{ DB::table('project_subjects')->where('id',$prokolpoAreaListAll->prokolpo_type)->value('name')}}
                                                             <br>
-                                                            বরাদ্দকৃত বাজেট: {{ $prokolpoAreaListAll->allocated_budget }}
+                                                            বরাদ্দকৃত বাজেট: {{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->allocated_budget) }}
                                                         </span>
 
                                                             </td>
-                                                        <td>{{ $prokolpoAreaListAll->number_of_beneficiaries }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($prokolpoAreaListAll->number_of_beneficiaries) }}</td>
 
                                                     </tr>
                                                     @endforeach
@@ -458,7 +441,7 @@
                                         <td>টেলিফোন, ফ্যাক্স ও ইমেইল নম্বর </td>
                                         <td>
 
-                                                {{ $fc1FormList->foreigner_donor_telephone_number }}, {{ $fc1FormList->foreigner_donor_fax }} ও {{ $fc1FormList->foreigner_donor_email }}
+                                                {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->foreigner_donor_telephone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->foreigner_donor_fax) }} ও {{ $fc1FormList->foreigner_donor_email }}
 
 
                                         </td>
@@ -522,7 +505,7 @@
 
                                         <td style="text-align: center;">গ.</td>
                                         <td>টেলিফোন, ফ্যাক্স নম্বর </td>
-                                        <td>{{ $fc1FormList->organization_telephone_number }}, {{ $fc1FormList->organization_fax }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_telephone_number) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_fax) }}</td>
 
                                     </tr>
 
@@ -605,7 +588,7 @@
 
                                         <td colspan="3">
 
-                                           {{ $fc1FormList->bond_paper_available_or_not }}, {{ $fc1FormList->bond_paper_work_name }}, {{ $fc1FormList->bond_paper_amount }}, {{ $fc1FormList->bond_paper_duration }}
+                                           {{ $fc1FormList->bond_paper_available_or_not }}, {{ $fc1FormList->bond_paper_work_name }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bond_paper_amount) }}, {{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bond_paper_duration) }}
 
 
 <br>
@@ -614,19 +597,7 @@
 
                                             @else
 
-
-                                            <?php
-
-                                            $file_path = url($fc1FormList->bond_paper_pdf);
-                                            $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                            ?>
-                                             <b>{{ $filename.'.'.$extension }}</b>
+                                            <a href="{{ route('fc1formextrapdf',['title'=>'bond_paper_pdf','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                              @endif
 
                                         </td>
@@ -649,14 +620,14 @@
 
                                         <td style="text-align: center;">ক.</td>
                                         <td>  বৈদেশিক মুদ্রার পরিমান</td>
-                                        <td>{{$fc1FormList->organization_amount_of_foreign_currency }}</td>
+                                        <td>{{App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->organization_amount_of_foreign_currency) }}</td>
 
                                     </tr>
                                     <tr>
 
                                         <td style="text-align: center;">খ.</td>
                                         <td>সমপরিমাণ বাংলাদেশী টাকা </td>
-                                        <td>{{ $fc1FormList->equivalent_amount_of_bd_taka }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->equivalent_amount_of_bd_taka) }}</td>
 
                                     </tr>
 
@@ -664,7 +635,7 @@
 
                                         <td style="text-align: center;">গ.</td>
                                         <td>পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য) </td>
-                                        <td>{{ $fc1FormList->commodities_value_in_bangladeshi_currency }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->commodities_value_in_bangladeshi_currency) }}</td>
 
                                     </tr>
 
@@ -698,7 +669,7 @@
 
                                         <td style="text-align: center;">গ.</td>
                                         <td>ব্যাংক হিসাব নম্বর</td>
-                                        <td>{{ $fc1FormList->bank_account_number }}</td>
+                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($fc1FormList->bank_account_number) }}</td>
 
                                     </tr>
 
@@ -745,7 +716,7 @@
                                                     <tr>
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $sectorWiseExpenditureLists->activities }}</td>
-                                                        <td>{{ $sectorWiseExpenditureLists->estimated_expenses }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->estimated_expenses) }}</td>
                                                         <td>
 
                                                             জেলা: {{ $sectorWiseExpenditureLists->work_area_district }}
@@ -755,8 +726,8 @@
                                                             উপজেলা: {{ $sectorWiseExpenditureLists->work_area_sub_district }}
 
                                                         </td>
-                                                        <td>{{ $sectorWiseExpenditureLists->time_limit }}</td>
-                                                        <td>{{ $sectorWiseExpenditureLists->number_of_beneficiaries }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->time_limit) }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($sectorWiseExpenditureLists->number_of_beneficiaries) }}</td>
 
 
                                                     </tr>
@@ -770,10 +741,10 @@
                                                     <tr>
                                                         <td></td>
                                                         <td></td>
-                                                        <td>মোট - {{ $totalEstimatedExpense }}</td>
+                                                        <td>মোট - {{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalEstimatedExpense) }}</td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td>মোট - {{ $totalBenificiare }}</td>
+                                                        <td>মোট - {{ App\Http\Controllers\NGO\CommonController::englishToBangla($totalBenificiare) }}</td>
 
                                                     </tr>
 
@@ -824,7 +795,7 @@
                                                     <tr>
                                                         <td>{{ $SDGDevelopmentGoals->goal }}</td>
                                                         <td>{{ $SDGDevelopmentGoals->target }}</td>
-                                                        <td>{{ $SDGDevelopmentGoals->budget_allocation }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($SDGDevelopmentGoals->budget_allocation) }}</td>
                                                         <td>{{ $SDGDevelopmentGoals->rationality }}</td>
                                                         <td>{{ $SDGDevelopmentGoals->comment }}</td>
 
@@ -877,10 +848,10 @@
 
                                                         <td>{{ $key+1 }}</td>
                                                         <td>{{ $donationLists->purpose_or_activities }}</td>
-                                                        <td>{{ $donationLists->registration_sarok_number }} ও {{ $donationLists->registration_date }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->registration_sarok_number) }} ও {{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->registration_date) }}</td>
 
                                                         <td>{{ $donationLists->donor_name }}</td>
-                                                        <td>{{ $donationLists->money_amount }}</td>
+                                                        <td>{{ App\Http\Controllers\NGO\CommonController::englishToBangla($donationLists->money_amount) }}</td>
                                                         <td>{{ $donationLists->audit_report }}</td>
                                                         <td>{{ $donationLists->final_report }}</td>
                                                         <td>{{ $donationLists->local_certificate }}</td>
@@ -983,18 +954,7 @@
                                             @else
 
 
-                                            <?php
-
-                                            $file_path = url($fc1FormList->donor_commitment_letter);
-                                            $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                            ?>
-                                             <b>{{ $filename.'.'.$extension }}</b>
+                                            <a href="{{ route('fc1formextrapdf',['title'=>'donor_commitment_letter','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm "><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                              @endif
 
                                              @if(empty($fc1FormList->donor_agency_commitment_letter))
@@ -1002,19 +962,7 @@
 
                                              @else
 
-
-                                             <?php
-
-                                             $file_path = url($fc1FormList->donor_agency_commitment_letter);
-                                             $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                             $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                             ?>
-                                              <b>{{ $filename.'.'.$extension }}</b>
+                                             <a href="{{ route('fc1formextrapdf',['title'=>'donor_agency_commitment_letter','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm "><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                               @endif
                                             </td>
                                     </tr>
@@ -1026,39 +974,14 @@
 
                                             @else
 
-
-                                            <?php
-
-                                            $file_path = url($fc1FormList->previous_audit_report);
-                                            $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                            ?>
-                                             <b>{{ $filename.'.'.$extension }}</b>
+                                            <a href="{{ route('fc1formextrapdf',['title'=>'previous_audit_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                              @endif
 
                                              @if(empty($fc1FormList->last_final_report))
 
 
                                              @else
-
-
-                                             <?php
-
-                                             $file_path = url($fc1FormList->last_final_report);
-                                             $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                             $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                             ?>
-                                              <b>{{ $filename.'.'.$extension }}</b>
+                                             <a href="{{ route('fc1formextrapdf',['title'=>'last_final_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm "><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                               @endif
 
                                               @if(empty($fc1FormList->administrative_certificate))
@@ -1066,19 +989,7 @@
 
                                                        @else
 
-
-                                                       <?php
-
-                                                       $file_path = url($fc1FormList->administrative_certificate);
-                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                                       ?>
-                                                        <b>{{ $filename.'.'.$extension }}</b>
+                                                       <a href="{{ route('fc1formextrapdf',['title'=>'administrative_certificate','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm mt-2"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                                                         @endif
                                             </td>
                                     </tr>
@@ -1117,7 +1028,7 @@
                         </div>
                         <!-- start new code --->
 
-                        <table class="table table-borderless" style="width:100%">
+                        <table class="table table-bordered" style="width:100%">
 
                             <!-- step three start -->
 
@@ -1245,7 +1156,7 @@
 
                             @else
 
-                            <a href="{{ route('fd2formextrapdf',['title'=>'last_year_achivment_pdf','id'=>$fd2FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                            <a href="{{ route('fd2formextrapdffc1',['title'=>'last_year_achivment_pdf','id'=>$fd2FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
                             @endif
                             </td>
                             </tr>
@@ -1289,7 +1200,7 @@
                                 @foreach($fd2OtherInfo as $fd2OtherInfoAll)
                                 <tr>
                                     <td>{{ $fd2OtherInfoAll->file_name }}</td>
-                                    <td><a href="{{ route('downloadFd2DetailForFd7Other',$fd2OtherInfoAll->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a></td>
+                                    <td><a href="{{ route('downloadFd2DetailForFc1Other',$fd2OtherInfoAll->id) }}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a></td>
                                 </tr>
                                 @endforeach
 
