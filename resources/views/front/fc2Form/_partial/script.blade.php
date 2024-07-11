@@ -114,7 +114,7 @@ var beneficiaries_total = $('#beneficiaries_total0').val();
 
 
 $.ajax({
-url: "{{ route('prokolpoAreaForFc1') }}",
+url: "{{ route('prokolpoAreaForFc2') }}",
 method: 'post',
 data: {mainEditId:mainEditId,beneficiaries_total:beneficiaries_total,division_name:division_name,district_name:district_name,city_corparation_name:city_corparation_name,upozila_name:upozila_name,thana_name:thana_name,municipality_name:municipality_name,ward_name:ward_name,prokolpoType:prokolpoType,allocated_budget:allocated_budget},
 success: function(data) {
@@ -207,7 +207,7 @@ var beneficiaries_total = $('#beneficiaries_total'+mainId).val();
 
 
 $.ajax({
-url: "{{ route('prokolpoAreaForFc1Update') }}",
+url: "{{ route('prokolpoAreaForFc2Update') }}",
 method: 'post',
 data: {mainEditId:mainEditId,mainId:mainId,beneficiaries_total:beneficiaries_total,division_name:division_name,district_name:district_name,city_corparation_name:city_corparation_name,upozila_name:upozila_name,thana_name:thana_name,municipality_name:municipality_name,ward_name:ward_name,prokolpoType:prokolpoType,allocated_budget:allocated_budget},
 success: function(data) {
@@ -299,12 +299,14 @@ var number_of_beneficiaries = $('#number_of_beneficiaries'+mainId).val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoBudgetUpdate') }}",
+url: "{{ route('fc2FormStepTwoBudgetUpdate') }}",
 method: 'post',
 data: {fcOneId:fcOneId,mainId:mainId,district_name:district_name,upozila_name:upozila_name,activities:activities,estimated_expenses:estimated_expenses,time_limit:time_limit,number_of_beneficiaries:number_of_beneficiaries},
 success: function(data) {
-    $('#tableCountOne').val(1);
+
 $('#prokolpoBudget'+mainId).modal('hide');
+
+$('#tableCountOne').val(1);
 
 alertify.set('notifier','position', 'top-center');
 alertify.success('Data Added Successfully');
@@ -379,12 +381,16 @@ var number_of_beneficiaries = $('#number_of_beneficiaries0').val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoBudget') }}",
+url: "{{ route('fc2FormStepTwoBudget') }}",
 method: 'post',
 data: {fcOneId:fcOneId,district_name:district_name,upozila_name:upozila_name,activities:activities,estimated_expenses:estimated_expenses,time_limit:time_limit,number_of_beneficiaries:number_of_beneficiaries},
 success: function(data) {
-    $('#tableCountOne').val(1);
+
     $('#exampleModal1').modal('hide');
+
+    $('#tableCountOne').val(1);
+
+
 
   alertify.set('notifier','position', 'top-center');
   alertify.success('Data Added Successfully');
@@ -456,7 +462,7 @@ var comment =$('#comment0').val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoSDG') }}",
+url: "{{ route('fc2FormStepTwoSDG') }}",
 method: 'post',
 data: {fcOneId:fcOneId,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
 success: function(data) {
@@ -534,7 +540,7 @@ var comment =$('#comment'+mainId).val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoSDGUpdate') }}",
+url: "{{ route('fc2FormStepTwoSDGUpdate') }}",
 method: 'post',
 data: {mainId:mainId,fcOneId:fcOneId,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
 success: function(data) {
@@ -634,7 +640,7 @@ var comment =$('#comment0').val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoDonor') }}",
+url: "{{ route('fc2FormStepTwoDonor') }}",
 method: 'post',
 data: {local_certificate:local_certificate,final_report:final_report,audit_report:audit_report,money_amount:money_amount,fcOneId:fcOneId,purpose_or_activities:purpose_or_activities,registration_sarok_number:registration_sarok_number,registration_date:registration_date,donor_name:donor_name,comment:comment},
 success: function(data) {
@@ -736,7 +742,7 @@ var comment =$('#comment'+mainId).val();
 
 
 $.ajax({
-url: "{{ route('fc1FormStepTwoDonorUpdate') }}",
+url: "{{ route('fc2FormStepTwoDonorUpdate') }}",
 method: 'post',
 data: {mainId:mainId,local_certificate:local_certificate,final_report:final_report,audit_report:audit_report,money_amount:money_amount,fcOneId:fcOneId,purpose_or_activities:purpose_or_activities,registration_sarok_number:registration_sarok_number,registration_date:registration_date,donor_name:donor_name,comment:comment},
 success: function(data) {
@@ -797,7 +803,7 @@ $('#pageloader').hide();
                 var mainEditId = $('#mainEditId').val();
 
                 $.ajax({
-    url: "{{ route('prokolpoAreaForFc1Delete') }}",
+    url: "{{ route('prokolpoAreaForFc2Delete') }}",
     method: 'GET',
     data: {mainEditId:mainEditId,id:id},
     success: function(data) {
@@ -858,7 +864,7 @@ $('#pageloader').hide();
                 var fcOneId = $('#fcOneId').val();
 
                 $.ajax({
-    url: "{{ route('fc1FormStepTwoDonorDelete') }}",
+    url: "{{ route('fc2FormStepTwoDonorDelete') }}",
     method: 'GET',
     data: {fcOneId:fcOneId,id:id},
     success: function(data) {
@@ -917,7 +923,7 @@ $('#pageloader').hide();
                 var fcOneId = $('#fcOneId').val();
 
                 $.ajax({
-    url: "{{ route('fc1FormStepTwoSDGDelete') }}",
+    url: "{{ route('fc2FormStepTwoSDGDelete') }}",
     method: 'GET',
     data: {fcOneId:fcOneId,id:id},
     success: function(data) {
@@ -975,7 +981,7 @@ $('#pageloader').hide();
                 var fcOneId = $('#fcOneId').val();
 
                 $.ajax({
-    url: "{{ route('fc1FormStepTwoBudgetDelete') }}",
+    url: "{{ route('fc2FormStepTwoBudgetDelete') }}",
     method: 'GET',
     data: {fcOneId:fcOneId,id:id},
     success: function(data) {
@@ -1055,7 +1061,7 @@ $('#pageloader').hide();
                 var fcOneId = $('#fcOneId').val();
 
                 $.ajax({
-    url: "{{ route('goToNextPageFcOneStepTwo') }}",
+    url: "{{ route('goToNextPageFcTwoStepTwo') }}",
     method: 'GET',
     data: {fcOneId:fcOneId,},
     success: function(data) {

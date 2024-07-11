@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('donation_receive_details', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('fc1_form_id')->unsigned();
-            $table->foreign('fc1_form_id')->references('id')->on('fc1_forms')->onDelete('cascade');
+            $table->integer('fc1_form_id')->nullable();
+            $table->string('type')->nullable();;
             $table->string('purpose_or_activities')->nullable();
             $table->string('registration_sarok_number')->nullable();
             $table->string('registration_date')->nullable();

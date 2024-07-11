@@ -113,9 +113,12 @@ class Fc1FormController extends Controller
             ->where('type','fcOne')->latest()->get();
 
             $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fd6Id)
+            ->where('type','fcOne')
             ->latest()->get();
 
-            $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)->latest()->get();
+            $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
+            ->where('type','fcOne')
+            ->latest()->get();
 
             return view('front.fc1Form.newAddFormStepTwo',compact('SDGDevelopmentGoal','subdDistrictList','sectorWiseExpenditureList','fd6Id','prokolpoAreaList','cityCorporationList','districtList','fc1FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
@@ -132,9 +135,13 @@ class Fc1FormController extends Controller
 
         try{
             $fc1Id = base64_decode($id);
-            $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)->latest()->get();
+            $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)
+            ->where('type','fcOne')
+            ->latest()->get();
             $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
-            $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)->latest()->get();
+            $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)
+            ->where('type','fcOne')
+            ->latest()->get();
 
             $fc1FormList = Fc1Form::where('fd_one_form_id',$ngo_list_all->id)
             ->where('id',$fc1Id)->latest()->first();
@@ -289,6 +296,7 @@ class Fc1FormController extends Controller
 
                     $form= new Fc1FormOtherFile();
                     $form->fc1_form_id = $request->fcOneId;
+                    $form->type='fcOne';
                     $form->file_title = $input['file_name'][$key];
                     $file=$input['file'][$key];
                     $filePath="FcOneForm";
@@ -520,7 +528,9 @@ class Fc1FormController extends Controller
         $form->comment=$request->comment;
         $form->save();
 
-        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
 
         $data = view('front.fc1Form.fc1FormStepTwoDonor',compact('donationList'))->render();
@@ -534,6 +544,7 @@ class Fc1FormController extends Controller
 
         $form= new DonationReceiveDetail();
         $form->fc1_form_id=$request->fcOneId;
+        $form->type='fcOne';
         $form->purpose_or_activities=$request->purpose_or_activities;
         $form->registration_sarok_number=$request->registration_sarok_number;
         $form->registration_date=$request->registration_date;
@@ -545,7 +556,9 @@ class Fc1FormController extends Controller
         $form->comment=$request->comment;
         $form->save();
 
-        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
 
         $data = view('front.fc1Form.fc1FormStepTwoDonor',compact('donationList'))->render();
@@ -563,7 +576,9 @@ class Fc1FormController extends Controller
             $admins->delete();
         }
 
-        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
 
         $data = view('front.fc1Form.fc1FormStepTwoDonor',compact('donationList'))->render();
@@ -587,7 +602,9 @@ class Fc1FormController extends Controller
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')
         ->select('division_bn')->get();
 
-        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')
         ->select('district_bn')->get();
         $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
@@ -607,7 +624,9 @@ class Fc1FormController extends Controller
             $admins->delete();
         }
 
-        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')
         ->select('district_bn')->get();
         $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
@@ -625,6 +644,7 @@ class Fc1FormController extends Controller
 
         $form= new SDGDevelopmentGoal();
         $form->fc1_form_id=$request->fcOneId;
+        $form->type='fcOne';
         $form->goal=$request->goal;
         $form->target=$request->target;
         $form->budget_allocation=$request->budget_allocation;
@@ -632,7 +652,9 @@ class Fc1FormController extends Controller
         $form->comment=$request->comment;
         $form->save();
 
-        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
         $data = view('front.fc1Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
         return response()->json($data);
@@ -648,7 +670,9 @@ class Fc1FormController extends Controller
         $form->comment=$request->comment;
         $form->save();
 
-        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
         $data = view('front.fc1Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
         return response()->json($data);
@@ -663,7 +687,9 @@ class Fc1FormController extends Controller
             $admins->delete();
         }
 
-        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
 
         $data = view('front.fc1Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
         return response()->json($data);
@@ -675,6 +701,7 @@ class Fc1FormController extends Controller
 
         $form= new SectorWiseExpenditure();
         $form->fc1_form_id=$request->fcOneId;
+        $form->type='fcOne';
         $form->work_area_district=$request->district_name;
         $form->work_area_sub_district=$request->upozila_name;
         $form->activities=$request->activities;
@@ -683,7 +710,9 @@ class Fc1FormController extends Controller
         $form->number_of_beneficiaries=$request->number_of_beneficiaries;
         $form->save();
 
-        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)->latest()->get();
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+        ->where('type','fcOne')
+        ->latest()->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')
         ->select('district_bn')->get();
         $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
@@ -1012,16 +1041,23 @@ class Fc1FormController extends Controller
         $fc1FormList = Fc1Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc1Id)->latest()->first();
 
         $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fc1Id)
+        ->where('type','fcOne')
         ->latest()->get();
 
         $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
         ->where('type','fc1')
         ->get();
 
-        $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)->latest()->get();
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)
+        ->where('type','fcOne')
+        ->latest()->get();
 
-        $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)->latest()->get();
-        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc1Id)->latest()->get();
+        $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)
+        ->where('type','fcOne')
+        ->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc1Id)
+        ->where('type','fcOne')
+        ->latest()->get();
         $prokolpoAreaList =ProkolpoArea::where('formId',$fc1Id)->where('type','fcOne')->latest()->get();
 
        return view('front.fc1Form.newview',compact('fc1OtherFileList','donationList','fd2AllFormLastYearDetail','SDGDevelopmentGoal','sectorWiseExpenditureList','prokolpoAreaList','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc1FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
@@ -1157,16 +1193,23 @@ class Fc1FormController extends Controller
     $fc1FormList = Fc1Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc1Id)->latest()->first();
 
     $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fc1Id)
+    ->where('type','fcOne')
     ->latest()->get();
 
     $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
     ->where('type','fc1')
     ->get();
 
-    $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)->latest()->get();
+    $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)
+    ->where('type','fcOne')
+    ->latest()->get();
 
-    $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)->latest()->get();
-    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc1Id)->latest()->get();
+    $fc1OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)
+    ->where('type','fcOne')
+    ->latest()->get();
+    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc1Id)
+    ->where('type','fcOne')
+    ->latest()->get();
     $prokolpoAreaList =ProkolpoArea::where('formId',$fc1Id)->where('type','fcOne')->latest()->get();
 
 

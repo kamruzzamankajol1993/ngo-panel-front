@@ -400,6 +400,36 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('fc2Form',Fc2FormController::class);
 
     Route::controller(Fc2FormController::class)->group(function () {
+
+        Route::get('fc2FormStepTwo/{id}', 'fc2FormStepTwo')->name('fc2FormStepTwo');
+        Route::get('fc2FormStepThree/{id}', 'fc2FormStepThree')->name('fc2FormStepThree');
+        Route::get('fc2pdfview/{id}', 'fc2pdfview')->name('fc2pdfview');
+        Route::get('fc2formextrapdf/{title}/{id}', 'fc2formextrapdf')->name('fc2formextrapdf');
+        Route::get('fd2pdfviewdfc2/{id}', 'fd2pdfviewdfc2')->name('fd2pdfviewdfc2');
+
+
+        Route::post('lastExtraUpdateFcTwo', 'lastExtraUpdateFcTwo')->name('lastExtraUpdateFcTwo');
+
+        Route::get('goToNextPageFcTwoStepTwo', 'goToNextPageFcTwoStepTwo')->name('goToNextPageFcTwoStepTwo');
+
+        Route::get('fc2FormStepTwoDonorDelete', 'fc2FormStepTwoDonorDelete')->name('fc2FormStepTwoDonorDelete');
+        Route::post('fc2FormStepTwoDonor', 'fc2FormStepTwoDonor')->name('fc2FormStepTwoDonor');
+        Route::post('fc2FormStepTwoDonorUpdate', 'fc2FormStepTwoDonorUpdate')->name('fc2FormStepTwoDonorUpdate');
+
+
+        Route::get('fc2FormStepTwoSDGDelete', 'fc2FormStepTwoSDGDelete')->name('fc2FormStepTwoSDGDelete');
+        Route::post('fc2FormStepTwoSDG', 'fc2FormStepTwoSDG')->name('fc2FormStepTwoSDG');
+        Route::post('fc2FormStepTwoSDGUpdate', 'fc2FormStepTwoSDGUpdate')->name('fc2FormStepTwoSDGUpdate');
+
+
+        Route::get('fc2FormStepTwoBudgetDelete', 'fc2FormStepTwoBudgetDelete')->name('fc2FormStepTwoBudgetDelete');
+        Route::post('fc2FormStepTwoBudget', 'fc2FormStepTwoBudget')->name('fc2FormStepTwoBudget');
+        Route::post('fc2FormStepTwoBudgetUpdate', 'fc2FormStepTwoBudgetUpdate')->name('fc2FormStepTwoBudgetUpdate');
+
+        Route::get('prokolpoAreaForFc2Delete', 'prokolpoAreaForFc2Delete')->name('prokolpoAreaForFc2Delete');
+        Route::post('prokolpoAreaForFc2', 'prokolpoAreaForFc2')->name('prokolpoAreaForFc2');
+        Route::post('prokolpoAreaForFc2Update', 'prokolpoAreaForFc2Update')->name('prokolpoAreaForFc2Update');
+
         Route::get('finalFcTwoApplicationSubmit/{id}', 'finalFcTwoApplicationSubmit')->name('finalFcTwoApplicationSubmit');
         Route::get('fc2PdfDownload/{id}', 'fc2PdfDownload')->name('fc2PdfDownload');
         Route::get('verifiedFcTwoForm/{id}', 'verifiedFcTwoForm')->name('verifiedFcTwoForm');

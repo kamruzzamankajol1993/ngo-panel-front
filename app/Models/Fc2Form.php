@@ -64,6 +64,22 @@ class Fc2Form extends Model
         'comment',
         'file_last_check_date',
         'check_status',
+        'purpose_of_donation',
+        'purpose_of_donation_pdf',
+        'bond_paper_available_or_not',
+        'bond_paper_work_name',
+        'bond_paper_amount',
+        'bond_paper_duration',
+        'bond_paper_pdf',
+        'administrative_certificate',
+        'last_final_report',
+        'previous_audit_report',
+        'donor_commitment_letter',
+        'donor_agency_commitment_letter',
+        'chief_name',
+        'chief_desi',
+        'digital_signature',
+        'digital_seal',
 
 
 ];

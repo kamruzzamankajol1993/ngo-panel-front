@@ -4,11 +4,16 @@ namespace App\Http\Controllers\NGO;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\NVisa;
+use App\Models\SectorWiseExpenditure;
+use App\Models\SDGDevelopmentGoal;
+use App\Models\DonationReceiveDetail;
+use App\Models\Fd2AllFormLastYearDetail;
+use App\Models\Fc1FormOtherFile;
 use App\Models\NgoStatus;
 use App\Models\Country;
-use App\Models\ProkolpoDetail;
+use Mpdf\Mpdf;
 use App\Models\NgoDuration;
+use App\Models\ProkolpoDetail;
 use Illuminate\Support\Facades\Crypt;
 use DB;
 use PDF;
@@ -21,14 +26,14 @@ use Illuminate\Support\Str;
 use Session;
 use App\Models\FdOneForm;
 use App\Models\Fc1Form;
-use App\Models\Fc2Form;
 use App\Models\NgoRenewInfo;
 use App\Models\Fd2FormForFc1Form;
 use App\Models\Fd2Fc1OtherInfo;
+use App\Models\ProkolpoArea;
+use Illuminate\Support\Facades\App;
+use App\Models\Fc2Form;
 use App\Models\Fd2FormForFc2Form;
 use App\Models\Fd2Fc2OtherInfo;
-use Illuminate\Support\Facades\App;
-use App\Models\ProkolpoArea;
 class Fc2FormController extends Controller
 {
     public function index(){
@@ -44,19 +49,14 @@ class Fc2FormController extends Controller
 
     public function create(){
 
-        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
-        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
-        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
-        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
-        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
-        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+        $prokolpoAreaList = ProkolpoArea::where('user_id',Auth::user()->id)
+            ->where('type','fcTwo')
+            ->where('upload_type',0)->get();
 
-        return view('front.fc2Form.newAddForm',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
-
-    }
-
-    public function fc2FormStepTwo($id){
-
+            $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+            ->groupBy('city_orporation')->select('city_orporation')->get();
+            $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+            $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
 
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
@@ -65,22 +65,12 @@ class Fc2FormController extends Controller
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
 
-        return view('front.fc2Form.newAddFormStepTwo',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        return view('front.fc2Form.newAddForm',compact('thanaList','subdDistrictList','cityCorporationList','prokolpoAreaList','districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
-    public function fc2FormStepThree($id){
 
 
-        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
-        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
-        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
-        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
-        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
-        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
 
-        return view('front.fc2Form.newAddFormStepThree',compact('districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
-
-    }
 
     public function edit($id){
 
@@ -211,9 +201,30 @@ class Fc2FormController extends Controller
             $fc2FormInfo->bank_address =$request->bank_address;
             $fc2FormInfo->bank_account_name =$request->bank_account_name;
             $fc2FormInfo->bank_account_number =$request->bank_account_number;
+            $fc2FormInfo->purpose_of_donation =$request->purpose_of_donation;
+            $fc2FormInfo->bond_paper_available_or_not =$request->bond_paper_available_or_not;
+            $fc2FormInfo->bond_paper_work_name =$request->bond_paper_work_name;
+            $fc2FormInfo->bond_paper_amount =$request->bond_paper_amount;
+            $fc2FormInfo->bond_paper_duration =$request->bond_paper_duration;
             $fc2FormInfo->status ='Review';
 
             $filePath="FcOneForm";
+
+            if ($request->hasfile('purpose_of_donation_pdf')) {
+
+                $file = $request->file('purpose_of_donation_pdf');
+
+                $fc2FormInfo->purpose_of_donation_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('bond_paper_pdf')) {
+
+                $file = $request->file('bond_paper_pdf');
+
+                $fc2FormInfo->bond_paper_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
 
             if ($request->hasfile('organization_name_of_the_job_amount_of_money_and_duration_pdf')) {
 
@@ -243,92 +254,22 @@ class Fc2FormController extends Controller
 
         $input = $request->all();
 
-        $divisionName = $input['division_name'];
-
-
-
-        foreach($divisionName as $key => $divisionName){
-            $form= new ProkolpoArea();
-            $form->formId=$fc2FormInfoId;
-            $form->type='fcTwo';
-            $form->division_name=$input['division_name'][$key];
-            $form->district_name=$input['district_name'][$key];
-            $form->city_corparation_name=$input['city_corparation_name'][$key];
-
-            if(empty($input['upozila_name'][$key])){
-
-
-            }else{
-
-                $form->upozila_name=$input['upozila_name'][$key];
-            }
-
-
-            if(empty($input['thana_name'][$key])){
-
-
-            }else{
-
-                $form->thana_name=$input['thana_name'][$key];
-            }
-
-
-
-            if(empty($input['municipality_name'][$key])){
-
-
-            }else{
-
-                $form->municipality_name=$input['municipality_name'][$key];
-            }
-
-
-
-            if(empty($input['ward_name'][$key])){
-
-
-            }else{
-
-                $form->ward_name=$input['ward_name'][$key];
-            }
-
-
-
-            if(empty($input['beneficiaries_total'][$key])){
-
-
-            }else{
-
-                $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
-            }
-
-            if(empty($input['prokolpoType'][$key])){
-
-
-            }else{
-
-                $form->prokolpo_type=$input['prokolpoType'][$key];
-            }
-
-            if(empty($input['allocated_budget'][$key])){
-
-
-            }else{
-
-                $form->allocated_budget=$input['allocated_budget'][$key];
-            }
-
-            $form->save();
-        }
+        ProkolpoArea::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+        ->where('type','fcTwo')
+   ->update([
+       'upload_type' => 1,
+       'formId' =>$fc2FormInfoId
+    ]);
 
     // ad new code end
 
             DB::commit();
-            return redirect()->route('addFd2DetailForFc2',base64_encode($fc2FormInfoId))->with('success','Added Successfuly');
+            return redirect()->route('fc2FormStepTwo',base64_encode($fc2FormInfoId))->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->route('error_404');
+            return $e;
         }
     }
 
@@ -388,10 +329,28 @@ class Fc2FormController extends Controller
             $fc2FormInfo->bank_address =$request->bank_address;
             $fc2FormInfo->bank_account_name =$request->bank_account_name;
             $fc2FormInfo->bank_account_number =$request->bank_account_number;
-
+            $fc2FormInfo->purpose_of_donation =$request->purpose_of_donation;
+            $fc2FormInfo->bond_paper_available_or_not =$request->bond_paper_available_or_not;
+            $fc2FormInfo->bond_paper_work_name =$request->bond_paper_work_name;
+            $fc2FormInfo->bond_paper_amount =$request->bond_paper_amount;
+            $fc2FormInfo->bond_paper_duration =$request->bond_paper_duration;
 
             $filePath="FcOneForm";
+            if ($request->hasfile('purpose_of_donation_pdf')) {
 
+                $file = $request->file('purpose_of_donation_pdf');
+
+                $fc2FormInfo->purpose_of_donation_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('bond_paper_pdf')) {
+
+                $file = $request->file('bond_paper_pdf');
+
+                $fc2FormInfo->bond_paper_pdf =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
             if ($request->hasfile('organization_name_of_the_job_amount_of_money_and_duration_pdf')) {
 
                 $file = $request->file('organization_name_of_the_job_amount_of_money_and_duration_pdf');
@@ -418,88 +377,18 @@ class Fc2FormController extends Controller
 
         $input = $request->all();
 
-        $divisionName = $input['division_name'];
-
-        ProkolpoArea::where('formId',$fc2FormInfoId)->where('type','fcTwo')->delete();
-
-        foreach($divisionName as $key => $divisionName){
-            $form= new ProkolpoArea();
-            $form->formId=$fc2FormInfoId;
-            $form->type='fcTwo';
-            $form->division_name=$input['division_name'][$key];
-            $form->district_name=$input['district_name'][$key];
-            $form->city_corparation_name=$input['city_corparation_name'][$key];
-
-            if(empty($input['upozila_name'][$key])){
-
-
-            }else{
-
-                $form->upozila_name=$input['upozila_name'][$key];
-            }
-
-
-            if(empty($input['thana_name'][$key])){
-
-
-            }else{
-
-                $form->thana_name=$input['thana_name'][$key];
-            }
-
-
-
-            if(empty($input['municipality_name'][$key])){
-
-
-            }else{
-
-                $form->municipality_name=$input['municipality_name'][$key];
-            }
-
-
-
-            if(empty($input['ward_name'][$key])){
-
-
-            }else{
-
-                $form->ward_name=$input['ward_name'][$key];
-            }
-
-
-
-            if(empty($input['beneficiaries_total'][$key])){
-
-
-            }else{
-
-                $form->number_of_beneficiaries=$input['beneficiaries_total'][$key];
-            }
-
-            if(empty($input['prokolpoType'][$key])){
-
-
-            }else{
-
-                $form->prokolpo_type=$input['prokolpoType'][$key];
-            }
-
-            if(empty($input['allocated_budget'][$key])){
-
-
-            }else{
-
-                $form->allocated_budget=$input['allocated_budget'][$key];
-            }
-
-            $form->save();
-        }
+        ProkolpoArea::where('user_id',Auth::user()->id)
+        ->where('upload_type',0)
+        ->where('type','fcTwo')
+   ->update([
+       'upload_type' => 1,
+       'formId' =>$fc1FormInfoId
+    ]);
 
     // ad new code end
 
             DB::commit();
-            return redirect()->route('editFd2DetailForFc2',base64_encode($fc2FormInfoId))->with('success','Updated Successfuly');
+            return redirect()->route('fc2FormStepTwo',base64_encode($fc2FormInfoId))->with('success','Updated Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -597,5 +486,554 @@ class Fc2FormController extends Controller
     ]);
 
    }
+
+   public function prokolpoAreaForFc2Update(Request $request){
+    $form= ProkolpoArea::find($request->mainId);
+    $form->type='fcTwo';
+    $form->division_name=$request->division_name;
+    $form->district_name=$request->district_name;
+    $form->city_corparation_name=$request->city_corparation_name;
+    $form->upozila_name=$request->upozila_name;
+    $form->thana_name=$request->thana_name;
+    $form->municipality_name=$request->municipality_name;
+    $form->ward_name=$request->ward_name;
+    $form->number_of_beneficiaries=$request->beneficiaries_total;
+    $form->prokolpo_type=$request->prokolpoType;
+    $form->allocated_budget=$request->allocated_budget;
+    $form->save();
+
+    if($request->mainEditId == 0){
+
+    $prokolpoAreaList = ProkolpoArea::where('user_id',Auth::user()->id)
+    ->where('type','fcTwo')
+    ->where('upload_type',0)->get();
+    }else{
+
+        $prokolpoAreaList = ProkolpoArea::where('formId',$request->mainEditId)
+        ->where('type','fcTwo')
+        ->get();
+
+
+    }
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+    $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+    ->groupBy('city_orporation')->select('city_orporation')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+    $data = view('front.fc2Form.prokolpoAreaForFc1',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+    return response()->json($data);
+
+}
+
+public function prokolpoAreaForFc2(Request $request){
+
+    $form= new ProkolpoArea();
+
+    if($request->mainEditId == 0){
+        $form->user_id =Auth::user()->id;
+    $form->upload_type =0;
+        }else{
+            $form->formId =$request->mainEditId;
+            $form->user_id =Auth::user()->id;
+            $form->upload_type =1;
+        }
+    $form->type='fcTwo';
+    $form->division_name=$request->division_name;
+    $form->district_name=$request->district_name;
+    $form->city_corparation_name=$request->city_corparation_name;
+    $form->upozila_name=$request->upozila_name;
+    $form->thana_name=$request->thana_name;
+    $form->municipality_name=$request->municipality_name;
+    $form->ward_name=$request->ward_name;
+    $form->number_of_beneficiaries=$request->beneficiaries_total;
+    $form->prokolpo_type=$request->prokolpoType;
+    $form->allocated_budget=$request->allocated_budget;
+    $form->save();
+
+    if($request->mainEditId == 0){
+
+    $prokolpoAreaList = ProkolpoArea::where('user_id',Auth::user()->id)
+    ->where('type','fcTwo')
+    ->where('upload_type',0)->get();
+    }else{
+
+        $prokolpoAreaList = ProkolpoArea::where('formId',$request->mainEditId)
+        ->where('type','fcTwo')
+        ->get();
+
+
+    }
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+    $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+    ->groupBy('city_orporation')->select('city_orporation')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+    $data = view('front.fc2Form.prokolpoAreaForFc1',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+    return response()->json($data);
+
+
+
+}
+
+
+
+
+
+public function prokolpoAreaForFc2Delete(Request $request){
+
+    $admins = ProkolpoArea::find($request->id);
+    if (!is_null($admins)) {
+        $admins->delete();
+    }
+
+    if($request->mainEditId == 0){
+
+        $prokolpoAreaList = ProkolpoArea::where('user_id',Auth::user()->id)
+        ->where('type','fcTwo')
+        ->where('upload_type',0)->get();
+        }else{
+
+            $prokolpoAreaList = ProkolpoArea::where('formId',$request->mainEditId)
+            ->where('type','fcTwo')
+            ->get();
+
+
+        }
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+    $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+    ->groupBy('city_orporation')->select('city_orporation')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+    $data = view('front.fc2Form.prokolpoAreaForFc1',compact('thanaList','subdDistrictList','cityCorporationList','districtList','divisionList','prokolpoAreaList'))->render();
+    return response()->json($data);
+
+
+}
+
+
+public function fc2FormStepTwo($id){
+
+
+    try{
+
+        $fd6Id = base64_decode($id);
+
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+            ->select('division_bn')->get();
+
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')
+            ->select('district_bn')->get();
+
+        $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')
+            ->select('city_orporation')->get();
+
+            $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+            ->select('thana_bn')->get();
+
+        $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)
+            ->where('id',$fd6Id)->latest()->first();
+
+        $prokolpoAreaList =ProkolpoArea::where('formId',$fd6Id)
+        ->where('type','fcTwo')->latest()->get();
+
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fd6Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        return view('front.fc2Form.newAddFormStepTwo',compact('SDGDevelopmentGoal','subdDistrictList','sectorWiseExpenditureList','fd6Id','prokolpoAreaList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
+
+}
+
+public function fc2FormStepTwoBudget(Request $request){
+
+
+
+    $form= new SectorWiseExpenditure();
+    $form->fc1_form_id=$request->fcOneId;
+    $form->type='fcTwo';
+    $form->work_area_district=$request->district_name;
+    $form->work_area_sub_district=$request->upozila_name;
+    $form->activities=$request->activities;
+    $form->estimated_expenses=$request->estimated_expenses;
+    $form->time_limit=$request->time_limit;
+    $form->number_of_beneficiaries=$request->number_of_beneficiaries;
+    $form->save();
+
+    $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoBudget',compact('divisionList','subdDistrictList','districtList','sectorWiseExpenditureList'))->render();
+    return response()->json($data);
+
+
+}
+
+public function fc2FormStepTwoBudgetUpdate(Request $request){
+
+
+    $form= SectorWiseExpenditure::find($request->mainId);
+    $form->work_area_district=$request->district_name;
+    $form->work_area_sub_district=$request->upozila_name;
+    $form->activities=$request->activities;
+    $form->estimated_expenses=$request->estimated_expenses;
+    $form->time_limit=$request->time_limit;
+    $form->number_of_beneficiaries=$request->number_of_beneficiaries;
+    $form->save();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoBudget',compact('divisionList','subdDistrictList','districtList','sectorWiseExpenditureList'))->render();
+    return response()->json($data);
+
+
+}
+
+
+public function fc2FormStepTwoBudgetDelete(Request $request){
+
+    $admins = SectorWiseExpenditure::find($request->id);
+    if (!is_null($admins)) {
+        $admins->delete();
+    }
+
+    $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoBudget',compact('divisionList','subdDistrictList','districtList','sectorWiseExpenditureList'))->render();
+    return response()->json($data);
+
+}
+
+public function fc2FormStepTwoSDG(Request $request){
+
+    $form= new SDGDevelopmentGoal();
+    $form->fc1_form_id=$request->fcOneId;
+    $form->type='fcTwo';
+    $form->goal=$request->goal;
+    $form->target=$request->target;
+    $form->budget_allocation=$request->budget_allocation;
+    $form->rationality=$request->rationality;
+    $form->comment=$request->comment;
+    $form->save();
+
+    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+    return response()->json($data);
+}
+
+public function fc2FormStepTwoSDGUpdate(Request $request){
+
+    $form= SDGDevelopmentGoal::find($request->mainId);
+    $form->goal=$request->goal;
+    $form->target=$request->target;
+    $form->budget_allocation=$request->budget_allocation;
+    $form->rationality=$request->rationality;
+    $form->comment=$request->comment;
+    $form->save();
+
+    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+    return response()->json($data);
+
+}
+
+public function fc1FormStepTwoSDGDelete(Request $request){
+
+
+    $admins = SDGDevelopmentGoal::find($request->id);
+    if (!is_null($admins)) {
+        $admins->delete();
+    }
+
+    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+    $data = view('front.fc2Form.fc1FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+    return response()->json($data);
+}
+
+
+public function goToNextPageFcTwoStepTwo(Request $request){
+
+
+    $fc1_form_id=$request->fcOneId;
+
+    $getUrl = url('fc2FormStepThree',base64_encode($fc1_form_id));
+
+    return $getUrl;
+
+
+}
+
+public function fc2FormStepThree($id){
+
+    try{
+        $fc1Id = base64_decode($id);
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$fc1Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $fc2OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc1Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)
+        ->where('id',$fc1Id)->latest()->first();
+
+
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+
+        } catch (\Exception $e) {
+
+            return redirect()->route('error_404');
+        }
+
+
+        return view('front.fc2Form.newAddFormStepThree',compact('fc2FormList','fc2OtherFileList','donationList','fc1Id','districtList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+}
+
+public function fc2FormStepTwoDonorUpdate(Request $request){
+
+
+    $form= DonationReceiveDetail::find($request->mainId);
+    $form->fc1_form_id=$request->fcOneId;
+    $form->purpose_or_activities=$request->purpose_or_activities;
+    $form->registration_sarok_number=$request->registration_sarok_number;
+    $form->registration_date=$request->registration_date;
+    $form->donor_name=$request->donor_name;
+    $form->money_amount=$request->money_amount;
+    $form->audit_report=$request->audit_report;
+    $form->final_report=$request->final_report;
+    $form->local_certificate=$request->local_certificate;
+    $form->comment=$request->comment;
+    $form->save();
+
+    $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+
+    $data = view('front.fc2Form.fc1FormStepTwoDonor',compact('donationList'))->render();
+    return response()->json($data);
+
+
+}
+
+
+public function fc2FormStepTwoDonor(Request $request){
+
+
+    $form= new DonationReceiveDetail();
+    $form->fc1_form_id=$request->fcOneId;
+    $form->type='fcTwo';
+    $form->purpose_or_activities=$request->purpose_or_activities;
+    $form->registration_sarok_number=$request->registration_sarok_number;
+    $form->registration_date=$request->registration_date;
+    $form->donor_name=$request->donor_name;
+    $form->money_amount=$request->money_amount;
+    $form->audit_report=$request->audit_report;
+    $form->final_report=$request->final_report;
+    $form->local_certificate=$request->local_certificate;
+    $form->comment=$request->comment;
+    $form->save();
+
+    $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+
+    $data = view('front.fc2Form.fc1FormStepTwoDonor',compact('donationList'))->render();
+    return response()->json($data);
+
+
+}
+
+
+public function fc2FormStepTwoDonorDelete(Request $request){
+
+
+    $admins = DonationReceiveDetail::find($request->id);
+    if (!is_null($admins)) {
+        $admins->delete();
+    }
+
+    $donationList = DonationReceiveDetail::where('fc1_form_id',$request->fcOneId)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+
+    $data = view('front.fc2Form.fc1FormStepTwoDonor',compact('donationList'))->render();
+    return response()->json($data);
+}
+
+
+public function lastExtraUpdateFcTwo(Request $request){
+
+    if($request->donationList == 0){
+
+
+        return redirect()->back();
+
+
+    }else{
+
+    $fc1FormInfo =Fc2Form::find($request->fcOneId);
+    $fc1FormInfo->chief_name = $request->chief_name;
+    $fc1FormInfo->chief_desi = $request->chief_desi;
+
+    $filePath="FcOneForm";
+
+    if (!empty($request->image_base64)) {
+
+        $filePath="ngoHead";
+        $file = $request->file('digital_signature');
+        $fc1FormInfo->digital_signature =CommonController::storeBase64($request->image_base64);
+
+        }
+
+
+    if (!empty($request->image_seal_base64)) {
+
+        $filePath="ngoHead";
+        $file = $request->file('digital_seal');
+        $fc1FormInfo->digital_seal =CommonController::storeBase64($request->image_seal_base64);
+
+        }
+
+    if ($request->hasfile('donor_commitment_letter')) {
+
+        $file = $request->file('donor_commitment_letter');
+
+        $fc1FormInfo->donor_commitment_letter =CommonController::pdfUpload($request,$file,$filePath);
+
+    }
+
+    if ($request->hasfile('donor_agency_commitment_letter')) {
+
+        $file = $request->file('donor_agency_commitment_letter');
+
+        $fc1FormInfo->donor_agency_commitment_letter =CommonController::pdfUpload($request,$file,$filePath);
+
+    }
+
+    if ($request->hasfile('previous_audit_report')) {
+
+        $file = $request->file('previous_audit_report');
+
+        $fc1FormInfo->previous_audit_report =CommonController::pdfUpload($request,$file,$filePath);
+
+    }
+
+    if ($request->hasfile('last_final_report')) {
+
+        $file = $request->file('last_final_report');
+
+        $fc1FormInfo->last_final_report =CommonController::pdfUpload($request,$file,$filePath);
+
+    }
+
+
+    if ($request->hasfile('administrative_certificate')) {
+
+        $file = $request->file('administrative_certificate');
+
+        $fc1FormInfo->administrative_certificate =CommonController::pdfUpload($request,$file,$filePath);
+
+    }
+
+    $fc1FormInfo->save();
+
+
+    $input = $request->all();
+
+
+    // new code start
+    if (array_key_exists("file_name", $input) && array_key_exists("file", $input)){
+
+        $otherFileList = $input['file_name'];
+        foreach($otherFileList as $key => $otherFileLists){
+
+                $form= new Fc1FormOtherFile();
+                $form->fc1_form_id = $request->fcOneId;
+                $form->type='fcTwo';
+                $form->file_title = $input['file_name'][$key];
+                $file=$input['file'][$key];
+                $filePath="FcOneForm";
+                $form->file=CommonController::pdfUpload($request,$file,$filePath);
+                $form->save();
+            }
+    }
+
+    $fd2FormList = Fd2FormForFc2Form::where('fc1_form_id',$request->fcOneId)->latest()->first();
+
+    if(!$fd2FormList){
+    return redirect()->route('addFd2DetailForFc2',base64_encode($request->fcOneId))->with('success','Added Successfully');
+    }else{
+
+        return redirect()->route('editFd2DetailForFc2',base64_encode($request->fcOneId))->with('success','Added Successfully');
+    }
+}
+}
 
 }

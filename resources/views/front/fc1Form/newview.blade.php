@@ -974,14 +974,15 @@
 
                                             @else
 
-                                            <a href="{{ route('fc1formextrapdf',['title'=>'previous_audit_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+
+                                            <a href="{{ route('fc1formextrapdf',['title'=>'previous_audit_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm"><i class="fa fa-file-pdf-o"></i> অডিট রিপোর্ট ব্যুরো হতে গ্রহণের প্রমাণক</a>
                                              @endif
 
                                              @if(empty($fc1FormList->last_final_report))
 
 
                                              @else
-                                             <a href="{{ route('fc1formextrapdf',['title'=>'last_final_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm "><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                             <a href="{{ route('fc1formextrapdf',['title'=>'last_final_report','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm mt-2"><i class="fa fa-file-pdf-o"></i> সমাপনী প্রতিবেদন</a>
                                               @endif
 
                                               @if(empty($fc1FormList->administrative_certificate))
@@ -989,7 +990,7 @@
 
                                                        @else
 
-                                                       <a href="{{ route('fc1formextrapdf',['title'=>'administrative_certificate','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm mt-2"><i class="fa fa-file-pdf-o"></i> পিডিএফ দেখুন</a>
+                                                       <a href="{{ route('fc1formextrapdf',['title'=>'administrative_certificate','id'=>$fc1FormList->id]) }}" target="_blank" class="btn btn-success btn-sm mt-2"><i class="fa fa-file-pdf-o"></i> প্রশাসনিক প্রত্যয়নপত্র</a>
                                                         @endif
                                             </td>
                                     </tr>

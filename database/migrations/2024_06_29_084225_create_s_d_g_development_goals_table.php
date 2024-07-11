@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('s_d_g_development_goals', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('fc1_form_id')->unsigned();
-            $table->foreign('fc1_form_id')->references('id')->on('fc1_forms')->onDelete('cascade');
+            $table->integer('fc1_form_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('goal')->nullable();
             $table->string('target')->nullable();
             $table->string('budget_allocation')->nullable();
