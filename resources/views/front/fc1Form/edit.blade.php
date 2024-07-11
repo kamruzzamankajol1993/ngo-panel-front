@@ -199,375 +199,666 @@
                                     <form action="{{ route('fc1Form.update',$fc1FormList->id) }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                         @method('PUT')
-                                    <div class="row">
+                                        <input type="hidden" id="mainEditId" value="{{ $fc1FormList->id }}"/>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-sm-12">
 
 
-    @csrf
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">এনজিও'র নাম</label>
+                                                <table class="table table-bordered" style="width:100%">
 
+                                                    <tr>
+                                                        <th style="text-align: center;" colspan="2">ক্র: নং:</th>
+                                                        <th style="text-align: center; width: 25%">বিবরণ</th>
+                                                        <th style="text-align: center;">তথ্যাদি</th>
 
+                                                    </tr>
 
+                                                    <tr>
+                                                        <th style="text-align: center;" colspan="2">(০১)</th>
+                                                        <th>এনজিও সংক্রান্ত তথ্য <span style="text-align: center;">(০২)</span></th>
+                                                        <th style="text-align: center;">(০৩)</th>
 
+                                                    </tr>
 
-                                    <input type="text" required name="ngo_name" value="{{ $fc1FormList->organization_name }}" class="form-control" id=""
-                                    placeholder="">
-
-
-
-
-
-
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">সংস্থার ঠিকানা</label>
-                                            <input type="text" required name="ngo_address" class="form-control" value="{{ $fc1FormList->ngo_address }}" id=""
-                                                   placeholder="">
-                                        </div>
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">টেলিফোন </label>
-                                            <input type="text" required name="ngo_telephone_number" value="{{ $fc1FormList->ngo_telephone_number }}" class="form-control" id=""
-                                                   placeholder="">
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">মোবাইল নম্বর</label>
-                                            <input oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                                            type = "number" required
-                                            maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” name="ngo_mobile_number" value="{{ $fc1FormList->ngo_mobile_number }}" class="form-control" id=""
-                                                   placeholder="">
-                                        </div>
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">ইমেইল ঠিকানা</label>
-                                            <input type="text" required name="ngo_email" class="form-control" id=""
-                                                   placeholder="" value="{{ $fc1FormList->ngo_email }}">
-                                        </div>
-
-
-                                        <div class="mb-3 col-lg-6">
-                                            <label for="" class="form-label">ওয়েবসাইট</label>
-                                            <input type="text" required value="{{ $fc1FormList->ngo_website }}" name="ngo_website" class="form-control" id=""
-                                                   placeholder="">
-                                        </div>
-
-
-                                    </div>
+                                                    <tr>
+                                                        <th style="text-align: center;" colspan="2">১.</th>
+                                                        <td style="text-align: center;">সংস্থার নাম, ঠিকানা (ফোন ,মোবাইল, ইমেইল ও ওয়েবসাইটসহ) <span style="color:red;">*</span>:</td>
+                                                        <th style="text-align: center;">
+                                                            <div class="row">
 
 
 
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            প্রকল্পের মেয়াদ
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-
-                                                <?php
-                                        $subjectIdList  = explode(",",$fc1FormList->subject_id);
-
-                                        ?>
+                                                                <div class="mb-3 col-lg-12">
 
 
-                                        <div class="mb-3 col-lg-12">
-                                            <label for="" class="form-label">প্রকল্পের ধরণ<span class="text-danger">*</span></label>
-                                            <select required multiple name="subject_id[]" class="form-control js-example-basic-multiple" id=""
-                                                   placeholder="">
-                                                   <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
-                                                   @foreach($projectSubjectList as $projectSubjectLists)
-                                                   <option value="{{ $projectSubjectLists->id }}" {{ (in_array($projectSubjectLists->id,$subjectIdList)) ? 'selected' : '' }}>{{ $projectSubjectLists->name }}</option>
-                                                   @endforeach
-                                            </select>
-                                        </div>
+
+                                                                    @if(session()->get('locale') == 'en' || empty(session()->get('locale')))
 
 
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">প্রকল্পের আরম্ভের তারিখ</label>
-                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">প্রকল্পের সমাপ্তির তারিখ</label>
-                                                    <input type="text" value="{{ $fc1FormList->ngo_prokolpo_end_date }}" name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
-                                                           placeholder="">
-                                                </div>
+                                                            <input type="text" placeholder="এনজিও'র নাম" required name="ngo_name" value="{{ $ngo_list_all->organization_name_ban }}" class="form-control" id=""
+                                                            placeholder="">
+
+                                                            @else
+
+
+                                                            <input type="text" placeholder="এনজিও'র নাম" required name="ngo_name" value="{{ $ngo_list_all->organization_name }}" class="form-control" id=""
+                                                            placeholder="">
+
+
+                                                            @endif
+
+
+
+                                                                </div>
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input type="text" placeholder="সংস্থার ঠিকানা" required name="ngo_address" class="form-control" value="{{ $ngo_list_all->organization_address }}" id=""
+                                                                           >
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input type="text" placeholder="টেলিফোন" required name="ngo_telephone_number" value="{{ $ngo_list_all->tele_phone_number }}" class="form-control" id=""
+                                                                           >
+                                                                </div>
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input placeholder="মোবাইল নম্বর" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                                                    type = "number" required
+                                                                    maxlength = "11" data-parsley-required minlength="11"  data-parsley-trigger=“keyup” name="ngo_mobile_number" value="{{ $ngo_list_all->phone }}" class="form-control" id=""
+                                                                          >
+                                                                </div>
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input placeholder="ইমেইল ঠিকানা" type="text" required name="ngo_email" class="form-control" id=""
+                                                                           value="{{ $ngo_list_all->email }}">
+                                                                </div>
+
+                                                                @if(empty($ngo_list_all->web_site_name))
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input placeholder="ওয়েবসাইট" type="text" required value="{{ $renewWebsiteName }}" name="ngo_website" class="form-control" id=""
+                                                                          >
+                                                                </div>
+                                                                @else
+                                                                <div class="mb-3 col-lg-12">
+
+                                                                    <input placeholder="ওয়েবসাইট" type="text" required value="{{ $ngo_list_all->web_site_name }}" name="ngo_website" class="form-control" id=""
+                                                                           >
+                                                                </div>
+
+                                                                @endif
+                                                            </div>
+                                                        </th>
+
+                                                    </tr>
+                                                  <!-- step one start  -->
+
+
+
+                                                    <!-- step two strat --->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="4">২.</th>
+
+                                                        <td style="font-weight:bold;" colspan="2">প্রকল্পের মেয়াদ</td>
+                                                        <td></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ক.</td>
+                                                        <td> আরম্ভের তারিখ <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input required type="text" value="{{ $fc1FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne" id=""
+                                                               placeholder="আরম্ভের তারিখ">
+
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="text-align: center;">খ.</td>
+                                                        <td>সমাপ্তির তারিখ  <span style="color:red;">*</span> </td>
+                                                        <td> <input type="text" required value="{{ $fc1FormList->ngo_prokolpo_end_date }}"  name="ngo_prokolpo_end_date" class="form-control datepickerOne" id=""
+                                                            placeholder="সমাপ্তির তারিখ"></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">গ.</td>
+                                                        <td>প্রকল্পের ধরণ <span style="color:red;">*</span> </td>
+                                                        <td>
+
+                                                            <?php
+                                                            $subjectIdList  = explode(",",$fc1FormList->subject_id);
+
+                                                            ?>
+                                                                    <select multiple required name="subject_id[]" class="form-control js-example-basic-multiple" id=""
+                                                                           placeholder="">
+                                                                           <option value="">--অনুগ্রহ করে নির্বাচন করুন--</option>
+                                                                           @foreach($projectSubjectList as $projectSubjectLists)
+                                                                           <option value="{{ $projectSubjectLists->id }}" {{ (in_array($projectSubjectLists->id,$subjectIdList)) ? 'selected' : '' }}>{{ $projectSubjectLists->name }}</option>
+                                                                           @endforeach
+                                                                    </select>
+
+                                                    </td>
+
+                                                    </tr>
+
+
+
+
+
+                                                    <!-- step two end --->
+
+                                                    <!-- step three start -->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="2">৩.</th>
+                                                        <td style="font-weight:bold;" colspan="3">অনুদান গ্রহণের উদ্দেশ্য<span style="color:red;">*</span><span class="text-danger" style="font-size:12px;">যে কোনো একটি ইনপুট ফিল্ড অবশ্যই পূরণ করতে হবে</span></td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <textarea required name="purpose_of_donation" class="form-control summernote" id=""
+                                                            placeholder="বিস্তারিত বিবরণ">
+
+                                                            {!! $fc1FormList->purpose_of_donation !!}
+                                                        </textarea>
+
+                                                            <input type="file" accept=".pdf" name="purpose_of_donation_pdf" class="form-control mt-3" id=""
+                                                               placeholder="পূর্ণ নাম">
+
+                                                               @if(empty($fc1FormList->purpose_of_donation_pdf))
+
+
+                                                               @else
+
+
+                                                               <?php
+
+                                                               $file_path = url($fc1FormList->purpose_of_donation_pdf);
+                                                               $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                               $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                               ?>
+                                                                <b>{{ $filename.'.'.$extension }}</b>
+                                                                @endif
+                                                        </td>
+                                                    </tr>
+                                                  <!-- step one start  -->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="4">৪.</th>
+
+                                                        <td style="font-weight:bold;" colspan="2">কর্ম এলাকা ও বাজেট</td>
+                                                        <td> <div class="d-flex justify-content-between ">
+                                                            <div class="p-2">
+
+
+                                                            </div>
+                                                            <div class="p-2">
+                                                                <button class="btn btn-primary btn-sm btn-custom" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                                                                     যুক্ত করুন
+                                                                </button>
+                                                            </div>
+                                                        </div></td>
+
+                                                    </tr>
+                                                    <tr>
+
+                                                        {{-- <td style="text-align: center;">ক.</td> --}}
+                                                        <td colspan="3" rowspan="3">
+
+                                                            <div class="table-responsive" id="tableAjaxDatapro">
+
+
+                                                                @include('front.fc1Form._partial.prokolpoAreaTable')
+                                                            </div>
+
+                                                </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                    </tr>
+
+                                                    <tr>
+                                                    </tr>
+
+                                                    <!-- step three end -->
+
+                                                    <!-- step four start --->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="19">৫.</th>
+
+                                                        <th style="" colspan="3">যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ</th>
+
+                                                    </tr>
+
+
+
+                                                    <tr >
+
+                                                        <td style="text-align: center;">অ.</td>
+                                                        <th>ব্যক্তির ক্ষেত্রে</th>
+                                                        <td>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ক.</td>
+                                                        <td>পূর্ণ নাম <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_full_name }}" name="foreigner_donor_full_name" class="form-control" id=""
+                                                               placeholder="পূর্ণ নাম">
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">খ.</td>
+                                                        <td>পেশা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_occupation }}" name="foreigner_donor_occupation" class="form-control" id=""
+                                                            placeholder="পেশা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">গ.</td>
+                                                        <td>যোগাযোগের ঠিকানা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_address }}" name="foreigner_donor_address" class="form-control" id=""
+                                                               placeholder="যোগাযোগের ঠিকানা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ঘ.</td>
+                                                        <td>টেলিফোন, ফ্যাক্স ও ইমেইল নম্বর <span style="color:red;">* </span></td>
+                                                        <td>
+
+                                                                <input type="text" value="{{ $fc1FormList->foreigner_donor_telephone_number }}" name="foreigner_donor_telephone_number" class="form-control mt-2" id=""
+                                                                       placeholder="টেলিফোন">
+
+
+                                                                <input type="text" value="{{ $fc1FormList->foreigner_donor_fax }}" name="foreigner_donor_fax" class="form-control mt-2" id=""
+                                                                       placeholder="ফ্যাক্স">
+
+                                                                <input type="text" value="{{ $fc1FormList->foreigner_donor_email }}" name="foreigner_donor_email" class="form-control mt-2" id=""
+                                                                       placeholder="ইমেইল নম্বর">
+
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ঙ.</td>
+                                                        <td>জাতীয়তা/নাগরিকত্ব <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_nationality }}" name="foreigner_donor_nationality" class="form-control" id=""
+                                                            placeholder="জাতীয়তা/নাগরিকত্ব">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">চ.</td>
+                                                        <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত
+                                                            United Nations Security Council’s Resolution (UNSCR)
+                                                            কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_is_verified }}" name="foreigner_donor_is_verified" class="form-control" id=""
+                                                               placeholder="প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+
+
+                                                        <td style="text-align: center;">ছ.</td>
+                                                        <td>উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->foreigner_donor_is_affiliatedrict }}" name="foreigner_donor_is_affiliatedrict" class="form-control" id=""
+                                                            placeholder="উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা">
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align: center;"> আ.</td>
+                                                    <th>সংস্থার ক্ষেত্রে</th>
+                                                    <td>
+
+                                                    </td>
+
+                                                </tr>
+
+    <tr>
+
+                                                        <td style="text-align: center;">ক.</td>
+                                                        <td>সংস্থার নাম <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text"  value="{{ $fc1FormList->organization_name }}" name="organization_name" class="form-control" id=""
+                                                            placeholder="সংস্থার নাম">
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">খ.</td>
+                                                        <td>অফিস/ সংস্থার ঠিকানা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->organization_address }}" name="organization_address" class="form-control" id=""
+                                                            placeholder="অফিস/ সংস্থার ঠিকানা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">গ.</td>
+                                                        <td>টেলিফোন, ফ্যাক্স নম্বর <span style="color:red;">* </span></td>
+                                                        <td>
+
+                                                                <input type="text" value="{{ $fc1FormList->organization_telephone_number }}" name="organization_telephone_number" class="form-control mt-2" id=""
+                                                                       placeholder="টেলিফোন">
+
+                                                                <input type="text" value="{{ $fc1FormList->organization_fax }}" name="organization_fax" class="form-control mt-2" id=""
+                                                                       placeholder="ফ্যাক্স নম্বর">
+
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ঘ.</td>
+                                                        <td>ই-মেইল ও ওয়েবসাইট <span style="color:red;">* </span></td>
+                                                        <td>
+
+
+                                                                <input type="text" value="{{ $fc1FormList->organization_email }}" name="organization_email" class="form-control mt-2" id=""
+                                                                       placeholder="ই-মেইল">
+
+                                                                <input type="text" value="{{ $fc1FormList->organization_website }}" name="organization_website" class="form-control mt-2" id=""
+                                                                       placeholder="ওয়েবসাইট">
+
+
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ঙ.</td>
+                                                        <td>মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত
+                                                            United Nations Security Council’s Resolution (UNSCR)
+                                                            কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->organization_is_verified }}"  name="organization_is_verified" class="form-control" id=""
+                                                               placeholder="প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">চ.</td>
+                                                        <td>উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->relation_with_donor }}"  name="relation_with_donor" class="form-control" id=""
+                                                               placeholder="উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা">
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+
+
+                                                        <td style="text-align: center;">ছ.</td>
+                                                        <td>প্রধান নির্বাহী কর্মকর্তার নাম ও পদবি <span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input type="text" value="{{ $fc1FormList->organization_ceo_name }}" name="organization_ceo_name" class="form-control" id=""
+                                                            placeholder="প্রধান নির্বাহী কর্মকর্তার নাম">
+
+                                                            <input type="text" value="{{ $fc1FormList->organization_ceo_designation }}" name="organization_ceo_designation" class="form-control mt-2" id=""
+                                                            placeholder="প্রধান নির্বাহী কর্মকর্তার পদবি">
+
+                                                        </td>
+
+                                                    </tr>
+
+
+                                            <tr>
+                                                <td style="text-align: center;">জ.</td>
+                                                    <td>বাংলাদেশের জন্য দায়িত্ব প্রাপ্ত নির্বাহীর নাম ও পদবি <span style="color:red;">* </span></td>
+                                                    <td>
+
+                                                            <input type="text" value="{{ $fc1FormList->organization_name_of_executive_responsible_for_bd }}" name="organization_name_of_executive_responsible_for_bd" class="form-control" id=""
+                                                                   placeholder="বাংলাদেশের জন্য দায়িত্ব প্রাপ্ত নির্বাহীর নাম">
+
+
+                                                            <input type="text" value="{{ $fc1FormList->organization_name_of_executive_responsible_for_bd_designation }}"  name="organization_name_of_executive_responsible_for_bd_designation" class="form-control mt-3" id=""
+                                                                   placeholder="বাংলাদেশের জন্য দায়িত্ব প্রাপ্ত নির্বাহীর পদবি">
+
+
+                                                    </td>
+
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td style="text-align: center;">ঝ.</td>
+                                                        <td>সংস্থার উদ্দেশ্যসমূহ <span style="color:red;">* </span></td>
+                                                        <td>
+
+                                                            <textarea name="objectives_of_the_organization" class="form-control summernote" id=""
+                                                            placeholder="সংস্থার উদ্দেশ্যসমূহ">
+
+                                                            {!! $fc1FormList->objectives_of_the_organization !!}
+
+                                                        </textarea>
+
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <!-- steap four end -->
+
+                                                    <!-- step five start -->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="2">৬.</th>
+
+                                                        <td style="font-weight:bold;" colspan="2">প্রতিশ্রতিপত্র আছে কি না</td>
+                                                        <td style="font-weight:bold;">কাজের নাম,অর্থের পরিমাণ ও মেয়াদকাল সুস্পষ্টভাবে উল্লেখপূর্বক কপি সংযুক্ত  করতে হবে </td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+
+                                                        <td colspan="3">
+
+                                                            <input type="text" required value="{{ $fc1FormList->bond_paper_available_or_not }}" name="bond_paper_available_or_not" class="form-control mt-1" id=""
+                                                            placeholder="প্রতিশ্রতিপত্র আছে কি না">
+
+                                                            <input type="text" required value="{{ $fc1FormList->bond_paper_work_name }}" name="bond_paper_work_name" class="form-control mt-1" id=""
+                                                            placeholder="কাজের নাম">
+
+                                                            <input type="text" required value="{{ $fc1FormList->bond_paper_amount }}" name="bond_paper_amount" class="form-control mt-1" id=""
+                                                            placeholder="অর্থের পরিমাণ">
+
+                                                            <input type="text" required value="{{ $fc1FormList->bond_paper_duration }}" name="bond_paper_duration" class="form-control mt-1" id=""
+                                                            placeholder="মেয়াদকাল">
+
+                                                            <input type="file" accept=".pdf"  name="bond_paper_pdf" class="form-control mt-1" id=""
+                                                            placeholder="প্রতিশ্রতিপত্র আছে কি না">
+
+                                                            @if(empty($fc1FormList->bond_paper_pdf))
+
+
+                                                            @else
+
+
+                                                            <?php
+
+                                                            $file_path = url($fc1FormList->bond_paper_pdf);
+                                                            $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                            $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                            ?>
+                                                             <b>{{ $filename.'.'.$extension }}</b>
+                                                             @endif
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                    <!-- step five end --->
+
+                                                    <!-- step six start -->
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="4">৭.</th>
+                                                        <td></td>
+                                                        <td style="font-weight:bold;">অনুদানের বিস্তারিত বিবরণ</td>
+                                                        <td></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ক.</td>
+                                                        <td>  বৈদেশিক মুদ্রার পরিমান<span style="color:red;">* </span></td>
+                                                        <td>
+                                                            <input required type="number" value="{{ $fc1FormList->organization_amount_of_foreign_currency }}" name="organization_amount_of_foreign_currency" class="form-control" id=""
+                                                               placeholder="বৈদেশিক মুদ্রার পরিমান">
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="text-align: center;">খ.</td>
+                                                        <td>সমপরিমাণ বাংলাদেশী টাকা<span style="color:red;">*</span> </td>
+                                                        <td><input required type="number" value="{{ $fc1FormList->equivalent_amount_of_bd_taka }}"  name="equivalent_amount_of_bd_taka" class="form-control" id=""
+                                                            placeholder="সমপরিমাণ বাংলাদেশী টাকা"></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">গ.</td>
+                                                        <td>পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য)<span style="color:red;">*</span> </td>
+                                                        <td><input required type="number" value="{{ $fc1FormList->commodities_value_in_bangladeshi_currency }}" name="commodities_value_in_bangladeshi_currency" class="form-control" id=""
+                                                            placeholder="পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য)"></td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th style="text-align: center;" rowspan="4">৮.</th>
+                                                        <td></td>
+                                                        <td style="font-weight:bold;">ব্যাংক সংক্রান্ত তথ্যাবলী</td>
+                                                        <td></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">ক.</td>
+                                                        <td>যে ব্যাংকের মাধ্যমে বৈদেশিক অনুদান গ্রহণ করতে ইচ্ছুক তার নাম ও ঠিকানা</td>
+                                                        <td>
+                                                            <div class="mb-3 col-lg-12">
+
+                                                                <input type="text" value="{{ $fc1FormList->bank_name }}" name="bank_name" class="form-control" id=""
+                                                                       placeholder="নাম">
+                                                            </div>
+                                                            <div class="mb-3 col-lg-12">
+
+                                                                <input type="text" value="{{ $fc1FormList->bank_address }}" name="bank_address" class="form-control" id=""
+                                                                       placeholder="ঠিকানা">
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td style="text-align: center;">খ.</td>
+                                                        <td>ব্যাংক হিসাবের নাম</td>
+                                                        <td> <input type="text" value="{{ $fc1FormList->bank_account_name }}" name="bank_account_name" class="form-control" id=""
+                                                            placeholder="ব্যাংক হিসাবের নাম"></td>
+
+                                                    </tr>
+
+                                                    <tr>
+
+                                                        <td style="text-align: center;">গ.</td>
+                                                        <td>ব্যাংক হিসাব নম্বর</td>
+                                                        <td><input type="text" value="{{ $fc1FormList->bank_account_number }}"  name="bank_account_number" class="form-control" id=""
+                                                            placeholder="ব্যাংক হিসাব নম্বর"/></td>
+
+                                                    </tr>
+
+                                                    <!-- step six end -->
+
+                                                </table>
+
+
+
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            প্রকল্প এলাকা
-                                        </div>
-                                        <div class="card-body">
-
-                                            <div class="row">
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">প্রকল্প এলাকা</label>
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <table class="table table-bordered" id="dynamicAddRemove">
+                                        <!-- step one end --->
 
 
-                                                        @foreach($prokolpoAreaList as $key=>$prokolpoAreaListAll)
-                                            <!-- global table  start --->
-                                       @include('front.include.globalTableEdit')
-                                       <!-- global table end --->
-                                            @endforeach
-                                                    </table>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            যে বৈদেশিক উৎস থেকে অনুদান গ্রহণ করা হবে তার বিবরণ
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="mb-3 col-lg-12">
-                                                    <h5>ব্যক্তির ক্ষেত্রে</h5>
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">পূর্ণ নাম</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_full_name }}" name="foreigner_donor_full_name" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">পেশা</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_occupation }}" name="foreigner_donor_occupation" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">যোগাযোগের ঠিকানা	</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_address }}" name="foreigner_donor_address" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">টেলিফোন</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_telephone_number }}" name="foreigner_donor_telephone_number" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ফ্যাক্স </label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_fax }}" name="foreigner_donor_fax" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ইমেইল নম্বর</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_email }}" name="foreigner_donor_email" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">জাতীয়তা/নাগরিকত্ব</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_nationality }}" name="foreigner_donor_nationality" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধে নিমিত্ত
-                                                        United Nations Security Council’s Resolution (UNSCR)
-                                                        কর্তৃক প্রকাশিত তালিকার সংগে দাতার তথ্য যাচাই করা হয়েছে কিনা
-                                                    </label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_is_verified }}" name="foreigner_donor_is_verified" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">উক্ত তালিকাভুক্ত ব্যক্তি/ ব্যক্তিবর্গ/ সংস্থার সাথে দাতার সংশ্লিষ্টতা আছে কিনা</label>
-                                                    <input type="text" value="{{ $fc1FormList->foreigner_donor_is_affiliatedrict }}" name="foreigner_donor_is_affiliatedrict" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <h5>সংস্থা ক্ষেত্রে</h5>
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">সংস্থার নাম</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_name }}" name="organization_name" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">অফিস/ সংস্থার ঠিকানা</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_address }}" name="organization_address" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">টেলিফোন</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_telephone_number }}" name="organization_telephone_number" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ফ্যাক্স নম্বর</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_fax }}" name="organization_fax" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ইমেইল </label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_email }}" name="organization_email" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ওয়েবসাইট</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_website }}" name="organization_website" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">ম্যানিডাডেরিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধের নিমিত্ত
-                                                        United Nations Security Council’s Resolution (UNSCR)
-                                                        কর্তৃক প্রকাশিত তালিকার সংগে দাতা সংস্থার তথ্য যাচাই করা হয়েছে কিনা
-                                                    </label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_is_verified }}" name="organization_is_verified" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">উক্ত তালিকাভুক্ত ব্যক্তি/ব্যক্তিবর্গ/ সংস্থার সাথে দাতা সংস্থার সংশ্লিষ্টতা আছে কিনা</label>
-                                                    <input type="text" value="{{ $fc1FormList->relation_with_donor }}" name="relation_with_donor" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">প্রধান নির্বাহী কর্মকর্তার নাম</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_ceo_name }}" name="organization_ceo_name" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">প্রধান নির্বাহী কর্মকর্তার পদবি</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_ceo_designation }}" name="organization_ceo_designation" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">বাংলাদেশের জন্য দায়িত্ব প্রাপ্ত নির্বাহীর নাম</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_name_of_executive_responsible_for_bd }}" name="organization_name_of_executive_responsible_for_bd" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">বাংলাদেশের জন্য দায়িত্ব প্রাপ্ত নির্বাহীর পদবি</label>
-                                                    <input type="text" value="{{ $fc1FormList->organization_name_of_executive_responsible_for_bd_designation }}" name="organization_name_of_executive_responsible_for_bd_designation" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">সংস্থার উদ্দেশ্যসমূহ</label>
-                                                    <input type="text" value="{{ $fc1FormList->objectives_of_the_organization }}" name="objectives_of_the_organization" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <label for="" class="form-label">প্রতিশ্রুতিপত্র আছে কিনা
-                                        </label>
-                                        <select name="organization_letter_of_commitment" id="" class="form-control">
-                                            <option value="হ্যাঁ" {{'হ্যাঁ' == $fc1FormList->organization_letter_of_commitment ? 'selected':''}}>হ্যাঁ</option>
-                                            <option value="না" {{ 'না' == $fc1FormList->organization_letter_of_commitment ? 'selected':''}}>না</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <label for="" class="form-label">কাজের নাম, অর্থের পরিমান ও মেয়াদকাল সুস্পষ্টভাবে উল্লেখপূর্বক কপি সংযুক্ত করতে হবে <br><span class="text-danger" style="font-size: 12px;">(Maximum 500 KB)</span></label>
-                                        <input type="file" accept=".pdf" name="organization_name_of_the_job_amount_of_money_and_duration_pdf" class="form-control" id="fc1PdfN1"
-                                               placeholder="">
-
-                                               <p id="fc1PdfN1_text" class="text-danger mt-2" style="font-size:12px;"></p>
-
-                                               <?php
-
-                                               $file_path = url($fc1FormList->organization_name_of_the_job_amount_of_money_and_duration_pdf);
-                                               $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                               $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                               ?>
-                                                <b>{{ $filename.'.'.$extension }}</b>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            অনুদানের বিস্তারিত বিবরণ
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">বৈদেশিক মুদ্রার পরিমান</label>
-                                                    <input type="number" value="{{ $fc1FormList->organization_amount_of_foreign_currency }}" name="organization_amount_of_foreign_currency" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">সমপরিমাণ বাংলাদেশী টাকা</label>
-                                                    <input type="number" value="{{ $fc1FormList->equivalent_amount_of_bd_taka }}" name="equivalent_amount_of_bd_taka" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-12">
-                                                    <label for="" class="form-label">পণ্যসামগ্রী (বাংলাদেশী মুদ্রায় আনুমানিক মূল্য)</label>
-                                                    <input type="number" value="{{ $fc1FormList->commodities_value_in_bangladeshi_currency }}" name="commodities_value_in_bangladeshi_currency" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-                                        <div class="card-header">
-                                            ব্যাংক সংক্রান্ত তথ্যাবলী
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">যে ব্যাংকের মাধ্যমে বৈদেশিক অনুদান গ্রহণ করতে ইচ্ছুক তার নাম</label>
-                                                    <input type="text" value="{{ $fc1FormList->bank_name }}" name="bank_name" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label"> ঠিকানা</label>
-                                                    <input type="text" value="{{ $fc1FormList->bank_address }}" name="bank_address" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ব্যাংক হিসাবের নাম	</label>
-                                                    <input type="text" value="{{ $fc1FormList->bank_account_name }}" name="bank_account_name" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                                <div class="mb-3 col-lg-6">
-                                                    <label for="" class="form-label">ব্যাংক হিসাব নম্বর</label>
-                                                    <input type="text" value="{{ $fc1FormList->bank_account_number }}" name="bank_account_number" class="form-control" id=""
-                                                           placeholder="">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mb-3 col-lg-12">
-
-                                        <div class="card-header">
-                                            এককালীন অনুদান গ্রহণের আবেদন ফরম /এফসি -১ ফরম
-                                        </div>
-
-                                        <div class="card-body">
-
-                                            <div class="mb-3 col-lg-12">
-                                                <label for="" class="form-label">এককালীন অনুদান গ্রহণের আবেদন ফরম /এফসি -১ ফরম<span class="text-danger">*</span> <br><span class="text-danger" style="font-size: 12px;">(Maximum 10 MB)</span></label>
-                                                <input type="file" accept=".pdf" name="verified_fc_one_form" class="form-control" id="fc1PdfN2"
-                                                       placeholder="">
-
-                                                       <p id="fc1PdfN2_text" class="text-danger mt-2" style="font-size:12px;"></p>
-
-                                                       <?php
-
-                                                       $file_path = url($fc1FormList->verified_fc_one_form);
-                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
-
-                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
-
-
-
-
-                                                       ?>
-                                                        <b>{{ $filename.'.'.$extension }}</b>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="d-grid d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-registration"
-                                                >পরবর্তী পৃষ্ঠা
+                                        <div class="d-grid d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-registration">পরবর্তী পৃষ্ঠা
                                         </button>
-                                    </div>
+                                        </div>
                                 </form>
                                 </div>
                             </div>
@@ -583,102 +874,11 @@
 
 </section>
 
-
+@include('front.fc1Form._partial.stepOneModal')
+<!-- end modal -->
 @endsection
 
 @section('script')
+@include('front.fc1Form._partial.script')
 @include('front.include.globalScript')
-<script>
-
-    ///
-
-
-        $(document).on('change', 'select.division_name', function () {
-
-var main_id = $(this).attr('id');
-var get_id_from_main = main_id.slice(13);
-var getMainValue = $('#division_name'+get_id_from_main).val();
-
- // var getMainValue = $(this).val();
-
-  //alert(getMainValue);
-
-
-  $.ajax({
-    url: "{{ route('getDistrictList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#district_name"+get_id_from_main).html('');
-      $("#district_name"+get_id_from_main).html(data);
-    }
-    });
-
-// });
-
-
-$.ajax({
-    url: "{{ route('getCityCorporationList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#city_corparation_name"+get_id_from_main).html('');
-      $("#city_corparation_name"+get_id_from_main).html(data);
-    }
-    });
-
-});
-
-
-
-
-
-
-    ///
-$("#ngo_prokolpo_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#project_name').val(getMainValue);
-
-});
-
-
-$("#ngo_prokolpo_duration").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#duration_of_project').val(getMainValue);
-
-});
-
-
-$("#donor_organization_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#donor_organization_name_two').val(getMainValue);
-
-});
-
-
-
-
-
-
-
-
-</script>
-
-
-
-
-{{-- <script>
-    var i = 0;
-    $("#dynamic-ar").click(function () {
-        ++i;
-        $("#dynamicAddRemove").append('<tr><td style="width: 20%"><label for="" class="form-label">বিভাগ</label><select required name="division_name[]" class="form-control division_name" id="division_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option>@foreach($divisionList as $districtListAll)<option value="{{ $districtListAll->division_bn }}">{{ $districtListAll->division_bn }}</option>@endforeach</select></td><td style="width: 30%"><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">জেলা</label><select required name="district_name[]" class="form-control district_name" id="district_name'+i+'"><option value="">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div><div class="col-lg-12 mb-3"><label for="" class="form-label">সিটি কর্পোরেশন</label><select required name="city_corparation_name[]" class="form-control city_corparation_name" id="city_corparation_name'+i+'"><option value="অনুগ্রহ করে নির্বাচন করুন">--- অনুগ্রহ করে নির্বাচন করুন ---</option></select></div></div></td><td><div class="row"><div class="col-lg-12 mb-3"><label for="" class="form-label">উপজেলা</label><input type="text" name="upozila_name[]" class="form-control" id="" placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">থানা</label><input type="text"  required name="thana_name[]" class="form-control" id=""placeholder=""></div><div class="col-lg-12 mb-3"><label for="" class="form-label">পৌরসভা</label><input type="text" name="municipality_name[]" class="form-control" id=""placeholder=""></div></div></td><td><label for="" class="form-label">ইউনিয়ন/ওয়ার্ড</label><input type="text" name="ward_name[]" class="form-control" id="" placeholder=""></td><td><input type="number" name="allocated_budget[]" required class="form-control" id="" placeholder=""></td><td><input type="number" name="number_of_beneficiaries[]" required class="form-control" id="" placeholder=""></td><td><button type="button" class="btn btn-outline-danger remove-input-field"><i class="bi bi-file-earmark-x-fill"></i></button></td></tr>');});
-    $(document).on('click', '.remove-input-field', function () {
-        $(this).parents('tr').remove();
-    });
-
-</script> --}}
-
 @endsection

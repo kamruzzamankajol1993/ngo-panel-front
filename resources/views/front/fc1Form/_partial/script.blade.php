@@ -569,6 +569,211 @@ $('#pageloader').hide();
 
 //SDG edit end
 
+
+//donation modal start
+
+
+$(document).on('click', '#fc1DonationAjax', function () {
+
+var fcOneId = $('#fcOneId').val();
+
+
+
+if(!$('#purpose_or_activities0').val()){
+
+alertify.alert('Error', 'উদ্দেশ্য / কার্যক্রম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#registration_sarok_number0').val()){
+
+alertify.alert('Error', 'স্বারক নম্বর সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#registration_date0').val()){
+
+alertify.alert('Error', 'অনুমোদনের তারিখ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#donor_name0').val()){
+
+alertify.alert('Error', 'দাতা সংস্থার নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#money_amount0').val()){
+
+alertify.alert('Error', 'টাকার পরিমাণ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#audit_report0').val()){
+
+alertify.alert('Error', 'অডিট রিপোর্ট সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#final_report0').val()){
+
+alertify.alert('Error', 'প্রতিবেদন সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#local_certificate0').val()){
+
+alertify.alert('Error', 'প্রত্যয়ন পত্র সম্পর্কিত তথ্য দিন');
+
+}else{
+
+
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+
+
+var purpose_or_activities = $('#purpose_or_activities0').val();
+var registration_sarok_number = $('#registration_sarok_number0').val();
+var registration_date = $('#registration_date0').val();
+var donor_name = $('#donor_name0').val();
+var money_amount =$('#money_amount0').val();
+var audit_report =$('#audit_report0').val();
+var final_report =$('#final_report0').val();
+var local_certificate =$('#local_certificate0').val();
+var comment =$('#comment0').val();
+
+
+$.ajax({
+url: "{{ route('fc1FormStepTwoDonor') }}",
+method: 'post',
+data: {local_certificate:local_certificate,final_report:final_report,audit_report:audit_report,money_amount:money_amount,fcOneId:fcOneId,purpose_or_activities:purpose_or_activities,registration_sarok_number:registration_sarok_number,registration_date:registration_date,donor_name:donor_name,comment:comment},
+success: function(data) {
+
+$('#exampleModal').modal('hide');
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Added Successfully');
+
+$("#tableAjaxDataDOnor").html('');
+$("#tableAjaxDataDOnor").html(data);
+
+var purpose_or_activities = $('#purpose_or_activities0').val('');
+var registration_sarok_number = $('#registration_sarok_number0').val('');
+var registration_date = $('#registration_date0').val('');
+var donor_name = $('#donor_name0').val('');
+var money_amount =$('#money_amount0').val('');
+var audit_report =$('#audit_report0').val('');
+var final_report =$('#final_report0').val('');
+var local_certificate =$('#local_certificate0').val('');
+var comment =$('#comment0').val('');
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+}
+
+});
+
+//donation modal end
+
+//donation modal edit start
+
+
+$(document).on('click', '.fc1DonationAjaxEdit', function () {
+
+var fcOneId = $('#fcOneId').val();
+var mainId = $(this).attr('id');
+
+
+if(!$('#purpose_or_activities'+mainId).val()){
+
+alertify.alert('Error', 'উদ্দেশ্য / কার্যক্রম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#registration_sarok_number'+mainId).val()){
+
+alertify.alert('Error', 'স্বারক নম্বর সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#registration_date'+mainId).val()){
+
+alertify.alert('Error', 'অনুমোদনের তারিখ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#donor_name'+mainId).val()){
+
+alertify.alert('Error', 'দাতা সংস্থার নাম সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#money_amount'+mainId).val()){
+
+alertify.alert('Error', 'টাকার পরিমাণ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#audit_report'+mainId).val()){
+
+alertify.alert('Error', 'অডিট রিপোর্ট সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#final_report'+mainId).val()){
+
+alertify.alert('Error', 'প্রতিবেদন সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#local_certificate'+mainId).val()){
+
+alertify.alert('Error', 'প্রত্যয়ন পত্র সম্পর্কিত তথ্য দিন');
+
+}else{
+
+
+$.ajaxSetup({
+headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+
+
+var purpose_or_activities = $('#purpose_or_activities'+mainId).val();
+var registration_sarok_number = $('#registration_sarok_number'+mainId).val();
+var registration_date = $('#registration_date'+mainId).val();
+var donor_name = $('#donor_name'+mainId).val();
+var money_amount =$('#money_amount'+mainId).val();
+var audit_report =$('#audit_report'+mainId).val();
+var final_report =$('#final_report'+mainId).val();
+var local_certificate =$('#local_certificate'+mainId).val();
+var comment =$('#comment'+mainId).val();
+
+
+$.ajax({
+url: "{{ route('fc1FormStepTwoDonor') }}",
+method: 'post',
+data: {mainId:mainId,local_certificate:local_certificate,final_report:final_report,audit_report:audit_report,money_amount:money_amount,fcOneId:fcOneId,purpose_or_activities:purpose_or_activities,registration_sarok_number:registration_sarok_number,registration_date:registration_date,donor_name:donor_name,comment:comment},
+success: function(data) {
+
+$('#prokolpoDonor'+mainId).modal('hide');
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Added Successfully');
+
+$("#tableAjaxDataDOnor").html('');
+$("#tableAjaxDataDOnor").html(data);
+
+var purpose_or_activities = $('#purpose_or_activities'+mainId).val('');
+var registration_sarok_number = $('#registration_sarok_number'+mainId).val('');
+var registration_date = $('#registration_date'+mainId).val('');
+var donor_name = $('#donor_name'+mainId).val('');
+var money_amount =$('#money_amount'+mainId).val('');
+var audit_report =$('#audit_report'+mainId).val('');
+var final_report =$('#final_report'+mainId).val('');
+var local_certificate =$('#local_certificate'+mainId).val('');
+var comment =$('#comment'+mainId).val('');
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+}
+
+});
+
+//donation modal edit end
+
 </script>
 
 
@@ -631,6 +836,66 @@ $('#pageloader').hide();
     }
 </script>
 
+
+
+<script type="text/javascript">
+    function deleteTagDonor(id) {
+        swal({
+            title: '{{ trans('notification.success_one')}}',
+            text: "{{ trans('notification.success_two')}}",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '{{ trans('notification.success_three')}}',
+            cancelButtonText: '{{ trans('notification.success_four')}}',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                var fcOneId = $('#fcOneId').val();
+
+                $.ajax({
+    url: "{{ route('fc1FormStepTwoDonorDelete') }}",
+    method: 'GET',
+    data: {fcOneId:fcOneId,id:id},
+    success: function(data) {
+
+      alertify.set('notifier','position', 'top-center');
+      alertify.error('Data Delete Successfully');
+      $("#tableAjaxDataDOnor").html('');
+      $("#tableAjaxDataDOnor").html(data);
+      //location.reload(true);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+                // event.preventDefault();
+                // document.getElementById('delete-form-'+id).submit();
+
+
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    '{{ trans('notification.success_five')}}',
+                    '{{ trans('notification.success_six')}} :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
 
 <script type="text/javascript">
     function deleteTagSDG(id) {
@@ -774,6 +1039,45 @@ $('#pageloader').hide();
 
     });
 
+    </script>
+    <script>
+        $(document).on('click', '#finalStepToThree', function () {
+
+            var tableCountTwo = $('#tableCountTwo').val();
+            var tableCountOne = $('#tableCountOne').val();
+
+            var finlalCount = parseInt(tableCountTwo) + parseInt(tableCountOne);
+
+            //alert(finlalCount);
+
+            if(finlalCount >= 2){
+
+                var fcOneId = $('#fcOneId').val();
+
+                $.ajax({
+    url: "{{ route('goToNextPageFcOneStepTwo') }}",
+    method: 'GET',
+    data: {fcOneId:fcOneId,},
+    success: function(data) {
+
+        window.location.href = data;
+      //location.reload(true);
+
+    },
+    beforeSend: function(){
+       $('#pageloader').show()
+   },
+  complete: function(){
+       $('#pageloader').hide();
+  }
+    });
+
+
+            }else{
+                alertify.alert('Error', '৯.ক এবং  ৯.খ  পূরণ করুন');
+            }
+
+        });
     </script>
     <script>
 

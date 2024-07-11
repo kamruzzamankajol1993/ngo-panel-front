@@ -224,6 +224,11 @@
                                         @csrf
 
                                     <input type="hidden" id="fcOneId" value="{{ $fd6Id }}"/>
+
+                                    <input type="hidden" id="tableCountTwo" value="{{ count($SDGDevelopmentGoal) }}"/>
+                                    <input type="hidden" id="tableCountOne" value="{{ count($sectorWiseExpenditureList) }}"/>
+
+
                                      <!-- step one start -->
 
                                      <div class="row">
@@ -325,12 +330,12 @@
                                     <!-- step one end --->
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
-                                        <a href="{{ route('fc1Form.create') }}" class="btn btn-danger"
+                                        <a href="{{ route('fc1Form.edit',base64_encode($fd6Id)) }}" class="btn btn-danger"
                                                 >পূর্ববর্তী পৃষ্ঠায় যান
                                     </a>
-                                        <button id="finalStepToThree"  style="margin-left:10px;" class="btn btn-registration"
+                                        <a id="finalStepToThree"  style="margin-left:10px;" class="btn btn-registration"
                                                 >পরবর্তী পৃষ্ঠা
-                                </button>
+                                </a>
                                     </div>
                                 </form>
                                 </div>

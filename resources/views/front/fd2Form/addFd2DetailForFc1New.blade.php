@@ -199,8 +199,9 @@
                                     </div>
                                     <form action="{{ route('storeFd2DetailForFc1') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
-
-
+                                        <input type="hidden" id="mainType"  value="fc1"/>
+                                        <input type="hidden" name="fc1_form_id" value="{{ base64_encode($fc1Id) }}" />
+                                        <input type="hidden" id="mainEditId"  value="0"/>
                                         <table class="table table-bordered" style="width:100%">
 
                                             <tr>
@@ -221,9 +222,9 @@
     <th style="text-align: center;" colspan="2">১.</th>
     <td style="font-weight:bold;text-align: center;" >সংস্থার নাম ও ঠিকানা <span style="color:red;">*</span></td>
     <th style="text-align: center;">
-        <input type="text" required value="" name="ngo_name" class="form-control" id=""
+        <input type="text" required value="{{ $fc1FormList->ngo_name }}" name="ngo_name" class="form-control" id=""
                                                    placeholder="সংস্থার নাম">
-                                                   <input type="text" required class="form-control mt-3" value="" name="ngo_address" id=""
+                                                   <input type="text" required class="form-control mt-3" value="{{ $fc1FormList->ngo_address }}" name="ngo_address" id=""
                                                    placeholder="সংস্থার ঠিকানা">
     </th>
 
@@ -248,10 +249,10 @@
         <input type="text" required value="" name="ngo_prokolpo_duration" class="form-control" id=""
         placeholder="প্রকল্পের মেয়াদ">
 
-        <input type="text" required value="" name="ngo_prokolpo_start_date" class="form-control datepickerOne mt-2" id=""
+        <input type="text" required value="{{ $fc1FormList->ngo_prokolpo_start_date }}" name="ngo_prokolpo_start_date" class="form-control datepickerOne mt-2" id=""
         placeholder="আরম্ভের তারিখ">
 
-        <input type="text" required value="" name="ngo_prokolpo_end_date" class="form-control datepickerOne mt-2" id=""
+        <input type="text" required value="{{ $fc1FormList->ngo_prokolpo_end_date }}"" name="ngo_prokolpo_end_date" class="form-control datepickerOne mt-2" id=""
         placeholder="সমাপ্তির তারিখ">
 
     </th>
@@ -276,7 +277,7 @@
     <th style="text-align: center;" colspan="2">৫.</th>
     <td style="font-weight:bold;text-align: center;" >১ম/২য়/৩য়/৪র্থ বছরে ব্যাংক হতে উত্তোলিত অর্থের পরিমাণ<span style="color:red;">*</span></td>
     <th style="text-align: center;">
-        <select required class="form-control" name="proposed_rebate_amount_in_foreign_currency"
+        <select required class="form-control" name="amount_withdrawn_year"
                                                    placeholder="">
                                             <option value="">-নির্বাচন করুন-</option>
                                             <option value="1">১ম</option>
@@ -285,7 +286,7 @@
                                             <option value="4">৪র্থ</option>
                                             </select>
 
-                                            <input type="text" required class="form-control mt-2" id="" name="proposed_rebate_amount_in_foreign_currency"
+                                            <input type="text" required class="form-control mt-2" id="" name="amount_withdrawn"
                                             placeholder="ব্যাংক হতে উত্তোলিত অর্থের পরিমাণ">
 
     </th>
@@ -311,7 +312,7 @@
                 </button>
             </div>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" id="tableAjaxDatafd2">
 
 
             <table class="table table-bordered">
@@ -330,19 +331,40 @@
                     <th>বাস্তব</th>
                     <th>আর্থিক </th>
                 </tr>
+                <?php
+
+                $totalBeni = 0;
+
+                ?>
+                @foreach($fd2AllFormLastYearDetail as $key=>$fd2AllFormLastYearDetails)
+                <?php
+
+            $totalBeni = $totalBeni + $fd2AllFormLastYearDetails->total_benificiari;
+                ?>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $key+1 }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->prokolpoName }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->last_year_target_real }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->last_year_target_financial }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->last_year_achievment_real }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->last_year_achievment_financial }}</td>
+                    <td>{{ $fd2AllFormLastYearDetails->total_benificiari }}</td>
+
+                    <td>{{ $fd2AllFormLastYearDetails->comment }}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#prokolpoAreaModalEdit{{ $fd2AllFormLastYearDetails->id }}" >
+                            <i class="fa fa-pencil"></i>
+                        </button>
+
+                        @include('front.fd2Form.allFromLastYearDetailModal')
+
+                        <button type="button" onclick="deleteTagProkolpoArea({{ $fd2AllFormLastYearDetails->id}})" class="btn btn-sm btn-outline-danger"><i
+                            class="bi bi-trash"></i></button>
+                    </td>
                 </tr>
+                @endforeach
                 <tr>
-                    <th colspan="7">মোট উপকারভোগীর সংখ্যা -</th>
+                    <th colspan="7">মোট উপকারভোগীর সংখ্যা - {{ $totalBeni }}</th>
 
                     <td></td>
                     <td></td>
@@ -351,7 +373,7 @@
             </table>
 
         </div>
-        <input type="file" required class="form-control" value="" name="ngo_address" id=""
+        <input type="file" accept=".pdf"  class="form-control" value="" name="last_year_achivment_pdf" id=""
         placeholder="">
     </td>
 </tr>
@@ -365,8 +387,8 @@
 
     <th>(ক)</th>
     <th>ব্যাংকের নাম</th>
-    <td><input type="text" required class="form-control" value="" name="ngo_address" id=""
-        placeholder="ব্যাংকের নাম"></td>
+    <td><input type="text" required class="form-control" value="" name="bank_name" id=""
+        placeholder="ব্যাংকের নাম"></td></td>
 
 </tr>
 <tr>
@@ -374,10 +396,10 @@
     <th>(খ) </th>
     <th>ব্যাংকের ঠিকানা ও হিসাব নম্বর</th>
     <td>
-        <input type="text" required value="" name="ngo_prokolpo_name" class="form-control" id=""
+        <input type="text" required value="" name="bank_adddress" class="form-control" id=""
         placeholder="ব্যাংকের ঠিকানা">
 
-        <input type="text" required value="" name="ngo_prokolpo_duration" class="form-control mt-2" id=""
+        <input type="text" required value="" name="bank_account_number" class="form-control mt-2" id=""
         placeholder="ব্যাংকের হিসাব নম্বর">
 
     </td>
@@ -412,16 +434,11 @@
 
                                         </table>
 
-
-                                        <input type="hidden" name="fc1_form_id" value="{{ base64_encode($fc1Id) }}" />
-
-
-
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="button" class="btn btn-dark me-2"
-                                                onclick="location.href = '{{ route('fc1FormStepThree',1) }}';">আগের পৃষ্ঠায় যান
+                                                onclick="location.href = '{{ route('fc1FormStepThree',base64_encode($fc1Id)) }}';">আগের পৃষ্ঠায় যান
                                         </button>
-                                        <button type="submit" disabled class="btn btn-registration"
+                                        <button type="submit"  class="btn btn-registration"
                                                 >তথ্য জমা দিন
                                         </button>
                                     </div>
@@ -467,34 +484,34 @@
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">কার্যক্রমের নাম</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
+                                        <input type="text" name="prokolpoName" class="form-control" id="prokolpoName"
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">বিগত বছরের লক্ষ্যমাত্রা(বাস্তব)<span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
+                                        <input type="text"  name="last_year_target_real" class="form-control" id="last_year_target_real"
                                         placeholder="" >
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">বিগত বছরের লক্ষ্যমাত্রা(আর্থিক)<span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
+                                        <input type="text"  name="last_year_target_financial" class="form-control" id="last_year_target_financial"
                                         placeholder="" >
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">অর্জন(%)(বাস্তব)</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
+                                        <input type="text" name="last_year_achievment_real" class="form-control" id="last_year_achievment_real"
                                         placeholder="">
                                     </div>
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">অর্জন(%)(আর্থিক)</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
+                                        <input type="text" name="last_year_achievment_financial" class="form-control" id="last_year_achievment_financial"
                                         placeholder="">
                                     </div>
 
                                     <div class="col-lg-6 mb-3">
                                         <label for="" class="form-label">উপকারভোগীর সংখ্যা</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
+                                        <input type="text" name="total_benificiari" class="form-control" id="total_benificiari"
                                         placeholder="">
                                     </div>
 
@@ -502,12 +519,12 @@
 
 
                                     <div class="col-lg-12 mb-3">
-                                        <label for="" class="form-label">মন্তব্য<span class="text-danger">*</span></label>
-                                        <textarea required name="beneficiaries_total[]" class="form-control" id="" placeholder=""></textarea>
+                                        <label for="" class="form-label">মন্তব্য</label>
+                                        <textarea  name="comment" class="form-control" id="comment" placeholder=""></textarea>
                                     </div>
 
                             </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
+                            <a id="fd2alldataPostFcOne"  class="btn btn-registration">জমা দিন</a>
 
                     </div>
                 </div>
@@ -523,7 +540,7 @@
 @endsection
 
 @section('script')
-
+@include('front.fd2Form.script')
 <script>
 
     ///

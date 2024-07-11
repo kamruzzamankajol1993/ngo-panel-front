@@ -222,7 +222,7 @@
 
                                     <form action="{{ route('fc1Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
-                                        <input type="hidden" id="mainEditId" value="0"/
+                                        <input type="hidden" id="mainEditId" value="0"/>
                                      <!-- step one start -->
 
                                      <div class="row">

@@ -543,6 +543,15 @@ $("document").ready(function(){
 
  //
 
+
+ $( function() {
+     $( "#registration_date0" ).datepicker({
+         dateFormat: "dd-mm-yy"
+         ,	duration: "fast"
+     });
+ } );
+
+
  $( function() {
      $( "#form_date" ).datepicker({
          dateFormat: "dd-mm-yy"

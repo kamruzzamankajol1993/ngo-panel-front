@@ -359,6 +359,25 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('fc1FormStepThree/{id}', 'fc1FormStepThree')->name('fc1FormStepThree');
 
 
+        Route::get('fc1pdfview/{id}', 'fc1pdfview')->name('fc1pdfview');
+
+        Route::get('fd2pdfviewdfc1/{id}', 'fd2pdfviewdfc1')->name('fd2pdfviewdfc1');
+
+
+        Route::post('fcOneOtherPdfListUpdate', 'fcOneOtherPdfListUpdate')->name('fcOneOtherPdfListUpdate');
+        Route::get('fcOneOtherPdfList', 'fcOneOtherPdfList')->name('fcOneOtherPdfList');
+        Route::get('fcOneOtherPdfListdownload/{id}', 'fcOneOtherPdfListdownload')->name('fcOneOtherPdfListdownload');
+        Route::get('fcOneOtherPdfListdelete/{id}', 'fcOneOtherPdfListdelete')->name('fcOneOtherPdfListdelete');
+
+
+        Route::post('lastExtraUpdate', 'lastExtraUpdate')->name('lastExtraUpdate');
+
+        Route::get('goToNextPageFcOneStepTwo', 'goToNextPageFcOneStepTwo')->name('goToNextPageFcOneStepTwo');
+
+        Route::get('fc1FormStepTwoDonorDelete', 'fc1FormStepTwoDonorDelete')->name('fc1FormStepTwoDonorDelete');
+        Route::post('fc1FormStepTwoDonor', 'fc1FormStepTwoDonor')->name('fc1FormStepTwoDonor');
+        Route::post('fc1FormStepTwoDonorUpdate', 'fc1FormStepTwoDonorUpdate')->name('fc1FormStepTwoDonorUpdate');
+
 
         Route::get('fc1FormStepTwoSDGDelete', 'fc1FormStepTwoSDGDelete')->name('fc1FormStepTwoSDGDelete');
         Route::post('fc1FormStepTwoSDG', 'fc1FormStepTwoSDG')->name('fc1FormStepTwoSDG');

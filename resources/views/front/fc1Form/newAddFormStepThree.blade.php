@@ -5,7 +5,34 @@
 @endsection
 
 @section('css')
+<style>
 
+    .alertify .ajs-body .ajs-content {
+        font-weight: bolder;
+        color:red;
+        font-size: 20px;
+    }
+
+    .alertify .ajs-header{
+
+        color:red;
+        font-size: 20px;
+
+    }
+
+    .alertify .ajs-footer .ajs-buttons .ajs-button{
+
+        background-color: #006A4E;
+        color: #fff;
+
+    }
+
+</style>
+<style>
+    .ui-widget.ui-widget-content {
+    top: 10px !important;
+    }
+</style>
 @endsection
 
 @section('body')
@@ -198,9 +225,11 @@
                                         <h4>এককালীন অনুদান গ্রহণের আবেদন ফরম</h4>
                                     </div>
 
-                                    <form action="{{ route('fc1Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('lastExtraUpdate') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                      <!-- step one start -->
+                                     <input type="hidden" name="fcOneId" id="fcOneId" value="{{ $fc1Id }}"/>
+                                     <input type="hidden" name="donationList" id="" value="{{ count($donationList)}}"/>
 
                                      <div class="row">
                                         <div class="col-lg-12 col-sm-12">
@@ -231,24 +260,9 @@
                                                       {{-- <td style="text-align: center;">ক.</td> --}}
                                                       <td colspan="3" rowspan="3">
 
-                                                          <div class="table-responsive">
-                                                            <table class="table table-bordered">
-                                                                <tr style="text-align: center">
-                                                                    <th rowspan="2">ক্র : নং :</th>
-                                                                    <th rowspan="2">উদ্দেশ্য / কার্যক্রম</th>
-                                                                    <th rowspan="2">এনজিও বিষয়ক ব্যুরো কর্তৃক অনুমোদনের স্বারক নম্বর ও তারিখ</th>
-                                                                    <th rowspan="2">দাতা সংস্থার নাম</th>
-                                                                    <th rowspan="2">টাকার পরিমাণ </th>
-                                                                    <th rowspan="2">অডিট রিপোর্ট দাখিল এবং ব্যুরো কতৃক গৃহীত হয়েছে কিনা</th>
-                                                                    <th rowspan="2">সমাপ্তি প্রতিবেদন দাখিল করা হয়েছে কিনা?</th>
-                                                                    <th rowspan="2">স্থানীয়  প্রশাসনের প্রত্যয়ন পত্র দাখিল করা হয়েছে কিনা ?</th>
-                                                                    <th rowspan="2">মন্তব্য</th>
-                                                                    <th></th>
-                                                                </tr>
+                                                          <div class="table-responsive" id="tableAjaxDataDOnor">
 
-
-                                                            </table>
-
+@include('front.fc1Form.fc1FormStepTwoDonor')
                                                           </div>
 
 
@@ -281,6 +295,42 @@
 
                                                     {{-- <td style="text-align: center;">ক.</td> --}}
                                                     <td colspan="3" rowspan="3">
+
+                                                        @if(count($fc1OtherFileList) == 0)
+
+
+                                                        @else
+
+
+                                                            <div class="table-respnsive">
+                                                                <table class="table table-bordered">
+                                                                    @foreach($fc1OtherFileList as $key=>$fd2OtherInfoAll)
+                                                                    <tr>
+                                                                        <td>{{ $fd2OtherInfoAll->file_title }}</td>
+                                                                        <td>
+
+                                                                            <a target="_blank" href="{{ route('fcOneOtherPdfListdownload',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
+                                                                            <i class="fa fa-download" aria-hidden="true"></i>
+                                                                        </a>
+
+                                                                        <button type="button" class="btn btn-custom next_button btn-sm mmexampleModal" id="{{ $fd2OtherInfoAll->id }}">
+                                                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                                                                          </button>
+
+                                                                          <a href="{{ route('fcOneOtherPdfListdelete',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
+                                                                            class="bi bi-trash"></i></a>
+
+
+
+                                                                    </td>
+                                                                    </tr>
+                                                                    @endforeach
+
+                                                                </table>
+                                                            </div>
+
+                                                        @endif
 
                                                         <div class="table-responsive">
 
@@ -338,6 +388,8 @@
                                                 </div>
                                                 <div class="card-body">
 
+                                                    @if(!$fc1FormList)
+
                                                       <!--new code for ngo-->
                                          <div class="mb-3">
                                             <label for="" class="form-label">{{ trans('mview.ttTwo')}}: <span class="text-danger">*</span></label>
@@ -383,6 +435,67 @@
                                                 <!-- new code for image cropper end -->
                                             </div>
                                             <!-- end new code -->
+                                            @else
+
+                                                                              <!--new code for ngo-->
+                                         <div class="mb-3">
+                                            <label for="" class="form-label">{{ trans('mview.ttTwo')}}: <span class="text-danger">*</span></label>
+                                                 <input type="text" data-parsley-required value="{{ $fc1FormList->chief_name }}"  name="chief_name"  class="form-control" id="mainName" placeholder="{{ trans('mview.ttTwo')}}">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">{{ trans('mview.ttThree')}}: <span class="text-danger">*</span></label>
+                                                <input type="text" data-parsley-required value="{{ $fc1FormList->chief_desi }}" name="chief_desi"  class="form-control"  placeholder="{{ trans('mview.ttThree')}}">
+                                            </div>
+
+
+
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">{{ trans('zoom.digitalSignature')}}: <span class="text-danger">*</span>
+                                                    <span class="text-danger"><b style="font-size: 12px;">(Dimension:(300*80) , Size:Max 60 KB & Image Format:PNG)</b></span></label>
+                                    <br>
+                                                    <button type="button" class="btn btn-custom btn-sm next_button btn22">{{ trans('zoom.upload')}}</button>
+                                    <br>
+                                                <input type="hidden" required  name="image_base64">
+                                                <div class="croppedInput mt-2">
+                                                    @if(empty($fc1FormList->digital_signature))
+
+
+                                                    @else
+                                                    <img src="{{asset('/')}}{{ $fc1FormList->digital_signature }}" style="width: 200px;" class="show-image">
+                                                    @endif
+                                                </div>
+                                                <!-- new code for image cropper start --->
+                                                @include('front.signature_modal.sign_main_modal')
+                                                <!-- new code for image cropper end -->
+
+                                            </div>
+
+
+                                            <div class="mb-3">
+                                                <label for="" class="form-label">{{ trans('zoom.digitalSeal')}}: <span class="text-danger">*</span>
+                                                    <span class="text-danger"><b style="font-size: 12px;">(Dimension:(300*100) , Size:Max 80 KB & Image Format:PNG)</b> </label></span>
+                                                 <br>
+                                                <button type="button" class="btn btn-custom btn-sm next_button btn22ss">{{ trans('zoom.upload')}}</button>
+
+                                                <input type="hidden" required  name="image_seal_base64">
+                                                <div class="croppedInputss mt-2">
+
+                                                    @if(empty($fc1FormList->digital_seal))
+
+
+                                                    @else
+                                                    <img src="{{asset('/')}}{{ $fc1FormList->digital_seal }}" style="width: 200px;" class="show_image_seal">
+                                                   @endif
+                                                </div>
+                                                <!-- new code for image cropper start --->
+                                                @include('front.signature_modal.seal_main_modal')
+                                                <!-- new code for image cropper end -->
+                                            </div>
+                                            <!-- end new code -->
+
+
+                                            @endif
 
                                                 </div>
                                             </div>
@@ -395,16 +508,19 @@
 
                                             <span style="font-weight:bold;">সংযুক্তি <br> ১। </span>
 
+
+                                            @if(!$fc1FormList)
+
                                             <div class="row">
 
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label"> দাতার প্রতিশ্রুতি পত্র </label>
-                                                    <input type="file" name="bank_address" class="form-control" id=""
+                                                    <input type="file" accept=".pdf" name="donor_commitment_letter" class="form-control" id=""
                                                            placeholder="">
                                                 </div>
                                                 <div class="mb-3 col-lg-6">
                                                     <label for="" class="form-label">দাতা সংস্থার প্রতিশ্রুতি পত্র </label>
-                                                    <input type="file" name="bank_account_name" class="form-control" id=""
+                                                    <input type="file" accept=".pdf" name="donor_agency_commitment_letter" class="form-control" id=""
                                                            placeholder="">
                                                 </div>
 
@@ -413,33 +529,175 @@
                                             <div class="row">
                                             <div class="mb-3 col-lg-12">
                                                 <label for="" class="form-label">ইতোপূর্বে সমাপ্ত প্রকল্পের অডিট রিপোর্ট ব্যুরো হতে গ্রহণের প্রমাণক</label>
-                                                <input type="file" name="bank_address" class="form-control" id=""
+                                                <input type="file" accept=".pdf" name="previous_audit_report" class="form-control" id=""
                                                        placeholder="">
                                             </div>
                                             <div class="mb-3 col-lg-6">
                                                 <label for="" class="form-label">সমাপনী প্রতিবেদন</label>
-                                                <input type="file" name="bank_account_name" class="form-control" id=""
+                                                <input type="file" accept=".pdf" name="last_final_report" class="form-control" id=""
                                                        placeholder="">
                                             </div>
 
                                             <div class="mb-3 col-lg-6">
                                                 <label for="" class="form-label">প্রশাসনিক প্রত্যয়নপত্র</label>
-                                                <input type="file" name="bank_account_name" class="form-control" id=""
+                                                <input type="file" accept=".pdf" name="administrative_certificate" class="form-control" id=""
                                                        placeholder="">
                                             </div>
                                             </div>
+
+                                            @else
+
+                                            <div class="row">
+
+                                                <div class="mb-3 col-lg-6">
+                                                    <label for="" class="form-label"> দাতার প্রতিশ্রুতি পত্র </label>
+                                                    <input type="file" accept=".pdf" name="donor_commitment_letter" class="form-control" id=""
+                                                           placeholder="">
+
+                                                           @if(empty($fc1FormList->donor_commitment_letter))
+
+
+                                                           @else
+
+
+                                                           <?php
+
+                                                           $file_path = url($fc1FormList->donor_commitment_letter);
+                                                           $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                           $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                           ?>
+                                                            <b>{{ $filename.'.'.$extension }}</b>
+                                                            @endif
+                                                </div>
+                                                <div class="mb-3 col-lg-6">
+                                                    <label for="" class="form-label">দাতা সংস্থার প্রতিশ্রুতি পত্র </label>
+                                                    <input type="file" accept=".pdf" name="donor_agency_commitment_letter" class="form-control" id=""
+                                                           placeholder="">
+
+                                                           @if(empty($fc1FormList->donor_agency_commitment_letter))
+
+
+                                                           @else
+
+
+                                                           <?php
+
+                                                           $file_path = url($fc1FormList->donor_agency_commitment_letter);
+                                                           $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                           $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                           ?>
+                                                            <b>{{ $filename.'.'.$extension }}</b>
+                                                            @endif
+                                                </div>
+
+                                            </div>
+                                            <span style="font-weight:bold;">২। </span>
+                                            <div class="row">
+                                            <div class="mb-3 col-lg-12">
+                                                <label for="" class="form-label">ইতোপূর্বে সমাপ্ত প্রকল্পের অডিট রিপোর্ট ব্যুরো হতে গ্রহণের প্রমাণক</label>
+                                                <input type="file" accept=".pdf" name="previous_audit_report" class="form-control" id=""
+                                                       placeholder="">
+
+                                                       @if(empty($fc1FormList->previous_audit_report))
+
+
+                                                       @else
+
+
+                                                       <?php
+
+                                                       $file_path = url($fc1FormList->previous_audit_report);
+                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                       ?>
+                                                        <b>{{ $filename.'.'.$extension }}</b>
+                                                        @endif
+                                            </div>
+                                            <div class="mb-3 col-lg-6">
+                                                <label for="" class="form-label">সমাপনী প্রতিবেদন</label>
+                                                <input type="file" accept=".pdf" name="last_final_report" class="form-control" id=""
+                                                       placeholder="">
+
+
+                                                       @if(empty($fc1FormList->last_final_report))
+
+
+                                                       @else
+
+
+                                                       <?php
+
+                                                       $file_path = url($fc1FormList->last_final_report);
+                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                       ?>
+                                                        <b>{{ $filename.'.'.$extension }}</b>
+                                                        @endif
+                                            </div>
+
+                                            <div class="mb-3 col-lg-6">
+                                                <label for="" class="form-label">প্রশাসনিক প্রত্যয়নপত্র</label>
+                                                <input type="file" accept=".pdf" name="administrative_certificate" class="form-control" id=""
+                                                       placeholder="">
+
+
+                                                       @if(empty($fc1FormList->administrative_certificate))
+
+
+                                                       @else
+
+
+                                                       <?php
+
+                                                       $file_path = url($fc1FormList->administrative_certificate);
+                                                       $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+
+                                                       $extension = pathinfo($file_path, PATHINFO_EXTENSION);
+
+
+
+
+                                                       ?>
+                                                        <b>{{ $filename.'.'.$extension }}</b>
+                                                        @endif
+                                            </div>
+                                            </div>
+
+
+
+                                            @endif
 
                                         </div>
                                     </div>
                                     <!-- step one end --->
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
-                                        <a href="{{ route('fc1FormStepTwo',1) }}" class="btn btn-danger"
+                                        <a href="{{ route('fc1FormStepTwo',base64_encode($fc1Id)) }}" class="btn btn-danger"
                                                 >পূর্ববর্তী পৃষ্ঠায় যান
                                     </a>
-                                        <a href="{{ route('addFd2DetailForFc1',1) }}" style="margin-left:10px;" class="btn btn-registration"
+                                          <button type="submit" style="margin-left:10px;" class="btn btn-registration"
                                                 >পরবর্তী পৃষ্ঠা
-                                </a>
+                                           </button>
                                     </div>
                                 </form>
                                 </div>
@@ -483,99 +741,56 @@
     </div>
 </div>
 <!--  modal end -->
+ <!-- Modal -->
+ <div class="modal fade" id="mmexampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">ডেটা আপডেট করুন</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body" id="formBody">
+
+
+    </div>
+
+    </div>
+    </div>
+    </div>
 
 <!--modal-->
-<div class="modal modal-xl fade" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-
-                    ইতোপূর্বে গৃহীত অনুদানের বিবরণ
-
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body">
-
-
-                            <div class="row">
-
-
-
-
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">উদ্দেশ্য / কার্যক্রম</label>
-                                        <input type="text" name="upozila_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">এনজিও বিষয়ক ব্যুরো কর্তৃক অনুমোদনের স্বারক নম্বর <span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">এনজিও বিষয়ক ব্যুরো কর্তৃক অনুমোদনের তারিখ<span class="text-danger">*</span></label>
-                                        <input type="text" required name="thana_name[]" class="form-control" id=""
-                                        placeholder="" >
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">দাতা সংস্থার নাম</label>
-                                        <input type="text" name="municipality_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">টাকার পরিমাণ</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">অডিট রিপোর্ট দাখিল এবং ব্যুরো কতৃক গৃহীত হয়েছে কিনা</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">সমাপ্তি প্রতিবেদন দাখিল করা হয়েছে কিনা?</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-                                    <div class="col-lg-6 mb-3">
-                                        <label for="" class="form-label">স্থানীয় প্রশাসনের প্রত্যয়ন পত্র দাখিল করা হয়েছে কিনা ?</label>
-                                        <input type="text" name="ward_name[]" class="form-control" id=""
-                                        placeholder="">
-                                    </div>
-
-
-                                    <div class="col-lg-12 mb-3">
-                                        <label for="" class="form-label">মন্তব্য<span class="text-danger">*</span></label>
-                                        <textarea required name="beneficiaries_total[]" class="form-control" id="" placeholder=""></textarea>
-                                    </div>
-
-                            </div>
-                            <a id="stepFiveAjax"  class="btn btn-registration">জমা দিন</a>
-
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
+<!--modal-->
+@include('front.fc1Form._partial.donationModal')
 
 <!-- end modal -->
 
 @endsection
 
 @section('script')
+@include('front.fc1Form._partial.script')
 @include('front.zoomButtonImage')
+<script>
+
+    $(document).on('click', '.mmexampleModal', function () {
+
+        var main_id = $(this).attr('id');
+        $('#mmexampleModal').modal('show');
+
+
+
+        $.ajax({
+        url: "{{ route('fcOneOtherPdfList') }}",
+        method: 'GET',
+        data: {main_id:main_id},
+        success: function(data) {
+          $("#formBody").html('');
+          $("#formBody").html(data);
+        }
+        });
+
+
+    });
+    </script>
 <script>
     var i = 0;
     $("#dynamic-ar").click(function () {
@@ -587,84 +802,4 @@
     });
 
 </script>
-<script>
-
-    ///
-
-
-        $(document).on('change', 'select.division_name', function () {
-
-var main_id = $(this).attr('id');
-var get_id_from_main = main_id.slice(13);
-var getMainValue = $('#division_name'+get_id_from_main).val();
-
- // var getMainValue = $(this).val();
-
-  //alert(getMainValue);
-
-
-  $.ajax({
-    url: "{{ route('getDistrictList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#district_name"+get_id_from_main).html('');
-      $("#district_name"+get_id_from_main).html(data);
-    }
-    });
-
-// });
-
-
-$.ajax({
-    url: "{{ route('getCityCorporationList') }}",
-    method: 'GET',
-    data: {getMainValue:getMainValue},
-    success: function(data) {
-      $("#city_corparation_name"+get_id_from_main).html('');
-      $("#city_corparation_name"+get_id_from_main).html(data);
-    }
-    });
-
-});
-
-
-
-
-
-
-    ///
-$("#ngo_prokolpo_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#project_name').val(getMainValue);
-
-});
-
-
-$("#ngo_prokolpo_duration").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#duration_of_project').val(getMainValue);
-
-});
-
-
-$("#donor_organization_name").keyup(function(){
-  var getMainValue = $(this).val();
-
-  $('#donor_organization_name_two').val(getMainValue);
-
-});
-
-
-
-
-
-
-
-
-</script>
-
-
 @endsection

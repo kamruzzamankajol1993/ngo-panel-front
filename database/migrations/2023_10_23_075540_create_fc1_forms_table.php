@@ -76,6 +76,15 @@ return new class extends Migration
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();
             $table->string('step_status')->nullable();
+            $table->string('administrative_certificate')->nullable();
+            $table->string('last_final_report')->nullable();
+            $table->string('previous_audit_report')->nullable();
+            $table->string('donor_commitment_letter')->nullable();
+            $table->string('donor_agency_commitment_letter')->nullable();
+            $table->string('chief_name')->nullable();
+            $table->string('chief_desi')->nullable();
+            $table->string('digital_signature')->nullable();
+            $table->string('digital_seal')->nullable();
             $table->timestamps();
         });
     }

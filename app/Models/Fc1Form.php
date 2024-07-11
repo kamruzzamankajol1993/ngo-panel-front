@@ -60,7 +60,15 @@ class Fc1Form extends Model
         'comment',
         'file_last_check_date',
         'check_status',
-        'step_status',
+       'chief_name',
+       'chief_desi',
+        'digital_signature',
+        'digital_seal',
+'administrative_certificate',
+       'last_final_report',
+        'previous_audit_report',
+      'donor_commitment_letter',
+   'donor_agency_commitment_letter'
 
 
 ];
