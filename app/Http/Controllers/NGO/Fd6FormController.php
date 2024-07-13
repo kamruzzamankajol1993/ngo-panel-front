@@ -51,7 +51,7 @@ class Fd6FormController extends Controller
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
 
-        return view('front.fd6Form.create',compact('divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        return view('front.fd6Form.newAddForm',compact('divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 

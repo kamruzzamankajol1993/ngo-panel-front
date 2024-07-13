@@ -111,13 +111,13 @@
 
                         <div class="profile_link_box">
                             <a href="{{ route('fc1Form.index') }}">
-                                <p class="{{ Route::is('fc1Form.index') ||  Route::is('fc1Form.create') || Route::is('fc1Form.view') || Route::is('addFd2DetailForFc1') || Route::is('editFd2DetailForFc1') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc1')}}</p>
+                                <p class="{{Route::is('fc1FormStepTwo') ||  Route::is('fc1FormStepThree') || Route::is('fc1Form.index') ||  Route::is('fc1Form.create') || Route::is('fc1Form.view') || Route::is('addFd2DetailForFc1') || Route::is('editFd2DetailForFc1') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc1')}}</p>
                             </a>
                         </div>
 
                         <div class="profile_link_box">
                             <a href="{{ route('fc2Form.index') }}">
-                                <p class="{{ Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.view') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
+                                <p class="{{Route::is('fc2FormStepTwo') ||  Route::is('fc2FormStepThree') || Route::is('fc2Form.index') ||  Route::is('fc2Form.create') || Route::is('fc2Form.view') || Route::is('addFd2DetailForFc2') || Route::is('editFd2DetailForFc2') ? 'active_link' : '' }}"><i class="fa fa-desktop pe-2"></i>{{ trans('fd9.fc2')}}</p>
                             </a>
                         </div>
                         <div class="profile_link_box">
@@ -201,7 +201,7 @@
                                 <ul class="process-model more-icon-preocess">
                                     <li class="active visited">
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        <p>এফসি - ১ </p>
+                                        <p>এফসি - ২</p>
                                     </li>
                                     <li>
                                         <i class="fa fa-file-text" aria-hidden="true"></i>
@@ -212,7 +212,7 @@
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12">
                                     <div class="others_inner_section">
-                                        <h1>এককালীন অনুদান গ্রহণের আবেদন ফরম</h1>
+                                        <h1>ব্যক্তি কর্তৃক বৈদেশিক অনুদানে গৃহীত প্রকল্প প্রস্তাব ফরম</h1>
                                         <div class="notice_underline"></div>
                                     </div>
                                 </div>
@@ -506,7 +506,7 @@
 
                                         <div class="col-lg-12 col-sm-12 mt-3">
 
-                                            <span style="font-weight:bold;">সংযুক্তি <br> ১। </span>
+                                            <span style="font-weight:bold;">সংযুক্তি <br> ১। (<span class="text-danger" style="font-size:12px;">যে কোনো একটি ইনপুট ফিল্ড অবশ্যই পূরণ করতে হবে</span>)</span>
 
 
                                             @if(!$fc2FormList)

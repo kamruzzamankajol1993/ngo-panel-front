@@ -1,7 +1,7 @@
 @extends('front.master.master')
 
 @section('title')
-{{ trans('fd9.fc1')}} | {{ trans('header.ngo_ab')}}
+{{ trans('fd9.fc2')}} | {{ trans('header.ngo_ab')}}
 @endsection
 
 @section('css')
@@ -197,11 +197,11 @@
                                         <h3>এফডি -২ ফরম</h3>
                                         <h4>অর্থছাড়ের আবেদন ফরম</h4>
                                     </div>
-                                    <form action="{{ route('updateFd2DetailForFc1') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('updateFd2DetailForFc2') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $fd2FormList->id }}"/>
-                                        <input type="hidden" id="mainType"  value="fc1"/>
-                                        <input type="hidden" name="fc1_form_id" value="{{ base64_encode($fc1Id) }}" />
+                                        <input type="hidden" id="mainType"  value="fc2"/>
+                                        <input type="hidden" name="fc2_form_id" value="{{ base64_encode($fc2Id) }}" />
                                         <input type="hidden" id="mainEditId"  value="0"/>
                                         <table class="table table-bordered" style="width:100%">
 
@@ -447,7 +447,7 @@
                         <td>{{ $fd2OtherInfoAll->file_name }}</td>
                         <td>
 
-                          <a target="_blank" href="{{ route('downloadFd2DetailForFc1Other',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
+                          <a target="_blank" href="{{ route('downloadFd2DetailForFc2Other',$fd2OtherInfoAll->id) }}" class="btn btn-custom next_button btn-sm" >
                               <i class="fa fa-download" aria-hidden="true"></i>
                           </a>
 
@@ -456,7 +456,7 @@
 
                             </button>
 
-                            <a href="{{ route('deleteFd2DetailForFc1',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
+                            <a href="{{ route('deleteFd2DetailForFc2',$fd2OtherInfoAll->id) }}}" class="btn btn-sm btn-outline-danger"><i
                               class="bi bi-trash"></i></a>
 
 
@@ -473,7 +473,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-          <form method="post" action="{{ route('fd2ForFc1PdfUpdate') }}" enctype="multipart/form-data" id="form">
+          <form method="post" action="{{ route('fd2ForFc2PdfUpdate') }}" enctype="multipart/form-data" id="form">
           @csrf
 
 
@@ -551,7 +551,7 @@
 
                                     <div class="d-grid d-md-flex justify-content-md-end">
                                         <button type="button" class="btn btn-dark me-2"
-                                                onclick="location.href = '{{ route('fc1FormStepThree',base64_encode($fc1Id)) }}';">আগের পৃষ্ঠায় যান
+                                                onclick="location.href = '{{ route('fc2FormStepThree',base64_encode($fc2Id)) }}';">আগের পৃষ্ঠায় যান
                                         </button>
                                         <button type="submit"  class="btn btn-registration"
                                                 >তথ্য জমা দিন

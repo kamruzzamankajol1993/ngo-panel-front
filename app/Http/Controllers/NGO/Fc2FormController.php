@@ -74,19 +74,46 @@ class Fc2FormController extends Controller
 
     public function edit($id){
 
-        $fd6Id = base64_decode($id);
+        $fc2Id = base64_decode($id);
 
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $fd2FormList = Fd2FormForFc2Form::where('fd_one_form_id',$ngo_list_all->id)
+        ->where('fc2_form_id',$fc2Id)->latest()->first();
+        $fd2OtherInfo = Fd2Fc2OtherInfo::where('fd2_form_for_fc2_form_id',$fd2FormList->id)
+        ->latest()->get();
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
         $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
         $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
-        $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id) ->where('id',$fd6Id)->latest()->first();
+        $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc2Id)->latest()->first();
 
-        $prokolpoAreaList =ProkolpoArea::where('formId',$fd6Id)->where('type','fcTwo')->latest()->get();
-        return view('front.fc2Form.edit',compact('prokolpoAreaList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+        ->where('type','fc2')
+        ->get();
+
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $fc2OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+        $prokolpoAreaList =ProkolpoArea::where('formId',$fc2Id)
+        ->where('type','fcTwo')->latest()->get();
+
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+       return view('front.fc2Form.newedit',compact('thanaList','subdDistrictList','fc2OtherFileList','donationList','fd2AllFormLastYearDetail','SDGDevelopmentGoal','sectorWiseExpenditureList','prokolpoAreaList','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
@@ -382,7 +409,7 @@ class Fc2FormController extends Controller
         ->where('type','fcTwo')
    ->update([
        'upload_type' => 1,
-       'formId' =>$fc1FormInfoId
+       'formId' =>$fc2FormInfoId
     ]);
 
     // ad new code end
@@ -426,17 +453,16 @@ class Fc2FormController extends Controller
         }
     }
 
-
-
-
     public function show($id){
 
         $fc2Id = base64_decode($id);
 
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
-        $fd2FormList = Fd2FormForFc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('fc2_form_id',$fc2Id)->latest()->first();
-        $fd2OtherInfo = Fd2Fc2OtherInfo::where('fd2_form_for_fc2_form_id',$fd2FormList->id)->latest()->get();
+        $fd2FormList = Fd2FormForFc2Form::where('fd_one_form_id',$ngo_list_all->id)
+        ->where('fc2_form_id',$fc2Id)->latest()->first();
+        $fd2OtherInfo = Fd2Fc2OtherInfo::where('fd2_form_for_fc2_form_id',$fd2FormList->id)
+        ->latest()->get();
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
@@ -444,9 +470,27 @@ class Fc2FormController extends Controller
         $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
         $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc2Id)->latest()->first();
 
+        $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+        ->where('type','fc2')
+        ->get();
+
+        $donationList = DonationReceiveDetail::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+
+        $fc2OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc2Id)
+        ->where('type','fcTwo')
+        ->latest()->get();
         $prokolpoAreaList =ProkolpoArea::where('formId',$fc2Id)->where('type','fcTwo')->latest()->get();
 
-        return view('front.fc2Form.view',compact('prokolpoAreaList','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+       return view('front.fc2Form.newview',compact('fc2OtherFileList','donationList','fd2AllFormLastYearDetail','SDGDevelopmentGoal','sectorWiseExpenditureList','prokolpoAreaList','fd2OtherInfo','fd2FormList','cityCorporationList','districtList','fc2FormList','divisionList','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
    }
 
@@ -1025,7 +1069,7 @@ public function lastExtraUpdateFcTwo(Request $request){
             }
     }
 
-    $fd2FormList = Fd2FormForFc2Form::where('fc1_form_id',$request->fcOneId)->latest()->first();
+    $fd2FormList = Fd2FormForFc2Form::where('fc2_form_id',$request->fcOneId)->latest()->first();
 
     if(!$fd2FormList){
     return redirect()->route('addFd2DetailForFc2',base64_encode($request->fcOneId))->with('success','Added Successfully');
@@ -1035,5 +1079,143 @@ public function lastExtraUpdateFcTwo(Request $request){
     }
 }
 }
+
+public function fc2formextrapdf($title, $id){
+
+    $get_file_data = Fc2Form::where('id',$id)->value($title);
+
+    $file_path = url('public/'.$get_file_data);
+    $filename  = pathinfo($file_path, PATHINFO_FILENAME);
+    $file= public_path('/'). $get_file_data;
+
+    $headers = array(
+              'Content-Type: application/pdf',
+            );
+
+    return Response::make(file_get_contents($file), 200, [
+        'content-type'=>'application/pdf',
+    ]);
+
+
+   }
+
+
+   public function fd2pdfviewdfc2($id){
+
+    $fd7Id = base64_decode($id);
+
+   $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+   $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+   $fd2FormList = Fd2FormForFc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('fc2_form_id',$fd7Id)->latest()->first();
+   $fd2OtherInfo = Fd2Fc2OtherInfo::where('fd2_form_for_fc2_form_id',$fd2FormList->id)->latest()->get();
+   $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+   $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+   $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+   $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+   $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+   $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd7Id)->latest()->first();
+
+   $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+   ->where('type','fc2')
+   ->get();
+
+   $file_Name_Custome = 'fc_one_form';
+   $data =view('front.fc2Form.fd2pdfviewdfc1',[
+    'divisionList'=>$divisionList,
+    'renewWebsiteName'=>$renewWebsiteName,
+    'ngoDurationLastEx'=>$ngoDurationLastEx,
+    'ngoDurationReg'=>$ngoDurationReg,
+    'ngo_list_all'=>$ngo_list_all,
+'fc2FormList'=>$fc2FormList,
+                   'fd2AllFormLastYearDetail'=>$fd2AllFormLastYearDetail,
+
+                   'fd2OtherInfo'=>$fd2OtherInfo,
+                   'fd2FormList'=>$fd2FormList,
+                   'cityCorporationList'=>$cityCorporationList,
+                   'districtList'=>$districtList
+
+               ])->render();
+
+
+   $pdfFilePath =$file_Name_Custome.'.pdf';
+
+
+   $mpdf = new Mpdf([ 'default_font_size' => 14,'default_font' => 'nikosh']);
+   $mpdf->WriteHTML($data);
+   $mpdf->Output($pdfFilePath, "I");
+   die();
+
+
+}
+
+
+public function fc2pdfview($id){
+
+
+    $fc2Id = base64_decode($id);
+
+    $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+    $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+    $fd2FormList = Fd2FormForFc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('fc2_form_id',$fc2Id)->latest()->first();
+    $fd2OtherInfo = Fd2Fc2OtherInfo::where('fd2_form_for_fc2_form_id',$fd2FormList->id)->latest()->get();
+    $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+    $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')->select('division_bn')->get();
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')->select('district_bn')->get();
+    $cityCorporationList = DB::table('civilinfos')->whereNotNull('city_orporation')->groupBy('city_orporation')->select('city_orporation')->get();
+    $fc2FormList = Fc2Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fc2Id)->latest()->first();
+
+    $sectorWiseExpenditureList = SectorWiseExpenditure::where('fc1_form_id',$fc2Id)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+    $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
+    ->where('type','fc2')
+    ->get();
+
+    $donationList = DonationReceiveDetail::where('fc1_form_id',$fc2Id)
+    ->where('type','fcTwo')
+    ->latest()->get();
+
+    $fc2OtherFileList = Fc1FormOtherFile::where('fc1_form_id',$fc2Id)
+    ->where('type','fcTwo')
+    ->latest()->get();
+    $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fc2Id)
+    ->where('type','fcTwo')
+    ->latest()->get();
+    $prokolpoAreaList =ProkolpoArea::where('formId',$fc2Id)->where('type','fcTwo')->latest()->get();
+
+
+   $file_Name_Custome = 'fc_two_form';
+   $data =view('front.fc2Form.fc1pdfview',[
+    'fc2OtherFileList'=>$fc2OtherFileList,
+    'donationList'=>$donationList,
+    'fd2AllFormLastYearDetail'=>$fd2AllFormLastYearDetail,
+    'SDGDevelopmentGoal'=>$SDGDevelopmentGoal,
+    'sectorWiseExpenditureList'=>$sectorWiseExpenditureList,
+'prokolpoAreaList'=>$prokolpoAreaList,
+                   'fd2OtherInfo'=>$fd2OtherInfo,
+                   'fd2FormList'=>$fd2FormList,
+                   'cityCorporationList'=>$cityCorporationList,
+                   'districtList'=>$districtList,
+                   'fc2FormList'=>$fc2FormList,
+                   'divisionList'=>$divisionList,
+                   'renewWebsiteName'=>$renewWebsiteName,
+                   'ngoDurationLastEx'=>$ngoDurationLastEx,
+                   'ngoDurationReg'=>$ngoDurationReg,
+                   'ngo_list_all'=>$ngo_list_all,
+
+               ])->render();
+
+
+   $pdfFilePath =$file_Name_Custome.'.pdf';
+
+
+   $mpdf = new Mpdf([ 'default_font_size' => 14,'default_font' => 'nikosh']);
+   $mpdf->WriteHTML($data);
+   $mpdf->Output($pdfFilePath, "I");
+   die();
+
+   }
 
 }

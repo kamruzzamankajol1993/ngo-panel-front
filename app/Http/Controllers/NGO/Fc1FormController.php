@@ -1243,21 +1243,12 @@ class Fc1FormController extends Controller
    $mpdf->Output($pdfFilePath, "I");
    die();
 
-
-
-
-
    }
 
 
    public function fd2pdfviewdfc1($id){
 
-
-
-
         $fd7Id = base64_decode($id);
-
-        //dd($id);
 
        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
@@ -1273,11 +1264,6 @@ class Fc1FormController extends Controller
        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd2FormList->id)
        ->where('type','fc1')
        ->get();
-
-
-
-
-
 
        $file_Name_Custome = 'fc_one_form';
        $data =view('front.fc1Form.fd2pdfviewdfc1',[
