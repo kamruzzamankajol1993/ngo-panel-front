@@ -572,7 +572,16 @@ Route::group(['middleware' => ['auth']], function() {
 
     });
 
-    Route::controller(Fd6FormController::class)->group(function () {
+    Route::controller(Fd6FormController::class)->group(function (){
+
+        Route::get('prokolpoAreaForFd6Delete', 'prokolpoAreaForFd6Delete')->name('prokolpoAreaForFd6Delete');
+        Route::post('prokolpoAreaForFd6', 'prokolpoAreaForFd6')->name('prokolpoAreaForFd6');
+        Route::post('prokolpoAreaForFd6Update', 'prokolpoAreaForFd6Update')->name('prokolpoAreaForFd6Update');
+
+        Route::get('fd6StepTwo/{id}', 'fd6StepTwo')->name('fd6StepTwo');
+        Route::get('fd6StepThree/{id}', 'fd6StepThree')->name('fd6StepThree');
+        Route::get('fd6StepFour/{id}', 'fd6StepFour')->name('fd6StepFour');
+        Route::get('fd6StepFive/{id}', 'fd6StepFive')->name('fd6StepFive');
 
         Route::get('finalFdSixApplicationSubmit/{id}', 'finalFdSixApplicationSubmit')->name('finalFdSixApplicationSubmit');
 

@@ -425,12 +425,6 @@
                                                         @include('front.fc2Form._partial.prokolpoAreaTable')
 
                                                     </div>
-
-
-
-                                            </span>
-
-
                                         </td>
 
 

@@ -47,7 +47,7 @@
             <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#prokolpoAreaModalEdit{{ $prokolpoAreaListAll->id }}" >
                 <i class="fa fa-pencil"></i>
             </button>
-            @include('front.fc1Form._partial.stepOneModalEdit')
+            @include('front.fc2Form._partial.stepOneModalEdit')
 
 
             <button type="button" onclick="deleteTagProkolpoArea({{ $prokolpoAreaListAll->id}})" class="btn btn-sm btn-outline-danger"><i
