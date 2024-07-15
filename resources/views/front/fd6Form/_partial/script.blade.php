@@ -1,4 +1,128 @@
 <script>
+
+$(document).on('click', '.GrantAjaxEdit', function () {
+
+var main_id = $(this).attr('id');
+
+if(!$('#grants_total'+main_id).val()){
+
+alertify.alert('Error', 'বিদেশ থেকে প্রাপ্ত অনুদান অথবা বিদেশি দাতার প্রদত্ত অনুদান অথবা স্থানীয় অনুদান সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#prokolpo_year_grant_start_date'+main_id).val()){
+
+alertify.alert('Error', 'প্রকল্পের মেয়াদ শুরুর তারিখ সম্পর্কিত তথ্য দিন');
+
+}else if(!$('#prokolpo_year_grant_end_date'+main_id).val()){
+
+alertify.alert('Error', 'প্রকল্পের মেয়াদ সমাপ্তির তারিখ সম্পর্কিত তথ্য দিন');
+
+}else{
+
+$.ajaxSetup({
+headers: {
+'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+});
+
+var grants_received_from_abroad = $('#grants_received_from_abroad'+main_id).val();
+var donations_made_by_foreign_donors = $('#donations_made_by_foreign_donors'+main_id).val();
+var local_grants = $('#local_grants'+main_id).val();
+var grants_total = $('#grants_total'+main_id).val();
+var prokolpo_year_grant = $('#prokolpo_year_grant'+main_id).val();
+var prokolpo_year_grant_start_date = $('#prokolpo_year_grant_start_date'+main_id).val();
+var prokolpo_year_grant_end_date =$('#prokolpo_year_grant_end_date'+main_id).val();
+var comment_grant = $('#comment_grant'+main_id).val();
+
+var fd6Id = $('#fd6Id').val();
+$.ajax({
+url: "{{ route('estimatedExpensesFd6Update') }}",
+method: 'post',
+data: {
+    fd6Id:fd6Id,
+main_id:main_id,
+grants_received_from_abroad:grants_received_from_abroad,
+donations_made_by_foreign_donors:donations_made_by_foreign_donors,
+local_grants:local_grants,
+grants_total:grants_total,
+prokolpo_year_grant:prokolpo_year_grant,
+prokolpo_year_grant_start_date:prokolpo_year_grant_start_date,
+prokolpo_year_grant_end_date:prokolpo_year_grant_end_date,
+comment_grant:comment_grant,
+},
+success: function(data) {
+
+if(prokolpo_year_grant == '১ম বছর'){
+
+    $('#expenseEditModal1').modal('hide');
+
+}else if(prokolpo_year_grant == '২য় বছর'){
+    $('#expenseEditModal2').modal('hide');
+
+}else if(prokolpo_year_grant == '৩য় বছর'){
+    $('#expenseEditModal3').modal('hide');
+
+}else if(prokolpo_year_grant == '৪র্থ বছর'){
+    $('#expenseEditModal4').modal('hide');
+}else if(prokolpo_year_grant == '৫ম বছর'){
+    $('#expenseEditModal5').modal('hide');
+}
+
+
+alertify.set('notifier','position', 'top-center');
+alertify.success('Data Added Successfully');
+
+$("#tableAjaxDataexp").html('');
+$("#tableAjaxDataexp").html(data);
+
+},
+beforeSend: function(){
+$('#pageloader').show()
+},
+complete: function(){
+$('#pageloader').hide();
+}
+});
+
+}
+
+});
+
+//expensece start
+
+// $(document).on('click', '[id^=expenseEditModal]', function () {
+//     var main_id = $(this).attr('id');
+//     var get_id_from_main = main_id.slice(16);
+//     var fd6Id = $('#fd6Id').val();
+
+//     $('#grantReceiveEdit').modal('show');
+//     $.ajaxSetup({
+//     headers: {
+//         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//     }
+// });
+//     $.ajax({
+// url: "{{ route('showExpenseDataInModal') }}",
+// method: 'post',
+// data: {
+//     fd6Id:fd6Id,
+//     get_id_from_main:get_id_from_main,
+// },
+// success: function(data) {
+
+//   $('#grantReceiveEdit').modal('hide');
+//   $("#grantReceiveEditModal").html('');
+//   $("#grantReceiveEditModal").html(data);
+
+// },
+// beforeSend: function(){
+//    $('#pageloader').show()
+// },
+// complete: function(){
+//    $('#pageloader').hide();
+// }
+// });
+// });
+//expence end
 //grant script strat
 $(document).on('keyup', '[id^=grants_received_from_abroad]', function () {
 
@@ -99,6 +223,10 @@ var total = parseInt(grants_received_from_abroad);
 
 var total = parseInt(donations_made_by_foreign_donors);
 
+}else if(grants_received_from_abroad.length === 0 && donations_made_by_foreign_donors.length === 0){
+
+var total = parseInt(local_grants);
+
 }else if(donations_made_by_foreign_donors.length === 0){
 
 var total = parseInt(grants_received_from_abroad) + parseInt(local_grants);
@@ -122,31 +250,84 @@ $('#grants_total'+get_id_from_main).val(total);
 
 $(document).on('click', '#GrantAjax', function () {
 
-    if(!$('#grants_received_from_abroad0').val()){
+    if(!$('#grants_total0').val()){
 
-alertify.alert('Error', 'বিভাগ  সম্পর্কিত তথ্য দিন');
+alertify.alert('Error', 'বিদেশ থেকে প্রাপ্ত অনুদান অথবা বিদেশি দাতার প্রদত্ত অনুদান অথবা স্থানীয় অনুদান সম্পর্কিত তথ্য দিন');
 
-}else if(!$('#district_name0').val()){
+}else if(!$('#prokolpo_year_grant_start_date0').val()){
 
-alertify.alert('Error', 'জেলা সম্পর্কিত তথ্য দিন');
+alertify.alert('Error', 'প্রকল্পের মেয়াদ শুরুর তারিখ সম্পর্কিত তথ্য দিন');
 
-}else if(!$('#thana_name0').val()){
+}else if(!$('#prokolpo_year_grant_end_date0').val()){
 
-alertify.alert('Error', 'থানা সম্পর্কিত তথ্য দিন');
-
-}else if(!$('#prokolpoType0').val()){
-
-alertify.alert('Error', 'প্রকল্পের ধরণ সম্পর্কিত তথ্য দিন');
-
-}else if(!$('#allocated_budget0').val()){
-
-alertify.alert('Error', 'বরাদ্দকৃত বাজেট সম্পর্কিত তথ্য দিন');
-
-}else if(!$('#beneficiaries_total0').val()){
-
-alertify.alert('Error', 'উপকারভোগীর সংখ্যা সম্পর্কিত তথ্য দিন');
+alertify.alert('Error', 'প্রকল্পের মেয়াদ সমাপ্তির তারিখ সম্পর্কিত তথ্য দিন');
 
 }else{
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+var fd6Id = $('#fd6Id').val();
+var grants_received_from_abroad = $('#grants_received_from_abroad0').val();
+var donations_made_by_foreign_donors = $('#donations_made_by_foreign_donors0').val();
+var local_grants = $('#local_grants0').val();
+var grants_total = $('#grants_total0').val();
+var prokolpo_year_grant = $('#prokolpo_year_grant0').val();
+var prokolpo_year_grant_start_date = $('#prokolpo_year_grant_start_date0').val();
+var prokolpo_year_grant_end_date =$('#prokolpo_year_grant_end_date0').val();
+var comment_grant = $('#comment_grant0').val();
+
+
+
+$.ajax({
+url: "{{ route('estimatedExpensesFd6') }}",
+method: 'get',
+data: {
+    fd6Id:fd6Id,
+    grants_received_from_abroad:grants_received_from_abroad,
+    donations_made_by_foreign_donors:donations_made_by_foreign_donors,
+    local_grants:local_grants,
+    grants_total:grants_total,
+    prokolpo_year_grant:prokolpo_year_grant,
+    prokolpo_year_grant_start_date:prokolpo_year_grant_start_date,
+    prokolpo_year_grant_end_date:prokolpo_year_grant_end_date,
+    comment_grant:comment_grant,
+},
+success: function(data) {
+
+
+
+    $('#expenseId').val(1);
+
+    $('#grantReceive').modal('hide');
+
+  alertify.set('notifier','position', 'top-center');
+  alertify.success('Data Added Successfully');
+
+  $("#tableAjaxDataexp").html('');
+  $("#tableAjaxDataexp").html(data);
+
+   $('#grants_received_from_abroad0').val('');
+$('#donations_made_by_foreign_donors0').val('');
+$('#local_grants0').val('');
+ $('#grants_total0').val('');
+$('#prokolpo_year_grant0').val('');
+ $('#prokolpo_year_grant_start_date0').val('');
+$('#prokolpo_year_grant_end_date0').val('');
+$('#comment_grant0').val('');
+
+},
+beforeSend: function(){
+   $('#pageloader').show()
+},
+complete: function(){
+   $('#pageloader').hide();
+}
+});
 
 
 }
@@ -584,7 +765,7 @@ complete: function(){
 
 $(document).on('click', '#SDGAjax', function () {
 
-var fcOneId = $('#fcOneId').val();
+    var fd6Id = $('#fd6Id').val();
 
 if(!$('#goal0').val()){
 
@@ -621,12 +802,12 @@ var comment =$('#comment0').val();
 
 
 $.ajax({
-url: "{{ route('fc2FormStepTwoSDG') }}",
+url: "{{ route('fd6FormStepTwoSDG') }}",
 method: 'post',
-data: {fcOneId:fcOneId,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
+data: {fd6Id:fd6Id,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
 success: function(data) {
     $('#tableCountTwo').val(1);
-$('#exampleModal').modal('hide');
+$('#Avistto').modal('hide');
 
 alertify.set('notifier','position', 'top-center');
 alertify.success('Data Added Successfully');
@@ -661,7 +842,7 @@ $('#pageloader').hide();
 
 $(document).on('click', '.SDGAjaxData', function () {
 
-var fcOneId = $('#fcOneId').val();
+    var fd6Id = $('#fd6Id').val();
 var mainId = $(this).attr('id');
 
 if(!$('#goal'+mainId).val()){
@@ -699,9 +880,9 @@ var comment =$('#comment'+mainId).val();
 
 
 $.ajax({
-url: "{{ route('fc2FormStepTwoSDGUpdate') }}",
+url: "{{ route('fd6FormStepTwoSDGUpdate') }}",
 method: 'post',
-data: {mainId:mainId,fcOneId:fcOneId,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
+data: {mainId:mainId,fd6Id:fd6Id,goal:goal,target:target,budget_allocation:budget_allocation,rationality:rationality,comment:comment},
 success: function(data) {
     $('#tableCountTwo').val(1);
 $('#prokolpoSDG'+mainId).modal('hide');
@@ -1079,12 +1260,12 @@ $('#pageloader').hide();
             reverseButtons: true
         }).then((result) => {
             if (result.value) {
-                var fcOneId = $('#fcOneId').val();
+                var fd6Id = $('#fd6Id').val();
 
                 $.ajax({
-    url: "{{ route('fc2FormStepTwoSDGDelete') }}",
+    url: "{{ route('fd6FormStepTwoSDGDelete') }}",
     method: 'GET',
-    data: {fcOneId:fcOneId,id:id},
+    data: {fd6Id:fd6Id,id:id},
     success: function(data) {
 
       alertify.set('notifier','position', 'top-center');

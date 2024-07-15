@@ -574,6 +574,17 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(Fd6FormController::class)->group(function (){
 
+        Route::get('fd6FormStepTwoSDGDelete', 'fd6FormStepTwoSDGDelete')->name('fd6FormStepTwoSDGDelete');
+        Route::post('fd6FormStepTwoSDG', 'fd6FormStepTwoSDG')->name('fd6FormStepTwoSDG');
+        Route::post('fd6FormStepTwoSDGUpdate', 'fd6FormStepTwoSDGUpdate')->name('fd6FormStepTwoSDGUpdate');
+
+
+        Route::post('showExpenseDataInModal', 'showExpenseDataInModal')->name('showExpenseDataInModal');
+        Route::get('estimatedExpensesFd6Delete', 'estimatedExpensesFd6Delete')->name('estimatedExpensesFd6Delete');
+        Route::get('estimatedExpensesFd6', 'estimatedExpensesFd6')->name('estimatedExpensesFd6');
+        Route::post('estimatedExpensesFd6Update', 'estimatedExpensesFd6Update')->name('estimatedExpensesFd6Update');
+
+
         Route::get('prokolpoAreaForFd6Delete', 'prokolpoAreaForFd6Delete')->name('prokolpoAreaForFd6Delete');
         Route::post('prokolpoAreaForFd6', 'prokolpoAreaForFd6')->name('prokolpoAreaForFd6');
         Route::post('prokolpoAreaForFd6Update', 'prokolpoAreaForFd6Update')->name('prokolpoAreaForFd6Update');

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('main_id')->nullable();
             $table->string('prokolpoName')->nullable();
+            $table->string('target_year')->nullable();
             $table->string('last_year_target_real')->nullable();
             $table->string('last_year_target_financial')->nullable();
             $table->string('last_year_achievment_real')->nullable();

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Fd6Form;
 use App\Models\Fd6FormProkolpoArea;
 use App\Models\NVisa;
+use App\Models\SDGDevelopmentGoal;
 use App\Models\Fd2Form;
 use App\Models\Fd2FormOtherInfo;
 use App\Models\NgoStatus;
@@ -524,6 +525,15 @@ class Fd6FormController extends Controller
 
     }
 
+    public function showExpenseDataInModal(Request $request){
+
+        $fd6FormList = Fd6Form::where('id',$request->fd6Id)->latest()->first();
+        $prokolpoYearId = $request->get_id_from_main;
+        $data = view('front.fd6Form._partial.showExpenseDataInModal',compact('fd6FormList','prokolpoYearId'))->render();
+        return response()->json($data);
+
+    }
+
     public function prokolpoAreaForFd6Update(Request $request){
         $form= Fd6FormProkolpoArea::find($request->mainId);
         $form->division_name=$request->division_name;
@@ -660,13 +670,285 @@ class Fd6FormController extends Controller
 
     public function fd6StepTwo($id){
 
+
+
         $fd6Id = base64_decode($id);
         $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
         $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
         $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
         $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
         $fd6FormList = Fd6Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd6Id)->latest()->first();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+        return view('front.fd6Form.fd6StepTwo',compact('SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+    }
 
-        return view('front.fd6Form.fd6StepTwo',compact('fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    public function estimatedExpensesFd6Update(Request $request){
+
+        if($request->prokolpo_year_grant == '১ম বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_first_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_first_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_first_year =$request->local_grants;
+            $fd6FormInfo->prokolpo_year_grant_start_date_first =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_first =$request->prokolpo_year_grant_end_date;
+
+
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+
+            $fd6FormInfo->total_first_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+
+        }elseif($request->prokolpo_year_grant == '২য় বছর'){
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_second_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_second_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_second_year =$request->local_grants;
+            $fd6FormInfo->prokolpo_year_grant_start_date_second =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_second =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_second_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+
+        }elseif($request->prokolpo_year_grant == '৩য় বছর'){
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_third_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_third_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_third_year =$request->local_grants;
+            $fd6FormInfo->prokolpo_year_grant_start_date_third =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_third =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_third_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+        }elseif($request->prokolpo_year_grant == '৪র্থ বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_fourth_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_fourth_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_fourth_year =$request->local_grants;
+            $fd6FormInfo->prokolpo_year_grant_start_date_fourth =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_fourth =$request->prokolpo_year_grant_end_date;
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            $fd6FormInfo->total_fourth_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+        }elseif($request->prokolpo_year_grant == '৫ম বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_fifth_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_fifth_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_fifth_year =$request->local_grants;
+            $fd6FormInfo->prokolpo_year_grant_start_date_fifth =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_fifth =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_fifth_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+       }
+
+       $fd6FormList = Fd6Form::where('id',$request->fd6Id)->latest()->first();
+
+       $data = view('front.fd6Form.estimatedExpensesFd6',compact('fd6FormList'))->render();
+        return response()->json($data);
+
+    }
+
+
+    public function estimatedExpensesFd6(Request $request){
+
+
+        if($request->prokolpo_year_grant == '১ম বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_first_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_first_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_first_year =$request->local_grants;
+            $fd6FormInfo->new_prokolpo_year =$request->prokolpo_year_grant;
+            $fd6FormInfo->prokolpo_year_grant_start_date_first =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_first =$request->prokolpo_year_grant_end_date;
+
+
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+
+            $fd6FormInfo->total_first_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+
+        }elseif($request->prokolpo_year_grant == '২য় বছর'){
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_second_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_second_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_second_year =$request->local_grants;
+            $fd6FormInfo->new_prokolpo_year =$request->prokolpo_year_grant;
+            $fd6FormInfo->prokolpo_year_grant_start_date_second =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_second =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_second_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+
+        }elseif($request->prokolpo_year_grant == '৩য় বছর'){
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_third_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_third_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_third_year =$request->local_grants;
+            $fd6FormInfo->new_prokolpo_year =$request->prokolpo_year_grant;
+            $fd6FormInfo->prokolpo_year_grant_start_date_third =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_third =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_third_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+        }elseif($request->prokolpo_year_grant == '৪র্থ বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_fourth_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_fourth_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_fourth_year =$request->local_grants;
+            $fd6FormInfo->new_prokolpo_year =$request->prokolpo_year_grant;
+            $fd6FormInfo->prokolpo_year_grant_start_date_fourth =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_fourth =$request->prokolpo_year_grant_end_date;
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            $fd6FormInfo->total_fourth_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+
+        }elseif($request->prokolpo_year_grant == '৫ম বছর'){
+
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->grants_received_from_abroad_fifth_year =$request->grants_received_from_abroad;
+            $fd6FormInfo->donations_made_by_foreign_donors_fifth_year =$request->donations_made_by_foreign_donors;
+            $fd6FormInfo->local_grants_fifth_year =$request->local_grants;
+            $fd6FormInfo->new_prokolpo_year =$request->prokolpo_year_grant;
+            $fd6FormInfo->prokolpo_year_grant_start_date_fifth =$request->prokolpo_year_grant_start_date;
+            $fd6FormInfo->prokolpo_year_grant_end_date_fifth =$request->prokolpo_year_grant_end_date;
+            if(empty($request->comment_grant)){
+
+            }else{
+
+            $fd6FormInfo->total_donors_comment =$request->comment_grant;
+            }
+            $fd6FormInfo->total_fifth_year =$request->grants_total;
+            $fd6FormInfo->save();
+
+       }
+
+       $fd6FormList = Fd6Form::where('id',$request->fd6Id)->latest()->first();
+
+       $data = view('front.fd6Form.estimatedExpensesFd6',compact('fd6FormList'))->render();
+        return response()->json($data);
+
+    }
+
+
+    public function fd6FormStepTwoSDG(Request $request){
+
+        $form= new SDGDevelopmentGoal();
+        $form->fc1_form_id=$request->fd6Id;
+        $form->type='fd6';
+        $form->goal=$request->goal;
+        $form->target=$request->target;
+        $form->budget_allocation=$request->budget_allocation;
+        $form->rationality=$request->rationality;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $data = view('front.fd6Form.fd6FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+        return response()->json($data);
+    }
+
+    public function fd6FormStepTwoSDGUpdate(Request $request){
+
+        $form= SDGDevelopmentGoal::find($request->mainId);
+        $form->goal=$request->goal;
+        $form->target=$request->target;
+        $form->budget_allocation=$request->budget_allocation;
+        $form->rationality=$request->rationality;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $data = view('front.fd6Form.fd6FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+        return response()->json($data);
+
+    }
+
+    public function fd6FormStepTwoSDGDelete(Request $request){
+
+
+        $admins = SDGDevelopmentGoal::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $data = view('front.fd6Form.fd6FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
+        return response()->json($data);
     }
 }

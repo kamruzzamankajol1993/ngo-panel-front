@@ -226,6 +226,8 @@
 
                                     <form action="{{ route('fd6Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
+                                        <input type="hidden" id="fd6Id" value="{{ $fd6Id }}"/>
+                                        <input type="hidden" id="expenseId" value="1"/>
 
                                         <div class="row">
                                             <div class="col-lg-12">
@@ -241,130 +243,30 @@
                                                     </tr>
                                                     <tr>
                                                         <td style="width:40px;">ক)</td>
-                                                        <td colspan="2">প্রাক্কলিক ব্যয় (টাকায়)</td>
+                                                        <td colspan="2">
+                                                            প্রাক্কলিক ব্যয় (টাকায়):
+                                                            <input type="text" class="form-control mb-3" id=""
+                                                                   placeholder="প্রাক্কলিক ব্যয় (টাকায়)">
+
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td colspan="4">
                                                             <div class="d-flex justify-content-end">
+                                                                @if(empty($fd6FormList->total_fifth_year))
                                                                 <a class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
                                                                         data-bs-target="#grantReceive">প্রাক্কলিক ব্যয় যুক্ত করুন
                                                             </a>
-                                                            </div>
+                                                            @else
 
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <th>অর্থের উৎসের বিবরণ:</th>
-                                                                    <th>১ম বছর</th>
-                                                                    <th>২য় বছর</th>
-                                                                    <th>৩য় বছর</th>
-                                                                    <th>৪র্থ বছর</th>
-                                                                    <th>৫ম বছর</th>
-                                                                    <th>মোট</th>
-                                                                    <th>মন্তব্য</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>১.বিদেশ থেকে প্রাপ্ত অনুদান (বাংলাদেশি
-                                                                        তাকে পরিবর্তিত)
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>২.দেশে অবস্থানরত বিদেশি দাতার প্রদত্ত
-                                                                        অনুদান
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>৩.স্থানীয় অনুদান (উৎসের বিস্তারিত বিবরণ
-                                                                        ও প্রমাণকসহ)
-                                                                    </td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>মোট</td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                    <td><input type="text" class="form-control"
-                                                                               id=""
-                                                                               placeholder=""></td>
-                                                                </tr>
-                                                            </table>
+                                                            @endif
+                                                            </div>
+                                                            <div id="tableAjaxDataexp">
+                                                           @include('front.fd6Form.estimatedExpensesFd6')
+                                                            <div>
+
+                                                                <input type="file" accept=".pdf" class="form-control mb-3" id=""
+                                                                   placeholder="">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -464,26 +366,17 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <div class="d-flex justify-content-end">
-                                                                <button class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
+                                                                <a class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
                                                                         data-bs-target="#Avistto">নতুন অভীষ্ট যুক্ত করুন
-                                                                </button>
+                                                            </a>
                                                             </div>
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <td>অভীষ্ট (Goal)</td>
-                                                                    <td>লক্ষ্যমাত্রা (Target)</td>
-                                                                    <td>বাজেট বরাদ্দ</td>
-                                                                    <td>যৌক্তিকতা</td>
-                                                                    <td>মন্তব্য</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                            </table>
+                                                            <div class="table-responsive" id="tableAjaxDataSDG">
+
+                                                                @include('front.fd6Form.fd6FormStepTwoSDG')
+                                                                    </div>
+
+                                                            <input type="file" accept=".pdf" class="form-control mb-3" id=""
+                                                                   placeholder="">
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -506,11 +399,11 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <div class="d-flex justify-content-end">
-                                                                <button class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
-                                                                        data-bs-target="#ProkolppoLokkhoMatra">নতুন
+                                                                <a class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModalTarget">নতুন
                                                                     লক্ষ্যমাত্রা
                                                                     যুক্ত করুন
-                                                                </button>
+                                                            </a>
                                                             </div>
                                                             <table class="table table-bordered">
                                                                 <tr>
@@ -658,7 +551,14 @@
 
 </section>
 
+@include('front.fd6Form._partial.prokolpoTargetModal')
+@include('front.fd6Form._partial.stepTwoSDGModal')
 @include('front.fd6Form._partial.grantReceiveModal')
+@include('front.fd6Form._partial.expenseEditModal1')
+@include('front.fd6Form._partial.expenseEditModal2')
+@include('front.fd6Form._partial.expenseEditModal3')
+@include('front.fd6Form._partial.expenseEditModal4')
+@include('front.fd6Form._partial.expenseEditModal5')
 @endsection
 
 @section('script')

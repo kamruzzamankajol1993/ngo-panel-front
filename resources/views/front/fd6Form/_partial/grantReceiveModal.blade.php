@@ -32,7 +32,7 @@
                             </div>
 
                             <div class="col-lg-6 mb-3">
-                                <label for="" class="form-label">মোট</label>
+                                <label for="" class="form-label">মোট অনুদান</label>
                                 <input type="number" readonly name="grants_total" class="form-control" id="grants_total0"
                                 placeholder="মোট">
                             </div>
@@ -45,7 +45,7 @@
 
                             ?>
 
-                            @if(empty($getYearVal->grants_received_from_abroad_first_year))
+                            @if(empty($getYearVal->total_first_year))
 
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">প্রকল্প বর্ষ</label>
@@ -53,7 +53,7 @@
                                 placeholder="প্রকল্প বর্ষ">
                             </div>
 
-                            @elseif(empty($getYearVal->grants_received_from_abroad_second_year))
+                            @elseif(empty($getYearVal->total_second_year))
 
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">প্রকল্প বর্ষ</label>
@@ -61,7 +61,7 @@
                                 placeholder="প্রকল্প বর্ষ">
                             </div>
 
-                            @elseif(empty($getYearVal->grants_received_from_abroad_third_year))
+                            @elseif(empty($getYearVal->total_third_year))
 
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">প্রকল্প বর্ষ</label>
@@ -69,7 +69,7 @@
                                 placeholder="প্রকল্প বর্ষ">
                             </div>
 
-                            @elseif(empty($getYearVal->grants_received_from_abroad_fourth_year))
+                            @elseif(empty($getYearVal->total_fourth_year))
 
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">প্রকল্প বর্ষ</label>
@@ -77,7 +77,7 @@
                                 placeholder="প্রকল্প বর্ষ">
                             </div>
 
-                            @elseif(empty($getYearVal->grants_received_from_abroad_fifth_year))
+                            @elseif(empty($getYearVal->total_fifth_year))
 
                             <div class="col-lg-12 mb-3">
                                 <label for="" class="form-label">প্রকল্প বর্ষ</label>
