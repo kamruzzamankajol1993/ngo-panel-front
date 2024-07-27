@@ -224,9 +224,9 @@
                                         <h4>প্রকল্প প্রস্তাব ফরম</h4>
                                     </div>
 
-                                    <form action="{{ route('fd6Form.store') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
+                                    <form action="{{ route('fd6StepTwoMainPost') }}" method="post" enctype="multipart/form-data" id="form" data-parsley-validate="">
                                         @csrf
-                                        <input type="hidden" id="fd6Id" value="{{ $fd6Id }}"/>
+                                        <input type="hidden" name="fd6Id" id="fd6Id" value="{{ $fd6Id }}"/>
                                         <input type="hidden" id="expenseId" value="1"/>
 
                                         <div class="row">
@@ -245,7 +245,7 @@
                                                         <td style="width:40px;">ক)</td>
                                                         <td colspan="2">
                                                             প্রাক্কলিক ব্যয় (টাকায়):
-                                                            <input type="text" class="form-control mb-3" id=""
+                                                            <input type="text" required name="estimated_expenses" class="form-control mb-3" id=""
                                                                    placeholder="প্রাক্কলিক ব্যয় (টাকায়)">
 
                                                         </td>
@@ -265,7 +265,7 @@
                                                            @include('front.fd6Form.estimatedExpensesFd6')
                                                             <div>
 
-                                                                <input type="file" accept=".pdf" class="form-control mb-3" id=""
+                                                                <input type="file" name="estimated_expenses_file" accept=".pdf" class="form-control mb-3" id=""
                                                                    placeholder="">
                                                         </td>
                                                     </tr>
@@ -273,39 +273,39 @@
                                                         <td rowspan="6" style="width:40px;">খ)</td>
                                                         <td style="width: 25%;">১. দাতা সংস্থার নাম</td>
                                                         <td>
-                                                            <input type="text" class="form-control" id=""
+                                                            <input type="text" required name="donor_organization_name" class="form-control" id=""
                                                                    placeholder="দাতা সংস্থার নাম">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>২. দাতা সংস্থার ঠিকানা</td>
                                                         <td>
-                                                            <input type="text" class="form-control" id=""
+                                                            <input type="text" required name="donor_organization_address" class="form-control" id=""
                                                                    placeholder=" দাতা সংস্থার ঠিকানা">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td> ৩. ফোন/মোবাইল/ইমেইল নম্বর</td>
                                                         <td>
-                                                            <input type="text" class="form-control mb-3" id=""
+                                                            <input type="text" required name="donor_organization_phone_mobile_email" class="form-control mb-3" id=""
                                                                    placeholder="ফোন">
-                                                            <input type="nnumber" class="form-control mb-3" id=""
+                                                            <input type="nnumber" required name="donor_organization_mobile" class="form-control mb-3" id=""
                                                                    placeholder="মোবাইল">
-                                                            <input type="email" class="form-control mb-3" id=""
+                                                            <input type="email" required name="donor_organization_email" class="form-control mb-3" id=""
                                                                    placeholder="ইমেইল">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td> ৪. ওয়েবসাইট</td>
                                                         <td>
-                                                            <input type="text" class="form-control" id=""
+                                                            <input type="text" required name="donor_organization_website" class="form-control" id=""
                                                                    placeholder="ওয়েবসাইট">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td> ৫. মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধের নিমিত্ত</td>
                                                         <td>
-                                                            <input type="text" class="form-control" id=""
+                                                            <input type="text" required name="money_laundering_and_terrorist_financing" class="form-control" id=""
                                                                    placeholder="মানিলন্ডারিং এবং সন্ত্রাসে অর্থায়ন প্রতিরোধের নিমিত্ত">
                                                         </td>
                                                     </tr>
@@ -316,9 +316,9 @@
                                                             সংশ্লিষ্টতারয়েছে কিনা:
                                                         </td>
                                                         <td>
-                                                            <select class="form-control" name="" id="">
-                                                                <option value="">হ্যা</option>
-                                                                <option value="">না</option>
+                                                            <select class="form-control" name="security_council_check" id="" required>
+                                                                <option value="হ্যা">হ্যা</option>
+                                                                <option value="না">না</option>
                                                             </select>
                                                         </td>
                                                     </tr>
@@ -337,7 +337,7 @@
                                                             কমিউনিটিকে সম্পৃক্ত করা হয়েছে তা উল্লেখ করতে হবে):
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control" name="" id="" cols="30"
+                                                            <textarea class="form-control" required name="introduction_and_background" id="" cols="30"
                                                                       rows="5"></textarea>
                                                         </td>
                                                     </tr>
@@ -347,14 +347,14 @@
                                                             প্রাসঙ্গিকতা:
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control" name="" id="" cols="30"
+                                                            <textarea class="form-control" required name="rationality_and_plan" id="" cols="30"
                                                                       rows="5"></textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>(২) প্রকল্প এলাকা নির্ধারণের যৌক্তিকতা:</td>
                                                         <td>
-                                                            <textarea class="form-control" name="" id="" cols="30"
+                                                            <textarea class="form-control" required name="rationale_project_araea" id="" cols="30"
                                                                       rows="5"></textarea>
                                                         </td>
                                                     </tr>
@@ -375,7 +375,7 @@
                                                                 @include('front.fd6Form.fd6FormStepTwoSDG')
                                                                     </div>
 
-                                                            <input type="file" accept=".pdf" class="form-control mb-3" id=""
+                                                            <input type="file" name="sdg_file" accept=".pdf" class="form-control mb-3" id=""
                                                                    placeholder="">
                                                         </td>
                                                     </tr>
@@ -384,7 +384,7 @@
                                                         <td>উদ্দেশ্যসমূহ
                                                         </td>
                                                         <td>
-                                                            <textarea class="form-control" name="" id="" cols="30"
+                                                            <textarea class="form-control" name="sdg_objective_file" id="" cols="30"
                                                                       rows="5"></textarea>
                                                         </td>
                                                     </tr>
@@ -405,33 +405,12 @@
                                                                     যুক্ত করুন
                                                             </a>
                                                             </div>
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <th rowspan="2">ক্রমিক নং</th>
-                                                                    <th rowspan="2">কার্যক্রমের নাম</th>
-                                                                    <th colspan="3">লক্ষমাত্রা (বছর ভিত্তিক)</th>
-                                                                    <th rowspan="2">অর্জনযোগ্য(%)</th>
-                                                                    <th rowspan="2">উপকারভোগীর সংখ্যা</th>
-                                                                    <th rowspan="2">মন্তব্য (যদি থাকে)</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>বছর</th>
-                                                                    <th>বাস্তব</th>
-                                                                    <th>আর্থিক</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>01</td>
-                                                                    <td>Kalama Projext</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colspan="6">মোট উপকারভোগীর সংখ্যা-</td>
-                                                                    <td>X</td>
-                                                                </tr>
-                                                            </table>
+                                                            <div class="table-responsive" id="tableAjaxDataTarget">
+                                                            @include('front.fd6Form.fd6TargetTable')
+                                                            </div>
+
+                                                            <input type="file" name="target_from_perspective_file" accept=".pdf" class="form-control mb-3" id=""
+                                                                   placeholder="">
 
                                                         </td>
                                                     </tr>
@@ -444,24 +423,21 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <div class="d-flex justify-content-end">
-                                                                <button class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
+                                                                <a class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
                                                                         data-bs-target="#ProttashitoFol">নতুন
                                                                     প্রত্যাশিত ফলাফল
                                                                     যুক্ত করুন
-                                                                </button>
+                                                            </a>
                                                             </div>
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <th>গুনবাচক</th>
-                                                                    <th>সংখ্যা বাচক</th>
-                                                                    <th>সময়কাল</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                </tr>
-                                                            </table>
+
+                                                            <div class="table-responsive" id="tableAjaxDataResult">
+                                                                @include('front.fd6Form.fd6ExpectedResultTable')
+                                                                </div>
+
+                                                                <input type="file" name="expected_result_file" accept=".pdf" class="form-control mb-3" id=""
+                                                                   placeholder="">
+
+
                                                             <small>*(উপরে বর্ণিত ফলাফলের ভিত্তিতে প্রতিটি প্রধান কার্যক্রম
                                                                 বর্ণনা করতে হবে। যে কার্যক্রম উপরে বর্ণিত ফলাফল অর্জনে সহায়ক
                                                                 নয়, সে কার্যক্রম গ্রহণযোগ্য হবে না। উপকারভোগীর সংখ্যা
@@ -481,41 +457,19 @@
                                                     <tr>
                                                         <td colspan="3">
                                                             <div class="d-flex justify-content-end">
-                                                                <button class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
+                                                            <a class="btn btn-sm btn-custom mb-3" data-bs-toggle="modal"
                                                                         data-bs-target="#JelawaisKarjokokrom">নতুন
                                                                     কর্মকান্ড
                                                                     যুক্ত করুন
-                                                                </button>
+                                                            </a>
                                                             </div>
-                                                            <table class="table table-bordered">
-                                                                <tr>
-                                                                    <th rowspan="2">ত্রু : নং</th>
-                                                                    <th rowspan="2">জেলা/সিটি/ পৌর-কর্পোরেশন</th>
-                                                                    <th rowspan="2">উপজেলা/ থানা/ ওয়ার্ড</th>
-                                                                    <th rowspan="2">কার্যক্রম সমূহ</th>
-                                                                    <th rowspan="2">প্রকল্প সময়</th>
-                                                                    <th colspan="3">লক্ষমাত্রা (বছর ভিত্তিক)</th>
-                                                                    <th rowspan="2">মোট বাজেট</th>
-                                                                    <th rowspan="2">মন্তব্য (যেখানে প্রযোজ্য)</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th>বছর</th>
-                                                                    <th>বাস্তব</th>
-                                                                    <th>আর্থিক</th>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                    <td>X</td>
-                                                                </tr>
-                                                            </table>
+                                                            <div id="tableAjaxDataDis">
+                                                           @include('front.fd6Form.districtWise')
+                                                            </div>
+
+                                                            <input type="file" name="district_wise_activity_file" accept=".pdf" class="form-control mb-3" id=""
+                                                                   placeholder="">
+
                                                         </td>
                                                     </tr>
 
@@ -550,7 +504,7 @@
     </div>
 
 </section>
-
+@include('front.fd6Form._partial.expectedResultModal')
 @include('front.fd6Form._partial.prokolpoTargetModal')
 @include('front.fd6Form._partial.stepTwoSDGModal')
 @include('front.fd6Form._partial.grantReceiveModal')
@@ -559,8 +513,10 @@
 @include('front.fd6Form._partial.expenseEditModal3')
 @include('front.fd6Form._partial.expenseEditModal4')
 @include('front.fd6Form._partial.expenseEditModal5')
+@include('front.fd6Form._partial.JelawaisKarjokokromModal')
 @endsection
 
 @section('script')
 @include('front.fd6Form._partial.script')
+@include('front.fd6Form._partial.stepTwoScript')
 @endsection

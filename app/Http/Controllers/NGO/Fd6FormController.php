@@ -10,6 +10,9 @@ use App\Models\NVisa;
 use App\Models\SDGDevelopmentGoal;
 use App\Models\Fd2Form;
 use App\Models\Fd2FormOtherInfo;
+use App\Models\Fd2AllFormLastYearDetail;
+use App\Models\ExpectedResult;
+use App\Models\DistrictWiseActivity;
 use App\Models\NgoStatus;
 use App\Models\Country;
 use App\Models\Fd9Form;
@@ -681,7 +684,70 @@ class Fd6FormController extends Controller
         $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
         ->where('type','fd6')
         ->latest()->get();
-        return view('front.fd6Form.fd6StepTwo',compact('SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $expectedResultDetail = ExpectedResult::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $districtWiseList = DistrictWiseActivity::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+    $thanaList = DB::table('civilinfos')
+    ->groupBy('thana_bn')->select('thana_bn')->get();
+
+        return view('front.fd6Form.fd6StepTwo',compact('cityCorporationList','thanaList','districtWiseList','divisionList','subdDistrictList','districtList','expectedResultDetail','fd2AllFormLastYearDetail','SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+    }
+
+
+    public function fd6StepThree($id){
+
+
+        $fd6Id = base64_decode($id);
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+        $fd6FormList = Fd6Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd6Id)->latest()->first();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $expectedResultDetail = ExpectedResult::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $districtWiseList = DistrictWiseActivity::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+    $thanaList = DB::table('civilinfos')
+    ->groupBy('thana_bn')->select('thana_bn')->get();
+
+        return view('front.fd6Form.fd6StepThree',compact('cityCorporationList','thanaList','districtWiseList','divisionList','subdDistrictList','districtList','expectedResultDetail','fd2AllFormLastYearDetail','SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
     }
 
 
@@ -897,6 +963,211 @@ class Fd6FormController extends Controller
     }
 
 
+    public function fd6ExpectedResultTarget(Request $request){
+
+        $form= new ExpectedResult();
+        $form->main_id=$request->fd6Id;
+        $form->type='fd6';
+        $form->multiplicative=$request->multiplicative;
+        $form->number_reader=$request->number_reader;
+        $form->duration=$request->duration;
+        $form->save();
+
+        $expectedResultDetail = ExpectedResult::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->get();
+
+        $data = view('front.fd6Form.fd6ExpectedResultTable',compact('expectedResultDetail'))->render();
+        return response()->json($data);
+
+
+    }
+
+    public function fd6ExpectedResultUpdate(Request $request){
+
+        $form= ExpectedResult::find($request->mainId);
+        $form->multiplicative=$request->multiplicative;
+        $form->number_reader=$request->number_reader;
+        $form->duration=$request->duration;
+        $form->save();
+
+        $expectedResultDetail = ExpectedResult::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->get();
+
+        $data = view('front.fd6Form.fd6ExpectedResultTable',compact('expectedResultDetail'))->render();
+        return response()->json($data);
+
+    }
+
+    public function fd6ExpectedResultDelete(Request $request){
+
+        $admins = ExpectedResult::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+
+        $expectedResultDetail = ExpectedResult::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->get();
+
+        $data = view('front.fd6Form.fd6ExpectedResultTable',compact('expectedResultDetail'))->render();
+        return response()->json($data);
+
+    }
+
+
+    public function fd6Target(Request $request){
+
+        $form= new Fd2AllFormLastYearDetail();
+        $form->upload_type =1;
+        $form->main_id=$request->fd6Id;
+        $form->type='fd6';
+        $form->prokolpoName=$request->prokolpoName;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->last_year_achievment_real=$request->last_year_achievment_real;
+        $form->target_year=$request->target_year;
+        $form->total_benificiari=$request->total_benificiari;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->get();
+
+        $data = view('front.fd6Form.fd6TargetTable',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+
+    }
+
+    public function fd6TargetUpdate(Request $request){
+
+
+        $form= Fd2AllFormLastYearDetail::find($request->mainId);
+        $form->prokolpoName=$request->prokolpoName;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->last_year_achievment_real=$request->last_year_achievment_real;
+        $form->target_year=$request->target_year;
+        $form->total_benificiari=$request->total_benificiari;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->get();
+
+        $data = view('front.fd6Form.fd6TargetTable',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+
+    }
+
+    public function fd6TargetDelete(Request $request){
+
+
+        $admins = Fd2AllFormLastYearDetail::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $data = view('front.fd6Form.fd6TargetTable',compact('fd2AllFormLastYearDetail'))->render();
+        return response()->json($data);
+    }
+
+
+    public function districtWiseUpdate(Request $request){
+
+
+        $form= DistrictWiseActivity::find($request->mainId);
+        $form->division_name=$request->division_name;
+        $form->district_name=$request->district_name;
+        $form->city_corparation_name=$request->city_corparation_name;
+        $form->upozila_name=$request->upozila_name;
+        $form->thana_name=$request->thana_name;
+        $form->municipality_name=$request->municipality_name;
+        $form->ward_name=$request->ward_name;
+        $form->prokolpo_time=$request->prokolpo_time;
+        $form->target_year=$request->target_year;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->activities=$request->activities;
+        $form->total_budget=$request->total_budget;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        $districtWiseList = DistrictWiseActivity::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd6Form.districtWise',compact('cityCorporationList','thanaList','divisionList','subdDistrictList','districtList','districtWiseList'))->render();
+        return response()->json($data);
+
+
+    }
+
+
+    public function districtWise(Request $request){
+
+
+        $form= new DistrictWiseActivity();
+        $form->main_id=$request->fd6Id;
+        $form->type='fd6';
+        $form->division_name=$request->division_name;
+        $form->district_name=$request->district_name;
+        $form->city_corparation_name=$request->city_corparation_name;
+        $form->upozila_name=$request->upozila_name;
+        $form->thana_name=$request->thana_name;
+        $form->municipality_name=$request->municipality_name;
+        $form->ward_name=$request->ward_name;
+        $form->prokolpo_time=$request->prokolpo_time;
+        $form->target_year=$request->target_year;
+        $form->last_year_target_real=$request->last_year_target_real;
+        $form->last_year_target_financial=$request->last_year_target_financial;
+        $form->activities=$request->activities;
+        $form->total_budget=$request->total_budget;
+        $form->comment=$request->comment;
+        $form->save();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        $districtWiseList = DistrictWiseActivity::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd6Form.districtWise',compact('cityCorporationList','thanaList','divisionList','subdDistrictList','districtList','districtWiseList'))->render();
+        return response()->json($data);
+
+    }
     public function fd6FormStepTwoSDG(Request $request){
 
         $form= new SDGDevelopmentGoal();
@@ -950,5 +1221,103 @@ class Fd6FormController extends Controller
 
         $data = view('front.fd6Form.fd6FormStepTwoSDG',compact('SDGDevelopmentGoal'))->render();
         return response()->json($data);
+    }
+
+
+    public function districtWiseDelete(Request $request){
+
+        $admins = DistrictWiseActivity::find($request->id);
+        if (!is_null($admins)) {
+            $admins->delete();
+        }
+
+        $districtWiseList = DistrictWiseActivity::where('main_id',$request->fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        $districtList = DB::table('civilinfos')->groupBy('district_bn')
+        ->select('district_bn')->get();
+        $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+        ->select('thana_bn')->get();
+
+        $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+        ->select('division_bn')->get();
+
+        $thanaList = DB::table('civilinfos')->groupBy('thana_bn')
+        ->select('thana_bn')->get();
+
+        $data = view('front.fd6Form.districtWise',compact('cityCorporationList','thanaList','divisionList','subdDistrictList','districtList','districtWiseList'))->render();
+        return response()->json($data);
+
+    }
+
+
+    public function fd6StepTwoMainPost(Request $request){
+
+
+        try{
+            //dd($request->all());
+            DB::beginTransaction();
+
+            $fd6FormInfo = Fd6Form::find($request->fd6Id);
+            $fd6FormInfo->estimated_expenses =$request->estimated_expenses;
+            $fd6FormInfo->donor_organization_name =$request->donor_organization_name;
+            $fd6FormInfo->donor_organization_address =$request->donor_organization_address;
+            $fd6FormInfo->donor_organization_phone_mobile_email =$request->donor_organization_phone_mobile_email;
+            $fd6FormInfo->donor_organization_mobile =$request->donor_organization_mobile;
+            $fd6FormInfo->donor_organization_email =$request->donor_organization_email;
+            $fd6FormInfo->donor_organization_website =$request->donor_organization_website;
+            $fd6FormInfo->money_laundering_and_terrorist_financing =$request->money_laundering_and_terrorist_financing;
+            $fd6FormInfo->security_council_check =$request->security_council_check;
+            $fd6FormInfo->introduction_and_background =$request->introduction_and_background;
+            $fd6FormInfo->rationality_and_plan =$request->rationality_and_plan;
+            $fd6FormInfo->rationale_project_araea =$request->rationale_project_araea;
+            $fd6FormInfo->sdg_objective_file =$request->sdg_objective_file;
+
+            if ($request->hasfile('estimated_expenses_file')) {
+                $filePath="FdSixForm";
+                $file = $request->file('estimated_expenses_file');
+
+                $fd6FormInfo->estimated_expenses_file =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('sdg_file')) {
+                $filePath="FdSixForm";
+                $file = $request->file('sdg_file');
+
+                $fd6FormInfo->sdg_file =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('target_from_perspective_file')) {
+                $filePath="FdSixForm";
+                $file = $request->file('target_from_perspective_file');
+
+                $fd6FormInfo->target_from_perspective_file =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('district_wise_activity_file')) {
+                $filePath="FdSixForm";
+                $file = $request->file('district_wise_activity_file');
+
+                $fd6FormInfo->district_wise_activity_file =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            $fd6FormInfo->save();
+
+        DB::commit();
+        return redirect()->route('fd6StepThree',base64_encode($fd6FormInfo->id))->with('success','Added Successfuly');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
     }
 }

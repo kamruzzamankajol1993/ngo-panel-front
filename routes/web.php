@@ -574,6 +574,19 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(Fd6FormController::class)->group(function (){
 
+
+        Route::get('districtWiseDelete', 'districtWiseDelete')->name('districtWiseDelete');
+        Route::post('districtWise', 'districtWise')->name('districtWise');
+        Route::post('districtWiseUpdate', 'districtWiseUpdate')->name('districtWiseUpdate');
+
+        Route::get('fd6ExpectedResultDelete', 'fd6ExpectedResultDelete')->name('fd6ExpectedResultDelete');
+        Route::post('fd6ExpectedResultTarget', 'fd6ExpectedResultTarget')->name('fd6ExpectedResultTarget');
+        Route::post('fd6ExpectedResultUpdate', 'fd6ExpectedResultUpdate')->name('fd6ExpectedResultUpdate');
+
+        Route::get('fd6TargetDelete', 'fd6TargetDelete')->name('fd6TargetDelete');
+        Route::post('fd6Target', 'fd6Target')->name('fd6Target');
+        Route::post('fd6TargetUpdate', 'fd6TargetUpdate')->name('fd6TargetUpdate');
+
         Route::get('fd6FormStepTwoSDGDelete', 'fd6FormStepTwoSDGDelete')->name('fd6FormStepTwoSDGDelete');
         Route::post('fd6FormStepTwoSDG', 'fd6FormStepTwoSDG')->name('fd6FormStepTwoSDG');
         Route::post('fd6FormStepTwoSDGUpdate', 'fd6FormStepTwoSDGUpdate')->name('fd6FormStepTwoSDGUpdate');
@@ -588,6 +601,10 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('prokolpoAreaForFd6Delete', 'prokolpoAreaForFd6Delete')->name('prokolpoAreaForFd6Delete');
         Route::post('prokolpoAreaForFd6', 'prokolpoAreaForFd6')->name('prokolpoAreaForFd6');
         Route::post('prokolpoAreaForFd6Update', 'prokolpoAreaForFd6Update')->name('prokolpoAreaForFd6Update');
+
+
+        Route::post('fd6StepTwoMainPost', 'fd6StepTwoMainPost')->name('fd6StepTwoMainPost');
+
 
         Route::get('fd6StepTwo/{id}', 'fd6StepTwo')->name('fd6StepTwo');
         Route::get('fd6StepThree/{id}', 'fd6StepThree')->name('fd6StepThree');

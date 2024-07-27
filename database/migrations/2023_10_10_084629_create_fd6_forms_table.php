@@ -92,6 +92,20 @@ return new class extends Migration
             $table->string('comment')->nullable();
             $table->string('file_last_check_date')->nullable();
             $table->string('check_status')->nullable();
+
+            $table->string('district_wise_activity_file')->nullable();
+            $table->string('expected_result_file')->nullable();
+            $table->string('target_from_perspective_file')->nullable();
+            $table->string('sdg_file')->nullable();
+            $table->string('sdg_objective_file')->nullable();
+            $table->string('introduction_and_background')->nullable();
+            $table->string('rationality_and_plan')->nullable();
+            $table->string('rationale_project_araea')->nullable();
+            $table->string('security_council_check')->nullable();
+            $table->string('estimated_expenses')->nullable();
+            $table->string('estimated_expenses_file')->nullable();
+            $table->string('donor_organization_mobile')->nullable();
+            $table->string('donor_organization_email')->nullable();
             $table->timestamps();
         });
     }
