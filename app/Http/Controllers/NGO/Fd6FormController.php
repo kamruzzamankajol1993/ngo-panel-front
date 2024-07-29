@@ -30,7 +30,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Session;
 use App\Models\FdOneForm;
-
+use App\Models\Fd6GovernanceAndTransparency;
+use App\Models\Fd6ProjectManagement;
+use App\Models\Fd6StepThree;
 use App\Models\NgoRenewInfo;
 use Illuminate\Support\Facades\App;
 class Fd6FormController extends Controller
@@ -750,6 +752,44 @@ class Fd6FormController extends Controller
 
     }
 
+    public function fd6StepFour($id){
+
+        $fd6Id = base64_decode($id);
+        $ngo_list_all = FdOneForm::where('user_id',Auth::user()->id)->first();
+        $ngoDurationReg = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->value('ngo_duration_start_date');
+        $ngoDurationLastEx = NgoDuration::where('fd_one_form_id',$ngo_list_all->id)->orderBy('id','desc')->first();
+        $renewWebsiteName = NgoRenewInfo::where('fd_one_form_id',$ngo_list_all->id)->value('web_site_name');
+        $fd6FormList = Fd6Form::where('fd_one_form_id',$ngo_list_all->id)->where('id',$fd6Id)->latest()->first();
+        $SDGDevelopmentGoal = SDGDevelopmentGoal::where('fc1_form_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+        $fd2AllFormLastYearDetail = Fd2AllFormLastYearDetail::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $expectedResultDetail = ExpectedResult::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->get();
+        $districtWiseList = DistrictWiseActivity::where('main_id',$fd6Id)
+        ->where('type','fd6')
+        ->latest()->get();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+    $thanaList = DB::table('civilinfos')
+    ->groupBy('thana_bn')->select('thana_bn')->get();
+
+        return view('front.fd6Form.fd6StepFour',compact('cityCorporationList','thanaList','districtWiseList','divisionList','subdDistrictList','districtList','expectedResultDetail','fd2AllFormLastYearDetail','SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+
+    }
+
 
     public function estimatedExpensesFd6Update(Request $request){
 
@@ -1313,6 +1353,77 @@ class Fd6FormController extends Controller
 
         DB::commit();
         return redirect()->route('fd6StepThree',base64_encode($fd6FormInfo->id))->with('success','Added Successfuly');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('error_404');
+        }
+
+    }
+
+
+    public function fd6StepThreeMainPost(Request $request){
+
+
+        try{
+            //dd($request->all());
+            DB::beginTransaction();
+
+            $fd6ProjectManagement = new Fd6ProjectManagement();
+            $fd6ProjectManagement->fd6_form_id =$request->fd6Id;
+            $fd6ProjectManagement->implementation_of_activities =$request->implementation_of_activities;
+            $fd6ProjectManagement->associate_NGO_detail =$request->associate_NGO_detail;
+            $fd6ProjectManagement->details_of_project_Officers_and_employees =$request->details_of_project_Officers_and_employees;
+            $fd6ProjectManagement->construction_details =$request->construction_details;
+            $fd6ProjectManagement->financial_sector_sub_sector_wise_allocation=$request->financial_sector_sub_sector_wise_allocation;
+            $fd6ProjectManagement->project_sustained_and_managed =$request->project_sustained_and_managed;
+            $fd6ProjectManagement->save();
+
+            $fd6GovernanceAndTransparency = new Fd6GovernanceAndTransparency();
+            $fd6GovernanceAndTransparency->fd6_form_id =$request->fd6Id;
+            $fd6GovernanceAndTransparency->private_individuals_advice =$request->private_individuals_advice;
+            $fd6GovernanceAndTransparency->govt_ongoing_activities =$request->govt_ongoing_activities;
+            $fd6GovernanceAndTransparency->similar_project_run_previously =$request->similar_project_run_previously;
+            $fd6GovernanceAndTransparency->project_in_form_no_eight =$request->project_in_form_no_eight;
+            $fd6GovernanceAndTransparency->audit_report =$request->audit_report;
+            $fd6GovernanceAndTransparency->annual_report =$request->annual_report;
+            $fd6GovernanceAndTransparency->action_plan_with_budget =$request->action_plan_with_budget;
+            $fd6GovernanceAndTransparency->beneficiary_database =$request->beneficiary_database;
+            $fd6GovernanceAndTransparency->detailed_results_of_the_project =$request->detailed_results_of_the_project;
+            $fd6GovernanceAndTransparency->complaints_detail =$request->complaints_detail;
+            $fd6GovernanceAndTransparency->focal_point_name_mobile_email =$request->focal_point_name_mobile_email;
+            $fd6GovernanceAndTransparency->online_training =$request->online_training;
+            $fd6GovernanceAndTransparency->save();
+
+
+            $fd6StepThree = new Fd6StepThree();
+            $fd6StepThree->fd6_form_id =$request->fd6Id;
+            $fd6StepThree->previous_project_detail =$request->previous_project_detail;
+            $fd6StepThree->receipt_of_audit_report =$request->receipt_of_audit_report;
+            $fd6StepThree->new_phase_project =$request->new_phase_project;
+            $fd6StepThree->annual_allocation_to_beneficiaries =$request->annual_allocation_to_beneficiaries;
+            $fd6StepThree->ratio_of_expenditure =$request->ratio_of_expenditure;
+            $fd6StepThree->project_benifit =$request->project_benifit;
+
+            if ($request->hasfile('detailed_budget_statement')) {
+                $filePath="FdSixForm";
+                $file = $request->file('detailed_budget_statement');
+
+                $fd6StepThree->detailed_budget_statement =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+
+            if ($request->hasfile('project_implementation_cost')) {
+                $filePath="FdSixForm";
+                $file = $request->file('project_implementation_cost');
+
+                $fd6StepThree->project_implementation_cost =CommonController::pdfUpload($request,$file,$filePath);
+
+            }
+            $fd6StepThree->save();
+
+        DB::commit();
+        return redirect()->route('fd6StepFour',base64_encode($request->fd6Id))->with('success','Added Successfuly');
 
         } catch (\Exception $e) {
             DB::rollBack();

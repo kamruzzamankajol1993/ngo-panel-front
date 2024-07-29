@@ -604,7 +604,9 @@ Route::group(['middleware' => ['auth']], function() {
 
 
         Route::post('fd6StepTwoMainPost', 'fd6StepTwoMainPost')->name('fd6StepTwoMainPost');
-
+        Route::post('fd6StepThreeMainPost', 'fd6StepThreeMainPost')->name('fd6StepThreeMainPost');
+        Route::post('fd6StepFourMainPost', 'fd6StepFourMainPost')->name('fd6StepFourMainPost');
+        Route::post('fd6StepFiveMainPost', 'fd6StepFiveMainPost')->name('fd6StepFiveMainPost');
 
         Route::get('fd6StepTwo/{id}', 'fd6StepTwo')->name('fd6StepTwo');
         Route::get('fd6StepThree/{id}', 'fd6StepThree')->name('fd6StepThree');
