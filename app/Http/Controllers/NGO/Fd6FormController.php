@@ -9,6 +9,8 @@ use App\Models\Fd6FormProkolpoArea;
 use App\Models\NVisa;
 use App\Models\SDGDevelopmentGoal;
 use App\Models\Fd2Form;
+use App\Models\Fd6PartnerNgo;
+use App\Models\Fd6AdjoiningB;
 use App\Models\Fd2FormOtherInfo;
 use App\Models\Fd2AllFormLastYearDetail;
 use App\Models\ExpectedResult;
@@ -786,7 +788,10 @@ class Fd6FormController extends Controller
     $thanaList = DB::table('civilinfos')
     ->groupBy('thana_bn')->select('thana_bn')->get();
 
-        return view('front.fd6Form.fd6StepFour',compact('cityCorporationList','thanaList','districtWiseList','divisionList','subdDistrictList','districtList','expectedResultDetail','fd2AllFormLastYearDetail','SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
+    $partnerDataPostList = Fd6PartnerNgo::where('fd6_form_id',$fd6Id)->latest()->get();
+    $employeeDataPostList = Fd6AdjoiningB::where('fd6_form_id',$fd6Id)->latest()->get();
+
+    return view('front.fd6Form.fd6StepFour',compact('employeeDataPostList','partnerDataPostList','cityCorporationList','thanaList','districtWiseList','divisionList','subdDistrictList','districtList','expectedResultDetail','fd2AllFormLastYearDetail','SDGDevelopmentGoal','fd6FormList','fd6Id','renewWebsiteName','ngoDurationLastEx','ngoDurationReg','ngo_list_all'));
 
     }
 
@@ -1429,6 +1434,78 @@ class Fd6FormController extends Controller
             DB::rollBack();
             return redirect()->route('error_404');
         }
+
+    }
+
+    public function partnerDataPost(Request $request){
+
+        $form=new Fd6PartnerNgo();
+        $form->fd6_form_id=$request->fd6Id;
+        $form->division_name=$request->division_name;
+        $form->district_name=$request->district_name;
+        $form->city_corparation_name=$request->city_corparation_name;
+        $form->upozila_name=$request->upozila_name;
+        $form->thana_name=$request->thana_name;
+        $form->municipality_name=$request->municipality_name;
+        $form->ward_name=$request->ward_name;
+        $form->partner_ngo_name=$request->partner_ngo_name;
+        $form->partner_ngo_address=$request->partner_ngo_address;
+        $form->partner_ngo_telephone=$request->partner_ngo_telephone;
+        $form->partner_ngo_mobile=$request->partner_ngo_mobile;
+        $form->partner_ngo_email=$request->partner_ngo_email;
+        $form->partner_ngo_reg_name=$request->partner_ngo_reg_name;
+        $form->partner_ngo_duration=$request->partner_ngo_duration;
+
+        $form->partner_ngo_work_detail=$request->partner_ngo_work_detail;
+        $form->budget_detail=$request->budget_detail;
+        $form->execution_deadline=$request->execution_deadline;
+        $form->beneficiary=$request->beneficiary;
+        $form->save();
+
+        $cityCorporationList =  DB::table('civilinfos')->whereNotNull('city_orporation')
+        ->groupBy('city_orporation')->select('city_orporation')->get();
+
+        $partnerDataPostList = Fd6PartnerNgo::where('fd6_form_id',$request->fd6Id)
+
+        ->latest()->get();
+
+    $districtList = DB::table('civilinfos')->groupBy('district_bn')
+    ->select('district_bn')->get();
+    $subdDistrictList = DB::table('civilinfos')->groupBy('thana_bn')
+    ->select('thana_bn')->get();
+
+    $divisionList = DB::table('civilinfos')->groupBy('division_bn')
+    ->select('division_bn')->get();
+
+    $thanaList = DB::table('civilinfos')->groupBy('thana_bn')->select('thana_bn')->get();
+
+        $data = view('front.fd6Form.partnerNgoTable',compact('cityCorporationList','thanaList','divisionList','subdDistrictList','districtList','partnerDataPostList'))->render();
+        return response()->json($data);
+
+    }
+
+    public function employeeDataPost(Request $request){
+
+
+        $form=new Fd6AdjoiningB();
+        $form->fd6_form_id=$request->fd6Id;
+        $form->name=$request->name;
+        $form->designation=$request->designation;
+        $form->nationality=$request->nationality;
+        $form->duration=$request->duration;
+        $form->educational_qualification=$request->educational_qualification;
+        $form->experience=$request->experience;
+        $form->responsibility=$request->responsibility;
+        $form->salary_from_this_project=$request->salary_from_this_project;
+        $form->salary_from_other_project=$request->salary_from_other_project;
+        $form->save();
+
+        $employeeDataPostList = Fd6AdjoiningB::where('fd6_form_id',$request->fd6Id)
+
+        ->latest()->get();
+
+        $data = view('front.fd6Form.employeeTable',compact('employeeDataPostList'))->render();
+        return response()->json($data);
 
     }
 }

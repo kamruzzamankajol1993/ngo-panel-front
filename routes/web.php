@@ -575,6 +575,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::controller(Fd6FormController::class)->group(function (){
 
 
+        Route::get('employeeDataPost', 'employeeDataPost')->name('employeeDataPost');
+        Route::post('partnerDataPost', 'partnerDataPost')->name('partnerDataPost');
+
         Route::get('districtWiseDelete', 'districtWiseDelete')->name('districtWiseDelete');
         Route::post('districtWise', 'districtWise')->name('districtWise');
         Route::post('districtWiseUpdate', 'districtWiseUpdate')->name('districtWiseUpdate');

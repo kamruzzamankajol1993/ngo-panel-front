@@ -254,43 +254,11 @@
                 যুক্ত করুন
         </a>
         </div>
-        <table class="table table-bordered">
-            <tr>
-                <th>পার্টনার এনজিওর নাম ও ঠিকানা (টেলিফোন, মোবাইল, ইমেইল
-                    নম্বরসহ)
-                </th>
-                <th>এনজিও ব্যুরোর নিবন্ধন নং ও মেয়াদ :</th>
-                <th>পার্টনার এনজিও /সংস্থা কর্তৃক বাস্তবায়িতব্য
-                    কার্যক্রমসমূহ (বিস্তারিত)
-                </th>
-                <th>কর্ম এলাকা (সম্ভাব্য ইউনিয়ন/ওয়ার্ড পর্যন্ত)</th>
-                <th>বাজেট</th>
-                <th>সম্পাদনের সময়সীমা</th>
-                <th>উপকারভোগী</th>
-            </tr>
-            <tr>
-                <td>
-                    <ul>
-                        <li>পার্টনার এনজিওর নাম:</li>
-                        <li>ঠিকানা:</li>
-                        <li>টেলিফোন:</li>
-                        <li>মোবাইল:</li>
-                        <li>ইমেইল</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul>
-                        <li>এনজিও ব্যুরোর নিবন্ধন নং :</li>
-                        <li>মেয়াদ:</li>
-                    </ul>
-                </td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-            </tr>
+        <div class="table-reponsive">
+        <table class="table table-bordered"  id="tableAjaxDataPartner">
+       @include('front.fd6Form.partnerNgoTable')
         </table>
+    </div>
     </td>
 </tr>
 <tr>
@@ -375,36 +343,11 @@
                 যুক্ত করুন
         </a>
         </div>
-        <table class="table table-bordered">
-            <tr>
-                <td rowspan="2">নাম ও পদবি</td>
-                <td rowspan="2">জাতীয়তা</td>
-                <td rowspan="2">মেয়াদ (জনমাস)</td>
-                <td rowspan="2">শিক্ষাগত যোগ্যতা</td>
-                <td rowspan="2">অভিজ্ঞতা</td>
-                <td rowspan="2">দায়িত্বসমূহ</td>
-                <td colspan="2">বেতন-ভাতাদি</td>
-            </tr>
-            <tr>
-                <td>এই প্রকল্প হতে</td>
-                <td>অন্যান্য প্রকল্প হতে</td>
-            </tr>
-            <tr>
-                <td>
-                    <ul>
-                        <li>নাম:</li>
-                        <li>পদবি:</li>
-                    </ul>
-                </td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-                <td>X</td>
-            </tr>
+        <div class="table-reponsive">
+        <table class="table table-bordered" id="tableAjaxDataEmployee">
+           @include('front.fd6Form.employeeTable')
         </table>
+        </div>
 
         <small>টীকা : বেতন ভাতাদি বলতে বেতন , বাড়ী ভাড়া , চিকিৎসা ও
             বেতনের সাথে সংশ্লিষ্ট অন্যান্য সকল আর্থিক সুবিধা অন্তর্ভুক্ত
@@ -584,4 +527,5 @@
 
 @section('script')
 @include('front.fd6Form._partial.script')
+@include('front.fd6Form._partial.stepFourscript')
 @endsection
